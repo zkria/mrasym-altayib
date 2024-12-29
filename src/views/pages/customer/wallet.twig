@@ -1,11 +1,11 @@
 {#
-| Variable                       | Type     | Description                                         |
-|--------------------------------|----------|-----------------------------------------------------|
-| page                           | object   |                                                     |
-| page.title                     | string   |                                                     |
-| page.slug                      | string   |                                                     |
+| المتغيرات                | النوع     | الوصف                     |
+|---------------------------|----------|---------------------------|
+| page                      | كائن     |                           |
+| page.title                | سلسلة    | عنوان الصفحة             |
+| page.slug                 | سلسلة    | رابط الصفحة              |
 #}
 {% extends "layouts.customer" %}
 {% block inner_content %}
-    <salla-wallet></salla-wallet>
+    <salla-wallet></salla-wallet> <!-- مكون عرض المحفظة -->
 {% endblock %}

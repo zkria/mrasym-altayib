@@ -1,18 +1,15 @@
-
 class WishlistCard extends HTMLElement {
 
     connectedCallback() {
-
         if (!this.product) {
-            return salla.logger.warn('custom-wishlist-card:: product does not exist!');
+            return salla.logger.warn('custom-wishlist-card:: المنتج غير موجود!');
         }
-        salla.onReady(() => this.render())
-
+        salla.onReady(() => this.render());
     }
 
     render() {
-        this.setAttribute('id', `wishlist-product-${this.product.id}`)
-        this.classList.add('product-entry', 'product-entry--wishlist')
+        this.setAttribute('id', `wishlist-product-${this.product.id}`);
+        this.classList.add('product-entry', 'product-entry--wishlist');
 
         this.innerHTML = `
         <div class="flex items-center mb-4 sm:mb-0">
@@ -42,9 +39,8 @@ class WishlistCard extends HTMLElement {
             <i class="sicon-cancel"></i>
           </salla-button>
         </div>
-  `
+        `;
         document.lazyLoadInstance?.update(this.querySelectorAll('.lazy'));
-
     }
 }
 

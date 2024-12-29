@@ -1,14 +1,14 @@
 {#
-| Variable         | Type       | Description                                                         |
-|------------------|------------|---------------------------------------------------------------------|
-| page             | object     |                                                                     |
-| page.title       | string     | *could be html                                                      |
-| page.slug        | string     | ex: "cat.show"                                                      |
+| المتغيرات                | النوع       | الوصف                                                         |
+|---------------------------|------------|---------------------------------------------------------------|
+| page                      | كائن      |                                                               |
+| page.title                | سلسلة     | *يمكن أن تكون HTML                                           |
+| page.slug                 | سلسلة     | مثال: "cat.show"                                            |
 #}
 {% extends "layouts.master" %}
 {% block content %}
-    {% component home %}
+    {% component home %} <!-- مكون الصفحة الرئيسية -->
 {% endblock %}
 {% block scripts %}
-    <script defer src="{{ 'home.js' | asset }}"></script>
+    <script defer src="{{ 'home.js' | asset }}"></script> <!-- سكربت الصفحة الرئيسية -->
 {% endblock %}

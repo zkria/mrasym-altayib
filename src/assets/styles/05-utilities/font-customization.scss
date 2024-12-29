@@ -1,8 +1,9 @@
+// إعدادات تخصيص الخط
 body {
   &.font-dinnextltarabic-regular {
     .btn--add-to-cart {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
+      padding-top: 0 !important; // إزالة الحشوة العلوية
+      padding-bottom: 0 !important; // إزالة الحشوة السفلية
     }
   }
 }

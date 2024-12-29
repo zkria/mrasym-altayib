@@ -1,102 +1,103 @@
-
-.loyalty{
+// إعدادات برنامج الولاء
+.loyalty {
   .breadcrumbs {
-    @apply pb-0 pt-4;
+    @apply pb-0 pt-4; // إعدادات الهوامش
 
-    ol{
-      @apply justify-center lg:justify-start;
+    ol {
+      @apply justify-center lg:justify-start; // إعدادات محاذاة القائمة
     }
     
     a,
     span,
     .arrow {
-      @apply text-white/90;
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      @apply text-white/90; // تعيين لون النص
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3); // إضافة ظل للنص
     }
   }
 
-  &__banner{
-    @apply relative overflow-hidden bg-white m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default;
+  &__banner {
+    @apply relative overflow-hidden bg-white m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default; // إعدادات لافتة الولاء
 
-    &-inner{
-      @apply relative z-10 text-center sm:flex flex-1 items-center rtl:space-x-reverse sm:space-x-12;
+    &-inner {
+      @apply relative z-10 text-center sm:flex flex-1 items-center rtl:space-x-reverse sm:space-x-12; // إعدادات المحتوى الداخلي
     }
 
-    &-content{
-      @apply md:flex flex-1 justify-between items-center;
+    &-content {
+      @apply md:flex flex-1 justify-between items-center; // إعدادات محتوى اللافتة
 
-      .info{
-        @apply mb-6 md:mb-0;
+      .info {
+        @apply mb-6 md:mb-0; // إعدادات المعلومات
 
-        h1{
-          @apply font-bold text-3xl mb-2.5;
+        h1 {
+          @apply font-bold text-3xl mb-2.5; // إعدادات عنوان المعلومات
         }
 
-        p{
-          @apply text-gray-500 max-w-xs leading-6 mb-2;
+        p {
+          @apply text-gray-500 max-w-xs leading-6 mb-2; // إعدادات وصف المعلومات
         }
       }
     }
 
-    .loyalty-points{
-      @apply text-sm text-gray-500;
+    .loyalty-points {
+      @apply text-sm text-gray-500; // إعدادات نقاط الولاء
 
-      .count-number{
-        @apply text-4xl text-primary font-bold ltr:ml-2.5 rtl:mr-2.5;
+      .count-number {
+        @apply text-4xl text-primary font-bold ltr:ml-2.5 rtl:mr-2.5; // إعدادات عدد النقاط
       }
     }
   }
 
-  &-star{
-    @apply absolute z-0 transform opacity-70;
+  &-star {
+    @apply absolute z-0 transform opacity-70; // إعدادات النجوم
 
-    i{
-      @apply text-gray-100 text-[400px];
+    i {
+      @apply text-gray-100 text-[400px]; // إعدادات أيقونة النجوم
     }
 
-    &--first{
-      @apply -right-24 -top-48 -rotate-45;
+    &--first {
+      @apply -right-24 -top-48 -rotate-45; // إعدادات النجمة الأولى
     }
 
-    &--second{
-      @apply -left-16 -bottom-40 -rotate-90;
+    &--second {
+      @apply -left-16 -bottom-40 -rotate-90; // إعدادات النجمة الثانية
     }
   }
 
-  .product-entry__image{
-      flex-shrink : unset;
+  .product-entry__image {
+    flex-shrink: unset; // إعدادات صورة المنتج
   }
 }
 
-.points-ways{
-  &__list{
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-8;
+// إعدادات طرق كسب النقاط
+.points-ways {
+  &__list {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-8; // إعدادات تخطيط قائمة طرق كسب النقاط
 
-    .way-item{
-      @apply flex flex-col bg-white w-full opacity-100 rounded-md shadow-default p-6;
+    .way-item {
+      @apply flex flex-col bg-white w-full opacity-100 rounded-md shadow-default p-6; // إعدادات عنصر طريقة كسب النقاط
 
-      &__icon{
-        @apply flex shrink-0 items-center justify-center relative h-12 w-12;
+      &__icon {
+        @apply flex shrink-0 items-center justify-center relative h-12 w-12; // إعدادات أيقونة طريقة كسب النقاط
 
-        span{
-          @apply absolute z-0 w-full h-full inset-0 rounded-full opacity-10
+        span {
+          @apply absolute z-0 w-full h-full inset-0 rounded-full opacity-10; // إعدادات الخلفية للرمز
         }
       }
 
-      &__content{
-        @apply flex flex-col justify-start;
+      &__content {
+        @apply flex flex-col justify-start; // إعدادات محتوى طريقة كسب النقاط
 
-        h4{
-          @apply font-bold text-xl break-all;
+        h4 {
+          @apply font-bold text-xl break-all; // إعدادات عنوان طريقة كسب النقاط
         }
 
-        p{
-          @apply text-sm text-gray-400;
+        p {
+          @apply text-sm text-gray-400; // إعدادات وصف طريقة كسب النقاط
         }
       }
 
-      &__action{
-        @apply mt-auto pt-4;
+      &__action {
+        @apply mt-auto pt-4; // إعدادات قسم الإجراءات
       }
     }
   }

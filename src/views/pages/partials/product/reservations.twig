@@ -1,15 +1,15 @@
 {#
-| Variable     | Type  | Description |
-|--------------|-------|-------------|
-| reservations | array |             |                                                                                                      |                                                                          |
+| المتغيرات                | النوع   | الوصف                     |
+|---------------------------|---------|---------------------------|
+| reservations              | مصفوفة  | قائمة الحجوزات           |
 #}
 <ul class="font-medium text-xs text-gray-600">
   {% for reservation in reservations %}
   <li class="py-1">
     <span class="text-unicode">
-      {{ reservation.day|date|number }}
+      {{ reservation.day|date|number }} <!-- عرض تاريخ الحجز -->
       {% if reservation.from_timestamp is not empty %}
-        ({{ reservation.from|number({'PM':'م', 'AM':'ص'}) }} - {{ reservation.to|number({'PM':'م', 'AM':'ص'}) }})
+        ({{ reservation.from|number({'PM':'م', 'AM':'ص'}) }} - {{ reservation.to|number({'PM':'م', 'AM':'ص'}) }}) <!-- عرض وقت الحجز -->
       {% endif %}
     </span>
   </li>

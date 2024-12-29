@@ -13,7 +13,7 @@ export default function toolTip() {
     element.classList.remove('visible');
   };
 
-  // Show the tooltip if the type is clickable
+  // إظهار التلميح إذا كان النوع قابل للنقر
   if (tooltipToggleClick.length) {
     tooltipToggleClick.forEach((element) => {
       element.addEventListener('click', (e) => {
@@ -23,7 +23,7 @@ export default function toolTip() {
     });
   }
 
-  // Show the tooltip if the type is hover or click on touch devices
+  // إظهار التلميح إذا كان النوع هو التحويم أو النقر على الأجهزة التي تعمل باللمس
   if (tooltipToggleHover.length) {
     tooltipToggleHover.forEach((element) => {
       if (isTouchDevice) {
@@ -43,7 +43,7 @@ export default function toolTip() {
     });
   }
 
-  // Hide the tooltip when the close button is clicked
+  // إخفاء التلميح عند النقر على زر الإغلاق
   if (closeTooltip.length) {
     closeTooltip.forEach(element => {
       element.addEventListener('click', (e) => {
@@ -53,7 +53,7 @@ export default function toolTip() {
     });
   }
 
-  // Hide the tooltip on window click
+  // إخفاء التلميح عند النقر في أي مكان في النافذة
   window.addEventListener('click', () => {
     tooltipToggleClick.forEach((element) => {
       hideTooltip(element);

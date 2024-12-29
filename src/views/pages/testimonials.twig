@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
 
-    {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
+    {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
     <nav class="breadcrumbs w-full py-5">
         <salla-breadcrumb></salla-breadcrumb>
     </nav>
@@ -23,7 +23,7 @@
                 </div>
             </div>
          
-            <salla-comments testimonials></salla-comments>
+            <salla-comments testimonials></salla-comments> {# قسم التعليقات والشهادات #}
 
         </div>
     </div>
@@ -31,5 +31,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script defer src="{{ 'testimonials.js' | asset }}"></script>
+<script defer src="{{ 'testimonials.js' | asset }}"></script> {# سكربت خاص بشهادات العملاء #}
 {% endblock %}

@@ -1,35 +1,35 @@
 {#
-| Variable                             | Type          | Description                                  |
-|--------------------------------------|---------------|----------------------------------------------|
-| page                                 | Page          |                                              |
-| page.title                           | string        |                                              |
-| page.slug                            | string        |                                              |
-| loyalty                              | Loyalty       |                                              |
-| loyalty.name                         | string        |                                              |
-| loyalty.description                  | string        |                                              |
-| loyalty.image                        | string        |                                              |
-| loyalty.promotion_title              | string        |                                              |
-| loyalty.promotion_description        | string        |                                              |
-| loyalty.points                       | Point[]       |                                              |
-| loyalty.points[].name                | string        |                                              |
-| loyalty.points[].description         | string        |                                              |
-| loyalty.points[].type                | string        | share, rating, order, profile                |
-| loyalty.points[].url                 | ?string       |                                              |
-| loyalty.points[].points              | int           |                                              |
-| loyalty.points[].icon                | string        |                                              |
-| loyalty.points[].color               | string        |                                              |
-| loyalty.prizes[]                     | PrizesGroup[] |                                              |
-| loyalty.prizes[].title               | string        |                                              |
-| loyalty.prizes[].type                | string        | free_product, coupon_discount, free_shipping |
-| loyalty.prizes[].items[]             | Prize[]       |                                              |
-| loyalty.prizes[].items[].id          | int           |                                              |
-| loyalty.prizes[].items[].name        | string        |                                              |
-| loyalty.prizes[].items[].description | string        |                                              |
-| loyalty.prizes[].items[].image       | string        |                                              |
-| loyalty.prizes[].items[].url         | ?string       |                                              |
-| loyalty.prizes[].items[].cost_points | int           |                                              |
-| user.loyalty_points                  | ?int          |                                              |
-| user.is_profile_completed            | bool          |                                              |
+| المتغيرات                             | النوع          | الوصف                                  |
+|--------------------------------------|---------------|----------------------------------------|
+| page                                 | صفحة          |                                        |
+| page.title                           | سلسلة        |                                        |
+| page.slug                            | سلسلة        |                                        |
+| loyalty                              | ولاء          |                                        |
+| loyalty.name                         | سلسلة        |                                        |
+| loyalty.description                  | سلسلة        |                                        |
+| loyalty.image                        | سلسلة        |                                        |
+| loyalty.promotion_title              | سلسلة        |                                        |
+| loyalty.promotion_description        | سلسلة        |                                        |
+| loyalty.points                       | نقاط[]       |                                        |
+| loyalty.points[].name                | سلسلة        |                                        |
+| loyalty.points[].description         | سلسلة        |                                        |
+| loyalty.points[].type                | سلسلة        | share, rating, order, profile          |
+| loyalty.points[].url                 | ?سلسلة       |                                        |
+| loyalty.points[].points              | عدد           |                                        |
+| loyalty.points[].icon                | سلسلة        |                                        |
+| loyalty.points[].color               | سلسلة        |                                        |
+| loyalty.prizes[]                     | مجموعة الجوائز[] |                                        |
+| loyalty.prizes[].title               | سلسلة        |                                        |
+| loyalty.prizes[].type                | سلسلة        | free_product, coupon_discount, free_shipping |
+| loyalty.prizes[].items[]             | جوائز[]       |                                        |
+| loyalty.prizes[].items[].id          | عدد           |                                        |
+| loyalty.prizes[].items[].name        | سلسلة        |                                        |
+| loyalty.prizes[].items[].description | سلسلة        |                                        |
+| loyalty.prizes[].items[].image       | سلسلة        |                                        |
+| loyalty.prizes[].items[].url         | ?سلسلة       |                                        |
+| loyalty.prizes[].items[].cost_points | عدد           |                                        |
+| user.loyalty_points                  | ?عدد          |                                        |
+| user.is_profile_completed            | بولياني       |                                        |
 #}
 {% extends "layouts.master" %}
 
@@ -39,10 +39,10 @@
         <div class="overlay h-full w-full bg-black opacity-50 absolute top-0 left-0"></div>
     </div>
     <div class="container space-y-8 lg:space-y-16">
-        {# Breadcrumbs #}
+        {# فتات الخبز #}
         <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
 
-        {# loyalty banner #}
+        {# لافتة الولاء #}
         <div class="loyalty__banner">
             <div class="loyalty__banner-inner">
                 <i class="sicon-star2 star-anime text-amber-400 text-7xl"></i>
@@ -66,12 +66,12 @@
                     </salla-loyalty>
                 </div>
             </div>
-            <!-- background big stars -->
+            <!-- نجوم كبيرة في الخلفية -->
             <div class="loyalty-star loyalty-star--first"><i class="sicon-star2"></i></div>
             <div class="loyalty-star loyalty-star--second"><i class="sicon-star2"></i></div>
         </div>
 
-        {# ways to get points #}
+        {# طرق كسب النقاط #}
         <section class="points-ways pt-6">
             <div class="s-block__title">
               <h2>{{ trans("pages.loyalty_program.ways_to_get_points") }}</h2>
@@ -110,7 +110,7 @@
                                             {{ point.url }}
                                         </h3>
                                     </div>
-                                {% elseif customer.is_profile_completed and point.type == 'profile' %}
+                                {% elseif user.is_profile_completed and point.type == 'profile' %}
                                     <div class="text-green-500 text-center border relative border-green-300 rounded-3xl bg-green-50 min-h-[34px] w-full pt-1 px-4">
                                         <i class="sicon-check-circle d-inline-block"></i>
                                         <span class="break-all">{{ trans('pages.loyalty_program.completed') }}</span>
@@ -131,19 +131,19 @@
             </div>
         </section>
 
-        {# 2-block:: prizes #}
+        {# الجوائز #}
         {% for prize_group in loyalty.prizes %}
             <div>
               <salla-slider 
                 type="carousel"
-                loop="{{prize_group.items|length < 4  ? 'false' : 'true'}}"
+                loop="{{ prize_group.items|length < 4  ? 'false' : 'true' }}"
                 block-title="{{ prize_group.title }}"
                 id="loyalty-slider-{{ prize_group.type }}">
                   <div slot="items">
                       {% for prize in prize_group.items %} 
                           <div class="slide--one-fourth">
                               <div class='product-entry flex-col'>
-                                  {% set img %}
+                                  {% set img %} 
                                       <img class="lazy sm:h-full w-full object-cover rounded-t-md"
                                           src="{{ 'images/s-empty.png' | cdn }}"
                                           data-src="{{ prize.image }}"
@@ -164,7 +164,7 @@
                                               {{ prize.name }}
                                           {% endif %}
                                       </h3>
-                                      <p class="text-sm leading-6 ">{{ prize.description }}</p>
+                                      <p class="text-sm leading-6">{{ prize.description }}</p>
                                   </div>
                                   {% if user.type == 'user' %}
                                       <div class="font-bold text-primary p-4 text-center border-t">

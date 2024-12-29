@@ -1,13 +1,13 @@
 {#
-| Variable        | Type       | Description                    |
-|-----------------|------------|--------------------------------|
-| products        | Products[] |                                |
-| position        | Int        | Sorting number start from zero |
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| products                      | منتج[]   | قائمة بالمنتجات                                                          |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
 #}
 <section class="s-block s-block--latest-products container mt-6 sm:mt-8">
     <div class="s-block__title">
-      <h2>{{ trans('blocks.home.latest_products') }}</h2>
+      <h2>{{ trans('blocks.home.latest_products') }}</h2> <!-- عنوان قسم المنتجات الأحدث -->
     </div>
     
-    <salla-products-list source="latest"></salla-products-list>
+    <salla-products-list source="latest"></salla-products-list> <!-- قائمة المنتجات الأحدث -->
 </section> 

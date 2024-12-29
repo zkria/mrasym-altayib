@@ -1,21 +1,21 @@
 {#
-| Variable          | Type                 | Description |
-|-------------------|----------------------|-------------|
-| page              | object               |             |
-| page.title        | string               |             |
-| page.slug         | string               |             |
-| orders[]          | Orders[] *Collection |             |
+| المتغيرات                | النوع                 | الوصف                     |
+|---------------------------|----------------------|---------------------------|
+| page                      | كائن                 |                           |
+| page.title                | سلسلة                | عنوان الصفحة             |
+| page.slug                 | سلسلة                | رابط الصفحة              |
+| orders[]                  | طلبات[] *مجموعة     | قائمة الطلبات            |
 #}
 {% extends "layouts.customer" %}
 {% block inner_content %}
     {% if orders|length %}
         {% hook 'customer:orders.index.items.start' %}
-          <salla-orders></salla-orders>
+          <salla-orders></salla-orders> <!-- مكون عرض الطلبات -->
         {% hook 'customer:orders.index.items.end' %}
     {% else %}
         <div class="no-content-placeholder">
-            <i class="sicon-packed-box icon"></i>
-            <p>{{ trans('pages.orders.non_orders') }}</p>
+            <i class="sicon-packed-box icon"></i> <!-- أيقونة عدم وجود طلبات -->
+            <p>{{ trans('pages.orders.non_orders') }}</p> <!-- رسالة توضح عدم وجود طلبات -->
         </div>
     {% endif %}
 {% endblock %}

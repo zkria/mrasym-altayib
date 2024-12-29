@@ -1,39 +1,40 @@
 class BasePage {
   constructor() {
+    // يمكن إضافة أي إعدادات أولية هنا
   }
 
   onReady() {
-    //
+    // يتم استدعاء هذا عند جاهزية الصفحة
   }
 
   registerEvents() {
-    //
+    // يتم استدعاء هذا لتسجيل الأحداث
   }
 
   /**
-   * To avoid loading unwanted classes, unless it's wanted page
+   * لتجنب تحميل الفئات غير المرغوب فيها، ما لم تكن الصفحة المطلوبة
    * @param {null|string[]} allowedPages
    * @return {*}
    */
   initiate(allowedPages) {
     if (allowedPages && !allowedPages.includes(salla.config.get('page.slug'))) {
-      return app.log(`The Class For (${allowedPages.join(',')}) Skipped.`);
+      return app.log(`تم تخطي الفئة (${allowedPages.join(',')})`);
     }
 
     this.onReady();
     this.registerEvents();
-    app.log(`The Class For (${allowedPages?.join(',') || '*'}) Loaded🎉`);
-  };
+    app.log(`تم تحميل الفئة (${allowedPages?.join(',') || '*'}) 🎉`);
+  }
 }
 
 /**
- * Because we merged multi classes into one file, there is no need to initiate all of them
+ * نظرًا لأننا دمجنا عدة فئات في ملف واحد، فلا حاجة لبدء تشغيل جميعها
  */
 BasePage.initiateWhenReady = function (allowedPages = null) {
   if (window.app?.status === 'ready') {
     (new this).initiate(allowedPages);
   } else {
-    document.addEventListener('theme::ready', () => (new this).initiate(allowedPages))
+    document.addEventListener('theme::ready', () => (new this).initiate(allowedPages));
   }
 }
 

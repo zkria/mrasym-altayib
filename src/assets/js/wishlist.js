@@ -3,27 +3,25 @@ import BasePage from './base-page';
 class Wishlist extends BasePage {
 
     onReady() {
-        // init wishlist icons in product cards
+        // تهيئة أيقونات قائمة الرغبات في بطاقات المنتجات
         salla.storage.get('salla::wishlist', []).forEach(id => this.toggleFavoriteIcon(id));
     }
 
     registerEvents() {
-
         salla.wishlist.event.onAdded((event, id) => this.toggleFavoriteIcon(id));
 
         salla.wishlist.event.onRemoved((response, id) => {
-
             this.toggleFavoriteIcon(id, false);
 
-            // just an animation when the item removed from wishlist page
+            // مجرد تأثير عند إزالة العنصر من صفحة قائمة الرغبات
             let item = document.querySelector('#wishlist-product-' + id);
 
-            if(!item){
+            if (!item) {
                 return;
             }
 
             app.anime(item, false)
-                .height(0)// -> from 'height' to '0',
+                .height(0) // -> من 'height' إلى '0'
                 .opacity(0)
                 .easing('easeInOutQuad')
                 .duration(300)
@@ -41,4 +39,5 @@ class Wishlist extends BasePage {
     }
 }
 
+// بدء الفئة عند جاهزية الصفحة
 Wishlist.initiateWhenReady();

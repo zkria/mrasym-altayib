@@ -1,22 +1,22 @@
 {#
-| Variable        | Type       | Description                                                      |
-|-----------------|------------|------------------------------------------------------------------|
-| display_all_url | ?string    | If it's existed, mean should show load more link to this url     |
-| title           | string     |                                                                  |
-| products        | Products[] |                                                                  |
-| position        | Int        | Sorting number start from zero                                   |
-| limit           | Int        | Number of products to be shown
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| display_all_url               | ?سلسلة   | إذا كانت موجودة، تعني أنه يجب عرض رابط "تحميل المزيد" إلى هذا الرابط   |
+| title                         | سلسلة    | عنوان القسم                                                              |
+| products                      | منتج[]   | قائمة بالمنتجات                                                          |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
+| limit                         | عدد صحيح | عدد المنتجات التي سيتم عرضها                                             |
 #}
 {% set is_vertical = theme.settings.get('vertical_fixed_products', true) %}
 <section class="s-block container">
     {% if title %}
       <div class="s-block__title">
         <div class="right-side">
-          <h2>{{ title }}</h2>
-          {# <p>عنوان فرعي توصيفي صغير</p> #}
+          <h2>{{ title }}</h2> <!-- عنوان القسم -->
+          {# <p>عنوان فرعي توصيفي صغير</p> #} <!-- تعليق على العنوان الفرعي -->
         </div>
         {% if display_all_url %}
-            <a href="{{ display_all_url }}" class="s-block__display-all">{{ trans('blocks.home.display_all') }} <i class="sicon-arrow-left"></i></a>
+            <a href="{{ display_all_url }}" class="s-block__display-all">{{ trans('blocks.home.display_all') }} <i class="sicon-arrow-left"></i></a> <!-- رابط "عرض الكل" -->
         {% endif %}
       </div>
     {% endif %}
@@ -25,9 +25,8 @@
       source="selected"
       limit="{{ limit }}"
       source-value="[{{ products|map((product) => product.id)|join(',') }}]"
-      class="{{is_vertical ? 'vertical-products' : 'horizontal-products'}}"
-      {{is_vertical ? '' : 'horizontal-cards'}}
-      >
+      class="{{ is_vertical ? 'vertical-products' : 'horizontal-products' }}"
+      {{ is_vertical ? '' : 'horizontal-cards' }}>
     </salla-products-list>
 </section>
 

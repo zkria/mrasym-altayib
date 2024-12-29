@@ -1,93 +1,113 @@
+// إعدادات أنماط التلميحات
 .tooltip {
   &-content {
-    position: absolute;
-    transform: translate(82px, -120px);
-    background: #fff;
-    padding: 15px 15px 15px 36px;
-    text-align: right;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s;
+    position: absolute; // تعيين الموضع المطلق
+    transform: translate(82px, -120px); // تعيين موضع التلميح
+    background: #fff; // لون خلفية التلميح
+    padding: 15px 15px 15px 36px; // إضافة حشوة داخلية
+    text-align: right; // محاذاة النص إلى اليمين
+    visibility: hidden; // إخفاء التلميح
+    opacity: 0; // تعيين الشفافية إلى 0
+    transition: all 0.3s; // تأثير الانتقال
 
     &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      z-index: -1;
-      left: auto;
-      background: #fff;
-      width: 20px;
-      height: 20px;
-      transform: rotate(45deg);
-      border-radius: 2px;
-      @apply shadow-md;
-      left: 43%;
-      bottom: -7px;
+      content: ""; // محتوى فارغ
+      display: block; // تعيين العرض ككتلة
+      position: absolute; // تعيين الموضع المطلق
+      z-index: -1; // تعيين مستوى الز-index
+      left: auto; // تعيين الموضع الأيسر
+      background: #fff; // لون خلفية السهم
+      width: 20px; // عرض السهم
+      height: 20px; // ارتفاع السهم
+      transform: rotate(45deg); // تدوير السهم
+      border-radius: 2px; // تعيين الزوايا المدورة
+      @apply shadow-md; // إضافة ظل
+      left: 43%; // تعيين الموضع الأيسر للسهم
+      bottom: -7px; // تعيين الموضع السفلي للسهم
     }
+
     .icon-trigger & {
-      background-color: var(--color-primary);
-      color: var(--color-primary-reverse);
-      padding: 10px;
-      width: 140px;
-      line-height: 1;
-      text-align: center;
+      background-color: var(--color-primary); // تعيين لون الخلفية عند التفعيل
+      color: var(--color-primary-reverse); // تعيين لون النص عند التفعيل
+      padding: 10px; // إضافة حشوة
+      width: 140px; // تعيين عرض التلميح
+      line-height: 1; // تعيين ارتفاع السطر
+      text-align: center; // محاذاة النص إلى المركز
+
       @media (max-width: 991px) {
-        width: 110px;
+        width: 110px; // تعديل العرض في الشاشات الصغيرة
       }
+
       &:after {
-        background-color: var(--color-primary);
+        background-color: var(--color-primary); // تعيين لون السهم عند التفعيل
       }
     }
-    
+
+    // إعدادات الاتجاه من اليمين إلى اليسار
     [dir="rtl"] .icon-trigger.mobile-shifted & {
-      transform: translate(53px, -73px);
+      transform: translate(53px, -73px); // تعديل موضع التلميح
       @media (max-width: 991px) {
-        transform: translate(70px, -90px);
+        transform: translate(70px, -90px); // تعديل الموضع في الشاشات الصغيرة
       }
+
       &:after {
         @media (max-width: 991px) {
-          left: 13%;
+          left: 13%; // تعديل موضع السهم في الشاشات الصغيرة
         }
       }
     }
+
+    // إعدادات الاتجاه من اليسار إلى اليمين
     [dir="ltr"] .icon-trigger.mobile-shifted & {
-      transform: translate(-53px, -75px);
+      transform: translate(-53px, -75px); // تعديل موضع التلميح
       @media (max-width: 991px) {
-        transform: translate(-70px, -90px);
+        transform: translate(-70px, -90px); // تعديل الموضع في الشاشات الصغيرة
       }
+
       &:after {
         @media (max-width: 991px) {
-          left: 69%;
+          left: 69%; // تعديل موضع السهم في الشاشات الصغيرة
         }
       }
     }
+
+    // عرض التلميح
     .visible & {
-      visibility: visible;
-      opacity: 1;
-      transform: translate(82px, -110px);
+      visibility: visible; // جعل التلميح مرئيًا
+      opacity: 1; // تعيين الشفافية إلى 1
+      transform: translate(82px, -110px); // تعديل موضع التلميح
     }
+
+    // إعدادات الاتجاه من اليمين إلى اليسار عند العرض
     [dir="rtl"] .icon-trigger.visible & {
-      transform: translate(53px, -63px);
+      transform: translate(53px, -63px); // تعديل موضع التلميح
     }
+
+    // إعدادات الاتجاه من اليسار إلى اليمين عند العرض
     [dir="ltr"] .icon-trigger.visible & {
-      transform: translate(-54px, -65px);
+      transform: translate(-54px, -65px); // تعديل موضع التلميح
     }
+
+    // إعدادات الاتجاه من اليمين إلى اليسار عند التفعيل
     [dir="rtl"] .icon-trigger.mobile-shifted.visible & {
       @media (max-width: 991px) {
-        transform: translate(70px, -80px);
+        transform: translate(70px, -80px); // تعديل الموضع في الشاشات الصغيرة
       }
-    } 
+    }
+
+    // إعدادات الاتجاه من اليسار إلى اليمين عند التفعيل
     [dir="ltr"] .icon-trigger.mobile-shifted.visible & {
       @media (max-width: 991px) {
-        transform: translate(-70px, -80px);
+        transform: translate(-70px, -80px); // تعديل الموضع في الشاشات الصغيرة
       }
     }
   }
 }
 
+// إعدادات زر إغلاق التلميح
 .close-tooltip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 9px 7px !important;
+  position: absolute; // تعيين الموضع المطلق
+  top: 0; // تعيين الموضع العلوي
+  left: 0; // تعيين الموضع الأيسر
+  padding: 9px 7px !important; // إضافة حشوة
 }

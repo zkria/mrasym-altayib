@@ -9,13 +9,13 @@ class NavigationMenu extends HTMLElement {
                 return salla.api.component.getMenus()
                 .then(({ data }) => {
                     this.menus = data;
-                    return this.render()
+                    return this.render();
                 }).catch((error) => salla.logger.error('salla-menu::Error fetching menus', error));
             });
     }
 
     /** 
-    * Check if the menu has children
+    * التحقق مما إذا كان للقائمة أطفال
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -24,7 +24,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * Check if the menu has products
+    * التحقق مما إذا كانت القائمة تحتوي على منتجات
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -33,18 +33,18 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * Get the classes for desktop menu
+    * الحصول على الفئات لقائمة سطح المكتب
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
     */
     getDesktopClasses(menu, isRootMenu) {
         return `!hidden lg:!block ${isRootMenu ? 'root-level lg:!inline-block' : 'relative'} ${menu.products ? ' mega-menu' : ''}
-        ${this.hasChildren(menu) ? ' has-children' : ''}`
+        ${this.hasChildren(menu) ? ' has-children' : ''}`;
     }
 
     /**
-    * Get the mobile menu
+    * الحصول على قائمة الجوال
     * @param {Object} menu
     * @param {String} displayAllText
     * @returns {String}
@@ -75,7 +75,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * Get the desktop menu
+    * الحصول على قائمة سطح المكتب
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
@@ -101,7 +101,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * Get the menus
+    * الحصول على القوائم
     * @returns {String}
     */
     getMenus() {
@@ -112,7 +112,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * Render the header menu
+    * عرض قائمة الرأس
     */
     render() {
         this.innerHTML =  `

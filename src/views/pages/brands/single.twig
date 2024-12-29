@@ -1,21 +1,21 @@
 {#
-| Variable          | Type                 | Description                                               |
-|-------------------|----------------------|-----------------------------------------------------------|
-| page              | object               |                                                           |
-| page.title        | string               |                                                           |
-| page.slug         | string               |                                                           |
-| brand             | Brand *              |                                                           |
-| brand.id          | int                  |                                                           |
-| brand.name        | string               |                                                           |
-| brand.url         | string               |                                                           |
-| brand.logo        | string               |                                                           |
-| brand.banner      | ?string              | Null when is not set, or merchant doesn't want to show it |
-| brand.description | string               |                                                           |
+| المتغيرات                | النوع                 | الوصف                                               |
+|---------------------------|----------------------|-----------------------------------------------------|
+| page                      | كائن                 |                                                     |
+| page.title                | سلسلة                | عنوان الصفحة                                       |
+| page.slug                 | سلسلة                | رابط الصفحة                                        |
+| brand                     | علامة تجارية *       |                                                     |
+| brand.id                  | عدد صحيح             | معرف العلامة التجارية                               |
+| brand.name                | سلسلة                | اسم العلامة التجارية                                |
+| brand.url                 | سلسلة                | رابط العلامة التجارية                               |
+| brand.logo                | سلسلة                | رابط شعار العلامة التجارية                          |
+| brand.banner              | ?سلسلة              | null عند عدم تعيينه، أو إذا لم يرغب التاجر في عرضه |
+| brand.description         | سلسلة                | وصف العلامة التجارية                                |
 #}
 {% extends "layouts.master" %}
 {% block content %}
 
-  {# Brand banner #} 
+  {# لافتة العلامة التجارية #} 
   {% if brand.banner %} 
         <div class="brand-page__banner">
             <img loading="eager" width="1200" height="300" class="w-full max-h-[300px] object-cover rounded-md bg-gray-100" src="{{ brand.banner }}" alt="{{ brand.name }}"/>
@@ -23,13 +23,13 @@
     {% endif %}
 
     <div class="container">
-        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
+        {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
         <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
         {% hook 'brands:single.details.start' %}
    
-        {# brand header #}
+        {# رأس العلامة التجارية #}
         <header class="flex flex-col md:flex-row items-center md:items-start text-center rtl:md:text-right ltr:md:text-left mt-2 mb-12 md:mb-20">
             <img class="rounded-md w-40 h-24 object-contain shadow-md p-4 bg-white lazy shrink-0" data-src="{{ brand.logo }}" src="{{ 'images/s-empty.png' | cdn }}" alt="{{ brand.name }}">
             <div class="px-5 pt-3 rtl:text-right">

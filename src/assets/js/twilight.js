@@ -1,17 +1,17 @@
 /**\
- * Salla backend will take care about twilight injecting into your theme pages.
- * This file just for IDE purpose, and it shouldn't be in webpack bundle output
+ * سيتولى نظام سلا backend عملية حقن Twilight في صفحات الثيم الخاصة بك.
+ * هذا الملف مخصص فقط لأغراض IDE، ولا ينبغي أن يكون في مخرجات حزمة webpack.
  *
- * 🚨 include this file in your bundle could case unexpected issues
+ * 🚨 تضمين هذا الملف في حزمة قد يتسبب في مشاكل غير متوقعة.
  *
- * If you are using webpack make sure to add it exclude rules in webpack.config.js
+ * إذا كنت تستخدم webpack، تأكد من إضافة قواعد الاستبعاد في webpack.config.js.
  *
  * {
  *     test: /\.js$/,
  *     exclude: [
- *         ....
+ *         .... 
  *         asset('js/twilight.js')
- *         ....
+ *         .... 
  *     ]
  * };
  *

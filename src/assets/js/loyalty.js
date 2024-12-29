@@ -35,8 +35,9 @@ class Loyalty extends BasePage {
             delay: function (el, i) {
                 return i * 100;
             },
-        }, '-=3200')
+        }, '-=3200');
     }
 }
 
+// بدء الفئة عند جاهزية الصفحة
 Loyalty.initiateWhenReady(['loyalty']);

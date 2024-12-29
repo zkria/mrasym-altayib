@@ -117,7 +117,7 @@ export default class AppHelpers {
   }
 
   /**
-   * 💡 you can pass multi classes: this.removeClass(element, 'class_1', 'class_2', ...)
+   * 💡 يمكنك تمرير عدة فئات: this.removeClass(element, 'class_1', 'class_2', ...)
    * @param {string|HTMLElement} element
    * @param {string} className
    * @return {AppHelpers}
@@ -128,7 +128,7 @@ export default class AppHelpers {
   }
 
   /**
-   * 💡 you can pass multi classes: this.addClass(element, 'class_1', 'class_2', ...)
+   * 💡 يمكنك تمرير عدة فئات: this.addClass(element, 'class_1', 'class_2', ...)
    * @param {string|HTMLElement} element
    * @param {string} className
    * @return {AppHelpers}

@@ -1,6 +1,6 @@
 {
     "name": {
-        "ar": "mtaceym",
+        "ar": "مراسيم  الطيب",
         "en": "mtaceym"
     },
     "repository": "https://github.com/zkria/mtaceym",
@@ -883,7 +883,7 @@
     ],
     "support_url": "https://example.com",
     "description": {
-        "ar": "",
-        "en": ""
+        "ar": null,
+        "en": null
     }
 }

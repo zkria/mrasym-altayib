@@ -1,75 +1,76 @@
+// إعدادات مخصصة لمكون SweetAlert
 .swal2-container {
-  @media (max-width: 640px){
-    width: 100% !important;
+  @media (max-width: 640px) {
+    width: 100% !important; // تعيين العرض في الشاشات الصغيرة
   }
   
-	.swal2-popup {
-		&.swal2-toast {
-			max-width: 300px;
-			padding: 0 10px 5px;
-			box-shadow: 0 1px 3px 1px #00000012;
+  .swal2-popup {
+    &.swal2-toast {
+      max-width: 300px; // تعيين الحد الأقصى للعرض
+      padding: 0 10px 5px; // تعيين الحشوة
+      box-shadow: 0 1px 3px 1px #00000012; // تعيين ظل العنصر
 
-      @media (max-width: 640px){
-        max-width: 100%;
+      @media (max-width: 640px) {
+        max-width: 100%; // تعيين الحد الأقصى للعرض في الشاشات الصغيرة
       }
 
-			.swal2 {
-				&-icon {
-          @apply rtl:ml-1 ltr:mr-1 rtl:-mr-1.5 ltr:-ml-1.5 scale-50 animate-none;
+      .swal2 {
+        &-icon {
+          @apply rtl:ml-1 ltr:mr-1 rtl:-mr-1.5 ltr:-ml-1.5 scale-50 animate-none; // إعدادات الأيقونة
 
-					&.swal2-success {
-						.swal2-success-ring {
-							@apply border-white;
-						}
+          &.swal2-success {
+            .swal2-success-ring {
+              @apply border-white; // تعيين لون الحدود
+            }
 
-						.swal2-success-line-tip,
-						.swal2-success-line-long {
-							@apply bg-white;
-						}
-					}
-				}
+            .swal2-success-line-tip,
+            .swal2-success-line-long {
+              @apply bg-white; // تعيين لون الخلفية
+            }
+          }
+        }
 
-				&-title {
-          @apply text-sm m-0 py-2 leading-6;
-				}
+        &-title {
+          @apply text-sm m-0 py-2 leading-6; // إعدادات عنوان التنبيه
+        }
 
-				&-close {
-          @apply rtl:mr-2 ltr:ml-2 scale-75 shrink-0;
-				}
+        &-close {
+          @apply rtl:mr-2 ltr:ml-2 scale-75 shrink-0; // إعدادات زر الإغلاق
+        }
 
-				&-timer-progress-bar-container {
-					height: 2px;
-				}
+        &-timer-progress-bar-container {
+          height: 2px; // تعيين ارتفاع حاوية شريط التقدم
+        }
 
-				&-timer-progress-bar {
-					background: #ddd;
-				}
-			}
+        &-timer-progress-bar {
+          background: #ddd; // تعيين لون شريط التقدم
+        }
+      }
 
-			&.swal2-icon-error {
-				@apply bg-red-400;
+      &.swal2-icon-error {
+        @apply bg-red-400; // تعيين لون الخلفية لرمز الخطأ
 
-				* {
-					@apply text-white;
-				}
+        * {
+          @apply text-white; // تعيين لون النص
+        }
 
-				.swal2-error {
-					@apply border-white;
-				}
+        .swal2-error {
+          @apply border-white; // تعيين لون الحدود
+        }
 
-				.swal2-x-mark-line-right,
-				.swal2-x-mark-line-left {
-					@apply bg-white;
-				}
-			}
+        .swal2-x-mark-line-right,
+        .swal2-x-mark-line-left {
+          @apply bg-white; // تعيين لون الخلفية لخطوط علامة الخطأ
+        }
+      }
 
-			&.swal2-icon-success {
-				@apply bg-green-500;
+      &.swal2-icon-success {
+        @apply bg-green-500; // تعيين لون الخلفية لرمز النجاح
 
-				* {
-					@apply text-white;
-				}
-			}
-		}
-	}
+        * {
+          @apply text-white; // تعيين لون النص
+        }
+      }
+    }
+  }
 }

@@ -2,7 +2,7 @@ import BasePage from './base-page';
 
 class Cart extends BasePage {
     onReady() {
-        // keep update the dom base in the events
+        // تحديث DOM بناءً على الأحداث
         salla.event.cart.onUpdated(data => this.updateCartPageInfo(data));
 
         app.watchElements({
@@ -45,37 +45,37 @@ class Cart extends BasePage {
             if (isValid) {
                 /** @type HTMLSallaButtonElement */
                 let btn = event.currentTarget;
-                salla.config.get('user.type') == 'guest' ? salla.cart.submit() : btn.load().then(() => salla.cart.submit())
+                salla.config.get('user.type') === 'guest' ? salla.cart.submit() : btn.load().then(() => salla.cart.submit());
             }
         });
     }
 
     updateCartOptions(options) {
-      if (!options || !options.length) return;
+        if (!options || !options.length) return;
 
-      const arrayTwoId = options.map((item) => (item.id));
+        const arrayTwoId = options.map((item) => (item.id));
 
-      document.querySelectorAll('.cart-options form')?.forEach((form) => {
-        if (!arrayTwoId.includes(parseInt(form.id.value))) {
-          form.remove();
-        }
-      })
+        document.querySelectorAll('.cart-options form')?.forEach((form) => {
+            if (!arrayTwoId.includes(parseInt(form.id.value))) {
+                form.remove();
+            }
+        });
     }
     
     /**
      * @param {import("@salla.sa/twilight/types/api/cart").CartSummary} cartData
      */
     updateCartPageInfo(cartData) {
-        //if item deleted & there is no more items, just reload the page
+        // إذا تم حذف عنصر ولم يتبقى عناصر، أعد تحميل الصفحة
         if (!cartData.count) {
-            // clear cart options from the dom before page reload
+            // مسح خيارات السلة من DOM قبل إعادة تحميل الصفحة
             document.querySelector('.cart-options')?.remove();
             return window.location.reload();
         }
 
-        // update the dom for cart options
+        // تحديث DOM لخيارات السلة
         this.updateCartOptions(cartData?.options);
-        // update each item data
+        // تحديث بيانات كل عنصر
         cartData.items?.forEach(item => this.updateItemInfo(item));
 
         app.subTotal.innerText = salla.money(cartData.sub_total);
@@ -106,10 +106,10 @@ class Cart extends BasePage {
      * @param {import("@salla.sa/twilight/types/api/cart").CartItem} item
      */
     updateItemInfo(item) {
-        // lets get the elements for this item
+        // الحصول على العناصر الخاصة بهذا العنصر
         let cartItem = document.querySelector('#item-' + item.id);
         if (!cartItem) {
-            salla.log(`Can't get the cart item dom for ${item.id}!`);
+            salla.log(`لا يمكن الحصول على عنصر السلة DOM لـ ${item.id}!`);
             return;
         }
         let totalElement = cartItem.querySelector('.item-total'),
@@ -137,7 +137,6 @@ class Cart extends BasePage {
         }
     }
 
-
     //=================== Coupon Method ========================//
     initiateCoupon() {
         if (!app.couponCodeInput) {
@@ -151,7 +150,7 @@ class Cart extends BasePage {
         });
 
         app.onClick(app.couponBtn, event => {
-            //if it's remove coupon, will have `btn--danger` class
+            // إذا كان زر إزالة القسيمة، سيكون لديه فئة `btn--danger`
             let hasCoupon = app.couponBtn.classList.contains('btn--danger');
             /** @type HTMLSallaButtonElement */
             let btn = event.currentTarget;
