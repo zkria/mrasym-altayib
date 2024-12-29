@@ -1,9 +1,9 @@
 {
     "name": {
-        "ar": "مراسيم  الطيب",
-        "en": "mtaceym"
+        "ar": "مراسيم الطيب",
+        "en": "mrasym-altayib"
     },
-    "repository": "https://github.com/zkria/mtaceym",
+    "repository": "https://github.com/zkria/mrasym-altayib",
     "author_email": "mrasymaltyb2@gmail.com",
     "features": [
         "mega-menu",
@@ -881,7 +881,7 @@
             ]
         }
     ],
-    "support_url": "https://example.com",
+    "support_url": "",
     "description": {
         "ar": null,
         "en": null
