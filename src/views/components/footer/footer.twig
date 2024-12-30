@@ -1,85 +1,61 @@
 <footer class="store-footer">
 	<div aria-label="footer" class="store-footer__inner">
-		<div class="container grid grid-col-1 lg:grid-cols-6 gap-8 lg:gap-6">
-			<div class="lg:col-span-2 rtl:lg:pl-20 ltr:lg:pr-20">
-				<a href="{{ link('/') }}" class="flex items-center m-0">
-					<h3>{{ store.name }}</h3> <!-- اسم المتجر -->
-				</a>
-				{% if store.description %}
-					<p class="max-w-sm leading-6 mb-6">
-						{{ store.description|raw }} <!-- وصف المتجر -->
-					</p>
-				{% endif %}
-
-				<div class="hidden lg:block">
-					<div class="social-icons">
-						<ul class="icons first">
-							<li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-							<li><a href="#"><span class="fab fa-twitter"></span></a></li>
-							<li><a href="#"><span class="fab fa-instagram"></span></a></li>
-							<li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-							<li><a href="#"><span class="fab fa-github"></span></a></li>
-						</ul>
-						<ul class="icons second">
-							<li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-							<li><a href="#"><span class="fab fa-twitter"></span></a></li>
-							<li><a href="#"><span class="fab fa-instagram"></span></a></li>
-							<li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-							<li><a href="#"><span class="fab fa-github"></span></a></li>
-						</ul>
-					</div>
+		<div class="container grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
+			<!-- القسم الأيسر -->
+			<div class="lg:col-span-1 rtl:lg:pl-20 ltr:lg:pr-20">
+				<h3>تطبيق FAILET</h3>
+				<div class="app-icons">
+					<a href="#"><img src="path/to/google-play-icon.png" alt="Google Play"></a>
+					<a href="#"><img src="path/to/app-store-icon.png" alt="App Store"></a>
 				</div>
-
-          {# رقم الضريبة #}
-          {% if store.settings.tax.number %}
-            <div class="flex rtl:space-x-reverse space-x-2 items-end">
-              {% if store.settings.tax.certificate %}
-                <a class="load-img-onclick" data-modal-id="modal-value-tax" href="#/" alt="{{ store.settings.tax.number }}">
-                  <img width="100%" height="100%" src="{{ 'images/s-empty.png' | cdn }}" data-src="{{ 'images/tax.png' | cdn(70,70) }}" class="lazy w-10 rounded-sm hover:opacity-80 transition-opacity" alt="value added tax">
-                </a>
-              {% endif %}
-              <div>
-                <p class="text-sm text-text-grey mb-1">{{ trans('common.elements.tax_number') }}</p> <!-- نص رقم الضريبة -->
-                <b class="text-sm">{{ store.settings.tax.number }}</b> <!-- عرض رقم الضريبة -->
-              </div>
-            </div>
-
-            {% if store.settings.tax.certificate %}
-              <salla-modal sub-title-first sub-title="{{ trans('common.elements.tax_number') }}" modal-title="{{ store.settings.tax.number }}" id="modal-value-tax">
-                <div class="flex justify-center max-w-full">
-                  <img class="w-full" loading="lazy" 
-                  src="{{ 'images/s-empty.png' | cdn }}" 
-                  data-src="{{ store.settings.tax.certificate }}" 
-                  alt="{{ store.settings.tax.number }}"/> <!-- شهادة الضريبة -->
-                </div>
-              </salla-modal>
-            {% endif %}
-          {% endif %}
-        </div>
-
-			<div>
-				<h3>{{ trans('blocks.footer.pages_links') }}</h3> <!-- روابط الصفحات -->
-				<salla-menu source="footer"></salla-menu> <!-- قائمة الروابط -->
-			</div>
-
-			<div>
-				<salla-contacts></salla-contacts> <!-- معلومات الاتصال -->
-
-				<div class="lg:hidden contact-social">
-					<salla-social></salla-social> <!-- أيقونات التواصل الاجتماعي في الشاشات الصغيرة -->
+				<div class="badge">
+					<span>حساب المنشأة</span>
+					<span>311041260200003</span>
+				</div>
+				<div class="payment-icons">
+					<img src="path/to/visa-icon.png" alt="Visa">
+					<img src="path/to/mastercard-icon.png" alt="Mastercard">
 				</div>
 			</div>
 
-			<salla-apps-icons class="lg:col-span-2 rtl:lg:pr-20 ltr:lg:pl-20"></salla-apps-icons> <!-- أيقونات التطبيقات -->
+			<!-- القسم الأوسط -->
+			<div class="lg:col-span-1">
+				<h3>خدمة العملاء</h3>
+				<div class="contact-icons">
+					<a href="tel:123456789"><img src="path/to/phone-icon.png" alt="Phone"></a>
+					<a href="tel:123456789"><img src="path/to/mobile-icon.png" alt="Mobile"></a>
+					<a href="https://wa.me/123456789"><img src="path/to/whatsapp-icon.png" alt="WhatsApp"></a>
+				</div>
+			</div>
 
+			<!-- القسم الأيمن -->
+			<div class="lg:col-span-1">
+				<h3>روابط تهمك</h3>
+				<ul class="important-links">
+					<li><a href="#">شروط الاستخدام</a></li>
+					<li><a href="#">سياسة الخصوصية</a></li>
+					<li><a href="#">الخدمات</a></li>
+					<li><a href="#">سياسة الإرجاع</a></li>
+					<li><a href="#">سياسة الضمان</a></li>
+				</ul>
+				<div class="brand-logo">
+					<img src="path/to/logo.png" alt="FAILET Logo">
+					<p>وصف مختصر عن العلامة التجارية في عالم الساعات والإكسسوارات.</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div class="md:flex items-center justify-between py-4 container text-center">
-		<span class="text-sm copyright-text">{% hook copyright %}</span> <!-- نص حقوق الطبع والنشر -->
-		<salla-payments></salla-payments> <!-- معلومات الدفع -->
+		<span class="text-sm copyright-text">{% hook copyright %}</span>
+		<div class="payment-methods">
+			<img src="path/to/apple-pay-icon.png" alt="Apple Pay">
+			<img src="path/to/visa-icon.png" alt="Visa">
+			<img src="path/to/mastercard-icon.png" alt="Mastercard">
+			<!-- أضف أيقونات الدفع الأخرى هنا -->
+		</div>
+		<div class="verification-badge">
+			<img src="path/to/verification-badge.png" alt="Verification Badge">
+		</div>
 	</div>
-</div>
-
-<span class="hidden bottom-2 rtl:pl-24 ltr:pr-24 md:grid-cols-3"></span>
 </footer>

@@ -40,7 +40,13 @@
       </div>
     </div>
   </div>
+
+  {# القائمة الجانبية #}
+  <div class="sidebar hidden">
+    <custom-main-menu class="custom-main-menu"></custom-main-menu>
+  </div>
 </header>
+
 {% if store.scope %}
     <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes> <!-- نطاقات المتجر -->
 {% endif %}
@@ -48,8 +54,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.sidebar-toggle').addEventListener('click', function() {
-      const mainMenu = document.querySelector('custom-main-menu');
-      mainMenu.classList.toggle('hidden');
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('hidden');
       console.log('زر القائمة تم الضغط عليه');
     });
   });

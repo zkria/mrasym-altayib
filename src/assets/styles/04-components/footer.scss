@@ -1,50 +1,110 @@
-// إعدادات تذييل المتجر
+/* إعدادات تذييل المتجر */
 .store-footer {
-  @apply relative bg-darker text-white mt-8 sm:mt-16; // إعدادات الخلفية والنص
-
-  a {
-    @apply transition-opacity hover:opacity-75; // تأثير الانتقال على الروابط
-  }
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
 
   &__inner {
-    @apply bg-dark py-8 lg:py-16 border-b border-dashed border-b-white/10; // إعدادات الحاوية الداخلية
-  }  
+    background-color: #444;
+    padding: 40px 0;
+    border-bottom: 1px dashed #555;
+  }
 
   h3 {
-    @apply text-lg font-bold mb-3 lg:mb-5; // إعدادات عنوان القسم
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
   }
 
-  .social-link {
-    @apply border rounded-full w-8 h-8 justify-center flex items-center hover:opacity-75 transition duration-300 text-sm; // إعدادات روابط الشبكات الاجتماعية
+  .app-icons a img,
+  .payment-icons img,
+  .contact-icons a img,
+  .payment-methods img,
+  .verification-badge img {
+    width: 40px;
+    margin-right: 10px;
   }
 
-  .contact-social {
-    @apply mt-5 pt-5 border-t border-white/10; // إعدادات قسم التواصل الاجتماعي
+  .badge {
+    background-color: #089285;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
 
-    ul {
-      @apply mb-0; // إزالة الهوامش السفلية للقائمة
+  .important-links {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+        transition: opacity 0.3s;
+
+        &:hover {
+          opacity: 0.75;
+        }
+      }
     }
   }
 
-  // إعدادات الوضع الفاتح
-  .footer-is-light & {
-    @apply bg-gray-50 text-gray-700; // إعدادات الخلفية والنص في الوضع الفاتح
-
-    .store-footer__inner {
-      @apply bg-gray-100 border-b-gray-200; // إعدادات الحاوية الداخلية في الوضع الفاتح
+  .brand-logo {
+    img {
+      width: 100px;
+      margin-top: 20px;
     }
 
-    .social-link {
-      @apply border-gray-300; // إعدادات حدود روابط الشبكات الاجتماعية في الوضع الفاتح
-    }
-
-    .contact-social {
-      @apply border-gray-100; // إعدادات حدود قسم التواصل الاجتماعي في الوضع الفاتح
+    p {
+      margin-top: 10px;
+      font-size: 0.875rem;
     }
   }
-}
 
-// إعدادات نص حقوق النشر
-.copyright-text p {
-  @apply text-gray-700; // إعدادات لون النص
+  .payment-methods img {
+    width: 50px;
+    margin-right: 10px;
+  }
+
+  .verification-badge img {
+    width: 50px;
+  }
+
+  @media (max-width: 768px) {
+    &__inner {
+      text-align: center;
+    }
+
+    .app-icons a img,
+    .payment-icons img,
+    .contact-icons a img,
+    .payment-methods img,
+    .verification-badge img {
+      width: 30px;
+      margin-right: 5px;
+    }
+
+    .badge {
+      margin-top: 20px;
+    }
+
+    .important-links li {
+      margin-bottom: 5px;
+    }
+
+    .brand-logo img {
+      width: 80px;
+    }
+
+    .payment-methods img {
+      width: 40px;
+    }
+
+    .verification-badge img {
+      width: 40px;
+    }
+  }
 }
