@@ -1,110 +1,49 @@
-/* إعدادات تذييل المتجر */
+
 .store-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 20px 0;
+  @apply relative bg-darker text-white mt-8 sm:mt-16;
 
-  &__inner {
-    background-color: #444;
-    padding: 40px 0;
-    border-bottom: 1px dashed #555;
+  a{
+    @apply transition-opacity hover:opacity-75;
   }
 
-  h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+  &__inner{
+    @apply bg-dark py-8 lg:py-16 border-b border-dashed border-b-white/10;
+  }  
+
+  h3{
+    @apply text-lg font-bold mb-3 lg:mb-5;
   }
 
-  .app-icons a img,
-  .payment-icons img,
-  .contact-icons a img,
-  .payment-methods img,
-  .verification-badge img {
-    width: 40px;
-    margin-right: 10px;
+  .social-link {
+    @apply border rounded-full w-8 h-8 justify-center flex items-center hover:opacity-75 transition duration-300 text-sm
   }
 
-  .badge {
-    background-color: #089285;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
+  .contact-social{
+    @apply mt-5 pt-5 border-t border-white/10;
 
-  .important-links {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 10px;
-
-      a {
-        color: #fff;
-        text-decoration: none;
-        transition: opacity 0.3s;
-
-        &:hover {
-          opacity: 0.75;
-        }
-      }
+    ul {
+      @apply mb-0;
     }
   }
 
-  .brand-logo {
-    img {
-      width: 100px;
-      margin-top: 20px;
+  .footer-is-light & {
+    @apply bg-gray-50 text-gray-700;
+
+    .store-footer__inner {
+      @apply bg-gray-100 border-b-gray-200;
     }
 
-    p {
-      margin-top: 10px;
-      font-size: 0.875rem;
-    }
-  }
-
-  .payment-methods img {
-    width: 50px;
-    margin-right: 10px;
-  }
-
-  .verification-badge img {
-    width: 50px;
-  }
-
-  @media (max-width: 768px) {
-    &__inner {
-      text-align: center;
+    .social-link {
+      @apply border-gray-300;
     }
 
-    .app-icons a img,
-    .payment-icons img,
-    .contact-icons a img,
-    .payment-methods img,
-    .verification-badge img {
-      width: 30px;
-      margin-right: 5px;
-    }
-
-    .badge {
-      margin-top: 20px;
-    }
-
-    .important-links li {
-      margin-bottom: 5px;
-    }
-
-    .brand-logo img {
-      width: 80px;
-    }
-
-    .payment-methods img {
-      width: 40px;
-    }
-
-    .verification-badge img {
-      width: 40px;
+    .contact-social{
+      @apply border-gray-100;
     }
   }
+}
+
+
+.copyright-text p{
+  @apply text-gray-700;
 }

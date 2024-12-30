@@ -1,0 +1,16 @@
+{#
+| المتغير                     | النوع          | الوصف                                       |
+|-----------------------------|---------------|---------------------------------------------|
+| advertisement               | إعلان         |                                             |
+| advertisement.id            | int           | معرف الإعلان                               |
+| advertisement.icon          | string        | فئة CSS                                    |
+| advertisement.title         | string        | عنوان الإعلان                              |
+| advertisement.description   | string        | وصف الإعلان                                |
+| advertisement.url           | ?string       | رابط الإعلان (اختياري)                    |
+| advertisement.close_url     | string        | * يجب أن يكون على جانب العميل لتجنب مشاكل التخزين المؤقت |
+| advertisement.colors        | object        |                                             |
+| advertisement.colors.bg     | string        | لون الخلفية (Hex) مثل: #23d1b0            |
+| advertisement.colors.text   | string        | لون النص (Hex) مثل: #ffffff                |
+| advertisement.target        | string        | `_self`، `_blank`                          |
+#}
+<salla-advertisement></salla-advertisement>
