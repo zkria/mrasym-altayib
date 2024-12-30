@@ -7,33 +7,36 @@
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
+  {# شريط التنقل العلوي #}
   <div class="top-navbar">
     <div class="container flex justify-between items-center">
-      <!-- زر القائمة الجانبية -->
-      <button class="sidebar-toggle" aria-label="Toggle Sidebar">
-        <i class="bx bx-menu"></i> <!-- أيقونة القائمة -->
-      </button>
-
-      <!-- حقل البحث -->
-      <div class="header-search flex-1 mx-4">
-        <input type="text" placeholder="بحث..." class="s-search-input">
+      <div class="flex items-center gap-2">
+        <button class="sidebar-toggle" aria-label="فتح القائمة">
+          <i class="sicon-menu text-2xl"></i>
+          <span class="ml-2">القائمة</span>
+        </button>
       </div>
-
-      <!-- الشعار -->
-      <div class="navbar-brand">
-        <a href="{{ store.url }}">
-          <img src="{{ store.logo }}" alt="{{ store.name }} logo">
+      
+      <custom-main-menu class="custom-main-menu"></custom-main-menu>
+      
+      <div class="flex justify-center">
+        <a class="navbar-brand" href="{{ store.url }}">
+          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
         </a>
       </div>
-
-      <!-- أيقونات المستخدم وسلة التسوق -->
-      <div class="header-icons">
-        <button class="header-btn" aria-label="سلة التسوق">
-          <i class="header-btn__icon sicon-shopping-bag"></i>
-        </button>
-        <button class="header-btn" aria-label="قائمة المستخدم">
-          <i class="header-btn__icon sicon-user-circle"></i>
-        </button>
+      
+      <div class="flex items-center justify-end gap-4">
+        {% if user.type == 'user' %}
+          <salla-user-menu avatar-only show-header></salla-user-menu>
+        {% else %}
+          <button class="header-btn" aria-label="أيقونة المستخدم" onclick="salla.event.dispatch('login::open')">
+            <i class="header-btn__icon sicon-user-circle"></i>
+          </button>
+        {% endif %}
+        
+        <salla-cart-summary>
+          <i slot="icon" class="header-btn__icon sicon-shopping-bag"></i>
+        </salla-cart-summary>
       </div>
     </div>
   </div>
@@ -41,3 +44,13 @@
 {% if store.scope %}
     <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes> <!-- نطاقات المتجر -->
 {% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+      const mainMenu = document.querySelector('custom-main-menu');
+      mainMenu.classList.toggle('hidden');
+      console.log('زر القائمة تم الضغط عليه');
+    });
+  });
+</script>

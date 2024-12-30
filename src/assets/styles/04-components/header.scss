@@ -1,44 +1,59 @@
-// إعدادات شريط التنقل الرئيسي
-.main-nav-container {
-  @apply flex items-center justify-between px-4; // توزيع العناصر بين اليمين واليسار مع حشوة
-  @apply min-h-[68px] lg:min-h-[84px]; // تعيين الارتفاع الأدنى
-
-  // لون الخلفية المخصص
-  .has-bg &,
-  .has-bg & .sub-menu {
-    @apply bg-[color:var(--mainnav-bg)]; // تعيين لون الخلفية
-  }
-
-  // لون النص المخصص
-  .has-text-color & {
-    @apply text-[color:var(--mainnav-text-color)]; // تعيين لون النص
-  }
+// إعدادات شريط التنقل العلوي
+.top-navbar {
+  @apply flex items-center justify-between py-2 bg-white shadow-md; // توزيع العناصر والخلفية
 }
 
-// إعدادات زر القائمة الجانبية
 .sidebar-toggle {
-  @apply text-gray-700 hover:text-gray-900; // إعدادات الأيقونة
+  @apply text-gray-700 hover:text-gray-900 p-2; // إعدادات زر القائمة
 }
 
-// إعدادات زقل البحث
-.header-search {
-  @apply flex-1 mx-4; // حشوة جانبية
+.search-btn {
+  @apply text-gray-700 hover:text-gray-900 p-2; // إعدادات زر البحث
 }
 
-// إعدادات الشعار
 .navbar-brand {
-  @apply flex items-center; // محاذاة الشعار
+  @apply flex justify-center items-center; // محاذاة الشعار
+  img {
+    @apply max-h-12; // حجم الشعار
+  }
 }
 
-// إعدادات أيقونات المستخدم وسلة التسوق
-.header-icons {
-  @apply flex items-center space-x-4; // توزيع الأيقونات مع مسافة بينهما
+.header-btn {
+  @apply text-gray-700 hover:text-gray-900 p-2; // إعدادات الأيقونات
+}
 
-  .header-btn {
-    @apply border-none outline-none transition-opacity hover:opacity-80; // إعدادات الزر
+.header-btn__icon {
+  @apply text-2xl; // حجم أيقونة الأزرار
+}
 
-    &__icon {
-      @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-700; // إعدادات أيقونة الزر
-    }
+.salla-cart-summary {
+  @apply relative; // موضع سلة التسوق
+}
+
+.hidden {
+  display: none;
+}
+
+.custom-main-menu {
+  position: fixed; /* لجعل القائمة ثابتة */
+  top: 0; /* بداية من أعلى الصفحة */
+  right: 0; /* من جهة اليمين */
+  width: 250px; /* عرض القائمة */
+  height: 100%; /* ملء ارتفاع الصفحة */
+  background-color: white; /* لون الخلفية */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* ظل خفيف */
+  transform: translateX(100%); /* إخفاء القائمة خارج الشاشة */
+  transition: transform 0.3s ease; /* تأثير الانتقال */
+  z-index: 1000; /* تأكد من أن القائمة فوق العناصر الأخرى */
+}
+
+.custom-main-menu.open {
+  transform: translateX(0); /* إظهار القائمة */
+}
+
+/* إضافة قواعد لجعل القائمة تظهر بشكل جانبي على جميع الشاشات */
+@media (max-width: 1024px) {
+  .custom-main-menu {
+    width: 100%; /* عرض القائمة 100% على الشاشات الصغيرة */
   }
 }
