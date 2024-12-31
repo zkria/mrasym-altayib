@@ -1,49 +1,95 @@
 {#
-| المتغيرات         | النوع    | الوصف                           |
+| المتغير          | النوع   | الوصف                           |
 |------------------|---------|---------------------------------|
-| cart             | كائن    | يمثل عربة التسوق                |
-| cart.items_count | int     | عدد العناصر في عربة التسوق      |
-| cart.total       | string  | المجموع الكلي للعربة بصيغة منسقة مثل: "١٠٠ ر.س" |
+| cart             | كائن    |                                 |
+| cart.items_count | عدد صحيح|                                 |
+| cart.total       | سلسلة   | المجموع بصيغة مثل: "١٠٠ ر.س"    |
 #}
-
 {% set important_links = theme.settings.get('important_links') %}
+<header class="store-header">
+  <!-- شريط التنقل العلوي -->
+  <div class="top-navbar flex items-center justify-between bg-gray-100 p-4 shadow-md">
+    <!-- الشعار -->
+    <a class="navbar-brand flex items-center" href="{{ store.url }}">
+      <img fetchpriority="high" width="100%" height="100%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
+      {% if is_page('index') %}
+        <h1 class="sr-only">{{ store.name }}</h1>
+      {% else %}
+        <h2 class="sr-only">{{ store.name }}</h2>
+      {% endif %}
+    </a>
 
-<div class="sidebar-header">
-  <header class="store-header">
-    <div class="sidebar-container">
-      <div class="flex flex-col items-start">
-        {# شعار المتجر #}
-        <a class="navbar-brand mb-4" href="{{ store.url }}">
-          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
-          {% if is_page('index') %}
-            <h1 class="sr-only">{{ store.name }}</h1>
-          {% else %}
-            <h2 class="sr-only">{{ store.name }}</h2>
-          {% endif %}
-        </a>
-        {# زر البحث الجديد في القائمة الجانبية #}
-        <div class="header-search mb-4">
-          <salla-search inline oval height="36"></salla-search>
+    <!-- زر لفتح الشريط الجانبي -->
+    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
+      <i class="header-btn__icon sicon-menu"></i>
+    </button>
+
+    <!-- شريط البحث -->
+    <div class="header-search flex-1 relative">
+      <button id="search-toggle" class="rounded-full border border-gray-300 shadow-sm p-2" aria-label="تبديل البحث">
+        <i class="sicon-search"></i>
+      </button>
+      <salla-search id="search-bar" inline oval height="36" class="rounded-full border border-gray-300 shadow-sm hidden absolute top-0 left-0 w-1/2 transition-all duration-300"></salla-search>
+    </div>
+
+    <!-- زر المستخدم وزر السلة -->
+    <div class="flex items-center">
+      {% if user.type=='user' %}
+        <salla-user-menu avatar-only show-header></salla-user-menu>
+      {% else %}
+        <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
+          <i class="header-btn__icon sicon-user-circle"></i>
+        </button>
+      {% endif %}
+
+      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
+        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+      </salla-cart-summary>
+    </div>
+  </div>
+
+  <!-- شريط التنقل الجانبي -->
+  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full">
+    <div class="inner bg-inherit">
+      <div class="container">
+        <div class="flex flex-col items-start justify-start relative">
+          <custom-main-menu></custom-main-menu>
         </div>
-        {# قائمة المستخدم إذا كان مسجلاً #}
-        {% if user.type=='user' %}
-          <salla-user-menu avatar-only show-header></salla-user-menu>
-        {% else %}
-          {# زر تسجيل الدخول إذا لم يكن المستخدم مسجلاً #}
-          <button class="header-btn mb-4" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
-            <i class="header-btn__icon sicon-user-circle"></i>
-          </button>
-        {% endif %}
-        {# ملخص عربة التسوق #}
-        <salla-cart-summary class="mb-4">
-          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-        </salla-cart-summary>
       </div>
     </div>
-  </header>
-</div>
+  </div>
+</header>
 
-{# مكون النطاقات إذا كان موجودًا #}
+<style>
+  .top-navbar.shifted {
+    transform: translateX(-200px); /* يمكنك تعديل القيمة حسب عرض الشريط الجانبي */
+    transition: transform 0.3s ease;
+  }
+</style>
+
+<script>
+  document.getElementById('toggle-sidenav').addEventListener('click', function() {
+    var sidenav = document.getElementById('sidenav');
+    var navbar = document.querySelector('.top-navbar');
+    sidenav.classList.toggle('open');
+    navbar.classList.toggle('shifted');
+  });
+
+  document.getElementById('search-toggle').addEventListener('click', function() {
+    var searchBar = document.getElementById('search-bar');
+    searchBar.classList.toggle('hidden');
+    searchBar.style.width = searchBar.classList.contains('hidden') ? '0' : '200px';
+  });
+
+  const toggleButton = document.getElementById('toggle-sidenav');
+  const sidenav = document.getElementById('sidenav');
+  const navbar = document.querySelector('.top-navbar');
+
+  console.log('Toggle Button:', toggleButton);
+  console.log('Sidenav:', sidenav);
+  console.log('Navbar:', navbar);
+</script>
+
 {% if store.scope %}
   <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
