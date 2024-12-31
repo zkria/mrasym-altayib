@@ -26,6 +26,7 @@ class App extends AppHelpers {
     this.changeMenuDirection();
     initTootTip();
     this.loadModalImgOnclick();
+    this.initiateSideNav();
 
     salla.comment.event.onAdded(() => window.location.reload());
 
@@ -320,6 +321,19 @@ class App extends AppHelpers {
     salla.cart.event.onItemAdded((response, prodId) => {
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
+  }
+
+  initiateSideNav() {
+    const toggleButton = document.getElementById('toggle-sidenav');
+    const sidenav = document.getElementById('sidenav');
+    const navbar = document.querySelector('.top-navbar');
+
+    if (toggleButton && sidenav && navbar) {
+      toggleButton.addEventListener('click', () => {
+        sidenav.classList.toggle('open');
+        navbar.classList.toggle('shifted');
+      });
+    }
   }
 }
 

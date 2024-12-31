@@ -9,28 +9,20 @@
 <header class="store-header">
   <!-- شريط التنقل العلوي -->
   <div class="top-navbar flex items-center justify-between bg-gray-100 p-4 shadow-md">
-    <!-- الشعار -->
-    <a class="navbar-brand flex items-center" href="{{ store.url }}">
-      <img fetchpriority="high" width="100%" height="100%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
+    <!-- زر لفتح الشريط الجانبي -->
+    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
+      <i class="header-btn__icon sicon-menu"></i>
+    </button>
+
+    <!-- الشعار في المنتصف -->
+    <a class="navbar-brand flex items-center mx-auto" href="{{ store.url }}">
+      <img fetchpriority="high" width="120%" height="120%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
       {% if is_page('index') %}
         <h1 class="sr-only">{{ store.name }}</h1>
       {% else %}
         <h2 class="sr-only">{{ store.name }}</h2>
       {% endif %}
     </a>
-
-    <!-- زر لفتح الشريط الجانبي -->
-    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
-      <i class="header-btn__icon sicon-menu"></i>
-    </button>
-
-    <!-- شريط البحث -->
-    <div class="header-search flex-1 relative">
-      <button id="search-toggle" class="rounded-full border border-gray-300 shadow-sm p-2" aria-label="تبديل البحث">
-        <i class="sicon-search"></i>
-      </button>
-      <salla-search id="search-bar" inline oval height="36" class="rounded-full border border-gray-300 shadow-sm hidden absolute top-0 left-0 w-1/2 transition-all duration-300"></salla-search>
-    </div>
 
     <!-- زر المستخدم وزر السلة -->
     <div class="flex items-center">
@@ -51,9 +43,17 @@
   <!-- شريط التنقل الجانبي -->
   <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full">
     <div class="inner bg-inherit">
+      <!-- الشعار في الأعلى -->
+      <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="mb-2">
+      <p class="text-white mb-4">القائمة</p>
+      
       <div class="container">
         <div class="flex flex-col items-start justify-start relative">
           <custom-main-menu></custom-main-menu>
+        </div>
+        {# Search bar #}
+        <div class="header-search flex-1">
+          <salla-search inline oval height="36"></salla-search>
         </div>
       </div>
     </div>
@@ -61,34 +61,22 @@
 </header>
 
 <style>
+  .top-navbar {
+    transition: margin 0.3s ease;
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+  }
   .top-navbar.shifted {
-    transform: translateX(-200px); /* يمكنك تعديل القيمة حسب عرض الشريط الجانبي */
-    transition: transform 0.3s ease;
+    margin-left: 200px; /* تعديل القيمة حسب عرض الشريط الجانبي */
+  }
+  .rtl .top-navbar.shifted {
+    margin-right: 200px; /* إزاحة من اليمين في حالة RTL */
+    margin-left: 0;
   }
 </style>
 
-<script>
-  document.getElementById('toggle-sidenav').addEventListener('click', function() {
-    var sidenav = document.getElementById('sidenav');
-    var navbar = document.querySelector('.top-navbar');
-    sidenav.classList.toggle('open');
-    navbar.classList.toggle('shifted');
-  });
-
-  document.getElementById('search-toggle').addEventListener('click', function() {
-    var searchBar = document.getElementById('search-bar');
-    searchBar.classList.toggle('hidden');
-    searchBar.style.width = searchBar.classList.contains('hidden') ? '0' : '200px';
-  });
-
-  const toggleButton = document.getElementById('toggle-sidenav');
-  const sidenav = document.getElementById('sidenav');
-  const navbar = document.querySelector('.top-navbar');
-
-  console.log('Toggle Button:', toggleButton);
-  console.log('Sidenav:', sidenav);
-  console.log('Navbar:', navbar);
-</script>
+<script src="path/to/header.js"></script>
 
 {% if store.scope %}
   <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>

@@ -1,6 +1,6 @@
 /* Top Nav */
 .top-navbar {
-  @apply flex py-2 min-h-[48px];
+  @apply flex py-2 min-h-[48px] transition-all duration-300;
 
   @screen lg {
     @apply py-1.5;
@@ -145,7 +145,7 @@
   @apply items-center flex my-2 lg:my-0;
 
   img {
-    @apply w-auto max-h-12 max-w-[100px] xs:max-w-[170px];
+    @apply w-auto max-h-16 max-w-[150px] xs:max-w-[200px];
   }
 }
 
@@ -154,7 +154,9 @@
   @apply border-none outline-none transition-opacity hover:opacity-80;
 
   &__icon{
-    @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-700;
+    @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center;
+    color: #fff;
+    background-color: #444;
     &.icon{
       @apply mr-[9px] rtl:ml-[9px] rtl:mr-[unset];
     }
@@ -168,6 +170,7 @@ salla-user-menu{
 // cart summary
 .s-cart-summary-total{
   @apply text-black font-[600];
+  color: #ff6600;
 }
 
 .s-cart-summary-count{
@@ -196,25 +199,58 @@ salla-user-menu{
 
 /* شريط التنقل الجانبي */
 .side-nav-container {
-  @apply w-64 bg-[$mainnav-bg] text-[$mainnav-text-color] shadow-lg;
+  @apply w-64 text-[$mainnav-text-color] shadow-lg;
   position: fixed;
   right: 0;
   top: 0;
   height: 100%;
   z-index: 30;
-  transform: translateX(100%); /* إخفاء الشريط الجانبي خارج الشاشة */
+  transform: translateX(100%);
   transition: transform 0.3s ease;
+  background-color: #222;
+  color: #fff;
 }
 
 .side-nav-container.open {
-  transform: translateX(0); /* إظهار الشريط الجانبي عند إضافة الفئة open */
+  transform: translateX(0);
 }
 
 .inner {
-  @apply flex flex-col items-start justify-start p-4;
+  @apply flex flex-col items-center justify-start p-4;
+}
+
+.custom-main-menu {
+  @apply flex flex-col items-center;
+  gap: 10px;
+  width: 100%;
 }
 
 .top-navbar.shifted {
-  width: 80%; /* تصغير العرض بدلاً من التحريك */
+  @apply flex-1;
   transition: width 0.3s ease;
+}
+
+.custom-main-menu-item {
+  &:nth-child(1) {
+    order: 2;
+  }
+  &:nth-child(2) {
+    order: 1;
+  }
+}
+
+.inner p {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ffcc00;
+  margin-bottom: 1rem;
+}
+
+.custom-main-menu li {
+  @apply flex items-center gap-2;
+  font-size: 1rem;
+}
+
+.custom-main-menu i {
+  color: #ffcc00;
 }
