@@ -9,45 +9,6 @@
 {% set important_links = theme.settings.get('important_links') %}
 
 <header class="store-header">
-  {# شريط التنقل العلوي #}
-  <div class="top-navbar">
-    <div class="container flex justify-between">
-      <div class="flex-1 flex items-center gap-2">
-          {# قائمة الروابط المهمة في الفوتر #}
-          {% if important_links %}
-            <salla-menu source="footer" topnav></salla-menu>
-          {% endif %}
-
-          {# مكون اللغة والعملة #}
-          <div class="header-buttons">
-              {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-                  <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
-                      <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-                      <span class="mx-1.5">|</span> <span>{{ currency.symbol }}</span>
-                  </button>
-                  <salla-localization-modal></salla-localization-modal>
-              {% endif %}
-          </div>
-
-          {# مكون الفروع أو النطاقات #}
-          {% if store.scope %}
-              <button class="btn--rounded-gray"
-                      onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-                  <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
-              </button>
-          {% endif %}
-
-          {# شريط البحث #}
-          <div class="header-search flex-1">
-            <salla-search inline oval height="36"></salla-search>
-          </div>
-      </div>
-
-      {# مكون جهات الاتصال في الهدر #}
-      <salla-contacts is-header></salla-contacts>
-    </div>
-  </div>
-
   {# شريط التنقل الرئيسي #}
   <div id="mainnav" class="main-nav-container shadow-default bg-white">
       <div class="inner bg-inherit">
@@ -67,10 +28,12 @@
                             <h2 class="sr-only">{{ store.name }}</h2>
                           {% endif %}
                       </a>
-                      {# القائمة الرئيسية المخصصة #}
-                      <custom-main-menu></custom-main-menu>
                   </div>
                   <div class="flex items-center justify-end">
+                      {# زر البحث الجديد في شريط التنقل الرئيسي #}
+                      <div class="header-search flex-1">
+                        <salla-search inline oval height="36"></salla-search>
+                      </div>
                       {# قائمة المستخدم إذا كان مسجلاً #}
                       {% if user.type=='user' %}
                         <salla-user-menu avatar-only show-header></salla-user-menu>
