@@ -8,7 +8,7 @@
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
   <!-- شريط التنقل العلوي -->
-  <div class="top-navbar flex items-center justify-between bg-gray-100 p-4 shadow-md">
+  <div class="top-navbar flex items-center justify-between bg-white p-4 shadow-md text-gray-800">
     <!-- زر لفتح الشريط الجانبي -->
     <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
       <i class="header-btn__icon sicon-menu"></i>
@@ -41,11 +41,11 @@
   </div>
 
   <!-- شريط التنقل الجانبي -->
-  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full">
+  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full text-gray-800">
     <div class="inner bg-inherit">
       <!-- الشعار في الأعلى -->
       <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="mb-2">
-      <p class="text-white mb-4">القائمة</p>
+      <p class="text-gray-800 mb-4">القائمة</p>
        {# Search bar #}
        <div class="header-search flex-1">
         <salla-search inline oval height="36"></salla-search>
@@ -54,10 +54,6 @@
       <div class="container">
         <div class="flex flex-col items-start justify-start relative">
           <custom-main-menu></custom-main-menu>
-        </div>
-        {# Search bar #}
-        <div class="header-search flex-1">
-          <salla-search inline oval height="36"></salla-search>
         </div>
       </div>
     </div>
@@ -68,8 +64,8 @@
   .top-navbar {
     transition: margin 0.3s ease;
     height: 60px;
-    background-color: #333;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
   }
   .top-navbar.shifted {
     margin-left: 200px; /* تعديل القيمة حسب عرض الشريط الجانبي */

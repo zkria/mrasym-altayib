@@ -1,89 +1,44 @@
 /* Top Nav */
 .top-navbar {
-  @apply flex py-2 min-h-[48px] transition-all duration-300;
+  @apply flex py-2 min-h-[48px] transition-all duration-300 bg-white text-gray-800;
 
   @screen lg {
     @apply py-1.5;
   }
 
-  .topnav-has-bg & {
-    @apply bg-[$topnav-bg];
-  }
-
-  .topnav-has-gradient & {
-    @apply bg-gradient-to-r from-[$topnav-gradient-from] to-[$topnav-gradient-to];
-  }
-
-  .topnav-has-text-color & {
-    @apply text-[$topnav-text-color];
-  }
-
-  .s-search-input{
+  .s-search-input {
     @apply bg-gray-200/50 hover:bg-gray-200/70 border-none;
   }
 
   @media (max-width: 640px) {
-    .s-search-results{
+    .s-search-results {
       @apply w-screen max-w-[100vw] rtl:-left-2.5 ltr:-right-2.5; 
     }
   } 
 
-  .topnav-is-dark & {
-    @apply bg-dark text-gray-300;
-
-    .btn--circle-gray,
-    .btn--rounded-gray,
-    .s-search-input{
-      @apply bg-gray-100/10 hover:bg-gray-100/[0.15]
-    }
-
-    .topnav-link-item{
-      @apply border-gray-300/10;
-    }
-
-    .s-search-input{
-      @apply text-white;
-    }
-  }
-
-  .search-btn{
+  .search-btn {
     @apply grow sm:grow-0 justify-start md:justify-center;
   }
 }
 
 // contacs menu items - pages menu items
-.topnav-link-item{
+.topnav-link-item {
   @apply inline-block transition duration-300 px-4 rtl:last:pl-0 ltr:last:pr-0 py-px text-sm leading-none ltr:border-r rtl:border-l border-gray-200 ltr:last:border-0 rtl:last:border-0 hover:opacity-80;
-
-  &.right-side{
-    @apply rtl:first:pr-0 ltr:first:pl-0
-  }
 }
 
 /* Main Nav */
 .main-nav-container {
-  @apply min-h-[68px] lg:min-h-[84px];
-  
-  // Custom background Color
-  .has-bg &,
-  .has-bg & .sub-menu{
-    @apply bg-[$mainnav-bg];
-  }
-
-  // Custom text color
-  .has-text-color & {
-    @apply text-[$mainnav-text-color];
-  }
+  @apply min-h-[68px] lg:min-h-[84px] bg-white text-gray-800;
 }
 
 .menu-item {
   @apply flex items-center px-6 py-2.5 sm:text-sm text-gray-500 transition-colors duration-300 hover:bg-gray-200/30;
 
-  &.logout{
+  &.logout {
     @apply text-red-400;
   }
 
-  &.is-active{
+  &.is-active {
     @apply text-primary bg-gray-200/20;
   }
 }
@@ -107,7 +62,7 @@
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
       transform: translate3d(0, -100%, 0);
 
-      @media (max-width: 1024px){
+      @media (max-width: 1024px) {
         transform: none;
         top: -70px;
       }
@@ -133,7 +88,7 @@
     .inner {
       transform: translate3d(0, 0, 0);
 
-      @media (max-width: 1024px){
+      @media (max-width: 1024px) {
         transform: none;
         top: 0;
       }
@@ -150,56 +105,55 @@
 }
 
 // Mainnav cart icon
-.header-btn{
+.header-btn {
   @apply border-none outline-none transition-opacity hover:opacity-80;
 
-  &__icon{
+  &__icon {
     @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center;
-    color: #fff;
-    background-color: #444;
-    &.icon{
+    color: #333;
+    background-color: #fff;
+    &.icon {
       @apply mr-[9px] rtl:ml-[9px] rtl:mr-[unset];
     }
   }
 }
 
-salla-user-menu{
+salla-user-menu {
   @apply shrink-0;
 }
 
 // cart summary
-.s-cart-summary-total{
+.s-cart-summary-total {
   @apply text-black font-[600];
   color: #ff6600;
 }
 
-.s-cart-summary-count{
+.s-cart-summary-count {
   @apply -top-0.5 ltr:-left-1.5 rtl:-right-1.5 bg-red-800;
 }
 
-#nav-cart{
+#nav-cart {
   @apply flex items-center rtl:mr-4 ltr:ml-4 relative whitespace-nowrap;
 
-  .icon{
+  .icon {
     @apply rtl:ml-2 ltr:mr-2;
   }
 
-  span{
+  span {
     @apply absolute top-1 rtl:-right-2 ltr:-left-2;
   }
 }
 
-
 // Search
-.header-search{
-  .s-search-results{
+.header-search {
+  .s-search-results {
     @apply z-10;
   }
 }
 
 /* شريط التنقل الجانبي */
 .side-nav-container {
-  @apply w-64 text-[$mainnav-text-color] shadow-lg;
+  @apply w-64 text-gray-800 shadow-lg bg-white;
   position: fixed;
   right: 0;
   top: 0;
@@ -207,8 +161,6 @@ salla-user-menu{
   z-index: 30;
   transform: translateX(100%);
   transition: transform 0.3s ease;
-  background-color: #222;
-  color: #fff;
 }
 
 .side-nav-container.open {
@@ -242,7 +194,7 @@ salla-user-menu{
 .inner p {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #ffcc00;
+  color: #333;
   margin-bottom: 1rem;
 }
 
@@ -252,5 +204,5 @@ salla-user-menu{
 }
 
 .custom-main-menu i {
-  color: #ffcc00;
+  color: #333;
 }

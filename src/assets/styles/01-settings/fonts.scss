@@ -1,4 +1,4 @@
-// إعدادات الخطوط
+// إعدادات الخطوط والألوان
 
 // استيراد الخطوط من Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -10,12 +10,15 @@ body {
   font-weight: 400; // الوزن الافتراضي
   font-size: 16px; // حجم الخط
   line-height: 1.5; // ارتفاع السطر
+  color: #e0f7f7; // لون النص الأساسي
+  background-color: #0d3d3d; // لون الخلفية الأساسي
 }
 
 // إعداد الخطوط للعناوين
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Open Sans', sans-serif; // تعيين خط العناوين
   font-weight: 700; // وزن الخط للعناوين
+  color: #ffffff; // لون النص للعناوين
 }
 
 // إعداد الخطوط الخاصة بالروابط
@@ -23,8 +26,10 @@ a {
   font-family: 'Roboto', sans-serif; // تعيين خط الروابط
   font-weight: 600; // وزن الخط للروابط
   text-decoration: none; // إزالة التزيين الافتراضي
+  color: #1a6b6b; // لون الروابط
 
   &:hover {
     text-decoration: underline; // إضافة التزيين عند التمرير فوق الرابط
+    color: #e0f7f7; // لون الروابط عند التمرير
   }
 }
