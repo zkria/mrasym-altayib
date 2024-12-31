@@ -1,93 +1,29 @@
-/* شريط التنقل الرئيسي */
-.main-nav-container {
-  @apply min-h-[68px] lg:min-h-[84px];
-  
-  // لون الخلفية المخصص
-  .has-bg &,
-  .has-bg & .sub-menu {
-    @apply bg-[color:var(--mainnav-bg)];
+/* الهيدر الجانبي */
+.sidebar-header {
+  @apply fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50;
+
+  .sidebar-container {
+    @apply flex flex-col p-4;
   }
 
-  // لون النص المخصص
-  .has-text-color & {
-    @apply text-[color:var(--mainnav-text-color)];
-  }
-}
-
-.menu-item {
-  @apply flex items-center px-6 py-2.5 sm:text-sm text-gray-500 transition-colors duration-300 hover:bg-gray-200/30;
-
-  &.logout {
-    @apply text-red-400;
+  .navbar-brand {
+    @apply mb-4;
   }
 
-  &.is-active {
-    @apply text-primary bg-gray-200/20;
+  .header-search {
+    @apply mb-4;
+  }
+
+  .header-btn {
+    @apply mb-4;
+  }
+
+  salla-cart-summary {
+    @apply mb-4;
   }
 }
 
-/* الهيدر الثابت */
-.main-nav-container {
-  &.animated {
-    .inner {
-      transition: top 0.5s, transform 0.5s, -webkit-transform 0.5s, opacity 0.4s;
-    }
-  }
-
-  &.fixed-pinned {
-    .inner {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
-      z-index: 29;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      transform: translate3d(0, -100%, 0);
-
-      @media (max-width: 1024px) {
-        transform: none;
-        top: -70px;
-      }
-    }
-
-    .navbar-brand {
-      img {
-        max-height: 40px;
-      }
-
-      h4 {
-        line-height: 1;
-      }
-    }
-
-    .main-menu > li > a {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
-  }
-
-  &.fixed-header {
-    .inner {
-      transform: translate3d(0, 0, 0);
-
-      @media (max-width: 1024px) {
-        transform: none;
-        top: 0;
-      }
-    }
-  }
-}
-
-.navbar-brand {
-  @apply items-center flex my-2 lg:my-0;
-
-  img {
-    @apply w-auto max-h-12 max-w-[100px] xs:max-w-[170px];
-  }
-}
-
-/* أيقونة عربة التسوق في شريط التنقل الرئيسي */
+/* أيقونة عربة التسوق في القائمة الجانبية */
 .header-btn {
   @apply border-none outline-none transition-opacity hover:opacity-80;
 

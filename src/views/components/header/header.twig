@@ -8,53 +8,42 @@
 
 {% set important_links = theme.settings.get('important_links') %}
 
-<header class="store-header">
-  {# شريط التنقل الرئيسي #}
-  <div id="mainnav" class="main-nav-container shadow-default bg-white">
-      <div class="inner bg-inherit">
-          <div class="container">
-              <div class="flex items-stretch justify-between relative">
-                  <div class="flex items-center">
-                      {# زر القائمة للموبايل #}
-                      <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="Open-menu">
-                        <i class="sicon-menu text-primary text-2xl"></i>
-                      </a>
-                      {# شعار المتجر #}
-                      <a class="navbar-brand" href="{{ store.url }}">
-                          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
-                          {% if is_page('index') %}
-                            <h1 class="sr-only">{{ store.name }}</h1>
-                          {% else %}
-                            <h2 class="sr-only">{{ store.name }}</h2>
-                          {% endif %}
-                      </a>
-                  </div>
-                  <div class="flex items-center justify-end">
-                      {# زر البحث الجديد في شريط التنقل الرئيسي #}
-                      <div class="header-search flex-1">
-                        <salla-search inline oval height="36"></salla-search>
-                      </div>
-                      {# قائمة المستخدم إذا كان مسجلاً #}
-                      {% if user.type=='user' %}
-                        <salla-user-menu avatar-only show-header></salla-user-menu>
-                      {% else %}
-                          {# زر تسجيل الدخول إذا لم يكن المستخدم مسجلاً #}
-                          <button class="header-btn" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
-                            <i class="header-btn__icon sicon-user-circle"></i>
-                          </button>
-                      {% endif %}
-                      {# ملخص عربة التسوق #}
-                      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
-                        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-                      </salla-cart-summary>
-                  </div>
-              </div>
-          </div>
+<div class="sidebar-header">
+  <header class="store-header">
+    <div class="sidebar-container">
+      <div class="flex flex-col items-start">
+        {# شعار المتجر #}
+        <a class="navbar-brand mb-4" href="{{ store.url }}">
+          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
+          {% if is_page('index') %}
+            <h1 class="sr-only">{{ store.name }}</h1>
+          {% else %}
+            <h2 class="sr-only">{{ store.name }}</h2>
+          {% endif %}
+        </a>
+        {# زر البحث الجديد في القائمة الجانبية #}
+        <div class="header-search mb-4">
+          <salla-search inline oval height="36"></salla-search>
+        </div>
+        {# قائمة المستخدم إذا كان مسجلاً #}
+        {% if user.type=='user' %}
+          <salla-user-menu avatar-only show-header></salla-user-menu>
+        {% else %}
+          {# زر تسجيل الدخول إذا لم يكن المستخدم مسجلاً #}
+          <button class="header-btn mb-4" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
+            <i class="header-btn__icon sicon-user-circle"></i>
+          </button>
+        {% endif %}
+        {# ملخص عربة التسوق #}
+        <salla-cart-summary class="mb-4">
+          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+        </salla-cart-summary>
       </div>
-  </div>
-</header>
+    </div>
+  </header>
+</div>
 
 {# مكون النطاقات إذا كان موجودًا #}
 {% if store.scope %}
-    <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
