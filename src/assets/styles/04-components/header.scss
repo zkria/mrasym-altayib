@@ -19,6 +19,11 @@
   .search-btn {
     @apply grow sm:grow-0 justify-start md:justify-center;
   }
+
+  transition: margin 0.3s ease;
+  height: 70px;
+  background-color: #fff;
+  color: #333;
 }
 
 // contacs menu items - pages menu items
@@ -28,7 +33,7 @@
 
 /* Main Nav */
 .main-nav-container {
-  @apply min-h-[68px] lg:min-h-[84px] bg-white text-gray-800;
+  @apply min-h-[100px] lg:min-h-[84px] bg-white text-gray-800;
 }
 
 .menu-item {
@@ -124,8 +129,8 @@ salla-user-menu {
 
 // cart summary
 .s-cart-summary-total {
-  @apply text-black font-[600];
-  color: #ff6600;
+  @apply text-black font-[500];
+  color: #110701;
 }
 
 .s-cart-summary-count {

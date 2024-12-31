@@ -8,7 +8,7 @@
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
   <!-- شريط التنقل العلوي -->
-  <div class="top-navbar flex items-center justify-between bg-white p-4 shadow-md text-gray-800">
+  <div class="top-navbar flex items-center justify-between bg-white p-6 shadow-md text-gray-800">
     <!-- زر لفتح الشريط الجانبي -->
     <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
       <i class="header-btn__icon sicon-menu"></i>
@@ -16,7 +16,7 @@
 
     <!-- الشعار في المنتصف -->
     <a class="navbar-brand flex items-center mx-auto" href="{{ store.url }}">
-      <img fetchpriority="high" width="120%" height="120%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
+      <img fetchpriority="high" width="120%" height="300%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
       {% if is_page('index') %}
         <h1 class="sr-only">{{ store.name }}</h1>
       {% else %}
