@@ -8,7 +8,7 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
-    <div class="container mb-20">
+    <div class="container mb-20 bg-white dark:bg-gray-800">
 
         {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
         <nav class="breadcrumbs w-full py-5">
@@ -16,7 +16,7 @@
         </nav>
 
         <div class="flex justify-between pt-2 pb-6">
-            <h2 class="font-bold mb-6 md:mb-0">{{ page.title }}</h2>
+            <h2 class="font-bold mb-6 md:mb-0 text-gray-800 dark:text-gray-200">{{ page.title }}</h2>
         </div>
 
         {% if brands|length %}
@@ -26,7 +26,7 @@
                     <li></li>
                     {% for char, brands_group in brands %}
                         <li>
-                            <a class="brands-nav__item"
+                            <a class="brands-nav__item text-gray-800 dark:text-gray-200"
                                href="#brand-section-{{ loop.index }}"
                                data-id="{{ loop.index }}">
                                <span class="fix-align">{{ char }}</span>
@@ -45,7 +45,7 @@
                     <section id="brand-section-{{ loop.index }}" class="pt-24 first:pt-16 md:first:pt-24">
                         <!-- فاصل -->
                         <div class="flex items-center mb-10">
-                            <span data-id="{{ loop.index }}" class="brand-char">
+                            <span data-id="{{ loop.index }}" class="brand-char text-gray-800 dark:text-gray-200">
                               <span class="fix-align">{{ char }}</span>
                             </span>
                             <div class="bg-border-color h-px flex-1"></div>
@@ -65,11 +65,11 @@
             </div>
         {% else %}
             <div class="no-content-placeholder">
-                <span class="rounded-icon !w-36 !h-36 bg-gray-100 mb-6">
-                    <i class="sicon-award-ribbon text-6xl block text-gray-400"></i>
+                <span class="rounded-icon !w-36 !h-36 bg-gray-100 dark:bg-gray-700 mb-6">
+                    <i class="sicon-award-ribbon text-6xl block text-gray-400 dark:text-gray-300"></i>
                 </span>
-                <h1 class="font-bold text-sm mb-1">{{ trans('pages.brands.non_brands') }}</h1>
-                <small>{{ trans('pages.brands.try_again') }}</small>
+                <h1 class="font-bold text-sm mb-1 text-gray-800 dark:text-gray-200">{{ trans('pages.brands.non_brands') }}</h1>
+                <small class="text-gray-500 dark:text-gray-400">{{ trans('pages.brands.try_again') }}</small>
             </div>
         {% endif %}
     </div>

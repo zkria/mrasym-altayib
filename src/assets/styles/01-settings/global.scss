@@ -18,6 +18,14 @@ $main-text-color: var(--main-text-color);
   --bg-gray: #004d40;
   --color-grey: #6d6875;
   --color-light-grey: #f0efeb;
+  --color-dark-grey: #2e2e2e;
+  --bg-dark: #121212;
+
+  /* new dark mode colors */
+  --bg-dark-gray-800: #1e293b; // dark:bg-gray-800
+  --text-dark-gray-200: #e5e7eb; // dark:text-gray-200
+  --bg-dark-gray-700: #374151; // dark:bg-gray-700
+
   /* font-size */
   --font-sm: 0.8685714286rem;
   /* font-family: ; */
@@ -25,4 +33,12 @@ $main-text-color: var(--main-text-color);
 
   /* plugins */
   --mm-ocd-width: calc(100% - 51px);
+}
+
+// تطبيق الوضع الداكن عبر الفئات أو العناصر
+body.dark-mode {
+  --main-text-color: var(--main-text-color-dark);
+  --color-primary: var(--color-primary-dark);
+  --bg-gray: var(--bg-dark-gray-800);
+  --color-grey: var(--bg-dark-gray-700);
 }

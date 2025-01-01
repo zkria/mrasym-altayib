@@ -39,6 +39,8 @@ body.fancybox-open {
   }
 
   #tidio-chat {
+    background: var(--chat-bg, transparent); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
     z-index: 9999999999; // تعيين مستوى z-index
     position: absolute; // تعيين الموضع
     top: 0; // تعيين الموضع العلوي

@@ -1,36 +1,44 @@
 .store-footer {
   @apply relative text-white mt-8 sm:mt-16;
-  background: linear-gradient(135deg, #004d40, #00796b); // تدرج لوني للفوتر بالكامل
+  background: linear-gradient(135deg, var(--footer-bg-start, #004d40), var(--footer-bg-end, #00796b)); // استخدام متغيرات للتدرج اللوني
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
   a {
     @apply transition-opacity hover:opacity-75;
-    color: #e0f7f7; // لون النص للروابط
+    color: var(--footer-link-color, #e0f7f7); // استخدام متغير للون الروابط
+    @apply dark:text-gray-200; // لون الروابط في الوضع الداكن
   }
 
   &__inner {
-    @apply py-8 lg:py-16 border-b border-dashed border-b-white/10;
+    @apply py-8 lg:py-16 border-b border-dashed;
+    border-color: var(--footer-inner-border, #ffffff1a); // استخدام متغير للون الحدود
     background-color: rgba(0, 0, 0, 0.5); // خلفية شفافة قليلاً
+    @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
   }
 
   h3 {
     @apply text-xl font-bold mb-3 lg:mb-5;
     font-family: var(--font-main), sans-serif; // تحسين نوع الخط
-    color: #e0f7f7; // لون النص للعناوين
+    color: var(--footer-heading-color, #e0f7f7); // استخدام متغير للون العناوين
+    @apply dark:text-gray-200; // لون العناوين في الوضع الداكن
   }
 
   p, b {
     font-family: var(--font-main), sans-serif; // تحسين نوع الخط
-    color: #e0f7f7; // لون النص للفقرات والنصوص البارزة
+    color: var(--footer-text-color, #e0f7f7); // استخدام متغير للون النصوص
+    @apply dark:text-gray-200; // لون النصوص في الوضع الداكن
   }
 
   .social-link {
     @apply border rounded-full w-8 h-8 justify-center flex items-center hover:opacity-75 transition duration-300 text-sm;
-    border-color: #00796b; // لون الحدود
+    border-color: var(--social-link-border, #00796b); // استخدام متغير للون الحدود
+    @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
   }
 
   .contact-social {
-    @apply mt-5 pt-5 border-t border-white/10;
-
+    @apply mt-5 pt-5 border-t;
+    border-color: var(--contact-social-border, #ffffff1a); // استخدام متغير للون الحدود
+    @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
     ul {
       @apply mb-0;
     }
@@ -56,4 +64,5 @@
 .copyright-text {
   @apply text-gray-300;
   font-family: var(--font-main), sans-serif; // تحسين نوع الخط
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن
 }

@@ -16,19 +16,21 @@ class App extends AppHelpers {
     const currentTheme = localStorage.getItem("theme");
 
     if (currentTheme === "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
-      document.body.classList.add("dark-mode");
+      this.applyDarkMode(true);
     } else {
-      document.body.classList.remove("dark-mode");
+      this.applyDarkMode(false);
     }
 
     document.getElementById('toggle-dark-mode').addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      let theme = "light";
-      if (document.body.classList.contains("dark-mode")) {
-        theme = "dark";
-      }
-      localStorage.setItem("theme", theme);
+      let isDarkMode = document.body.classList.toggle('dark-mode');
+      localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+      this.applyDarkMode(isDarkMode);
     });
+  }
+
+  applyDarkMode(isDarkMode) {
+    document.body.classList.toggle('dark-mode', isDarkMode);
+    this.setDarkMode(isDarkMode);
   }
 
   loadTheApp() {

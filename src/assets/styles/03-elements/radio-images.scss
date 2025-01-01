@@ -2,10 +2,14 @@
 .radio-images {
   &__label {
     @apply inline-block mb-0.5 cursor-pointer rounded-md overflow-hidden h-24 md:h-20 w-full; // إعدادات تسمية زر الراديو
+    background-color: var(--radio-label-bg, #fff); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
   }
 
   &__badge {
-    @apply block absolute bottom-10 left-1/2 -translate-x-1/2 rounded-full px-1.5 bg-red-400 text-white whitespace-nowrap; // إعدادات شارة الزر
+    @apply block absolute bottom-10 left-1/2 -translate-x-1/2 rounded-full px-1.5 text-white whitespace-nowrap; // إعدادات شارة الزر
+    background-color: var(--badge-bg, #f00); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
   }
 
   input[type="radio"] {
@@ -17,21 +21,11 @@
       &:after {
         content: "\ea9d"; // رمز الأيقونة
         font-family: "sallaicons" !important; // تعيين عائلة الخط
-        speak: never; // منع قراءة الأيقونة
-        font-style: normal; // تعيين نمط الخط
-        font-weight: normal; // تعيين وزن الخط
-        font-variant: normal; // تعيين متغير الخط
-        text-transform: none; // عدم تحويل النص
-        line-height: 1; // تعيين ارتفاع السطر
-        -webkit-font-smoothing: antialiased; // تحسين عرض الخط
-        -moz-osx-font-smoothing: grayscale; // تحسين عرض الخط على macOS
-        background: white; // لون خلفية الأيقونة
+        background: var(--icon-bg, #fff); // استخدام متغير للون خلفية الأيقونة
+        @apply dark:bg-gray-200; // لون خلفية الأيقونة في الوضع الداكن
         border-radius: 50%; // تعيين الزوايا المدورة
-        top: 50%; // تعيين الموضع العلوي
-        left: 50%; // تعيين الموضع الأيسر
         width: 20px; // عرض الأيقونة
         height: 20px; // ارتفاع الأيقونة
-        font-size: 14px; // حجم الخط
         display: flex; // تعيين العرض ككتلة مرنة
         justify-content: center; // محاذاة المحتوى إلى المركز
         align-items: center; // محاذاة المحتوى عموديًا
@@ -42,8 +36,8 @@
       }
 
       &:before {
-        content: ''; // محتوى فارغ
-        background-color: #004d40; // لون خلفية
+        background-color: var(--label-bg-before, #004d40); // استخدام متغير للون خلفية
+        @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
         opacity: 0; // تعيين الشفافية إلى 0
         position: absolute; // تعيين الموضع المطلق
         top: 0; // تعيين الموضع العلوي

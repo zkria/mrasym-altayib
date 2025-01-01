@@ -17,12 +17,14 @@
         vertical-align: middle; // محاذاة عمودية
         cursor: pointer; // تغيير المؤشر عند التمرير فوق الزر
         border-radius: 6px; // تعيين الزوايا المدورة
-        border: 2px solid #004d40; // لون الحدود
+        border: 2px solid var(--radio-border-color, #004d40); // استخدام متغير للون الحدود
+        @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
         background-repeat: no-repeat; // عدم تكرار الخلفية
         background-position: center; // تعيين موضع الخلفية
         text-align: center; // محاذاة النص إلى المركز
         line-height: 40px; // تعيين ارتفاع السطر
-        box-shadow: 0 1px 3px 0 rgba(#000, 0.075); // إضافة ظل
+        box-shadow: 0 1px 3px 0 rgba(var(--shadow-color, #000), 0.075); // استخدام متغير للون الظل
+        @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
         &::after {
           opacity: 0; // تعيين الشفافية إلى 0
@@ -37,7 +39,8 @@
           line-height: 1; // تعيين ارتفاع السطر
           -webkit-font-smoothing: antialiased; // تحسين عرض الخط
           content: "\ea9d"; // رمز الأيقونة
-          color: #e0f7f7; // لون الأيقونة
+          color: var(--icon-color, #e0f7f7); // استخدام متغير للون الأيقونة
+          @apply dark:text-gray-200; // لون الأيقونة في الوضع الداكن
           font-size: 20px; // حجم الخط
           font-weight: bold; // وزن الخط
         }
@@ -64,13 +67,15 @@
           display: inline-flex; // تعيين العرض ككتلة مرنة
           justify-content: center; // محاذاة المحتوى إلى المركز
           align-items: center; // محاذاة المحتوى عموديًا
-          background-color: #004d40; // لون الخلفية
+          background-color: var(--rounded-bg-color, #004d40); // استخدام متغير للون الخلفية
+          @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
           &::after {
             content: ""; // محتوى فارغ
             width: 14px; // عرض الأيقونة
             height: 14px; // ارتفاع الأيقونة
-            background-color: #e0f7f7; // لون الأيقونة
+            background-color: var(--icon-inner-color, #e0f7f7); // استخدام متغير للون الأيقونة
+            @apply dark:bg-gray-200; // لون الأيقونة في الوضع الداكن
             border-radius: 50%; // تعيين الزوايا المدورة
           }
         }
@@ -98,7 +103,8 @@
 
         .rate-title {
           font-weight: bold; // تعيين وزن الخط إلى عريض
-          color: #004d40; // لون النص
+          color: var(--rate-title-color, #004d40); // استخدام متغير للون النص
+          @apply dark:text-gray-200; // لون النص في الوضع الداكن
         }
       }
     }

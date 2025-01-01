@@ -20,13 +20,13 @@
 </script>
     {# ======================== صفحة الهبوط ======================== #}
     {% if not landing %}
-        <div class="landing-page notfound">
+        <div class="landing-page notfound bg-white dark:bg-gray-800">
             <header>
                 <div class="header-content container">
                 <a href="{{ store.url }}" class="header-content-logo" aria-label="{{ store.name }} logo">
 					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
                     <div class="header-content-inner">
-                        <h1>{{ trans('common.errors.404') }}</h1>
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ trans('common.errors.404') }}</h1>
                         <div class="text-center mt-6">
                             <salla-button href="{{ link('/') }}" color="primary" class="btn--rounded-full">
                                 {{ trans('common.elements.back_home') }}
@@ -37,14 +37,14 @@
             </header>
         </div>
     {% elseif landing.is_expired %}
-        <div class="landing-page expired">
+        <div class="landing-page expired bg-white dark:bg-gray-800">
             <header>
                 <div class="header-content container">
                 <a href="{{ store.url }}" aria-label="{{ store.name }} logo" class="header-content-logo">
 					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
                     <div class="header-content-inner">
-                        <h1>{{ trans('pages.offer.offer_finished') }}</h1>
-                        <p>{{ trans('pages.offer.offer_expired_message') }}</p>
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ trans('pages.offer.offer_finished') }}</h1>
+                        <p class="text-gray-500 dark:text-gray-400">{{ trans('pages.offer.offer_expired_message') }}</p>
                         <div class="text-center mt-6">
                             <salla-button href="{{ link('/') }}" color="primary" class="btn--rounded-full">
                                 {{ trans('common.elements.back_home') }}
@@ -55,18 +55,18 @@
             </header>
         </div>
     {% else %}
-        <div class="landing-page pb-10">
+        <div class="landing-page pb-10 bg-white dark:bg-gray-800">
             <header>
                 <div class="header-content container">
                 <a href="{{ store.url }}" aria-label="{{ store.name }} logo" class="header-content-logo">
 					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
                     <div class="header-content-inner">
-                        <h1>{{ landing.title }}</h1>
-                        <p>{{ landing.content|raw }}</p>
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ landing.title }}</h1>
+                        <p class="text-gray-500 dark:text-gray-400">{{ landing.content|raw }}</p>
                     </div>
                     {% if landing.offer_ends_at %}
                         <div class="header-content-offer">
-                            <h3>{{ trans('pages.offer.offer_remaining_time') }}</h3>
+                            <h3 class="text-gray-900 dark:text-gray-200">{{ trans('pages.offer.offer_remaining_time') }}</h3>
                             <salla-count-down date="{{ landing.offer_ends_at }}" labeled size="lg"></salla-count-down>
                         </div>
                     {% endif %}

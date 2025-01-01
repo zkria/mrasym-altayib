@@ -3,22 +3,34 @@
   @apply flex flex-col space-y-4; // إعدادات الفلاتر كعمود مع مسافات بين العناصر
 
   &__title {
-    @apply text-lg font-bold text-gray-800; // إعدادات عنوان الفلاتر
+    @apply text-lg font-bold; // إعدادات عنوان الفلاتر
+    color: var(--filter-title-color, #333); // استخدام متغير للون النص
+    @apply dark:text-gray-200; // لون النص في الوضع الداكن
   }
 
   &__item {
-    @apply bg-white border border-gray-200; // إعدادات عنصر الفلتر
+    @apply bg-white border; // إعدادات عنصر الفلتر
+    background-color: var(--filter-item-bg, #fff); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+    border-color: var(--filter-item-border, #ccc); // استخدام متغير للون الحدود
+    @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
 
     &--active {
-      @apply border-primary bg-gray-100; // إعدادات العنصر النشط
+      @apply border-primary; // إعدادات العنصر النشط
+      background-color: var(--filter-item-active-bg, #eef); // استخدام متغير للون الخلفية النشطة
+      @apply dark:bg-gray-700; // لون الخلفية النشطة في الوضع الداكن
     }
 
     &__label {
-      @apply text-sm text-gray-700; // إعدادات نص الفلتر
+      @apply text-sm; // إعدادات نص الفلتر
+      color: var(--filter-label-color, #666); // استخدام متغير للون النص
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
     }
   }
 
   &__reset {
-    @apply text-sm text-red-500; // إعدادات زر إعادة تعيين الفلاتر
+    @apply text-sm; // إعدادات زر إعادة تعيين الفلاتر
+    color: var(--reset-button-color, #f00); // استخدام متغير للون النص
+    @apply dark:text-gray-200; // لون النص في الوضع الداكن
   }
 }

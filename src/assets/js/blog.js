@@ -3,6 +3,7 @@ import BasePage from './base-page';
 class Blog extends BasePage {
     onReady() {
         this.initToggleLike();
+        this.applyDarkMode();
     }
 
     initToggleLike() {

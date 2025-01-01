@@ -1,12 +1,17 @@
 // إعدادات عنصر عدم وجود محتوى
 .no-content-placeholder {
-    @apply text-gray-400; // إعدادات الحاوية
+    color: var(--no-content-text-color, #bbb); // استخدام متغير للون النص
+    @apply dark:text-gray-200; // لون النص في الوضع الداكن
 
     .icon {
-        @apply bg-gray-100 text-gray-300; // إعدادات الأيقونة
+        @apply text-gray-300; // إعدادات الأيقونة
+        background-color: var(--no-content-icon-bg, #e0e0e0); // استخدام متغير للون الخلفية
+        @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
     }
 
     p {
-        @apply text-base text-gray-500; // إعدادات النص
+        @apply text-base; // إعدادات النص
+        color: var(--no-content-desc-color, #ccc); // استخدام متغير للون الوصف
+        @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
     }
 }

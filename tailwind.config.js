@@ -32,7 +32,12 @@ module.exports = {
             colors: {
                 'dark': '#1D1F1F',
                 'darker': '#0E0F0F',
-                'danger': '#AE0A0A'
+                'danger': '#AE0A0A',
+                'bg-lazy-default': '#fff',
+                'bg-lazy-loaded': '#000',
+                'gray-800': '#1e293b',
+                'gray-200': '#e5e7eb',
+                'gray-700': '#374151'
             },
             spacing: {
                 '3.75': '15px',

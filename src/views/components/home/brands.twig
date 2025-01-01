@@ -6,19 +6,19 @@
 | position                      | عدد صحيح | رقم الترتيب يبدأ من الصفر                                                |
 #}
 {% set display_all_url = theme.settings.get('is_more_button_enabled') %}
-<section class="s-block s-block--logos-slider s-block--full-bg bg-gray-100 pt-8 sm:pt-12 pb-8 sm:pb-20">
+<section class="s-block s-block--logos-slider s-block--full-bg bg-gray-100 dark:bg-gray-800 pt-8 sm:pt-12 pb-8 sm:pb-20">
     <div class="container">
     
         {% if component.title or component.show_all %}
           <div class="s-block__title">
             {% if component.title %}
               <div class="right-side">
-                <h2>{{ component.title }}</h2> <!-- عنوان القسم -->
-                {# <p>عنوان فرعي توصيفي صغير</p> #} <!-- تعليق على العنوان الفرعي -->
+                <h2 class="text-gray-800 dark:text-white">{{ component.title }}</h2> <!-- عنوان القسم -->
+                {# <p class="text-gray-600 dark:text-gray-300">عنوان فرعي توصيفي صغير</p> #} <!-- تعليق على العنوان الفرعي -->
               </div>
             {% endif %}
             {% if display_all_url %}
-              <a href="{{ link('brands') }}" class="s-block__display-all"> {{ trans('blocks.home.display_all') }} <i class="sicon-arrow-left"></i></a> <!-- رابط عرض جميع العلامات التجارية -->
+              <a href="{{ link('brands') }}" class="s-block__display-all text-blue-600 dark:text-blue-300"> {{ trans('blocks.home.display_all') }} <i class="sicon-arrow-left"></i></a> <!-- رابط عرض جميع العلامات التجارية -->
             {% endif %}
           </div>
         {% endif %}

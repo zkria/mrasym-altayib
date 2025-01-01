@@ -4,7 +4,7 @@ html {
   scroll-behavior: smooth; // سلاسة التمرير
 }
 
-// استخدام salla.document.onClick(...)، يصبح فعالًا عندما تكون جميع العناصر الفرعية بلا أحداث مؤشِّر.
+// استخدام salla.document.onClick(...), يصبح فعالًا عندما تكون جميع العناصر الفرعية بلا أحداث مؤشِّر.
 .cursor-pointer * {
   pointer-events: none; // منع التفاعل مع العناصر الفرعية
 }
@@ -19,6 +19,7 @@ input[type="file"] {
 
 body {
   @apply bg-gray-50; // تعيين لون خلفية الجسم
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
   [type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select {
     @apply focus:ring-0; // إزالة تأثير الحلقة عند التركيز
   }
@@ -49,11 +50,11 @@ input[type="number"] {
 }
 
 .spinner-loader {
-  border-right-color: #004d40 !important; // تعيين لون الحدود
-
+  border-right-color: var(--color-primary); // تعيين لون الحدود
   &.reverse {
-    border-right-color: #9f7171 !important; // لون مختلف عند التراجع
-    background-color: #f98181; // لون خلفية مختلف
+    border-right-color: var(--color-primary-reverse); // لون مختلف عند التراجع
+    background-color: var(--color-primary-l); // لون خلفية مختلف
+    @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
   }
 }
 
@@ -119,15 +120,15 @@ body {
     height: 20px; // ارتفاع الدائرة
     border-radius: 50%; // جعلها دائرية
     border: 2px solid; // تعيين الحدود
-    border-top-color: #004d40; // لون الحدود العلوية
-    border-bottom-color: #eee; // لون الحدود السفلية
-    border-left-color: #004d40; // لون الحدود اليسرى
-    border-right-color: #eee; // لون الحدود اليمنى
+    border-top-color: var(--color-primary); // لون الحدود العلوية
+    border-bottom-color: var(--color-light-grey); // لون الحدود السفلية
+    border-left-color: var(--color-primary); // لون الحدود اليسرى
+    border-right-color: var(--color-light-grey); // لون الحدود اليمنى
     animation: loader 1s ease-in-out infinite; // تعيين الرسوم المتحركة
 
     .btn--danger & {
       border-top-color: #ff6767; // لون مختلف عند استخدام زر خطر
-      border-left-color: #ff6767; // لون مختلف عند استخدام زر خطر
+      border-left_color: #ff6767; // لون مختلف عند استخدام زر خطر
     }
   }
 
@@ -334,6 +335,7 @@ salla-modal {
 .s-app-install-banner {
   @apply hidden flex-row items-center fixed left-0 right-0 w-[95%] my-4 mx-auto z-[999] rounded-md p-3 gap-2 drop-shadow-md; // تعيين أنماط اللافتة
   background-color: color-mix(in srgb, #004d40 15%, white); // تعيين لون الخلفية
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
   &[open=false] {
     @apply hidden; // إخفاء اللافتة
   }

@@ -8,6 +8,8 @@
 
     .full-banner-entry {
       background-attachment: initial; // تعيين خاصية الخلفية
+      background-color: var(--full-banner-bg, #fff); // استخدام متغير للون الخلفية
+      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
     }
   }
 }

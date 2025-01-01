@@ -5,10 +5,14 @@ salla-slider {
   &.details-slider {
     .s-slider-container { 
       @apply bg-white border-[1px] rounded-md; // إعدادات حاوية السلايدر
+      background-color: var(--slider-bg, #fff); // استخدام متغير للون الخلفية
+      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
     }
 
     .swiper-slide {
       @apply relative rounded-md bg-white ring-1 ring-inset ring-gray-100; // إعدادات شريحة السلايدر
+      background-color: var(--slide-bg, #fff); // استخدام متغير للون الخلفية
+      @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
     }
 
     salla-button.btn--wishlist {
@@ -39,6 +43,10 @@ salla-slider {
 .promotion-title {
   @apply absolute z-10 top-4 rtl:right-0 ltr:left-0 font-bold text-sm bg-red-800 text-white rtl:rounded-l-md ltr:rounded-r-md; // إعدادات عنوان الترويج
   @apply w-auto m-0 px-3 py-2 #{!important}; // إعدادات الحشوة
+  background-color: var(--promotion-bg, #d32f2f); // استخدام متغير للون الخلفية
+  color: var(--promotion-text-color, #fff); // استخدام متغير للون النص
+  @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن
 }
 
 // إعدادات السلايدر المنزلي
@@ -50,7 +58,8 @@ salla-slider {
 
     &:not(.loaded) {
       .overlay {
-        opacity: 0; // تعيين الشفافية
+        background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5)); // استخدام متغير للون الخلفية
+        @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
       }
     }
   }
@@ -80,6 +89,8 @@ salla-slider.photos-slider {
   
   .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
     @apply bg-gray-300; // لون النقاط غير النشطة
+    background-color: var(--inactive-bullet-bg, #ccc); // استخدام متغير للون النقاط غير النشطة
+    @apply dark:bg-gray-600; // لون النقاط غير النشطة في الوضع الداكن
   }
   
   @media (max-width: 1024px) {
@@ -144,10 +155,11 @@ salla-slider {
     border-radius: 5px; // زوايا النقاط
     background: #fff; // لون النقاط
     opacity: 0.3; // تعيين الشفافية
+    background-color: var(--bullet-bg, #fff); // استخدام متغير للون النقاط
 
     &-active {
       opacity: 1; // زيادة الشفافية للنقاط النشطة
-      background-color: var(--color-primary); // لون النقاط النشطة
+      background-color: var(--active-bullet-bg, var(--color-primary)); // استخدام متغير للون النقاط النشطة
     }
   }
 
@@ -168,6 +180,7 @@ salla-slider {
 
   h2 {
     @apply text-lg text-red-400; // إعدادات عنوان العرض
+    color: var(--offer-title-color, #d32f2f); // استخدام متغير للون العنوان
   }
 
   p {

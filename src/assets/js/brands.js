@@ -15,6 +15,17 @@ class Brands extends BasePage {
             let scrolAtTop = window.pageYOffset <= 200;
             app.toggleClassIf('#brands-nav', 'is-not-sticky', 'is-sticky', () => scrolAtTop);
         });
+
+        this.applyDarkMode(); // تطبيق الوضع الداكن عند جاهزية الصفحة
+    }
+
+    applyDarkMode() {
+        const nav = document.querySelector('#brands-nav');
+        if (this.darkMode) {
+            nav.classList.add('dark-mode');
+        } else {
+            nav.classList.remove('dark-mode');
+        }
     }
 }
 

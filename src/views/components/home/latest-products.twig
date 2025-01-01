@@ -4,10 +4,10 @@
 | products                      | منتج[]   | قائمة بالمنتجات                                                          |
 | position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
 #}
-<section class="s-block s-block--latest-products container mt-6 sm:mt-8">
+<section class="s-block s-block--latest-products container mt-6 sm:mt-8 bg-white dark:bg-gray-800">
     <div class="s-block__title">
-      <h2>{{ trans('blocks.home.latest_products') }}</h2> <!-- عنوان قسم المنتجات الأحدث -->
+      <h2 class="text-gray-800 dark:text-white">{{ trans('blocks.home.latest_products') }}</h2> <!-- عنوان قسم المنتجات الأحدث -->
     </div>
     
-    <salla-products-list source="latest"></salla-products-list> <!-- قائمة المنتجات الأحدث -->
+    <salla-products-list source="latest" class="dark:text-gray-200"></salla-products-list> <!-- قائمة المنتجات الأحدث -->
 </section> 

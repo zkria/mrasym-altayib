@@ -17,6 +17,15 @@ class Testimonials extends BasePage {
             await commentsList.reload();
             commentsList.setAttribute('sort', event.currentTarget.value);
         });
+
+        this.applyDarkMode(); // تطبيق الوضع الداكن عند جاهزية الصفحة
+    }
+
+    applyDarkMode() {
+        const testimonialElements = document.querySelectorAll('#testimonials-filter, .testimonial-item');
+        testimonialElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

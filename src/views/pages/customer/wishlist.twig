@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block inner_content %}
-	<div class="space-y-5" id="wishlist">
+	<div class="space-y-5 bg-white dark:bg-gray-800" id="wishlist">
 		{% hook 'customer:wishlist.items.start' %}
-		<salla-products-list source="wishlist" row-cards product-card-component="custom-wishlist-card"></salla-products-list> <!-- مكون عرض المنتجات في قائمة الرغبات -->
+		<salla-products-list source="wishlist" row-cards product-card-component="custom-wishlist-card" class="bg-white dark:bg-gray-800"></salla-products-list> <!-- مكون عرض المنتجات في قائمة الرغبات مع دعم الوضع الداكن -->
 		{% hook 'customer:wishlist.items.end' %}
 	</div>
 {% endblock %}

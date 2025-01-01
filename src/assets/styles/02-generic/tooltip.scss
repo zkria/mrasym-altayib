@@ -3,7 +3,8 @@
   &-content {
     position: absolute; // تعيين الموضع المطلق
     transform: translate(82px, -120px); // تعيين موضع التلميح
-    background: #004d40; // لون خلفية التلميح
+    background: var(--tooltip-bg, #004d40); // استخدام متغير للون خلفية التلميح
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
     padding: 15px 15px 15px 36px; // إضافة حشوة داخلية
     text-align: right; // محاذاة النص إلى اليمين
     visibility: hidden; // إخفاء التلميح
@@ -16,7 +17,8 @@
       position: absolute; // تعيين الموضع المطلق
       z-index: -1; // تعيين مستوى الز-index
       left: auto; // تعيين الموضع الأيسر
-      background: #004d40; // لون خلفية السهم
+      background: var(--tooltip-arrow-bg, #004d40); // استخدام متغير للون خلفية السهم
+      @apply dark:bg-gray-700; // لون خلفية السهم في الوضع الداكن
       width: 20px; // عرض السهم
       height: 20px; // ارتفاع السهم
       transform: rotate(45deg); // تدوير السهم
@@ -27,8 +29,10 @@
     }
 
     .icon-trigger & {
-      background-color: #004d40; // لون الخلفية عند التفعيل
-      color: #e0f7f7; // لون النص عند التفعيل
+      background-color: var(--tooltip-active-bg, #004d40); // استخدام متغير للون الخلفية عند التفعيل
+      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن عند التفعيل
+      color: var(--tooltip-text-color, #e0f7f7); // استخدام متغير للون النص عند التفعيل
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
       padding: 10px; // إضافة حشوة
       width: 140px; // تعيين عرض التلميح
       line-height: 1; // تعيين ارتفاع السطر
@@ -39,7 +43,8 @@
       }
 
       &:after {
-        background-color: #004d40; // لون السهم عند التفعيل
+        background-color: var(--tooltip-arrow-active-bg, #004d40); // استخدام متغير للون السهم عند التفعيل
+        @apply dark:bg-gray-700; // لون السهم في الوضع الداكن عند التفعيل
       }
     }
 

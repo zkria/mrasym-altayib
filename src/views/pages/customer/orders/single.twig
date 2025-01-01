@@ -21,29 +21,29 @@
 #}
 {% extends "layouts.customer" %}
 {% block inner_content %}
-    <div class="space-y-4">
+    <div class="space-y-4 bg-white dark:bg-gray-800">
         {# تفاصيل الطلب #}
         <div class="overflow-hidden space-y-5">
             {% for package in order.packages %}
                 <div class="shipping-orders">
                     {# تفاصيل الشحن #}
-                    <div class="flex flex-col md:flex-row justify-between md:items-center bg-white px-5 py-3 border-b border-gray-100 rounded-t-md text-sm space-y-4 md:space-y-0">
+                    <div class="flex flex-col md:flex-row justify-between md:items-center bg-white dark:bg-gray-900 px-5 py-3 border-b border-gray-100 dark:border-gray-700 rounded-t-md text-sm space-y-4 md:space-y-0">
                         <div class="flex space-x-5 rtl:space-x-reverse">
                             {% if package.shipping_company.logo %}
                                 <img src="{{ package.shipping_company.logo }}" class="max-w-16 max-h-8" alt="{{ package.shipping_company.name }}">
                             {% endif %}
-                            <span>{{ package.shipping_company.name }}</span>
+                            <span class="text-gray-800 dark:text-gray-200">{{ package.shipping_company.name }}</span>
                         </div>
                         <div class="flex space-x-5 rtl:space-x-reverse">
                             {% if package.branch %}
                                 <span>
                                     {{ trans('pages.orders.branch') }}:
-                                    <span class="font-bold">{{ package.branch.name }}</span>
+                                    <span class="font-bold text-gray-800 dark:text-gray-200">{{ package.branch.name }}</span>
                                 </span>
                             {% endif %}
                             {% if package.shipping_company.number %}
                                 <span>{{ trans('pages.orders.shipment_no') }}:
-                                    <span class="font-bold">{{ package.shipping_company.number|raw }}</span>
+                                    <span class="font-bold text-gray-800 dark:text-gray-200">{{ package.shipping_company.number|raw }}</span>
                                 </span>
                             {% endif %}
                             {% if package.is_delivered %}
@@ -54,7 +54,7 @@
                                     </span>
                                 </span>
                             {% elseif package.shipping_company.tracing_link %}
-                                <a class="font-bold text-primary hover:opacity-80 flex items-center"
+                                <a class="font-bold text-primary dark:text-primary hover:opacity-80 flex items-center"
                                    href="{{ package.shipping_company.tracing_link|raw }}"
                                    target="_blank">
                                     <span class="sicon-shipping rtl:ml-1 ltr:mr-1"></span>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     {% for item in package.items %}
-                        <div data-order-item-id="{{ item.id }}" data-order-item-product-id="{{ item.product.id }}" class="order-item bg-white p-5 border-b border-gray-100 first:rounded-t-md last:rounded-b-md last:border-none">
+                        <div data-order-item-id="{{ item.id }}" data-order-item-product-id="{{ item.product.id }}" class="order-item bg-white dark:bg-gray-900 p-5 border-b border-gray-100 dark:border-gray-700 first:rounded-t-md last:rounded-b-md last:border-none">
                             <div class="mb-5 last:mb-0">
                                 {% if item.product %}
                                     <div class="flex rtl:space-x-reverse space-x-5 mb-4">
@@ -72,7 +72,7 @@
                                             <img src="{{ item.image ?: 'images/placeholder.png' | asset }}" alt="{{ item.name }}" class="w-18 h-14 object-{{ item.image ? 'cover':'contain' }} rounded-md">
                                         </a>
                                         <div>
-                                            <a href="{{ item.product.url }}" class="block leading-5 mb-1.5 md:text-base font-semibold transition-colors text-gray-500 hover:text-primary">
+                                            <a href="{{ item.product.url }}" class="block leading-5 mb-1.5 md:text-base font-semibold transition-colors text-gray-500 hover:text-primary dark:hover:text-primary">
                                                 {{ item.name }}
                                             </a>
                                             <b>{{ item.price|money }}</b>
@@ -80,32 +80,32 @@
                                     </div>
                                 {% else %}
                                     <div class="w-full flex justify-between text-sm py-2.5">
-                                        <span class="w-40 inline-block font-normal">{{ item.name }}</span>
+                                        <span class="w-40 inline-block font-normal text-gray-800 dark:text-gray-200">{{ item.name }}</span>
                                         <b>{{ item.price|money }}</b>
                                     </div>
                                 {% endif %}
                                 <div class="w-full flex justify-between text-sm py-2.5">
-                                    <span class="w-40 inline-block font-normal">{{ trans('pages.products.quantity') }}</span>
+                                    <span class="w-40 inline-block font-normal text-gray-800 dark:text-gray-200">{{ trans('pages.products.quantity') }}</span>
                                     <b>{{ item.quantity }}</b>
                                 </div>
                                 <div class="flex justify-between text-sm py-2.5">
-                                    <span class="w-40 inline-block font-normal">{{ trans('pages.products.price') }}</span>
+                                    <span class="w-40 inline-block font-normal text-gray-800 dark:text-gray-200">{{ trans('pages.products.price') }}</span>
                                     <b>{{ item.price|money }}</b>
                                 </div>
                                 <div class="flex justify-between text-sm py-2.5">
-                                    <span class="w-40 inline-block font-normal">{{ trans('pages.orders.total') }}</span>
+                                    <span class="w-40 inline-block font-normal text-gray-800 dark:text-gray-200">{{ trans('pages.orders.total') }}</span>
                                     <b>{{ item.total|money }}</b>
                                 </div>
                             </div>
                             {# تفاصيل إضافية للعنصر #}
                             {% if item.files %}
-                                <div class="flow-root rounded-md px-4 border border-gray-200">
+                                <div class="flow-root rounded-md px-4 border border-gray-200 dark:border-gray-700">
                                     <dl class="text-sm text-dark divide-y divide-border-color">
                                         {% for file in item.files %}
                                             <div class="order-file py-2.5 center-between">
                                                 <dt class="mb-2 md:mb-0">{{ file.name }}</dt>
                                                 <dd class="font-medium text-xs">
-                                                    <salla-button href="{{ file.url }}" target="_blank" class="btn--rounded-full font-bold text-gray-600 hover:text-black">
+                                                    <salla-button href="{{ file.url }}" target="_blank" class="btn--rounded-full font-bold text-gray-600 dark:text-gray-200 hover:text-black">
                                                         <i class="sicon-{{ is_protected ? 'eye' : 'download' }}"></i> {{ is_protected ? trans('common.uploader.browse') : trans('pages.thank_you.download') }}
                                                     </salla-button>
                                                 </dd>
@@ -115,12 +115,12 @@
                                 </div>
                             {% elseif item.codes %}
                                 <h2 class="mb-3.5 text-sm font-bold">{{ trans('pages.orders.codes') }}</h2>
-                                <div class="flow-root rounded-md px-4 border border-gray-200">
+                                <div class="flow-root rounded-md px-4 border border-gray-200 dark:border-gray-700">
                                     <dl class="text-sm text-dark divide-y divide-border-color">
                                         {% for code in item.codes %}
                                             <div class="py-2.5 center-between">
                                                 <dt class="flex-center">
-                                                    <i class="sicon-debit-card-back text-xl rtl:ml-2 ltr:mr-2 text-gray-500 inline-block -mt-1"></i>
+                                                    <i class="sicon-debit-card-back text-xl rtl:ml-2 ltr:mr-2 text-gray-500 dark:text-gray-200 inline-block -mt-1"></i>
                                                     <span class="break-all font-bold">{{ code.code }}</span>
                                                 </dt>
                                                 <salla-button class="btn--rounded-full" onclick="app.copyToClipboard(event)" data-content="{{ code.code }}">
@@ -133,17 +133,17 @@
                                 </div>
                             {% endif %}
                             {% if item.note %}
-                                <p class="mt-3 text-sm text-gray-500">
+                                <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
                                     <span>{{ trans('common.elements.note') }} : </span>{{ item.note }}
                                 </p>
                             {% endif %}
                             {% if item.attachments %}
-                                <div class="flow-root rounded-md px-4 border border-gray-200">
+                                <div class="flow-root rounded-md px-4 border border-gray-200 dark:border-gray-700">
                                     <dl class="text-sm text-dark divide-y divide-border-color">
                                         {% for attachment in item.attachments %}
                                             <div class="py-3.5 md:flex items-center justify-between">
                                                 <dt class="mb-2 md:mb-0">{{ trans('pages.products.attachments') }}</dt>
-                                                <dd class="font-medium {{ attachment.type == 'image' ? 'text-gray-900' : 'text-xs' }}">
+                                                <dd class="font-medium {{ attachment.type == 'image' ? 'text-gray-900' : 'text-xs' }} dark:text-gray-200">
                                                     <a href="{{ attachment.url }}">
                                                         {% if attachment.type == 'image' %}
                                                             <img src="{{ attachment.url }}" alt="{{ trans('pages.products.attachments') }}" class="max-w-16 max-h-8">

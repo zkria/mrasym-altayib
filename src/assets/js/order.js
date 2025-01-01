@@ -22,6 +22,15 @@ class Order extends BasePage {
                     app.element('#modal-order-cancel').hide();
                 });
         });
+
+        this.applyDarkMode();
+    }
+
+    applyDarkMode() {
+        const modalElements = document.querySelectorAll('#reorder-modal, #modal-order-cancel');
+        modalElements.forEach(modal => {
+            modal.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

@@ -34,11 +34,11 @@
 {% extends "layouts.master" %}
 
 {% block content %}
-    <div class="h-62 -mb-52 w-full bg-primary rtl:right-0 ltr:left-0 relative -z-1 bg-cover bg-no-repeat bg-center"
+    <div class="h-62 -mb-52 w-full bg-primary rtl:right-0 ltr:left-0 relative -z-1 bg-cover bg-no-repeat bg-center dark:bg-gray-800"
          style="background-image:url({{ loyalty.image }})">
         <div class="overlay h-full w-full bg-black opacity-50 absolute top-0 left-0"></div>
     </div>
-    <div class="container space-y-8 lg:space-y-16">
+    <div class="container space-y-8 lg:space-y-16 bg-white dark:bg-gray-800">
         {# فتات الخبز #}
         <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
 
@@ -48,8 +48,8 @@
                 <i class="sicon-star2 star-anime text-amber-400 text-7xl"></i>
                 <div class="loyalty__banner-content">
                     <div class="info">
-                        <h1>{{ loyalty.name }}</h1>
-                        <p>{{ loyalty.description }}</p>
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ loyalty.name }}</h1>
+                        <p class="text-gray-500 dark:text-gray-400">{{ loyalty.description }}</p>
                         {% if user.loyalty_points %}
                             <div class="loyalty-points">
                                 {{ trans('pages.loyalty_program.you_have') }}
@@ -74,7 +74,7 @@
         {# طرق كسب النقاط #}
         <section class="points-ways pt-6">
             <div class="s-block__title">
-              <h2>{{ trans("pages.loyalty_program.ways_to_get_points") }}</h2>
+              <h2 class="text-gray-900 dark:text-gray-200">{{ trans("pages.loyalty_program.ways_to_get_points") }}</h2>
             </div>
             <div class="points-ways__list">
                 {% for point in loyalty.points %}
@@ -89,7 +89,7 @@
                                     {{ point.points }}
                                     {{ trans("pages.loyalty_program.point") }}
                                 </h3>
-                                <p>{{ point.description }}</p>
+                                <p class="text-gray-500 dark:text-gray-400">{{ point.description }}</p>
                             </div>
                         </div>
 

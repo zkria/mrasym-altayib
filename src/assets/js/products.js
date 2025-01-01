@@ -24,6 +24,7 @@ class Products extends BasePage {
         });
 
         this.initiateMobileMenu();
+        this.applyDarkMode();
     }
 
     initiateMobileMenu() {
@@ -54,6 +55,13 @@ class Products extends BasePage {
             }
             document.body.classList.remove('filters-opened');
             drawer.close();
+        });
+    }
+
+    applyDarkMode() {
+        const productElements = document.querySelectorAll('#filters-menu, #product-filter, .product-list-item');
+        productElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
         });
     }
 }

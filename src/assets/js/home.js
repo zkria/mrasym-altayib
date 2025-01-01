@@ -6,6 +6,7 @@ window.fslightbox = Lightbox;
 class Home extends BasePage {
     onReady() {
         this.initFeaturedTabs();
+        this.applyDarkMode();
     }
 
     /**
@@ -24,6 +25,13 @@ class Home extends BasePage {
             });
         });
         document.querySelectorAll('.s-block-tabs').forEach(block => block.classList.add('tabs-initialized'));
+    }
+
+    applyDarkMode() {
+        const tabs = document.querySelectorAll('.tab-trigger, .tabs-wrapper>div');
+        tabs.forEach(tab => {
+            tab.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

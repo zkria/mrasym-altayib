@@ -50,7 +50,7 @@
 | theme.settings.get(settingName, default=null)      | مختلط    | الحصول على إعداد السمة مثل `theme.settings.get('my_var', 'fallback')`                             |
 #}
 <!DOCTYPE html>
-<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
+<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}" class="dark">
 <!-- بسم الله الرحمن الرحيم -->
 <head>
     <meta charset="UTF-8">
@@ -75,8 +75,8 @@
     {% hook head %}
     {% block styles %}{% endblock %}
     <link rel="stylesheet" href="{{ 'app.css' | asset }}">
-    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
-    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
+    <link rel="stylesheet" href="{{ theme.font.path|cdn }}">
+    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}">
     
     <style>
         :root {
@@ -85,6 +85,14 @@
             --color-primary-dark: {{ theme.color.darker(0.15) }};
             --color-primary-light: {{ theme.color.lighter(0.15) }};
             --color-primary-reverse: {{ theme.color.reverse_text }};
+            --color-text: {{ theme.color.text }};
+            --color-background: #FFFFFF;
+            --color-dark-background: #333333;
+            --color-dark-text: #FFFFFF;
+        }
+        body.dark {
+            background-color: var(--color-dark-background);
+            color: var(--color-dark-text);
         }
     </style>
     {# خدمات التتبع، ميزة CSS مخصصة. #}

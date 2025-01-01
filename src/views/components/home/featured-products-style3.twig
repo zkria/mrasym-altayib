@@ -13,13 +13,13 @@
 | items[].id                    | سلسلة    | معرف القسم                                                               |
 | position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
 #}
-<section class="s-block s-block--features-products {% if items | length > 1 %}two-cols{% endif %} container">
+<section class="s-block s-block--features-products {% if items | length > 1 %}two-cols{% endif %} container bg-white dark:bg-gray-800">
     <div class="inner">
         {% for section in items %}
             <div>
                 <div class="s-block__title">
-                  <h2>{{ section.title }}</h2> <!-- عنوان القسم -->
-                  {# <p>عنوان فرعي توصيفي صغير</p> #} <!-- تعليق على العنوان الفرعي -->
+                  <h2 class="text-gray-800 dark:text-white">{{ section.title }}</h2> <!-- عنوان القسم -->
+                  {# <p class="text-gray-600 dark:text-gray-400">عنوان فرعي توصيفي صغير</p> #} <!-- تعليق على العنوان الفرعي -->
                 </div> 
                 <div class="flex-1 grid lg:grid-cols-2 gap-4 sm:gap-8">
                     {% if section.featured_product %}

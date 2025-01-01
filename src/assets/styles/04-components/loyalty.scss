@@ -10,12 +10,15 @@
     a,
     span,
     .arrow {
-      @apply text-white/90; // تعيين لون النص
+      color: var(--breadcrumbs-text-color, #fff); // استخدام متغير للون النص
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
     }
   }
 
   &__banner {
-    @apply relative overflow-hidden bg-white m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default; // إعدادات لافتة الولاء
+    @apply relative overflow-hidden m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default; // إعدادات لافتة الولاء
+    background-color: var(--banner-bg, #fff); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
     &-inner {
       @apply relative z-10 text-center sm:flex flex-1 items-center rtl:space-x-reverse sm:space-x-12; // إعدادات المحتوى الداخلي
@@ -29,19 +32,27 @@
 
         h1 {
           @apply font-bold text-3xl mb-2.5; // إعدادات عنوان المعلومات
+          color: var(--info-title-color, #333); // استخدام متغير للون العنوان
+          @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
         }
 
         p {
-          @apply text-gray-500 max-w-xs leading-6 mb-2; // إعدادات وصف المعلومات
+          @apply max-w-xs leading-6 mb-2; // إعدادات وصف المعلومات
+          color: var(--info-desc-color, #666); // استخدام متغير للون الوصف
+          @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
         }
       }
     }
 
     .loyalty-points {
-      @apply text-sm text-gray-500; // إعدادات نقاط الولاء
+      @apply text-sm; // إعدادات نقاط الولاء
+      color: var(--points-text-color, #666); // استخدام متغير للون النص
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
 
       .count-number {
-        @apply text-4xl text-primary; // إعدادات عدد النقاط
+        @apply text-4xl; // إعدادات عدد النقاط
+        color: var(--points-number-color, #00796b); // استخدام متغير للون الأرقام
+        @apply dark:text-green-300; // لون الأرقام في الوضع الداكن
       }
     }
   }
@@ -50,7 +61,8 @@
     @apply absolute z-0 transform opacity-70; // إعدادات النجوم
 
     i {
-      @apply text-gray-100; // إعدادات أيقونة النجوم
+      color: var(--star-color, #ccc); // استخدام متغير للون الأيقونة
+      @apply dark:text-gray-400; // لون الأيقونة في الوضع الداكن
     }
 
     &--first {
@@ -73,13 +85,17 @@
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-8; // إعدادات تخطيط قائمة طرق كسب النقاط
 
     .way-item {
-      @apply flex flex-col bg-white w-full opacity-100 rounded-md shadow-default p-6; // إعدادات عنصر طريقة كسب النقاط
+      @apply flex flex-col w-full opacity-100 rounded-md shadow-default p-6; // إعدادات عنصر طريقة كسب النقاط
+      background-color: var(--way-item-bg, #fff); // استخدام متغير للون الخلفية
+      @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
       &__icon {
         @apply flex shrink-0 items-center justify-center relative h-12 w-12; // إعدادات أيقونة طريقة كسب النقاط
 
         span {
           @apply absolute z-0 w-full h-full inset-0 rounded-full opacity-10; // إعدادات الخلفية للرمز
+          background-color: var(--icon-bg-color, #eee); // استخدام متغير للون الخلفية
+          @apply dark:bg-gray-300; // لون الخلفية في الوضع الداكن
         }
       }
 
@@ -88,10 +104,14 @@
 
         h4 {
           @apply font-bold text-xl break-all; // إعدادات عنوان طريقة كسب النقاط
+          color: var(--content-title-color, #333); // استخدام متغير للون العنوان
+          @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
         }
 
         p {
-          @apply text-sm text-gray-400; // إعدادات وصف طريقة كسب النقاط
+          @apply text-sm; // إعدادات وصف طريقة كسب النقاط
+          color: var(--content-desc-color, #666); // استخدام متغير للون الوصف
+          @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
         }
       }
 

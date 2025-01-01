@@ -11,6 +11,15 @@ class ThankYou extends BasePage {
             form.innerHTML = res.data.message; // تحديث محتوى النموذج برسالة الفاتورة
             form.classList.add('sent'); // إضافة فئة "sent" للنموذج
         });
+
+        this.applyDarkMode(); // تطبيق الوضع الداكن عند جاهزية الصفحة
+    }
+
+    applyDarkMode() {
+        const thankYouElements = document.querySelectorAll('.thanks-item, #invoice-form');
+        thankYouElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

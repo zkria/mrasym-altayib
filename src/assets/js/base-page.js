@@ -1,14 +1,23 @@
 class BasePage {
   constructor() {
     // يمكن إضافة أي إعدادات أولية هنا
+    this.darkMode = localStorage.getItem('theme') === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 
   onReady() {
     // يتم استدعاء هذا عند جاهزية الصفحة
+    this.applyDarkMode();
   }
 
   registerEvents() {
     // يتم استدعاء هذا لتسجيل الأحداث
+  }
+
+  /**
+   * تطبيق الوضع الداكن على الصفحة
+   */
+  applyDarkMode() {
+    document.body.classList.toggle('dark-mode', this.darkMode);
   }
 
   /**

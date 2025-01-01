@@ -1,6 +1,10 @@
 /* شريط التنقل العلوي */
 .top-navbar {
-  @apply flex items-center justify-between bg-white text-gray-800 p-6 shadow-md sticky top-0 z-50;
+  @apply flex items-center justify-between p-6 shadow-md sticky top-0 z-50;
+  background-color: var(--navbar-bg, #fff);
+  @apply dark:bg-gray-800;
+  color: var(--navbar-text-color, #333);
+  @apply dark:text-gray-200;
   transition: margin-right 0.3s ease;
   position: relative;
 }
@@ -12,6 +16,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   color: inherit;
+  @apply dark:text-gray-200;
 }
 
 .navbar-brand {
@@ -41,7 +46,7 @@
 }
 
 .side-nav-container {
-  @apply fixed right-0 top-0 h-full text-gray-800 bg-white z-30;
+  @apply fixed right-0 top-0 h-full z-30;
   width: 200px;
   transform: translateX(100%);
   transition: transform 0.3s ease;
@@ -50,6 +55,10 @@
   align-items: center;
   padding: 20px;
   box-shadow: none;
+  background-color: var(--sidenav-bg, #fff);
+  @apply dark:bg-gray-700;
+  color: var(--sidenav-text-color, #333);
+  @apply dark:text-gray-200;
 }
 
 .side-nav-container.open {

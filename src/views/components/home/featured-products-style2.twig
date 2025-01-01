@@ -16,13 +16,13 @@
 #}
 {% set component_id='featured-products-style2-' ~ position %}
 {% set is_vertical = theme.settings.get('vertical_fixed_products', true) %}
-<section class="s-block s-block-tabs s-block--tabs-products s-block--full-bg {{ is_slider ? 'as-slider' : 'as-grid' }} bg-gray-100 py-8 sm:py-16" id="{{ component_id }}">
+<section class="s-block s-block-tabs s-block--tabs-products s-block--full-bg {{ is_slider ? 'as-slider' : 'as-grid' }} bg-gray-100 dark:bg-gray-800 py-8 sm:py-16" id="{{ component_id }}">
   <div class="container">
 
       <div class="tabs hide-scroll">
           {% for section in items %}
               <salla-button 
-                class="tab-trigger {{ loop.first ? 'is-active' : '' }}"
+                class="tab-trigger {{ loop.first ? 'is-active' : '' }} text-gray-800 dark:text-gray-200"
                 data-target="{{ component_id }}-{{ section.id }}"
                 data-component-id="{{ component_id }}"
                 fill="outline">

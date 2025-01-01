@@ -6,6 +6,6 @@
 | sort                          | سلسلة    | طريقة ترتيب الشهادات                                                      |
 | hide_customer_info            | بولياني  | تحديد ما إذا كان يجب عرض/إخفاء معلومات العملاء                          |
 #}
-<section class="s-block s-block--testimonials container overflow-hidden">
+<section class="s-block s-block--testimonials container overflow-hidden bg-white dark:bg-gray-800">
     <salla-reviews {{ display_all_url ? "display-all-link" : "" }} limit="{{ limit }}" sort="{{ sort }}" {{ hide_customer_info ? 'hide-customer-info' : '' }} type="{{ type }}"></salla-reviews>
 </section> 

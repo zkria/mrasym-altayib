@@ -1,6 +1,8 @@
 // إعدادات إدخال المنتج في قائمة الرغبات
 .product-entry {
   @apply h-full transition-shadow duration-300 bg-white hover:shadow-default rounded-lg justify-between flex relative; // إعدادات الحاوية
+  background-color: var(--product-bg, #fff); // استخدام متغير للون الخلفية
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
   &--wishlist {
     @apply justify-between p-4 flex-col sm:flex-row; // إعدادات قائمة الرغبات
@@ -23,6 +25,8 @@
 
   &-product {
     @apply bg-gray-100 mb-4 md:mb-14 py-4 md:py-14; // إعدادات حاوية التعليقات
+    background-color: var(--comments-bg, #f5f5f5); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
     .s-comments-container {
       @apply container; // إعدادات حاوية التعليقات
@@ -33,6 +37,8 @@
 // إعدادات أزرار المشاركة
 .share-btns-list {
   @apply absolute z-10 overflow-hidden opacity-0 top-12 bg-white flex items-center flex-col shadow-huge rounded-3xl; // إعدادات قائمة الأزرار
+  background-color: var(--share-buttons-bg, #fff); // استخدام متغير للون الخلفية
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
   a {
     @apply block p-3 hover:text-primary; // إعدادات الروابط
@@ -49,7 +55,8 @@
 // إعدادات تقييم المنتج (SVG)
 .s-product-card-content-pie-svg-base {
   transition: stroke-dashoffset 1s linear; // إعدادات التحويل
-  stroke: #E8EDF2; // لون الحدود
+  stroke: var(--svg-base-stroke, #E8EDF2); // استخدام متغير للون الحدود
+  @apply dark:stroke-gray-600; // لون الحدود في الوضع الداكن
   stroke-width: 2px; // عرض الحدود
   stroke-linecap: round; // شكل نهاية الحدود
   fill: none; // عدم ملء الشكل
@@ -57,7 +64,8 @@
 
 .s-product-card-content-pie-svg-bar {
   fill: none; // عدم ملء الشكل
-  stroke: var(--color-primary); // لون الحدود
+  stroke: var(--svg-bar-stroke, var(--color-primary)); // استخدام متغير للون الحدود
+  @apply dark:stroke-primary; // لون الحدود في الوضع الداكن
   stroke-dasharray: 100 100; // إعدادات التدرج
   stroke-dashoffset: 100; // إعدادات التحويل
 }
@@ -120,6 +128,7 @@
 
     .sticky-product-bar {
       @apply flex flex-wrap flex-col gap-2.5 sm:gap-4 fixed z-[2] bottom-0 left-0 p-3 w-full justify-between items-center shadow-[-1px_-2px_9px_0_rgba(0,0,0,0.05)] transition duration-700 delay-500 translate-y-100 opacity-0 ease-elastic; // إعدادات الشريط الثابت
+      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
       &__quantity,
       salla-add-product-button {
@@ -352,6 +361,7 @@
 // إعدادات شارة عرض البنك
 #offer-corner-badge {
   @apply float-left absolute bg-red-600 text-white transform rtl:-rotate-45 ltr:rotate-45 px-12 py-1 h-auto w-auto border-0 m-0 z-1 rtl:top-3 ltr:top-5 rtl:-left-12 ltr:-right-14; // إعدادات الشارة
+  background-color: var(--offer-badge-bg, #ba000d); // استخدام متغير للون الخلفية
 }
 
 // إعدادات خيارات السلة

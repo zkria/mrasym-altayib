@@ -1,10 +1,25 @@
 // إعدادات إعادة تعيين الأنماط الأساسية
+:root {
+  --text-color-light: #e0f7f7; // لون النص الرئيسي في الوضع الفاتح
+  --text-color-dark: #2c3e50; // لون النص الرئيسي في الوضع الداكن
+  --background-color-light: #fff; // لون الخلفية في الوضع الفاتح
+  --background-color-dark: #34495e; // لون الخلفية في الوضع الداكن
+}
+
 body {
   font-size: 15px; // حجم الخط الأساسي
   font-weight: 400; // وزن الخط
   line-height: 26px; // ارتفاع السطر
-  color: #e0f7f7; // لون النص الرئيسي
+  color: var(--text-color-light); // استخدام المتغير للون النص
+  background-color: var(--background-color-light); // استخدام المتغير للون الخلفية
   position: relative; // تعيين الموضع النسبي
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن
+}
+
+body.dark-mode {
+  color: var(--text-color-dark); // تغيير لون النص في الوضع الداكن
+  background-color: var(--background-color-dark); // تغيير لون الخلفية في الوضع الداكن
 }
 
 // p {
@@ -33,6 +48,7 @@ h5, .h5,
 h6, .h6 {
   font-weight: 600; // وزن الخط للعناوين
   margin-bottom: 0px; // إزالة الهوامش السفلية
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن للعناوين
 }
 
 a {
@@ -85,7 +101,8 @@ h3 {
 // }
 
 .f-color {
-  color: #004d40; // لون خاص
+  color: var(--text-color-light); // استخدام المتغير للون الخاص
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن
 }
 
 h5.subtitle {

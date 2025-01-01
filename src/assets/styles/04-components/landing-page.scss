@@ -1,6 +1,7 @@
 // إعدادات صفحة الهبوط
 .landing-page {
-    @apply bg-white; // تعيين لون الخلفية
+    background-color: var(--landing-bg, #fff); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
     @media (max-width: 640px) {
         @apply pb-16; // تعيين الحشوة السفلية في الشاشات الصغيرة
@@ -18,28 +19,36 @@
 
             &-inner {
                 & > h1 {
-                    @apply text-2xl md:text-4xl font-bold text-[#004d40]; // إعدادات عنوان الصفحة
+                    @apply text-2xl md:text-4xl font-bold; // إعدادات عنوان الصفحة
+                    color: var(--landing-header-color, #004d40); // استخدام متغير للون العنوان
+                    @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
                 }
 
                 & > p {
-                    @apply text-[#00796b]; // إعدادات وصف الصفحة
+                    color: var(--landing-desc-color, #00796b); // استخدام متغير للون وصف الصفحة
+                    @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
                 }
             }
 
             &-offer {
                 @apply mt-16; // إعدادات قسم العروض
                 p {
-                    @apply text-[#004d40]; // إعدادات نص العرض
+                    color: var(--offer-text-color, #004d40); // استخدام متغير للون نص العرض
+                    @apply dark:text-gray-200; // لون نص العرض في الوضع الداكن
                 }
                 h3 {
-                    @apply text-3xl mb-16 text-[#004d40]; // إعدادات عنوان العرض
+                    @apply text-3xl mb-16; // إعدادات عنوان العرض
+                    color: var(--offer-title-color, #004d40); // استخدام متغير للون عنوان العرض
+                    @apply dark:text-gray-200; // لون عنوان العرض في الوضع الداكن
                 }
             }
         }
 
         &:before {
+            @apply hidden sm:block content-[''] absolute inset-0 w-full h-full scale-x-150; // إعدادات الخلفية
+            background-color: var(--header-bg, #F5F7F9); // استخدام متغير للون الخلفية
+            @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
             border-radius: 0 0 50% 50%/ 0 0 100% 100%; // إعدادات الزوايا
-            @apply hidden sm:block content-[''] absolute inset-0 w-full h-full bg-[#F5F7F9] scale-x-150; // إعدادات الخلفية
         }
     }
 
@@ -70,7 +79,8 @@
 
     .swiper-wrapper, .s-products-list-wrapper {
         .s-product-card-entry {
-            @apply border border-[#eee]; // إعدادات حدود بطاقة المنتج
+            border-color: var(--product-border-color, #eee); // استخدام متغير للون الحدود
+            @apply dark:border-gray-700; // لون الحدود في الوضع الداكن
         }
     }
 
@@ -115,7 +125,8 @@
                     @apply mb-12; // إعدادات صورة الخطأ
                 }
                 h1 {
-                    @apply text-[#004d40]; // تعيين لون العنوان
+                    color: var(--expired-header-color, #004d40); // استخدام متغير للون العنوان
+                    @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
                 }
             }
         }

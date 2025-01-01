@@ -3,9 +3,10 @@
  *
  * @param imgID the id of the image to be zoomed
  * @param zoom the zoom strength
+ * @param darkMode optional parameter to enable dark mode styles
  * @returns void
  */
-export function zoom(imgID, zoom = 2) {
+export function zoom(imgID, zoom = 2, darkMode = false) {
 	if (!imgID) return;
 
 	const img = document.getElementById(imgID);
@@ -14,6 +15,15 @@ export function zoom(imgID, zoom = 2) {
 	const glass = document.createElement('DIV');
 	glass.className = 'img-magnifier-glass';
 	img.parentElement.insertBefore(glass, img);
+
+	// Apply dark mode styles if enabled
+	if (darkMode) {
+		glass.style.backgroundColor = 'rgba(0,0,0,0.5)'; // Dark background for the glass
+		glass.style.borderColor = '#fff'; // Light border for the glass
+	} else {
+		glass.style.backgroundColor = 'rgba(255,255,255,0.8)'; // Light background for the glass
+		glass.style.borderColor = '#000'; // Dark border for the glass
+	}
 
 	glass.style.backgroundImage = `url('${img.src}')`;
 	glass.style.backgroundRepeat = 'no-repeat';

@@ -5,3 +5,15 @@
   justify-content: $justify; // محاذاة العناصر أفقيًا
   flex-direction: $direction; // تحديد اتجاه العناصر
 }
+
+// مزيج لتطبيق الوضع الداكن
+@mixin dark-mode($dark-mode: false, $background-dark: #333, $text-dark: #fff) {
+  background-color: if($dark-mode, $background-dark, inherit); // تطبيق لون الخلفية الداكن
+  color: if($dark-mode, $text-dark, inherit); // تطبيق لون النص الداكن
+}
+
+// استخدام المزيج الجديد
+.example {
+  @include flexable(center, space-between, column);
+  @include dark-mode(true); // تفعيل الوضع الداكن
+}

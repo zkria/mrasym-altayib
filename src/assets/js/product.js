@@ -13,6 +13,7 @@ class Product extends BasePage {
         });
 
         this.initProductOptionValidations();
+        this.applyDarkMode();
 
         if (imageZoom) {
             // استدعاء الدالة عند جاهزية الصفحة
@@ -49,6 +50,13 @@ class Product extends BasePage {
                 const image = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active img');
                 zoom(image?.id, 2);
             }, 250);
+        });
+    }
+
+    applyDarkMode() {
+        const productElements = document.querySelectorAll('.product-details, .price-wrapper, .product-form');
+        productElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
         });
     }
 

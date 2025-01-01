@@ -13,4 +13,16 @@
 | advertisement.colors.text   | string        | لون النص (Hex) مثل: #ffffff                |
 | advertisement.target        | string        | `_self`، `_blank`                          |
 #}
-<salla-advertisement></salla-advertisement>
+<salla-advertisement
+    :id="advertisement.id"
+    :icon="advertisement.icon"
+    :title="advertisement.title"
+    :description="advertisement.description"
+    :url="advertisement.url"
+    :close-url="advertisement.close_url"
+    :colors="{
+        bg: var(--adv-bg-color, advertisement.colors.bg),
+        text: var(--adv-text-color, advertisement.colors.text)
+    }"
+    :target="advertisement.target"
+></salla-advertisement>

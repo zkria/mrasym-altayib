@@ -1,6 +1,14 @@
 /*
 * إعدادات الأزرار
 */
+:root {
+  --btn-text-color: #fff; // لون النص الافتراضي للأزرار
+  --btn-bg-color: #333; // لون خلفية الأزرار الافتراضي
+  --btn-hover-bg-color: #555; // لون خلفية الأزرار عند التمرير
+  --btn-dark-bg-color: #222; // لون خلفية الأزرار في الوضع الداكن
+  --btn-dark-hover-bg-color: #444; // لون خلفية الأزرار عند التمرير في الوضع الداكن
+}
+
 salla-button {
   &[width="wide"] {
     @apply w-full; // تعيين عرض الزر إلى كامل العرض
@@ -20,6 +28,15 @@ salla-button {
 
 .btn {
   @apply transition duration-300 flex-1 inline-flex justify-center items-center px-6 pb-2.5 pt-2 text-sm font-bold rounded-md hover:opacity-80 whitespace-nowrap; // إعدادات الزر الأساسية
+  background-color: var(--btn-bg-color); // استخدام متغير للون الخلفية
+  color: var(--btn-text-color); // استخدام متغير للون النص
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  @apply dark:text-gray-200; // لون النص في الوضع الداكن
+
+  &:hover {
+    background-color: var(--btn-hover-bg-color); // تغيير لون الخلفية عند التمرير
+    @apply dark:bg-gray-700; // لون الخلفية عند التمرير في الوضع الداكن
+  }
 
   .loader {
     width: 0; // عرض المحمل
@@ -131,18 +148,22 @@ salla-button {
   /* أنواع الأزرار */
   &--danger {
     @apply bg-red-400 text-white hover:opacity-80; // إعدادات زر الخطر
+    @apply dark:bg-red-600 dark:hover:bg-red-700; // إعدادات زر الخطر في الوضع الداكن
   }
 
   &--primary {
     @apply text-primary-reverse border border-primary bg-primary; // إعدادات الزر الأساسي
+    @apply dark:bg-blue-700 dark:border-blue-800 dark:text-white; // إعدادات الزر الأساسي في الوضع الداكن
   }
 
   &--outline-primary {
     @apply border border-primary text-primary hover:bg-primary hover:text-primary-reverse; // إعدادات الزر الخارجي الأساسي
+    @apply dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white; // إعدادات الزر الخارجي الأساسي في الوضع الداكن
   }
 
   &--outline {
     @apply text-gray-400 bg-white hover:bg-primary hover:text-white hover:border-primary shadow-sm border border-gray-200; // إعدادات الزر الخارجي
+    @apply dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white dark:border-gray-600; // إعدادات الزر الخارجي في الوضع الداكن
 
     &.light {
       @apply bg-transparent text-white border-white; // إعدادات الزر الخارجي الفاتح

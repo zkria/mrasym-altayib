@@ -1,4 +1,4 @@
-export default function toolTip() {
+export default function toolTip(darkMode = false) {
   const tooltipToggleClick = document.querySelectorAll('.tooltip-toggle--clickable'),
     tooltipToggleHover = document.querySelectorAll('.tooltip-toggle--hover'),
     closeTooltip = document.querySelectorAll('.close-tooltip');
@@ -7,6 +7,11 @@ export default function toolTip() {
 
   const showTooltip = (element) => {
     element.classList.add('visible');
+    if (darkMode) {
+      element.classList.add('tooltip-dark');
+    } else {
+      element.classList.remove('tooltip-dark');
+    }
   };
 
   const hideTooltip = (element) => {

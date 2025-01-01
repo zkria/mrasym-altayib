@@ -9,11 +9,11 @@
 {% block inner_content %}
     {% hook 'customer:profile.form.start' %}
 
-    <salla-user-profile></salla-user-profile> <!-- مكون عرض ملف المستخدم -->
+    <salla-user-profile class="bg-white dark:bg-gray-800"></salla-user-profile> <!-- مكون عرض ملف المستخدم مع دعم الوضع الداكن -->
 
     {% hook 'customer:profile.form.end' %}
 
-    <salla-verify></salla-verify> <!-- مكون التحقق من المستخدم -->
+    <salla-verify class="bg-white dark:bg-gray-800"></salla-verify> <!-- مكون التحقق من المستخدم مع دعم الوضع الداكن -->
 
-    <salla-user-settings class="mt-10 block"></salla-user-settings> <!-- مكون إعدادات المستخدم -->
+    <salla-user-settings class="mt-10 block bg-white dark:bg-gray-800"></salla-user-settings> <!-- مكون إعدادات المستخدم مع دعم الوضع الداكن -->
 {% endblock %}

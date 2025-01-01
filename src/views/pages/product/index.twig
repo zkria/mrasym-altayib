@@ -18,20 +18,19 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
-    <div class="container px-2.5 ms:px-5 mb-10">
-        {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
+    <div class="container px-2.5 ms:px-5 mb-10 bg-white dark:bg-gray-800">
         <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
         <div class="flex items-start flex-col md:flex-row">
             {% if filters %}
                 <button class="btn--close-sm close-filters sicon-cancel hidden"></button>
-                <salla-filters class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
+                <salla-filters class="md:w-72 lg:sticky lg:top-20 flex-none bg-white dark:bg-gray-800" id="filters-menu"></salla-filters>
             {% endif %}
 
             <div class="main-content flex-1 w-full {{ filters ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
                 <div class="mb-4 sm:mb-6 flex justify-between items-center">
-                    <h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
+                    <h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3 text-gray-800 dark:text-gray-200" id="page-main-title">{{ page.title|raw }}</h1>
                     <div class="flex items-center space-x-2 rtl:space-x-reverse">
                         {% if filters %}
                             <a href="#filters-menu"
@@ -41,9 +40,9 @@
                         {% endif %}
                         {% if sort_options|length %}
                             <div class="flex items-center">
-                                <label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap"
+                                <label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap text-gray-800 dark:text-gray-200"
                                        for="product-filter">{{ trans('pages.categories.sorting') }}</label>
-                                <select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10">
+                                <select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10 bg-white dark:bg-gray-700">
                                     {% for sort in sort_options %}
                                         <option value="{{ sort.id }}" {{ sort.is_selected ? 'selected' : '' }}>{{ sort.name }}</option>
                                     {% endfor %}

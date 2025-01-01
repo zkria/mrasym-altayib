@@ -5,6 +5,7 @@ class Wishlist extends BasePage {
     onReady() {
         // تهيئة أيقونات قائمة الرغبات في بطاقات المنتجات
         salla.storage.get('salla::wishlist', []).forEach(id => this.toggleFavoriteIcon(id));
+        this.applyDarkMode(); // تطبيق الوضع الداكن عند جاهزية الصفحة
     }
 
     registerEvents() {
@@ -36,6 +37,13 @@ class Wishlist extends BasePage {
                 app.toggleElementClassIf(btn, 'is-added', 'not-added', () => isAdded);
                 // app.toggleElementClassIf(btn, 'pulse', 'un-favorited', () => isAdded);
             });
+    }
+
+    applyDarkMode() {
+        const wishlistElements = document.querySelectorAll('.wishlist-item, .btn--wishlist');
+        wishlistElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

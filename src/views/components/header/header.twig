@@ -7,7 +7,7 @@
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
-  <div class="top-navbar flex items-center justify-between bg-white p-6 shadow-md text-gray-800 sticky top-0 z-50">
+  <div class="top-navbar flex items-center justify-between bg-white dark:bg-gray-800 p-6 shadow-md text-gray-800 dark:text-gray-200 sticky top-0 z-50">
     <a class="navbar-brand flex items-center mx-auto" href="{{ store.url }}">
       <img fetchpriority="high" width="120%" height="300%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
       {% if is_page('index') %}
@@ -35,7 +35,7 @@
       </div>
 
       <div>
-        <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن">
+        <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن" onclick="toggleDarkMode()">
           <i class="header-btn__icon sicon-moon"></i>
         </button>
       </div>
@@ -54,16 +54,16 @@
   </div>
 
   <div id="search-popup" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-4 rounded shadow-lg">
+    <div class="bg-white dark:bg-gray-700 p-4 rounded shadow-lg">
       <button id="close-search" class="mb-2 text-red-500">إغلاق</button>
       <salla-search inline oval height="36"></salla-search>
     </div>
   </div>
 
-  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full text-gray-800 hidden">
+  <div id="sidenav" class="side-nav-container shadow-default bg-white dark:bg-gray-800 fixed right-0 top-0 h-full text-gray-800 dark:text-gray-200 hidden">
     <div class="inner bg-inherit p-4">
       <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="mb-2">
-      <p class="text-gray-800 mb-4 font-bold">القائمة</p>
+      <p class="text-gray-800 dark:text-gray-200 mb-4 font-bold">القائمة</p>
       <div class="container">
         <div class="flex flex-col items-start justify-start relative">
           <custom-main-menu></custom-main-menu>

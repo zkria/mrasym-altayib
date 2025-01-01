@@ -6,9 +6,13 @@
 | page.slug                 | سلسلة     | مثال: "cat.show"                                            |
 #}
 {% extends "layouts.master" %}
+
 {% block content %}
-    {% component home %} <!-- مكون الصفحة الرئيسية -->
+    <div class="bg-white dark:bg-gray-800">
+        {% component home %}
+    </div>
 {% endblock %}
+
 {% block scripts %}
-    <script defer src="{{ 'home.js' | asset }}"></script> <!-- سكربت الصفحة الرئيسية -->
+    <script defer src="{{ 'home.js' | asset }}"></script>
 {% endblock %}

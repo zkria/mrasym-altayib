@@ -3,6 +3,7 @@ import BasePage from '../base-page';
 class ProductCard extends HTMLElement {
   constructor() {
     super();
+    this.darkMode = false;
   }
   
   connectedCallback() {
@@ -151,8 +152,14 @@ class ProductCard extends HTMLElement {
     this.showQuantity = this.hasAttribute('showQuantity');
   }
 
+  setDarkMode(darkMode) {
+    this.darkMode = darkMode;
+    this.render();
+  }
+
   render() {
-    this.classList.add('s-product-card-entry'); 
+    const cardClass = this.darkMode ? 's-product-card-dark' : 's-product-card-light';
+    this.classList.add('s-product-card-entry', cardClass); 
     this.setAttribute('id', this.product.id);
     !this.horizontal && !this.fullImage && !this.minimal ? this.classList.add('s-product-card-vertical') : '';
     this.horizontal && !this.fullImage && !this.minimal ? this.classList.add('s-product-card-horizontal') : '';
@@ -256,7 +263,8 @@ class ProductCard extends HTMLElement {
                 product-status="${this.product.status}"
                 product-type="${this.product.type}">
                 ${this.product.status == 'sale' ? 
-                    `<i class="text-base sicon-${ this.product.type == 'booking' ? 'calendar-time' : 'shopping-bag'}"></i>` : ``}
+                    `<i class="text-base sicon-${ this.product.type == 'booking' ? 'calendar-time' : 'shopping-bag'}"></i>`
+                : ``}
                 <span>${this.product.add_to_cart_label ? this.product.add_to_cart_label : this.getAddButtonLabel()}</span>
               </salla-add-product-button>
 

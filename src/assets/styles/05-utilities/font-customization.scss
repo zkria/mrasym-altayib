@@ -4,6 +4,15 @@ body {
     .btn--add-to-cart {
       padding-top: 0 !important; // إزالة الحشوة العلوية
       padding-bottom: 0 !important; // إزالة الحشوة السفلية
+      color: var(--btn-text-color, #000); // استخدام متغير للون النص
+      background-color: var(--btn-bg-color, #fff); // استخدام متغير للون الخلفية
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
+      @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+
+      &:hover {
+        background-color: var(--btn-hover-bg-color, #e0e0e0); // لون الخلفية عند التمرير
+        @apply dark:bg-gray-800; // لون الخلفية عند التمرير في الوضع الداكن
+      }
     }
   }
 }

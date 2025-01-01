@@ -36,6 +36,15 @@ class Loyalty extends BasePage {
                 return i * 100;
             },
         }, '-=3200');
+
+        this.applyDarkMode();
+    }
+
+    applyDarkMode() {
+        const loyaltyElements = document.querySelectorAll('.loyality-item, .star-anime, .btn-anime');
+        loyaltyElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 }
 

@@ -17,9 +17,9 @@
         </nav>
 
         <div class="flex justify-center">
-            <div class="content content--single-page w-full lg:w-10/12 bg-white rounded p-6 lg:p-8 mt-4 lg:mt-12">
-                <h1 class="font-bold text-2xl mb-6">{{ page.title }}</h1>
-                <div class="content-entry">
+            <div class="content content--single-page w-full lg:w-10/12 bg-white dark:bg-gray-800 rounded p-6 lg:p-8 mt-4 lg:mt-12">
+                <h1 class="font-bold text-2xl mb-6 text-gray-900 dark:text-gray-200">{{ page.title }}</h1>
+                <div class="content-entry text-gray-900 dark:text-gray-200">
                     {{ page.content|raw }} {# عرض محتوى الصفحة #}
                 </div>
                 <salla-comments item-id="{{ page.id }}" type="page"></salla-comments> {# قسم التعليقات للصفحة #}

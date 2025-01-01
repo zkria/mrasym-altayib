@@ -12,6 +12,10 @@ body {
   line-height: 1.5; // ارتفاع السطر
   color: #e0f7f7; // لون النص الأساسي
   background-color: #004d40; // لون الخلفية الأساسي
+  @media (prefers-color-scheme: dark) {
+    color: #e5e7eb; // dark:text-gray-200
+    background-color: #1e293b; // dark:bg-gray-800
+  }
 }
 
 // إعداد الخطوط للعناوين
@@ -19,6 +23,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Open Sans', sans-serif; // تعيين خط العناوين
   font-weight: 700; // وزن الخط للعناوين
   color: #ffffff; // لون النص للعناوين
+  @media (prefers-color-scheme: dark) {
+    color: #e5e7eb; // dark:text-gray-200
+  }
 }
 
 // إعداد الخطوط الخاصة بالروابط
@@ -27,9 +34,14 @@ a {
   font-weight: 600; // وزن الخط للروابط
   text-decoration: none; // إزالة التزيين الافتراضي
   color: #00796b; // لون الروابط
-
   &:hover {
     text-decoration: underline; // إضافة التزيين عند التمرير فوق الرابط
     color: #004d40; // لون الروابط عند التمرير
+  }
+  @media (prefers-color-scheme: dark) {
+    color: #374151; // dark:bg-gray-700
+    &:hover {
+      color: #1e293b; // dark:bg-gray-800
+    }
   }
 }

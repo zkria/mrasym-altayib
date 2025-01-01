@@ -21,6 +21,14 @@ class Cart extends BasePage {
 
         this.initiateCoupon();
         this.initSubmitCart();
+        this.applyDarkMode(); // تطبيق الوضع الداكن عند جاهزية الصفحة
+    }
+
+    applyDarkMode() {
+        const cartElements = document.querySelectorAll('.cart-item, .cart-total, .coupon-section');
+        cartElements.forEach(el => {
+            el.classList.toggle('dark-mode', this.darkMode);
+        });
     }
 
     initSubmitCart() {

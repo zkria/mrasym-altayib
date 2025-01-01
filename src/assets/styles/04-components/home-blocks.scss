@@ -11,10 +11,14 @@
 
     h2 { 
       @apply text-lg font-bold relative leading-[1.2]; // إعدادات عنوان الكتلة
+      color: var(--block-title-color, #333); // استخدام متغير للون النص
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
     }
 
     p {
       @apply text-sm opacity-60 mt-2 line-clamp-1 sm:line-clamp-2 rtl:md:pl-16 ltr:md:pr-16; // إعدادات وصف الكتلة
+      color: var(--block-desc-color, #666); // استخدام متغير للون النص
+      @apply dark:text-gray-200; // لون النص في الوضع الداكن
     }
 
     &-nav {
@@ -24,6 +28,7 @@
 
   &__display-all {
     @apply inline-flex items-center gap-2 text-sm font-bold opacity-80 hover:opacity-100; // إعدادات زر عرض الكل
+    color: var(--display-all-color, #333); // استخدام متغير للون النص
 
     i {
       @apply ltr:rotate-180 inline-block; // إعدادات الأيقونة
@@ -36,15 +41,11 @@
 */
 .s-block--hero-slider {
   .swiper-slide {
-    @apply h-80 sm:h-96 lg:h-116 xl:h-132 relative bg-gray-800; // إعدادات ارتفاع السلايدر
+    @apply h-80 sm:h-96 lg:h-116 xl:h-132 relative; // إعدادات ارتفاع السلايدر
+    background-color: var(--hero-slider-bg, #555); // استخدام متغير للون الخلفية
+    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
-    .swiper-lazy {
-      &:after {
-        @apply bg-black/60; // إعدادات الخلفية
-      }
-    }
-
-    .overlay-bg {
+    .swiper-lazy, .overlay-bg {
       &:after {
         @apply bg-black/60; // إعدادات الخلفية
       }
@@ -68,14 +69,17 @@
 
   &--fixed {
     img {
-      @apply w-full object-cover rounded-md border-none block bg-gray-100; // إعدادات الصورة
+      @apply w-full object-cover rounded-md border-none block; // إعدادات الصورة
+      background-color: var(--fixed-banner-bg, #ccc); // استخدام متغير للون الخلفية
     }
   }
 }
 
 /* إعدادات الكتلة الإعلانية المربعة */
 .banner-entry {
-  @apply h-[200px] bg-gray-100 text-white text-center p-3 xs:p-4 rounded-md overflow-hidden relative bg-cover bg-no-repeat bg-center; // إعدادات الكتلة
+  @apply h-[200px] text-white text-center p-3 xs:p-4 rounded-md overflow-hidden relative bg-cover bg-no-repeat bg-center; // إعدادات الكتلة
+  background-color: var(--banner-entry-bg, #777); // استخدام متغير للون الخلفية
+  @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
   article {
     @apply flex flex-col items-center justify-center h-full p-2.5; // إعدادات المقال
@@ -89,11 +93,8 @@
     @apply flex flex-col justify-center xs:px-1; // إعدادات عنوان الكتلة
 
     &.text-with-border {
-      @apply xs:border border-dashed border-gray-200 rounded-md; // إعدادات الحدود
-
-      span {
-        @apply line-clamp-2; // إعدادات النص
-      }
+      @apply xs:border border-dashed rounded-md; // إعدادات الحدود
+      border-color: var(--banner-border-color, #ccc); // استخدام متغير للون الحدود
     }
   }
 
@@ -134,6 +135,7 @@
 .has-overlay { 
   &:after {
     @apply content-[''] h-full w-full bg-black/60 absolute top-0 left-0 transition-colors duration-300; // إعدادات التراكب
+    @apply dark:bg-black/70; // تعديل الشفافية في الوضع الداكن
   }
 
   &.with-hover {
@@ -156,6 +158,7 @@
 /* إعدادات الكتلة الإعلانية الكاملة */
 .full-banner-entry {
   @apply row-span-2 h-80 md:h-96 lg:h-116 xl:h-132 bg-stone-200 transition-opacity hover:opacity-95 bg-center bg-cover text-white text-center p-5 overflow-hidden relative bg-fixed; // إعدادات الكتلة
+  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
   background-attachment: initial;
 
@@ -269,6 +272,7 @@
 /* إعدادات السلايدر مع الخلفية */
 .s-block--slider-with-bg {
   @apply bg-gray-100 pb-8 sm:pb-16 mt-8 sm:mt-16 first-of-type:mt-0; // إعدادات الخلفية
+  @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
   .slider-bg {
     @apply h-96 sm:h-116 transition-opacity bg-center bg-cover text-white relative; // إعدادات الخلفية

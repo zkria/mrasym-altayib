@@ -1,13 +1,13 @@
-<footer class="store-footer">
-	<div aria-label="footer" class="store-footer__inner">
+<footer class="store-footer dark:bg-gray-800">
+	<div aria-label="footer" class="store-footer__inner dark:bg-gray-900">
 		<div class="container grid grid-cols-1 lg:grid-cols-6 gap-8 lg:gap-6">
 			<!-- قسم معلومات المتجر -->
 			<div class="lg:col-span-2 rtl:lg:pl-20 ltr:lg:pr-20">
 				<a href="{{ link('/') }}" class="flex items-center m-0">
-					<h3>{{store.name}}</h3> <!-- اسم المتجر -->
+					<h3 class="dark:text-white">{{store.name}}</h3> <!-- اسم المتجر -->
 				</a>
 				{% if store.description %}
-					<p class="max-w-sm leading-6 mb-6">
+					<p class="max-w-sm leading-6 mb-6 dark:text-gray-300">
 						{{ store.description|raw }} <!-- وصف المتجر -->
 					</p>
 				{% endif %}
@@ -25,8 +25,8 @@
 							</a>
 						{% endif %}
 						<div>
-							<p class="text-sm text-text-grey mb-1">{{ trans('common.elements.tax_number') }}</p>
-							<b class="text-sm">{{ store.settings.tax.number }}</b> <!-- الرقم الضريبي -->
+							<p class="text-sm text-text-grey mb-1 dark:text-gray-400">{{ trans('common.elements.tax_number') }}</p>
+							<b class="text-sm dark:text-white">{{ store.settings.tax.number }}</b> <!-- الرقم الضريبي -->
 						</div>
 					</div>
 
@@ -45,7 +45,7 @@
 
 			<!-- قسم الروابط المهمة -->
 			<div>
-				<h3>{{ trans('blocks.footer.pages_links') }}</h3>
+				<h3 class="dark:text-white">{{ trans('blocks.footer.pages_links') }}</h3>
 				<salla-menu source="footer"></salla-menu> <!-- قائمة الروابط -->
 			</div>
 
@@ -64,8 +64,8 @@
 	</div>
 
 	<!-- قسم الحقوق وطرق الدفع -->
-	<div class="md:flex items-center justify-between py-4 container text-center">
-		<span class="text-sm copyright-text">{% hook copyright %}</span> <!-- حقوق النشر -->
+	<div class="md:flex items-center justify-between py-4 container text-center dark:bg-gray-800">
+		<span class="text-sm copyright-text dark:text-gray-300">{% hook copyright %}</span> <!-- حقوق النشر -->
 		<salla-payments></salla-payments> <!-- طرق الدفع -->
 	</div>
 </footer>
