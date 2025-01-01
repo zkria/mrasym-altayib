@@ -8,6 +8,27 @@ class App extends AppHelpers {
   constructor() {
     super();
     window.app = this;
+    this.initDarkMode();
+  }
+
+  initDarkMode() {
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+
+    document.getElementById('toggle-dark-mode').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      let theme = "light";
+      if (document.body.classList.contains("dark-mode")) {
+        theme = "dark";
+      }
+      localStorage.setItem("theme", theme);
+    });
   }
 
   loadTheApp() {
@@ -332,9 +353,32 @@ class App extends AppHelpers {
       toggleButton.addEventListener('click', () => {
         sidenav.classList.toggle('open');
         navbar.classList.toggle('shifted');
+
+        // تحديث موضع الزر عند الفتح والإغلاق
+        if (sidenav.classList.contains('open')) {
+          toggleButton.style.right = '260px'; // نفس القيمة في CSS
+        } else {
+          toggleButton.style.right = '0';
+        }
       });
     }
   }
 }
 
 salla.onReady(() => (new App).loadTheApp());
+
+function toggleSideNav() {
+  const sideNav = document.getElementById('sidenav');
+  const toggleButton = document.getElementById('toggle-sidenav');
+  const topNavbar = document.querySelector('.top-navbar');
+
+  if (!sideNav || !toggleButton || !topNavbar) return;
+
+  const sideNavWidth = sideNav.offsetWidth;
+
+  sideNav.classList.toggle('hidden');
+  const isHidden = sideNav.classList.contains('hidden');
+
+  toggleButton.style.right = isHidden ? '0' : `${sideNavWidth}px`;
+  topNavbar.style.marginRight = isHidden ? '0' : `${sideNavWidth}px`;
+}

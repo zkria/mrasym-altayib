@@ -49,7 +49,7 @@ input[type="number"] {
 }
 
 .spinner-loader {
-  border-right-color: var(--color-primary) !important; // تعيين لون الحدود
+  border-right-color: #004d40 !important; // تعيين لون الحدود
 
   &.reverse {
     border-right-color: #9f7171 !important; // لون مختلف عند التراجع
@@ -119,9 +119,9 @@ body {
     height: 20px; // ارتفاع الدائرة
     border-radius: 50%; // جعلها دائرية
     border: 2px solid; // تعيين الحدود
-    border-top-color: var(--color-primary); // لون الحدود العلوية
+    border-top-color: #004d40; // لون الحدود العلوية
     border-bottom-color: #eee; // لون الحدود السفلية
-    border-left-color: var(--color-primary); // لون الحدود اليسرى
+    border-left-color: #004d40; // لون الحدود اليسرى
     border-right-color: #eee; // لون الحدود اليمنى
     animation: loader 1s ease-in-out infinite; // تعيين الرسوم المتحركة
 
@@ -333,7 +333,7 @@ salla-modal {
 // لافتة تثبيت تطبيق سلا
 .s-app-install-banner {
   @apply hidden flex-row items-center fixed left-0 right-0 w-[95%] my-4 mx-auto z-[999] rounded-md p-3 gap-2 drop-shadow-md; // تعيين أنماط اللافتة
-  background-color: color-mix(in srgb, var(--color-primary) 15%, white); // تعيين لون الخلفية
+  background-color: color-mix(in srgb, #004d40 15%, white); // تعيين لون الخلفية
   &[open=false] {
     @apply hidden; // إخفاء اللافتة
   }

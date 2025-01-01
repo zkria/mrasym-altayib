@@ -18,21 +18,21 @@
 
             &-inner {
                 & > h1 {
-                    @apply text-2xl md:text-4xl font-bold text-[#444444] mb-4; // إعدادات عنوان الصفحة
+                    @apply text-2xl md:text-4xl font-bold text-[#004d40]; // إعدادات عنوان الصفحة
                 }
 
                 & > p {
-                    @apply text-[#888888] text-sm md:text-base; // إعدادات وصف الصفحة
+                    @apply text-[#00796b]; // إعدادات وصف الصفحة
                 }
             }
 
             &-offer {
                 @apply mt-16; // إعدادات قسم العروض
                 p {
-                    @apply text-[#EA5455] text-xl mb-6; // إعدادات نص العرض
+                    @apply text-[#004d40]; // إعدادات نص العرض
                 }
                 h3 {
-                    @apply text-3xl mb-16 text-[#444444]; // إعدادات عنوان العرض
+                    @apply text-3xl mb-16 text-[#004d40]; // إعدادات عنوان العرض
                 }
             }
         }
@@ -115,7 +115,7 @@
                     @apply mb-12; // إعدادات صورة الخطأ
                 }
                 h1 {
-                    @apply text-[#EA5455]; // تعيين لون العنوان
+                    @apply text-[#004d40]; // تعيين لون العنوان
                 }
             }
         }

@@ -17,7 +17,7 @@
         vertical-align: middle; // محاذاة عمودية
         cursor: pointer; // تغيير المؤشر عند التمرير فوق الزر
         border-radius: 6px; // تعيين الزوايا المدورة
-        border: 2px solid #007B7F; // لون الحدود
+        border: 2px solid #004d40; // لون الحدود
         background-repeat: no-repeat; // عدم تكرار الخلفية
         background-position: center; // تعيين موضع الخلفية
         text-align: center; // محاذاة النص إلى المركز
@@ -37,7 +37,7 @@
           line-height: 1; // تعيين ارتفاع السطر
           -webkit-font-smoothing: antialiased; // تحسين عرض الخط
           content: "\ea9d"; // رمز الأيقونة
-          color: #ffffff; // لون الأيقونة
+          color: #e0f7f7; // لون الأيقونة
           font-size: 20px; // حجم الخط
           font-weight: bold; // وزن الخط
         }
@@ -64,13 +64,13 @@
           display: inline-flex; // تعيين العرض ككتلة مرنة
           justify-content: center; // محاذاة المحتوى إلى المركز
           align-items: center; // محاذاة المحتوى عموديًا
-          background-color: #f1f1f1; // لون الخلفية
+          background-color: #004d40; // لون الخلفية
 
           &::after {
             content: ""; // محتوى فارغ
             width: 14px; // عرض الأيقونة
             height: 14px; // ارتفاع الأيقونة
-            background-color: #ffffff; // لون الأيقونة
+            background-color: #e0f7f7; // لون الأيقونة
             border-radius: 50%; // تعيين الزوايا المدورة
           }
         }
@@ -98,7 +98,7 @@
 
         .rate-title {
           font-weight: bold; // تعيين وزن الخط إلى عريض
-          color: #2b2d34; // لون النص
+          color: #004d40; // لون النص
         }
       }
     }

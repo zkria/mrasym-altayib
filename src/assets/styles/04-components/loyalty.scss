@@ -11,7 +11,6 @@
     span,
     .arrow {
       @apply text-white/90; // تعيين لون النص
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3); // إضافة ظل للنص
     }
   }
 
@@ -42,7 +41,7 @@
       @apply text-sm text-gray-500; // إعدادات نقاط الولاء
 
       .count-number {
-        @apply text-4xl text-primary font-bold ltr:ml-2.5 rtl:mr-2.5; // إعدادات عدد النقاط
+        @apply text-4xl text-primary; // إعدادات عدد النقاط
       }
     }
   }
@@ -51,7 +50,7 @@
     @apply absolute z-0 transform opacity-70; // إعدادات النجوم
 
     i {
-      @apply text-gray-100 text-[400px]; // إعدادات أيقونة النجوم
+      @apply text-gray-100; // إعدادات أيقونة النجوم
     }
 
     &--first {

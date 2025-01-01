@@ -11,7 +11,7 @@ body {
   font-size: 16px; // حجم الخط
   line-height: 1.5; // ارتفاع السطر
   color: #e0f7f7; // لون النص الأساسي
-  background-color: #0d3d3d; // لون الخلفية الأساسي
+  background-color: #004d40; // لون الخلفية الأساسي
 }
 
 // إعداد الخطوط للعناوين
@@ -26,10 +26,10 @@ a {
   font-family: 'Roboto', sans-serif; // تعيين خط الروابط
   font-weight: 600; // وزن الخط للروابط
   text-decoration: none; // إزالة التزيين الافتراضي
-  color: #1a6b6b; // لون الروابط
+  color: #00796b; // لون الروابط
 
   &:hover {
     text-decoration: underline; // إضافة التزيين عند التمرير فوق الرابط
-    color: #e0f7f7; // لون الروابط عند التمرير
+    color: #004d40; // لون الروابط عند التمرير
   }
 }

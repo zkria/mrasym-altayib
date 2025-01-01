@@ -7,11 +7,7 @@
   }
 
   &__item {
-    @apply flex items-center justify-between p-2 bg-white border border-gray-200 rounded-md shadow-sm transition; // إعدادات عنصر الفلتر
-
-    &:hover {
-      @apply shadow-md; // إضافة ظل عند التمرير
-    }
+    @apply bg-white border border-gray-200; // إعدادات عنصر الفلتر
 
     &--active {
       @apply border-primary bg-gray-100; // إعدادات العنصر النشط
@@ -20,17 +16,9 @@
     &__label {
       @apply text-sm text-gray-700; // إعدادات نص الفلتر
     }
-
-    &__input {
-      @apply cursor-pointer; // تغيير المؤشر عند التمرير فوق المدخل
-    }
   }
 
   &__reset {
-    @apply text-sm text-red-500 cursor-pointer; // إعدادات زر إعادة تعيين الفلاتر
-
-    &:hover {
-      @apply underline; // إضافة خط تحت النص عند التمرير
-    }
+    @apply text-sm text-red-500; // إعدادات زر إعادة تعيين الفلاتر
   }
 }

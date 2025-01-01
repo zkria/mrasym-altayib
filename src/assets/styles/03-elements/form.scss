@@ -6,14 +6,14 @@ input[type="radio"] {
     }
 
     &:checked ~ div.absolute {
-      border-color: var(--color-main); // تغيير لون الحدود عند تحديد الخيار
+      border-color: #004d40; // تغيير لون الحدود عند تحديد الخيار
     }
   }
 }
 
 input[type="text"]:disabled {
   // background: #f9f9f9; // لون الخلفية عند التعطيل
-  color: #838383; // لون النص عند التعطيل
+  color: #004d40; // لون النص عند التعطيل
 }
 
 .form-label {

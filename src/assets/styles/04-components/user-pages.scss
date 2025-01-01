@@ -108,3 +108,25 @@
 .blog-single .s-comments-item-user-info-name {
   @apply mx-0; // إعدادات الهوامش
 }
+
+.tag--primary {
+  @apply text-primary border-primary; // إعدادات العلامة الأساسية
+}
+
+.profile-header .breadcrumbs a,
+.profile-header .breadcrumbs span,
+.profile-header .breadcrumbs .arrow {
+  @apply text-primary-reverse; // إعدادات الروابط والنصوص
+}
+
+.rating-header {
+  @apply from-primary to-primary-d text-primary-reverse; // إعدادات الحاوية
+}
+
+.thankyou-block.sent {
+  @apply text-green-500; // إعدادات النص عند الإرسال
+
+  &:before {
+    @apply bg-green-100 text-green-500; // إعدادات الأيقونة
+  }
+}

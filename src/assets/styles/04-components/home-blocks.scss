@@ -40,13 +40,13 @@
 
     .swiper-lazy {
       &:after {
-        @apply content-[''] absolute transition top-0 bg-black/60 w-full h-full; // إعدادات الخلفية
+        @apply bg-black/60; // إعدادات الخلفية
       }
     }
 
     .overlay-bg {
       &:after {
-        @apply content-[''] absolute top-0 bg-black/60 w-full h-full; // إعدادات الخلفية
+        @apply bg-black/60; // إعدادات الخلفية
       }
     }
   }
@@ -166,7 +166,7 @@
     top: 0; // تعيين الموضع العلوي
     right: -93%; // تعيين الموضع الأيمن
     content: ""; // محتوى فارغ
-    background: var(--color-primary); // تعيين لون الخلفية
+    background: #004d40; // تعيين لون الخلفية
     position: absolute; // تعيين الموضع المطلق
     transition: all 0.3s ease-in-out; // تأثير الانتقال
     transform: rotate(220deg) translateY(-50%) translateX(33%); // تعيين التحويل

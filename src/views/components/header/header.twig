@@ -7,14 +7,7 @@
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
-  <!-- شريط التنقل العلوي -->
-  <div class="top-navbar flex items-center justify-between bg-white p-6 shadow-md text-gray-800">
-    <!-- زر لفتح الشريط الجانبي -->
-    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية">
-      <i class="header-btn__icon sicon-menu"></i>
-    </button>
-
-    <!-- الشعار في المنتصف -->
+  <div class="top-navbar flex items-center justify-between bg-white p-6 shadow-md text-gray-800 sticky top-0 z-50">
     <a class="navbar-brand flex items-center mx-auto" href="{{ store.url }}">
       <img fetchpriority="high" width="120%" height="300%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
       {% if is_page('index') %}
@@ -24,33 +17,53 @@
       {% endif %}
     </a>
 
-    <!-- زر المستخدم وزر السلة -->
-    <div class="flex items-center">
-      {% if user.type=='user' %}
-        <salla-user-menu avatar-only show-header></salla-user-menu>
-      {% else %}
-        <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
-          <i class="header-btn__icon sicon-user-circle"></i>
-        </button>
-      {% endif %}
+    <div class="flex items-center space-x-4">
+      <div>
+        <salla-cart-summary class="ml-2 rtl:ml-[unset] rtl:mr-4">
+          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+        </salla-cart-summary>
+      </div>
 
-      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
-        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-      </salla-cart-summary>
+      <div>
+        {% if user.type=='user' %}
+          <salla-user-menu avatar-only show-header></salla-user-menu>
+        {% else %}
+          <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
+            <i class="header-btn__icon sicon-user-circle"></i>
+          </button>
+        {% endif %}
+      </div>
+
+      <div>
+        <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن">
+          <i class="header-btn__icon sicon-moon"></i>
+        </button>
+      </div>
+
+      <div class="search-container">
+        <button id="search-button" class="header-btn" aria-label="بحث">
+          <i class="header-btn__icon sicon-search"></i>
+        </button>
+        <input id="search-input" type="text" class="hidden search-input" placeholder="ابحث هنا...">
+      </div>
+    </div>
+
+    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية" onclick="toggleSideNav()">
+      <i class="header-btn__icon sicon-menu"></i>
+    </button>
+  </div>
+
+  <div id="search-popup" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-4 rounded shadow-lg">
+      <button id="close-search" class="mb-2 text-red-500">إغلاق</button>
+      <salla-search inline oval height="36"></salla-search>
     </div>
   </div>
 
-  <!-- شريط التنقل الجانبي -->
-  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full text-gray-800">
-    <div class="inner bg-inherit">
-      <!-- الشعار في الأعلى -->
+  <div id="sidenav" class="side-nav-container shadow-default bg-white fixed right-0 top-0 h-full text-gray-800 hidden">
+    <div class="inner bg-inherit p-4">
       <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="mb-2">
-      <p class="text-gray-800 mb-4">القائمة</p>
-       {# Search bar #}
-       <div class="header-search flex-1">
-        <salla-search inline oval height="36"></salla-search>
-      </div>
-      
+      <p class="text-gray-800 mb-4 font-bold">القائمة</p>
       <div class="container">
         <div class="flex flex-col items-start justify-start relative">
           <custom-main-menu></custom-main-menu>
@@ -60,24 +73,46 @@
   </div>
 </header>
 
-<style>
-  .top-navbar {
-    transition: margin 0.3s ease;
-    height: 60px;
-    background-color: #fff;
-    color: #333;
-  }
-  .top-navbar.shifted {
-    margin-left: 200px; /* تعديل القيمة حسب عرض الشريط الجانبي */
-  }
-  .rtl .top-navbar.shifted {
-    margin-right: 200px; /* إزاحة من اليمين في حالة RTL */
-    margin-left: 0;
-  }
-</style>
+<script>
+  // تحقق من تفضيلات النظام للوضع الداكن
+  const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
-<script src="path/to/header.js"></script>
+  // تحقق من حالة الوضع الداكن المخزنة في localStorage
+  const currentTheme = localStorage.getItem("theme");
 
-{% if store.scope %}
-  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
-{% endif %}
+  if (currentTheme === "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    let theme = "light";
+    if (document.body.classList.contains("dark-mode")) {
+      theme = "dark";
+    }
+    localStorage.setItem("theme", theme);
+  }
+
+  function toggleSideNav() {
+    const sideNav = document.getElementById('sidenav');
+    const toggleButton = document.getElementById('toggle-sidenav');
+    sideNav.classList.toggle('hidden');
+    if (sideNav.classList.contains('hidden')) {
+      toggleButton.style.right = '0';
+    } else {
+      toggleButton.style.right = '200px'; // Adjust this value based on the width of the side nav
+    }
+  }
+
+  document.getElementById('search-button').addEventListener('click', function() {
+    var searchInput = document.getElementById('search-input');
+    searchInput.classList.toggle('hidden');
+    searchInput.focus();
+  });
+
+  document.getElementById('close-search').addEventListener('click', function() {
+    document.getElementById('search-popup').classList.add('hidden');
+  });
+</script>

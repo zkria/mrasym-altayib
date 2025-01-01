@@ -391,3 +391,43 @@ salla-quantity-input[max='1'] {
     @apply cursor-not-allowed; // إعدادات زر الكمية
   }
 }
+
+.s-comments-product {
+  @apply bg-gray-100; // إعدادات حاوية التعليقات
+}
+
+.share-btns-list {
+  @apply bg-white; // إعدادات قائمة الأزرار
+
+  a {
+    @apply hover:text-primary; // إعدادات الروابط
+  }
+}
+
+.s-product-card-content-pie-svg-base {
+  stroke: #E8EDF2; // لون الحدود
+}
+
+.pie-wrapper .pie-svg circle {
+  stroke: #E8EDF2; // لون الحدود
+
+  &.circle_bar {
+    stroke: var(--color-primary); // لون الحدود
+  }
+}
+
+.s-product-card-wishlist-added i {
+  @apply text-red-500; // لون الأيقونة عند الإضافة إلى قائمة الرغبات
+}
+
+.s-product-card-promotion-title {
+  @apply bg-red-800 text-white; // إعدادات عنوان الترويج
+}
+
+.s-product-card-sale-price h4 {
+  @apply text-red-800 #{!important}; // إعدادات سعر البيع
+}
+
+#offer-corner-badge {
+  @apply bg-red-600 text-white; // إعدادات الشارة
+}

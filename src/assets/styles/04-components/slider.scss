@@ -190,3 +190,19 @@ model-viewer[style*="width"]:before {
     @apply min-h-[380px] max-h-[480px] md:max-h-[680px]; // إعدادات ارتفاع الصورة
   }
 }
+
+.promotion-title {
+  @apply bg-red-800 text-white; // إعدادات عنوان الترويج
+}
+
+.offer-slider .s-slider-block__title:before {
+  @apply text-red-50; // إعدادات الأيقونة
+}
+
+.offer-slider .s-slider-block__title h2 {
+  @apply text-red-400; // إعدادات عنوان العرض
+}
+
+.salla-slider .swiper-pagination-bullet-active {
+  background-color: var(--color-primary); // لون النقاط النشطة
+}
