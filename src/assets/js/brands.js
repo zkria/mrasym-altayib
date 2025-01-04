@@ -1,14 +1,13 @@
 import BasePage from './base-page';
-
 class Brands extends BasePage {
     onReady() {
-        // تعيين الارتفاع الابتدائي
+        // set initial height;
         const nav = document.querySelector('#brands-nav'),
               navWrap = document.querySelector('.brands-nav-wrap');
         navWrap.style.height = nav.clientHeight + 'px';
 
-        app.onClick('.brands-nav__item', ({ target: btn }) => {
-            app.all('.brands-nav__item', el => app.toggleElementClassIf(el, 'is-selected', 'unselected', () => el === btn));
+        app.onClick('.brands-nav__item', ({target:btn}) => {
+            app.all('.brands-nav__item', el => app.toggleElementClassIf(el, 'is-selected', 'unselected', () => el == btn));
         });
 
         window.addEventListener('scroll', () => {
@@ -18,5 +17,4 @@ class Brands extends BasePage {
     }
 }
 
-// بدء الفئة عند جاهزية الصفحة
 Brands.initiateWhenReady(['brands.index']);

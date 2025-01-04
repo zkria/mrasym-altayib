@@ -1,17 +1,18 @@
-// تأثيرات الانتقال للشفافية عند تحميل الشرائح بشكل كسول
-.swiper-lazy {
-  @apply transition-opacity duration-500 opacity-0; // تعيين تأثير الانتقال ومدة الشفافية
-  @apply absolute top-0 h-full w-full bg-cover bg-center; // تعيين موضع العنصر
 
-  &.swiper-lazy-loaded {
-    @apply opacity-100; // تعيين الشفافية إلى 100% عند التحميل
+// sliders lazyloading opacity transition
+.swiper-lazy{
+  @apply transition-opacity duration-500 opacity-0;
+  @apply absolute top-0 h-full w-full bg-cover bg-center;
+
+  &.swiper-lazy-loaded{
+    @apply opacity-100;
   }
 }
 
-.lazy__bg {
-  @apply absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-500 opacity-0; // تعيين تأثير الانتقال وموضع الخلفية
+.lazy__bg{
+  @apply absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-500 opacity-0;
 
-  &.loaded {
-    @apply opacity-100; // تعيين الشفافية إلى 100% عند التحميل
+  &.loaded{
+    @apply opacity-100;
   }
 }

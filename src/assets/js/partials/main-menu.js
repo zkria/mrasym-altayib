@@ -5,17 +5,31 @@ class NavigationMenu extends HTMLElement {
             .then(() => {
                 this.menus = [];
                 this.displayAllText = salla.lang.get('blocks.home.display_all');
+                /**
+                * Avoid saving the menu to localStorage (default) when in the development environment
+                * or when modifying the theme in the dashboard
+                */
+                const isPreview = salla.config.isDebug()
+                const cacheKey = `menus_${salla.lang.locale}`
+                const cachedMenus = salla.storage.getWithTTL(cacheKey, [])
+
+                if (cachedMenus.length > 0 && !isPreview) {
+                    this.menus = cachedMenus
+                    return this.render()
+                }
 
                 return salla.api.component.getMenus()
                 .then(({ data }) => {
                     this.menus = data;
-                    return this.render();
+                    !isPreview && salla.storage.setWithTTL(cacheKey, this.menus)
+                    return this.render()
+
                 }).catch((error) => salla.logger.error('salla-menu::Error fetching menus', error));
             });
     }
 
     /** 
-    * التحقق مما إذا كان للقائمة أطفال
+    * Check if the menu has children
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -24,7 +38,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * التحقق مما إذا كانت القائمة تحتوي على منتجات
+    * Check if the menu has products
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -33,18 +47,18 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على الفئات لقائمة سطح المكتب
+    * Get the classes for desktop menu
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
     */
     getDesktopClasses(menu, isRootMenu) {
         return `!hidden lg:!block ${isRootMenu ? 'root-level lg:!inline-block' : 'relative'} ${menu.products ? ' mega-menu' : ''}
-        ${this.hasChildren(menu) ? ' has-children' : ''}`;
+        ${this.hasChildren(menu) ? ' has-children' : ''}`
     }
 
     /**
-    * الحصول على قائمة الجوال
+    * Get the mobile menu
     * @param {Object} menu
     * @param {String} displayAllText
     * @returns {String}
@@ -75,7 +89,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على قائمة سطح المكتب
+    * Get the desktop menu
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
@@ -101,7 +115,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على القوائم
+    * Get the menus
     * @returns {String}
     */
     getMenus() {
@@ -112,7 +126,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * عرض قائمة الرأس
+    * Render the header menu
     */
     render() {
         this.innerHTML =  `

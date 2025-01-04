@@ -1,340 +1,196 @@
-// إعدادات شريط التنقل العلوي
+
+/* Top Nav */
 .top-navbar {
-  @apply flex py-2 min-h-[48px]; // إعدادات التنسيق والارتفاع الأدنى
+  @apply flex py-2 min-h-[48px];
 
   @screen lg {
-    @apply py-1.5; // تعديل الحشوة في الشاشات الكبيرة
+    @apply py-1.5;
   }
 
   .topnav-has-bg & {
-    @apply bg-[color:var(--topnav-bg)]; // تعيين لون الخلفية
+    @apply bg-[color:var(--topnav-bg)];
   }
 
   .topnav-has-gradient & {
-    @apply bg-gradient-to-r from-[color:var(--topnav-gradient-from)] to-[color:var(--topnav-gradient-to)]; // تعيين تدرج الخلفية
+    @apply bg-gradient-to-r from-[color:var(--topnav-gradient-from)] to-[color:var(--topnav-gradient-to)];
   }
 
   .topnav-has-text-color & {
-    @apply text-[color:var(--topnav-text-color)]; // تعيين لون النص
+    @apply text-[color:var(--topnav-text-color)];
   }
 
-  .s-search-input {
-    @apply bg-gray-200/50 hover:bg-gray-200/70 border-none; // إعدادات حقل البحث
+  .s-search-input{
+    @apply bg-gray-200/50 hover:bg-gray-200/70 border-none;
   }
 
   @media (max-width: 640px) {
-    .s-search-results {
-      @apply w-screen max-w-[100vw] rtl:-left-2.5 ltr:-right-2.5; // إعدادات نتائج البحث في الشاشات الصغيرة
+    .s-search-results{
+      @apply w-screen max-w-[100vw] rtl:-left-2.5 ltr:-right-2.5; 
     }
   } 
 
   .topnav-is-dark & {
-    @apply bg-dark text-gray-300; // إعدادات الوضع الداكن
+    @apply bg-dark text-gray-300;
 
     .btn--circle-gray,
     .btn--rounded-gray,
-    .s-search-input {
-      @apply bg-gray-100/10 hover:bg-gray-100/[0.15]; // إعدادات الأزرار وحقل البحث
+    .s-search-input{
+      @apply bg-gray-100/10 hover:bg-gray-100/[0.15]
     }
 
-    .topnav-link-item {
-      @apply border-gray-300/10; // إعدادات حدود عناصر الروابط
+    .topnav-link-item{
+      @apply border-gray-300/10;
     }
 
-    .s-search-input {
-      @apply text-white; // تعيين لون النص في حقل البحث
+    .s-search-input{
+      @apply text-white;
     }
   }
 
-  .search-btn {
-    @apply grow sm:grow-0 justify-start md:justify-center; // إعدادات زر البحث
-  }
-
-  background-color: #4A4A4A; // لون الخلفية
-  color: white; // لون النص
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // إضافة ظل للشريط
-
-  .header-buttons {
-    .header-btn {
-      color: white; // لون الأزرار
-      transition: color 0.3s; // تأثير عند التمرير
-      display: flex;
-      align-items: center;
-
-      &:hover {
-        color: #FFD700; // تغيير اللون عند التمرير
-      }
-    }
-
-    .icon {
-      font-size: 1.5rem; // تحسين حجم الأيقونات
-      margin-right: 0.5rem; // إضافة مسافة بين الأيقونة والنص
-    }
+  .search-btn{
+    @apply grow sm:grow-0 justify-start md:justify-center;
   }
 }
 
-// إعدادات عناصر قائمة الروابط
-.topnav-link-item {
-  @apply inline-block transition duration-300 px-4 rtl:last:pl-0 ltr:last:pr-0 py-px text-sm leading-none ltr:border-r rtl:border-l border-gray-200 ltr:last:border-0 rtl:last:border-0 hover:opacity-80; // إعدادات عناصر القائمة
+// contacs menu items - pages menu items
+.topnav-link-item{
+  @apply inline-block transition duration-300 px-4 rtl:last:pl-0 ltr:last:pr-0 py-px text-sm leading-none ltr:border-r rtl:border-l border-gray-200 ltr:last:border-0 rtl:last:border-0 hover:opacity-80;
 
-  &.right-side {
-    @apply rtl:first:pr-0 ltr:first:pl-0; // إعدادات الهوامش الجانبية
+  &.right-side{
+    @apply rtl:first:pr-0 ltr:first:pl-0
   }
 }
 
-// إعدادات شريط التنقل الرئيسي
+/* Main Nav */
 .main-nav-container {
-  @apply min-h-[68px] lg:min-h-[84px]; // تعيين الارتفاع الأدنى
-
-  // لون الخلفية المخصص
+  @apply min-h-[68px] lg:min-h-[84px];
+  
+  // Custom background Color
   .has-bg &,
-  .has-bg & .sub-menu {
-    @apply bg-[color:var(--mainnav-bg)]; // تعيين لون الخلفية
+  .has-bg & .sub-menu{
+    @apply bg-[color:var(--mainnav-bg)];
   }
 
-  // لون النص المخصص
+  // Custom text color
   .has-text-color & {
-    @apply text-[color:var(--mainnav-text-color)]; // تعيين لون النص
+    @apply text-[color:var(--mainnav-text-color)];
   }
 }
 
-// إعدادات عناصر القائمة
 .menu-item {
-  @apply flex items-center px-6 py-2.5 sm:text-sm text-gray-500 transition-colors duration-300 hover:bg-gray-200/30; // إعدادات عناصر القائمة
+  @apply flex items-center px-6 py-2.5 sm:text-sm text-gray-500 transition-colors duration-300 hover:bg-gray-200/30;
 
-  &.logout {
-    @apply text-red-400; // تعيين لون النص لزر تسجيل الخروج
+  &.logout{
+    @apply text-red-400;
   }
 
-  &.is-active {
-    @apply text-primary bg-gray-200/20; // إعدادات العنصر النشط
+  &.is-active{
+    @apply text-primary bg-gray-200/20;
   }
 }
 
-// إعدادات الرأس الثابت
+/* Sticky Header */
 .main-nav-container {
   &.animated {
     .inner {
-      transition: top 0.5s, transform 0.5s, -webkit-transform 0.5s, opacity 0.4s; // تأثير الانتقال
+      transition: top 0.5s, transform 0.5s, -webkit-transform 0.5s, opacity 0.4s;
     }
   }
 
   &.fixed-pinned {
     .inner {
-      position: fixed; // تعيين الموضع الثابت
-      top: 0; // تعيين الموضع العلوي
-      right: 0; // تعيين الموضع الأيمن
-      left: 0; // تعيين الموضع الأيسر
-      width: 100%; // تعيين العرض الكامل
-      z-index: 29; // تعيين مستوى z-index
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); // إضافة ظل
-      transform: translate3d(0, -100%, 0); // تعيين التحويل
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      z-index: 29;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transform: translate3d(0, -100%, 0);
 
-      @media (max-width: 1024px) {
-        transform: none; // إزالة التحويل في الشاشات الصغيرة
-        top: -70px; // تعيين الموضع العلوي
+      @media (max-width: 1024px){
+        transform: none;
+        top: -70px;
       }
     }
 
     .navbar-brand {
       img {
-        max-height: 40px; // تعيين الحد الأقصى لارتفاع الصورة
+        max-height: 40px;
       }
 
       h4 {
-        line-height: 1; // تعيين ارتفاع السطر
+        line-height: 1;
       }
     }
 
     .main-menu > li > a {
-      padding-top: 20px; // تعيين الحشوة العلوية
-      padding-bottom: 20px; // تعيين الحشوة السفلية
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
   }
 
   &.fixed-header {
     .inner {
-      transform: translate3d(0, 0, 0); // تعيين التحويل
+      transform: translate3d(0, 0, 0);
 
-      @media (max-width: 1024px) {
-        transform: none; // إزالة التحويل في الشاشات الصغيرة
-        top: 0; // تعيين الموضع العلوي
+      @media (max-width: 1024px){
+        transform: none;
+        top: 0;
       }
     }
   }
 }
 
-// إعدادات علامة العلامة التجارية
 .navbar-brand {
-  @apply items-center flex my-2 lg:my-0; // إعدادات التنسيق
+  @apply items-center flex my-2 lg:my-0;
 
   img {
-    @apply w-auto max-h-12 max-w-[100px] xs:max-w-[170px]; // إعدادات الصورة
+    @apply w-auto max-h-12 max-w-[100px] xs:max-w-[170px];
   }
 }
 
-// إعدادات أيقونة سلة التسوق
-.header-btn {
-  @apply border-none outline-none transition-opacity hover:opacity-80; // إعدادات الزر
+// Mainnav cart icon
+.header-btn{
+  @apply border-none outline-none transition-opacity hover:opacity-80;
 
-  &__icon {
-    @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-700; // إعدادات أيقونة الزر
-    &.icon {
-      @apply mr-[9px] rtl:ml-[9px] rtl:mr-[unset]; // إعدادات الهوامش
+  &__icon{
+    @apply text-xl w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-700;
+    &.icon{
+      @apply mr-[9px] rtl:ml-[9px] rtl:mr-[unset];
     }
   }
 }
 
-salla-user-menu {
-  @apply shrink-0; // إعدادات قائمة المستخدم
+salla-user-menu{
+  @apply shrink-0;
 }
 
-// إعدادات ملخص السلة
-.s-cart-summary-total {
-  @apply text-black font-[600]; // إعدادات النص
+// cart summary
+.s-cart-summary-total{
+  @apply text-black font-[600];
 }
 
-.s-cart-summary-count {
-  @apply -top-0.5 ltr:-left-1.5 rtl:-right-1.5 bg-red-800; // إعدادات العد
+.s-cart-summary-count{
+  @apply -top-0.5 ltr:-left-1.5 rtl:-right-1.5 bg-red-800;
 }
 
-#nav-cart {
-  @apply flex items-center rtl:mr-4 ltr:ml-4 relative whitespace-nowrap; // إعدادات سلة التسوق
+#nav-cart{
+  @apply flex items-center rtl:mr-4 ltr:ml-4 relative whitespace-nowrap;
 
-  .icon {
-    @apply rtl:ml-2 ltr:mr-2; // إعدادات الهوامش
+  .icon{
+    @apply rtl:ml-2 ltr:mr-2;
   }
 
-  span {
-    @apply absolute top-1 rtl:-right-2 ltr:-left-2; // إعدادات الموضع
-  }
-}
-
-// إعدادات البحث
-.header-search {
-  .s-search-results {
-    @apply z-10; // تعيين مستوى z-index
+  span{
+    @apply absolute top-1 rtl:-right-2 ltr:-left-2;
   }
 }
 
-/* ===== إعدادات الشريط الجانبي ===== */
-.sidebar {
-  position: fixed; /* تعيين الشريط الجانبي ليكون ثابتًا */
-  top: 0; /* تعيين الموضع العلوي */
-  right: 0; /* تعيين الموضع الأيمن */
-  height: 100%; /* تعيين ارتفاع الشريط الجانبي ليملأ الشاشة */
-  width: 250px; /* تعيين عرض الشريط الجانبي */
-  padding: 20px; /* إضافة حشوة داخلية */
-  background: var(--sidebar-color); /* تعيين لون خلفية الشريط الجانبي */
-  transition: width 0.3s ease, background 0.3s ease; /* تأثير الانتقال عند تغيير العرض أو الخلفية */
-  z-index: 100; /* تعيين مستوى z-index */
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* إضافة ظل للشريط الجانبي */
-  border-left: 1px solid rgba(0, 0, 0, 0.1); /* إضافة حد على اليسار */
-}
 
-.sidebar.close {
-  width: 88px; /* عرض الشريط الجانبي عند الإغلاق */
-}
-
-/* ===== تحسينات عناصر الشريط الجانبي ===== */
-.sidebar li {
-  height: 60px; /* تعيين ارتفاع العناصر */
-  list-style: none; /* إزالة النقاط من القائمة */
-  display: flex; /* استخدام flexbox لتنسيق العناصر */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
-  margin-top: 15px; /* إضافة مسافة بين العناصر */
-  padding: 10px; /* إضافة حشوة داخلية */
-  border-radius: 8px; /* تعيين زوايا مستديرة */
-  transition: background-color 0.3s; /* تأثير الانتقال عند التمرير */
-}
-
-.sidebar li:hover {
-  background-color: var(--primary-color-light); /* تغيير لون الخلفية عند التمرير */
-}
-
-.sidebar header {
-  display: flex; /* استخدام flexbox لتنسيق الهيدر */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
-  justify-content: space-between; /* توزيع العناصر بشكل متساوي */
-  margin-bottom: 20px; /* إضافة مسافة أسفل الهيدر */
-}
-
-.sidebar header .logo {
-  display: flex; /* استخدام flexbox لتنسيق الشعار */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
-}
-
-.sidebar header .logo img {
-  width: 40px; /* تعيين عرض الشعار */
-  border-radius: 6px; /* تعيين زوايا مستديرة للشعار */
-}
-
-.sidebar header .toggle {
-  cursor: pointer; /* تغيير شكل المؤشر عند التمرير فوق الزر */
-  transition: transform 0.3s; /* تأثير الانتقال عند التمرير */
-}
-
-.sidebar.close .toggle {
-  transform: rotate(180deg); /* تدوير الزر عند إغلاق الشريط الجانبي */
-}
-
-/* ===== تحسينات قائمة الشريط الجانبي ===== */
-.sidebar .menu {
-  margin-top: 40px; /* إضافة مسافة أعلى القائمة */
-  overflow-y: auto; /* السماح بالتمرير العمودي إذا كانت القائمة طويلة */
-}
-
-.sidebar li a {
-  display: flex; /* استخدام flexbox لتنسيق الروابط */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
-  width: 100%; /* تعيين عرض الروابط ليملأ العنصر */
-  padding: 10px; /* إضافة حشوة داخلية */
-  border-radius: 6px; /* تعيين زوايا مستديرة */
-  text-decoration: none; /* إزالة التسطير من الروابط */
-  color: var(--text-color); /* تعيين لون النص */
-  transition: background-color 0.3s; /* تأثير الانتقال عند التمرير */
-}
-
-.sidebar li a:hover {
-  background-color: var(--primary-color); /* تغيير لون الخلفية عند التمرير */
-  color: #fff; /* تغيير لون النص عند التمرير */
-}
-
-/* ===== تحسينات الأيقونات ===== */
-.sidebar .icon {
-  font-size: 24px; /* تعيين حجم الأيقونات */
-  margin-right: 10px; /* إضافة مسافة بين الأيقونة والنص */
-}
-
-/* ===== تحسينات زر التبديل ===== */
-.toggle-switch {
-  display: flex; /* استخدام flexbox لتنسيق زر التبديل */
-  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
-  cursor: pointer; /* تغيير شكل المؤشر عند التمرير فوق الزر */
-}
-
-.toggle-switch .switch {
-  position: relative; /* تعيين الموضع النسبي للتبديل */
-  height: 24px; /* تعيين ارتفاع التبديل */
-  width: 44px; /* تعيين عرض التبديل */
-  border-radius: 25px; /* تعيين زوايا مستديرة للتبديل */
-  background-color: var(--toggle-color); /* تعيين لون خلفية التبديل */
-  transition: background-color 0.3s; /* تأثير الانتقال عند تغيير اللون */
-}
-
-.switch::before {
-  content: ""; /* إضافة محتوى فارغ */
-  position: absolute; /* تعيين الموضع المطلق */
-  height: 18px; /* تعيين ارتفاع الزر داخل التبديل */
-  width: 18px; /* تعيين عرض الزر داخل التبديل */
-  border-radius: 50%; /* تعيين زوايا مستديرة للزر */
-  top: 50%; /* تعيين الموضع العلوي */
-  left: 5px; /* تعيين الموضع الأيسر */
-  transform: translateY(-50%); /* محاذاة الزر عموديًا */
-  background-color: var(--sidebar-color); /* تعيين لون الزر */
-  transition: transform 0.3s; /* تأثير الانتقال عند تغيير الموضع */
-}
-
-body.dark .switch::before {
-  left: 20px; /* تغيير الموضع الأيسر عند تفعيل الوضع الداكن */
+// Search
+.header-search{
+  .s-search-results{
+    @apply z-10;
+  }
 }

@@ -1,30 +1,30 @@
 {#
-| المتغيرات                | النوع          | الوصف                     |
-|---------------------------|----------------|---------------------------|
-| page                      | كائن           |                            |
-| page.title                | سلسلة          | عنوان الصفحة             |
-| page.slug                 | سلسلة          | رابط الصفحة              |
-| slides                    | ?مقال[]        | @see pages/blog/single.twig |
-| articles                  | مقال[]         |                            |
-| categories                | فئة المدونة[]   |                            |
-| category.is_current       | بولياني        | هل الفئة الحالية         |
-| category.name             | سلسلة          | اسم الفئة                |
-| category.url              | سلسلة          | رابط الفئة               |
+| Variable                | Type          | Description                 |
+|-------------------------|---------------|-----------------------------|
+| page                    | object        |                             |
+| page.title              | string        |                             |
+| page.slug               | string        |                             |
+| slides                  | ?Article[]    | @see pages/blog/single.twig |
+| articles                | Article[]     |                             |
+| categories              | BlogCategory[]|                             |
+| category.is_current     | bool          |                             |
+| category.name           | string        |                             |
+| category.url            | string        |                             |
 #}
 {% extends "layouts.master" %}
 
 {% block content %}
-    <div class="container mb-8 sm:mb-24">
+    <div class=" container mb-8 sm:mb-24">
       <div class="center-between">
 
-        {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
         <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
 
-        {# قائمة تصفية الفئات #}
+        {# Categories filter dropdown #}
         <div class="dropdown-toggler cat-filter lg:hidden">
-          <button aria-label="تفعيل الفئات" type="button" class="dropdown__trigger rtl:space-x-reverse space-x-1.5 flex text-sm text-primary" aria-expanded="true" aria-haspopup="true"> 
+          <button aria-label="Categories Trigger" type="button" class="dropdown__trigger rtl:space-x-reverse space-x-1.5 flex text-sm text-primary" aria-expanded="true" aria-haspopup="true"> 
             <i class="sicon-filter text-xs pointer-events-none"></i>
             <span class="fix-align pointer-events-none">{{ trans('pages.blog_categories.categories') }}</span>
           </button>
@@ -49,6 +49,7 @@
                   {% endfor %}
               </ul>
             </div>
+
           </div>
         </div>
 
@@ -91,7 +92,7 @@
                                                             <span class="whitespace-nowrap">{{ article.created_at|date }}</span>
                                                         </div>
                                                         <a href="{{ article.author.url }}"
-                                                           class="flex items-center hover:underline">
+                                                           class=" flex items-center hover:underline">
                                                             <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
                                                             <span class="whitespace-nowrap">{{ article.author.name }}</span>
                                                         </a>
@@ -144,23 +145,6 @@
                                     <p class="text-sm text-gray-500 leading-6 mb-2.5">
                                         {{ article.summary }}
                                     </p>
-                                    
-                                    {% if store.settings.blog.allow_likes_and_comments %}
-                                        <div class="post-entry__icons flex items-center gap-2.5 text-gray-500 text-sm">
-                                            {% if article.likes_count %}
-                                                <div class="flex items-center gap-1">
-                                                    <i class="sicon-thumbs-up"></i>
-                                                    {{ article.likes_count }}
-                                                </div>
-                                            {% endif %}
-                                            {% if article.comments_count %}
-                                                <div class="flex items-center gap-1">
-                                                <i class="sicon-chat"></i>
-                                                    {{ article.comments_count }}
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
                                 </div>
 
                                 {% if article.tags|length %}

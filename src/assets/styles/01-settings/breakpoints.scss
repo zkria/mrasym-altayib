@@ -1,4 +1,4 @@
-// مزيج نقاط التوقف للاستجابة
+// Responsive breakpoints mixin
 @mixin mobile-xs {
   @media(max-width: 400px) {
     @content;

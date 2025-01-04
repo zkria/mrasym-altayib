@@ -1,38 +1,38 @@
 {#
-| المتغيرات                | النوع           | الوصف                     |
-|---------------------------|----------------|---------------------------|
-| article.title             | سلسلة          | عنوان المقال              |
-| article.body              | سلسلة *HTML    | محتوى المقال              |
-| article.url               | سلسلة          | رابط المقال               |
-| article.has_image         | بولياني        | هل يحتوي المقال على صورة؟ |
-| article.image             | كائن           | كائن الصورة               |
-| article.image.url         | سلسلة          | رابط الصورة               |
-| article.image.alt         | سلسلة          | نص بديل للصورة           |
-| article.thumbnail         | سلسلة          | رابط الصورة المصغرة      |
-| article.created_at        | ?تاريخ *Carbon  | تاريخ إنشاء المقال        |
-| article.author.name       | سلسلة          | اسم المؤلف                |
-| article.author.url        | سلسلة          | رابط المؤلف               |
-| article.related           | مقال[]         | مقالات ذات صلة           |
-| article.tags              | علامة المدونة[] | علامات المقال             |
-| article.tags[].name       | سلسلة          | اسم العلامة               |
-| article.tags[].url        | سلسلة          | رابط العلامة              |
+| Variable                | Type           | Description |
+|-------------------------|----------------|-------------|
+| article.title           | string         |             |
+| article.body            | string *HTML   |             |
+| article.url             | string         |             |
+| article.has_image       | Bool           |             |
+| article.image           | object         |             |
+| article.image.url       | string         |             |
+| article.image.alt       | string         |             |
+| article.thumbnail       | string         |             |
+| article.created_at      | ?Date *Carbon  |             |
+| article.author.name     | string         |             |
+| article.author.url      | string         |             |
+| article.related         | Article[]      |             |
+| article.tags            | BlogTag[]      |             |
+| article.tags[].name     | string         |             |
+| article.tags[].url      | string         |             |
 #}
 {% extends "layouts.master" %}
 {% block content %}
     <div class="container mb-8 sm:mb-24">
-        {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
         <nav class="breadcrumbs w-full py-5 center-between">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
         <div class="md:flex items-start">
-            <div class="main-content blog-category md:w-96 flex-1 bg-white lg:p-8 rounded-md mb-10 md:mb-0">
+            <div class="main-content blog-category md:w-96 flex-1 bg-white p-8 rounded-md mb-10 md:mb-0">
                 <h1 class="font-bold text-3xl mb-5 leading-10">{{ article.title }}</h1>
                 <div class="mb-10 text-gray-500 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
-                    <div class="flex items-center">
+                    <div class=" flex items-center">
                         <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1"></i>
                         <span class="">{{ article.created_at|date }}</span>
                     </div>
-                    <a href="{{ article.author.url }}" class="flex items-center hover:text-dark">
+                    <a href="{{ article.author.url }}" class=" flex items-center hover:text-dark">
                         <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
                         <span class="">{{ article.author.name }}</span>
                     </a>
@@ -41,22 +41,6 @@
                     <img src="{{ article.image.url }}" alt="{{ article.image.alt }}" title="{{ article.image.alt }}"
                          class="h-80 mb-10 w-full object-cover rounded-md"/>
                 {% endif %}
-                
-                {% if store.settings.blog.allow_likes_and_comments %}
-                <div class="flex items-center gap-2.5 text-gray-500 text-base mb-2">
-                    <button id="blog-like" data-blog-id="{{ article.key }}" class="flex items-center gap-1">
-                        <i class="sicon-thumbs-up text-primary"></i>
-                        <span>{{ article.likes_count }}</span>
-                    </button>                    
-                    {% if article.comments_count %}
-                        <div class="flex items-center gap-1">
-                            <i class="sicon-chat text-primary"></i>
-                            {{ article.comments_count }}
-                        </div>
-                    {% endif %}
-                </div>
-                {% endif %}
-
                 <article class="leading-7 text-sm mb-10">{{ article.body|raw }}</article>
                 {% if article.tags|length %}
                     <div class="p-4 flex flex-wrap items-center border-t border-gray-200">
@@ -68,9 +52,6 @@
                             </a>
                         {% endfor %}
                     </div>
-                {% endif %}
-                {% if store.settings.blog.allow_likes_and_comments %}
-                    <salla-comments item-id="{{ article.key }}" type="blog"></salla-comments>
                 {% endif %}
             </div>
 
@@ -92,7 +73,7 @@
                                              alt="{{ article.image.alt }}">
                                     {% else %}
                                         <img class="sm:h-full w-10 object-contain opacity-60"
-                                             src="{{ 'images/placeholder.png' | asset }}" alt="صورة المقال"/>
+                                             src="{{ 'images/placeholder.png' | asset }}" alt="post image"/>
                                     {% endif %}
                                 </a>
                             </div>

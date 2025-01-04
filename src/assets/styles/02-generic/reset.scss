@@ -1,10 +1,9 @@
-// إعدادات إعادة تعيين الأنماط الأساسية
 body {
-  font-size: 15px; // حجم الخط الأساسي
-  font-weight: 400; // وزن الخط
-  line-height: 26px; // ارتفاع السطر
-  color: var(--main-text-color); // لون النص الرئيسي
-  position: relative; // تعيين الموضع النسبي
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--main-text-color);
+  position: relative;
 }
 
 // p {
@@ -20,9 +19,9 @@ html {
 }
 
 body {
-  border: 0; // إزالة الحدود
-  margin: 0; // إزالة الهوامش
-  padding: 0; // إزالة الحشوات
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 h1, .h1,
@@ -31,64 +30,65 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-weight: 600; // وزن الخط للعناوين
-  margin-bottom: 0px; // إزالة الهوامش السفلية
+  font-weight: 600;
+  margin-bottom: 0px;
 }
 
 a {
-  text-decoration: none; // إزالة التزيين الافتراضي
-  transition: color 0.2s; // تأثير الانتقال على اللون
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 img {
-  max-width: 100%; // تعيين الحد الأقصى للعرض
+  max-width: 100%;
 }
 
 a:focus {
-  outline: none; // إزالة الإطار عند التركيز
-  text-decoration: none; // إزالة التزيين عند التركيز
+  outline: none;
+  text-decoration: none;
 }
 
 ul,
 li {
-  margin: 0; // إزالة الهوامش
-  padding: 0; // إزالة الحشوات
-  list-style: none; // إزالة نمط القائمة
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
+
 h1 {
-  @apply text-3xl; // تعيين حجم الخط
+  @apply text-3xl;
 }
 
 h2 {
-  @apply text-xl; // تعيين حجم الخط
+  @apply text-xl;
 }
 
 h3 {
-  @apply text-xl; // تعيين حجم الخط
-  line-height: 38px; // ارتفاع السطر
+  @apply text-xl;
+  line-height: 38px;
 }
 
 // h4 {
-//   font-size: 22px; // حجم الخط
-//   line-height: 32px; // ارتفاع السطر
+//   font-size: 22px;
+//   line-height: 32px;
 // }
 
 // h5 {
-//   font-size: 16px; // حجم الخط
-//   line-height: 24px; // ارتفاع السطر
+//   font-size: 16px;
+//   line-height: 24px;
 // }
 
 // h6 {
-//   font-size: 14px; // حجم الخط
-//   line-height: 26px; // ارتفاع السطر
+//   font-size: 14px;
+//   line-height: 26px;
 // }
 
 .f-color {
-  color: #FF6767; // لون خاص
+  color: #FF6767;
 }
 
 h5.subtitle {
-  font-size: 16px; // حجم الخط
-  font-weight: 400; // وزن الخط
+  font-size: 16px;
+  font-weight: 400;
 }

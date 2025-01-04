@@ -1,65 +1,30 @@
-export default function toolTip() {
-  const tooltipToggleClick = document.querySelectorAll('.tooltip-toggle--clickable'),
-    tooltipToggleHover = document.querySelectorAll('.tooltip-toggle--hover'),
+export default function tootTip() {
+  const tooltipToggle = document.querySelectorAll('.tooltip-toggle--clickable'),
     closeTooltip = document.querySelectorAll('.close-tooltip');
 
-  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-  const showTooltip = (element) => {
-    element.classList.add('visible');
-  };
-
-  const hideTooltip = (element) => {
-    element.classList.remove('visible');
-  };
-
-  // إظهار التلميح إذا كان النوع قابل للنقر
-  if (tooltipToggleClick.length) {
-    tooltipToggleClick.forEach((element) => {
+  // Show the tooltip if the type is clickable
+  if (tooltipToggle.length) {
+    tooltipToggle.forEach(element => {
       element.addEventListener('click', (e) => {
         e.stopPropagation();
-        showTooltip(element);
+        element.classList.add('visible')
       });
     });
-  }
 
-  // إظهار التلميح إذا كان النوع هو التحويم أو النقر على الأجهزة التي تعمل باللمس
-  if (tooltipToggleHover.length) {
-    tooltipToggleHover.forEach((element) => {
-      if (isTouchDevice) {
-        element.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showTooltip(element);
-        });
-      } else {
-        element.addEventListener('mouseenter', () => {
-          showTooltip(element);
-        });
-
-        element.addEventListener('mouseleave', () => {
-          hideTooltip(element);
-        });
-      }
-    });
-  }
-
-  // إخفاء التلميح عند النقر على زر الإغلاق
-  if (closeTooltip.length) {
+    // Hide the tooltip
     closeTooltip.forEach(element => {
       element.addEventListener('click', (e) => {
         e.stopPropagation();
-        hideTooltip(element.parentElement.parentElement);
-      });
+        element.parentElement.parentElement.classList.remove('visible')
+      })
     });
-  }
 
-  // إخفاء التلميح عند النقر في أي مكان في النافذة
-  window.addEventListener('click', () => {
-    tooltipToggleClick.forEach((element) => {
-      hideTooltip(element);
-    });
-    tooltipToggleHover.forEach((element) => {
-      hideTooltip(element);
-    });
-  });
-}
+    // Hide the tooltip on window click
+    window.addEventListener('click', () => {
+      tooltipToggle.forEach(element => {
+        element.classList.remove('visible')
+      });
+    })
+  }
+};
+

@@ -5,11 +5,10 @@ window.anime = AnimeJS;
 class Anime {
     constructor(selector, options) {
         this.options = {
-            targets: selector,
-            opacity: [0, 1],
-            delay: (el, i) => i * 100,
+            targets : selector,
+            opacity : [0, 1],
+            delay   : (el, i) => i * 100,
             duration: 2000,
-            easing: 'easeInOutQuad',
         };
         this.setOptions(options);
     }
@@ -19,7 +18,7 @@ class Anime {
      * @return {Anime}
      */
     setOptions(options) {
-        this.options = Object.assign({}, this.options, options || {});
+        this.options = Object.assign(this.options, options || {});
         return this;
     }
 

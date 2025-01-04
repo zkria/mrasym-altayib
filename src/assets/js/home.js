@@ -9,23 +9,22 @@ class Home extends BasePage {
     }
 
     /**
-     * تستخدم في views/components/home/featured-products-style*.twig
+     * used in views/components/home/featured-products-style*.twig
      */
     initFeaturedTabs() {
         app.all('.tab-trigger', el => {
             el.addEventListener('click', ({ currentTarget: btn }) => {
                 let id = btn.dataset.componentId;
                 // btn.setAttribute('fill', 'solid');
-                app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'is-active opacity-0 translate-y-3', 'inactive', tab => tab.id === btn.dataset.target)
-                    .toggleClassIf(`#${id} .tab-trigger`, 'is-active', 'inactive', tabBtn => tabBtn === btn);
+                app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'is-active opacity-0 translate-y-3', 'inactive', tab => tab.id == btn.dataset.target)
+                    .toggleClassIf(`#${id} .tab-trigger`, 'is-active', 'inactive', tabBtn => tabBtn == btn);
 
-                // تلاشي التبويب النشط
-                setTimeout(() => app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'opacity-100 translate-y-0', 'opacity-0 translate-y-3', tab => tab.id === btn.dataset.target), 100);
-            });
+                // fadeIn active tabe
+                setTimeout(() => app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'opacity-100 translate-y-0', 'opacity-0 translate-y-3', tab => tab.id == btn.dataset.target), 100);
+            })
         });
         document.querySelectorAll('.s-block-tabs').forEach(block => block.classList.add('tabs-initialized'));
     }
 }
 
-// بدء الفئة عند جاهزية الصفحة
 Home.initiateWhenReady(['index']);
