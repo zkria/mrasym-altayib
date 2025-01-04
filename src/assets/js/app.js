@@ -4,10 +4,32 @@ import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
 
+class AppState {
+  constructor() {
+    this.menuOpen = false;
+    this.modalOpen = false;
+    this.observers = new Set();
+  }
+
+  setState(newState) {
+    Object.assign(this, newState);
+    this.notifyObservers();
+  }
+
+  subscribe(observer) {
+    this.observers.add(observer);
+  }
+
+  notifyObservers() {
+    this.observers.forEach(observer => observer(this));
+  }
+}
+
 class App extends AppHelpers {
   constructor() {
     super();
     window.app = this;
+    this.appState = new AppState();
   }
 
   loadTheApp() {
@@ -51,20 +73,29 @@ class App extends AppHelpers {
     }
 
   loadModalImgOnclick(){
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.add('loaded');
+          observer.unobserve(img);
+        }
+      });
+    });
+
     document.querySelectorAll('.load-img-onclick').forEach(link => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
-        let modal = document.querySelector('#' + link.dataset.modalId),
-          img = modal.querySelector('img'),
-          imgSrc = img.dataset.src;
+        const modal = document.querySelector('#' + link.dataset.modalId);
+        const img = modal.querySelector('img');
+        
         modal.open();
-
-        if (img.classList.contains('loaded')) return;
-
-        img.src = imgSrc;
-        img.classList.add('loaded');
-      })
-    })
+        if (!img.classList.contains('loaded')) {
+          imageObserver.observe(img);
+        }
+      });
+    });
   }
 
   commonThings() {
@@ -139,7 +170,7 @@ isElementLoaded(selector){
   this.isElementLoaded('#mobile-menu').then((menu) => {
 
  
-  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
+  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)");
 
   salla.lang.onLoaded(() => {
     mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
@@ -313,3 +344,61 @@ isElementLoaded(selector){
 }
 
 salla.onReady(() => (new App).loadTheApp());
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menuBtn = document.querySelector('.hamburger-menu');
+  const sidebar = document.querySelector('.sidebar-content');
+  const mainMenu = document.querySelector('custom-main-menu');
+  const body = document.body;
+
+  // إنشاء overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'sidebar-overlay';
+  body.appendChild(overlay);
+
+  // تهيئة القائمة
+  function initMenu() {
+    if (mainMenu) {
+      // إعادة تهيئة المكون
+      mainMenu.setAttribute('mobile', 'true');
+      mainMenu.setAttribute('show-categories', 'true');
+      mainMenu.setAttribute('show-brands', 'true');
+      
+      // إعادة تحميل المكون إذا كان متاحاً
+      if (typeof mainMenu.reload === 'function') {
+        mainMenu.reload();
+      }
+    }
+  }
+
+  function toggleMenu(e) {
+    if (e) e.preventDefault();
+    
+    menuBtn.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    
+    const isExpanded = sidebar.classList.contains('active');
+    menuBtn.setAttribute('aria-expanded', isExpanded);
+    body.style.overflow = isExpanded ? 'hidden' : '';
+    
+    // تهيئة القائمة عند فتحها
+    if (isExpanded) {
+      initMenu();
+    }
+  }
+
+  // مستمعات الأحداث
+  menuBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+
+  // إغلاق بـ ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+      toggleMenu();
+    }
+  });
+
+  // تهيئة القائمة عند تحميل الصفحة
+  initMenu();
+});
