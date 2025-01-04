@@ -1,11 +1,11 @@
 {
-  "name": "theme-raed",
+  "name": "مراسيم  الطيب",
   "version": "1.0.3",
-  "description": "Salla Theme",
+  "description": "mrasym-altayib",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SallaApp/theme-raed.git"
+    "url": "git+https://github.com/zkria/mrasym-altayib"
   },
   "scripts": {
     "build": "tailwindcss build src/assets/styles/tailwind.css -o dist/styles.css",

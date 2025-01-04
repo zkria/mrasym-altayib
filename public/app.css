@@ -909,6 +909,9 @@ select{
 .ml-4{
   margin-left: 1rem;
 }
+.ml-auto{
+  margin-left: auto;
+}
 .mr-1{
   margin-right: 0.25rem;
 }
@@ -1146,9 +1149,6 @@ select{
 .flex-grow{
   flex-grow: 1;
 }
-.basis-0{
-  flex-basis: 0px;
-}
 .table-fixed{
   table-layout: fixed;
 }
@@ -1202,9 +1202,6 @@ select{
 }
 .items-center{
   align-items: center;
-}
-.items-stretch{
-  align-items: stretch;
 }
 .justify-start{
   justify-content: flex-start;
@@ -1411,12 +1408,13 @@ select{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
+.bg-gray-800{
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1));
+}
 .bg-green-50{
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
-}
-.bg-inherit{
-  background-color: inherit;
 }
 .bg-primary{
   background-color: var(--color-primary);
@@ -1795,6 +1793,11 @@ select{
 .shadow-default{
   --tw-shadow: 5px 10px 30px #2B2D340D;;
   --tw-shadow-colored: 5px 10px 30px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-lg{
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .shadow-md{
@@ -15542,6 +15545,9 @@ input[type=radio].sr-only:checked ~ div.radio-images__badge {
   min-height: 48px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  background-color: #4A4A4A;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 @media (min-width: 1024px) {
   .top-navbar{
@@ -15617,6 +15623,19 @@ input[type=radio].sr-only:checked ~ div.radio-images__badge {
   .top-navbar .search-btn{
     justify-content: center;
   }
+}
+.top-navbar .header-buttons .header-btn {
+  color: white;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+}
+.top-navbar .header-buttons .header-btn:hover {
+  color: #FFD700;
+}
+.top-navbar .header-buttons .icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
 }
 
 .topnav-link-item{
@@ -15875,6 +15894,128 @@ input[type=radio].sr-only:checked ~ div#nav-cart span {
 
 .header-search .s-search-results{
   z-index: 10;
+}
+
+/* ===== إعدادات الشريط الجانبي ===== */
+.sidebar {
+  position: fixed; /* تعيين الشريط الجانبي ليكون ثابتًا */
+  top: 0; /* تعيين الموضع العلوي */
+  right: 0; /* تعيين الموضع الأيمن */
+  height: 100%; /* تعيين ارتفاع الشريط الجانبي ليملأ الشاشة */
+  width: 250px; /* تعيين عرض الشريط الجانبي */
+  padding: 20px; /* إضافة حشوة داخلية */
+  background: var(--sidebar-color); /* تعيين لون خلفية الشريط الجانبي */
+  transition: width 0.3s ease, background 0.3s ease; /* تأثير الانتقال عند تغيير العرض أو الخلفية */
+  z-index: 100; /* تعيين مستوى z-index */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* إضافة ظل للشريط الجانبي */
+  border-left: 1px solid rgba(0, 0, 0, 0.1); /* إضافة حد على اليسار */
+}
+
+.sidebar.close {
+  width: 88px; /* عرض الشريط الجانبي عند الإغلاق */
+}
+
+/* ===== تحسينات عناصر الشريط الجانبي ===== */
+.sidebar li {
+  height: 60px; /* تعيين ارتفاع العناصر */
+  list-style: none; /* إزالة النقاط من القائمة */
+  display: flex; /* استخدام flexbox لتنسيق العناصر */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+  margin-top: 15px; /* إضافة مسافة بين العناصر */
+  padding: 10px; /* إضافة حشوة داخلية */
+  border-radius: 8px; /* تعيين زوايا مستديرة */
+  transition: background-color 0.3s; /* تأثير الانتقال عند التمرير */
+}
+
+.sidebar li:hover {
+  background-color: var(--primary-color-light); /* تغيير لون الخلفية عند التمرير */
+}
+
+.sidebar header {
+  display: flex; /* استخدام flexbox لتنسيق الهيدر */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+  justify-content: space-between; /* توزيع العناصر بشكل متساوي */
+  margin-bottom: 20px; /* إضافة مسافة أسفل الهيدر */
+}
+
+.sidebar header .logo {
+  display: flex; /* استخدام flexbox لتنسيق الشعار */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+}
+
+.sidebar header .logo img {
+  width: 40px; /* تعيين عرض الشعار */
+  border-radius: 6px; /* تعيين زوايا مستديرة للشعار */
+}
+
+.sidebar header .toggle {
+  cursor: pointer; /* تغيير شكل المؤشر عند التمرير فوق الزر */
+  transition: transform 0.3s; /* تأثير الانتقال عند التمرير */
+}
+
+.sidebar.close .toggle {
+  transform: rotate(180deg); /* تدوير الزر عند إغلاق الشريط الجانبي */
+}
+
+/* ===== تحسينات قائمة الشريط الجانبي ===== */
+.sidebar .menu {
+  margin-top: 40px; /* إضافة مسافة أعلى القائمة */
+  overflow-y: auto; /* السماح بالتمرير العمودي إذا كانت القائمة طويلة */
+}
+
+.sidebar li a {
+  display: flex; /* استخدام flexbox لتنسيق الروابط */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+  width: 100%; /* تعيين عرض الروابط ليملأ العنصر */
+  padding: 10px; /* إضافة حشوة داخلية */
+  border-radius: 6px; /* تعيين زوايا مستديرة */
+  text-decoration: none; /* إزالة التسطير من الروابط */
+  color: var(--text-color); /* تعيين لون النص */
+  transition: background-color 0.3s; /* تأثير الانتقال عند التمرير */
+}
+
+.sidebar li a:hover {
+  background-color: var(--primary-color); /* تغيير لون الخلفية عند التمرير */
+  color: #fff; /* تغيير لون النص عند التمرير */
+}
+
+/* ===== تحسينات الأيقونات ===== */
+.sidebar .icon {
+  font-size: 24px; /* تعيين حجم الأيقونات */
+  margin-right: 10px; /* إضافة مسافة بين الأيقونة والنص */
+}
+
+/* ===== تحسينات زر التبديل ===== */
+.toggle-switch {
+  display: flex; /* استخدام flexbox لتنسيق زر التبديل */
+  align-items: center; /* محاذاة العناصر في المنتصف عموديًا */
+  cursor: pointer; /* تغيير شكل المؤشر عند التمرير فوق الزر */
+}
+
+.toggle-switch .switch {
+  position: relative; /* تعيين الموضع النسبي للتبديل */
+  height: 24px; /* تعيين ارتفاع التبديل */
+  width: 44px; /* تعيين عرض التبديل */
+  border-radius: 25px; /* تعيين زوايا مستديرة للتبديل */
+  background-color: var(--toggle-color); /* تعيين لون خلفية التبديل */
+  transition: background-color 0.3s; /* تأثير الانتقال عند تغيير اللون */
+}
+
+.switch::before {
+  content: ""; /* إضافة محتوى فارغ */
+  position: absolute; /* تعيين الموضع المطلق */
+  height: 18px; /* تعيين ارتفاع الزر داخل التبديل */
+  width: 18px; /* تعيين عرض الزر داخل التبديل */
+  border-radius: 50%; /* تعيين زوايا مستديرة للزر */
+  top: 50%; /* تعيين الموضع العلوي */
+  left: 5px; /* تعيين الموضع الأيسر */
+  transform: translateY(-50%); /* محاذاة الزر عموديًا */
+  background-color: var(--sidebar-color); /* تعيين لون الزر */
+  transition: transform 0.3s; /* تأثير الانتقال عند تغيير الموضع */
+}
+
+body.dark .switch::before {
+  left: 20px; /* تغيير الموضع الأيسر عند تفعيل الوضع الداكن */
 }
 
 .store-footer{
@@ -20170,10 +20311,6 @@ lite-youtube.lyt-activated > .lty-playbtn {
   margin-right: 0.75rem;
 }
 
-.ltr\:mr-4:where([dir="ltr"], [dir="ltr"] *){
-  margin-right: 1rem;
-}
-
 .ltr\:mr-8:where([dir="ltr"], [dir="ltr"] *){
   margin-right: 2rem;
 }
@@ -20315,10 +20452,6 @@ lite-youtube.lyt-activated > .lty-playbtn {
 
 .rtl\:ml-3:where([dir="rtl"], [dir="rtl"] *){
   margin-left: 0.75rem;
-}
-
-.rtl\:ml-4:where([dir="rtl"], [dir="rtl"] *){
-  margin-left: 1rem;
 }
 
 .rtl\:ml-8:where([dir="rtl"], [dir="rtl"] *){
