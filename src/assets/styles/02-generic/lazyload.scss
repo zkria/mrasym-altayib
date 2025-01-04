@@ -1,25 +1,18 @@
-// تأثيرات الانتقال للشفافية عند تحميل الشرائح بشكل كسول
-.swiper-lazy {
-  @apply transition-opacity duration-500 opacity-0; // تعيين تأثير الانتقال ومدة الشفافية
-  @apply absolute top-0 h-full w-full bg-cover bg-center; // تعيين موضع العنصر
-  background-color: var(--bg-lazy-default, #fff); // تعيين لون الخلفية الافتراضي
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
-  &.swiper-lazy-loaded {
-    @apply opacity-100; // تعيين الشفافية إلى 100% عند التحميل
-    background-color: var(--bg-lazy-loaded, #000); // تعيين لون الخلفية عند التحميل
-    @apply dark:bg-gray-700; // لون الخلفية عند التحميل في الوضع الداكن
+// sliders lazyloading opacity transition
+.swiper-lazy{
+  @apply transition-opacity duration-500 opacity-0;
+  @apply absolute top-0 h-full w-full bg-cover bg-center;
+
+  &.swiper-lazy-loaded{
+    @apply opacity-100;
   }
 }
 
-.lazy__bg {
-  @apply absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-500 opacity-0; // تعيين تأثير الانتقال وموضع الخلفية
-  background-color: var(--bg-lazy-default, #fff); // تعيين لون الخلفية الافتراضي
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+.lazy__bg{
+  @apply absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-500 opacity-0;
 
-  &.loaded {
-    @apply opacity-100; // تعيين الشفافية إلى 100% عند التحميل
-    background-color: var(--bg-lazy-loaded, #000); // تعيين لون الخلفية عند التحميل
-    @apply dark:bg-gray-700; // لون الخلفية عند التحميل في الوضع الداكن
+  &.loaded{
+    @apply opacity-100;
   }
 }

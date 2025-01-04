@@ -1,118 +1,86 @@
 {#
-| المتغير          | النوع   | الوصف                           |
+| Variable         | Type    | Description                     |
 |------------------|---------|---------------------------------|
-| cart             | كائن    |                                 |
-| cart.items_count | عدد صحيح|                                 |
-| cart.total       | سلسلة   | المجموع بصيغة مثل: "١٠٠ ر.س"    |
+| cart             | object  |                                 |
+| cart.items_count | int     |                                 |
+| cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
-  <div class="top-navbar flex items-center justify-between bg-white dark:bg-gray-800 p-6 shadow-md text-gray-800 dark:text-gray-200 sticky top-0 z-50">
-    <a class="navbar-brand flex items-center mx-auto" href="{{ store.url }}">
-      <img fetchpriority="high" width="120%" height="300%" loading="lazy" src="{{ store.logo }}" alt="شعار {{ store.name }}">
-      {% if is_page('index') %}
-        <h1 class="sr-only">{{ store.name }}</h1>
-      {% else %}
-        <h2 class="sr-only">{{ store.name }}</h2>
-      {% endif %}
-    </a>
+  {# Top Nav #}
+  <div class="top-navbar">
+    <div class="container flex justify-between">
+      <div class="flex-1 flex items-center gap-2">
+          {# Footer Menu #}
+          {% if important_links %}
+            <salla-menu source="footer" topnav></salla-menu>
+          {% endif %}
 
-    <div class="flex items-center space-x-4">
-      <div>
-        <salla-cart-summary class="ml-2 rtl:ml-[unset] rtl:mr-4">
-          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-        </salla-cart-summary>
+          {# Language & Currency Component #}
+          <div class="header-buttons">
+              {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                  <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
+                      <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+                      <span class="mx-1.5">|</span> <span>{{ currency.symbol }}</span>
+                  </button>
+                  <salla-localization-modal></salla-localization-modal>
+              {% endif %}
+          </div>
+
+          {# Scopes | Branches #}
+          {% if store.scope %}
+              <button class="btn--rounded-gray"
+                      onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+                  <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
+              </button>
+          {% endif %}
+
+          {# Search bar #}
+          <div class="header-search flex-1">
+            <salla-search inline oval height="36"></salla-search>
+          </div>
       </div>
 
-      <div>
-        {% if user.type=='user' %}
-          <salla-user-menu avatar-only show-header></salla-user-menu>
-        {% else %}
-          <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
-            <i class="header-btn__icon sicon-user-circle"></i>
-          </button>
-        {% endif %}
-      </div>
-
-      <div>
-        <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن" onclick="toggleDarkMode()">
-          <i class="header-btn__icon sicon-moon"></i>
-        </button>
-      </div>
-
-      <div class="search-container">
-        <button id="search-button" class="header-btn" aria-label="بحث">
-          <i class="header-btn__icon sicon-search"></i>
-        </button>
-        <input id="search-input" type="text" class="hidden search-input" placeholder="ابحث هنا...">
-      </div>
-    </div>
-
-    <button id="toggle-sidenav" class="header-btn mx-4" aria-label="فتح القائمة الجانبية" onclick="toggleSideNav()">
-      <i class="header-btn__icon sicon-menu"></i>
-    </button>
-  </div>
-
-  <div id="search-popup" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white dark:bg-gray-700 p-4 rounded shadow-lg">
-      <button id="close-search" class="mb-2 text-red-500">إغلاق</button>
-      <salla-search inline oval height="36"></salla-search>
+      <salla-contacts is-header></salla-contacts>
     </div>
   </div>
 
-  <div id="sidenav" class="side-nav-container shadow-default bg-white dark:bg-gray-800 fixed right-0 top-0 h-full text-gray-800 dark:text-gray-200 hidden">
-    <div class="inner bg-inherit p-4">
-      <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="mb-2">
-      <p class="text-gray-800 dark:text-gray-200 mb-4 font-bold">القائمة</p>
-      <div class="container">
-        <div class="flex flex-col items-start justify-start relative">
-          <custom-main-menu></custom-main-menu>
-        </div>
+  {# Main Nav #}
+  <div id="mainnav" class="main-nav-container shadow-default bg-white">
+      <div class="inner bg-inherit">
+          <div class="container">
+              <div class="flex items-stretch justify-between relative">
+                  <div class="flex items-center">
+                      <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="Open-menu">
+                        <i class="sicon-menu text-primary text-2xl"></i>
+                      </a>
+                      <a class="navbar-brand" href="{{ store.url }}">
+                          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
+                          {% if is_page('index') %}
+                            <h1 class="sr-only">{{ store.name }}</h1>
+                          {% else %}
+                            <h2 class="sr-only">{{ store.name }}</h2>
+                          {% endif %}
+                      </a>
+                      <custom-main-menu></custom-main-menu>
+                  </div>
+                  <div class="flex items-center justify-end">
+                      {% if user.type=='user' %}
+                        <salla-user-menu avatar-only show-header></salla-user-menu>
+                      {% else %}
+                          <button class="header-btn" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
+                            <i class="header-btn__icon sicon-user-circle"></i>
+                          </button>
+                      {% endif %}
+                      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
+                        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+                      </salla-cart-summary>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </header>
-
-<script>
-  // تحقق من تفضيلات النظام للوضع الداكن
-  const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-  // تحقق من حالة الوضع الداكن المخزنة في localStorage
-  const currentTheme = localStorage.getItem("theme");
-
-  if (currentTheme === "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
-    document.body.classList.add("dark-mode");
-  } else {
-    document.body.classList.remove("dark-mode");
-  }
-
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    let theme = "light";
-    if (document.body.classList.contains("dark-mode")) {
-      theme = "dark";
-    }
-    localStorage.setItem("theme", theme);
-  }
-
-  function toggleSideNav() {
-    const sideNav = document.getElementById('sidenav');
-    const toggleButton = document.getElementById('toggle-sidenav');
-    sideNav.classList.toggle('hidden');
-    if (sideNav.classList.contains('hidden')) {
-      toggleButton.style.right = '0';
-    } else {
-      toggleButton.style.right = '200px'; // Adjust this value based on the width of the side nav
-    }
-  }
-
-  document.getElementById('search-button').addEventListener('click', function() {
-    var searchInput = document.getElementById('search-input');
-    searchInput.classList.toggle('hidden');
-    searchInput.focus();
-  });
-
-  document.getElementById('close-search').addEventListener('click', function() {
-    document.getElementById('search-popup').classList.add('hidden');
-  });
-</script>
+{% if store.scope %}
+    <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+{% endif %}

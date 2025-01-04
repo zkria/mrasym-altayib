@@ -1,13 +1,13 @@
 {#
-| المتغيرات            | النوع   | الوصف                                  |
+| Variable            | Type   | Description                            |
 |---------------------|--------|----------------------------------------|
-| page                | كائن   |                                        |
-| page.title          | سلسلة  |                                        |
-| page.slug           | سلسلة  |                                        |
-| order               | طلب    | @see pages/customer/orders/single.twig |
-| thank_you           | سلسلة  |                                        |
-| share_message       | سلسلة  |                                        |
-| short_share_message | سلسلة  |                                        |
+| page                | object |                                        |
+| page.title          | string |                                        |
+| page.slug           | string |                                        |
+| order               | Order  | @see pages/customer/orders/single.twig |
+| thank_you           | string |                                        |
+| share_message       | string |                                        |
+| short_share_message | string |                                        |
 #}
 {% extends "layouts.master" %}
 
@@ -27,14 +27,14 @@
                 <li><span class="fix-align">{{ thank_you_title }}</span></li>
             </ol>
         </nav>
-        <div class="bg-white dark:bg-gray-800 p-4 md:p-8 rounded-md mb-6 md:mb-8">
+        <div class="bg-white p-4 md:p-8 rounded-md mb-6 md:mb-8">
             <div class="flex flex-col items-center pt-16 pb-10">
                 <div class="rtl:-scale-x-100">
                   <img src="{{ 'images/delivery-bro.svg' | asset }}" alt="{{ thank_you_title }}"
                      class="thanks-item opacity-0 w-40 mb-8">
                 </div>
-                <h1 class="font-bold text-lg mb-2.5 thanks-item opacity-0 text-gray-900 dark:text-gray-200">{{ thank_you_title }}</h1>
-                <p class="thanks-item opacity-0 text-gray-500 dark:text-gray-400 max-w-xs text-center text-sm leading-6 mb-6">
+                <h1 class="font-bold text-lg mb-2.5 thanks-item opacity-0">{{ thank_you_title }}</h1>
+                <p class="thanks-item opacity-0 text-gray-500 max-w-xs text-center text-sm leading-6 mb-6">
                     {{ trans('pages.thank_you.order_id') }}
                     <salla-button class="relative" onclick="app.copyToClipboard(event)" color="dark" shape="link" data-content="{{ order.reference_id }}">
                         <span>#{{ order.reference_id }}</span>

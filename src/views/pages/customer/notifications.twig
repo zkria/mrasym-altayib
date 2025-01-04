@@ -1,23 +1,23 @@
 {#
-| المتغيرات                | النوع                      | الوصف                     |
-|---------------------------|---------------------------|---------------------------|
-| page                      | كائن                      |                           |
-| page.title                | سلسلة                    | عنوان الصفحة             |
-| page.slug                 | سلسلة                    | رابط الصفحة              |
-| notifications             | إشعارات[] *صفحة         | قائمة الإشعارات         |
-| notifications.next_page   | ?سلسلة                   | رابط الصفحة التالية      |
-| notifications.count       | عدد صحيح                 | عدد الإشعارات            |
-| notifications[].is_new    | بولياني                  | هل الإشعار جديد؟        |
-| notifications[].url       | سلسلة                    | رابط الإشعار             |
-| notifications[].sub_title | سلسلة                    | العنوان الفرعي للإشعار   |
-| notifications[].title     | سلسلة                    | عنوان الإشعار            |
-| notifications[].date      | سلسلة                    | تاريخ الإشعار            |
+| Variable                  | Type                      | Description |
+|---------------------------|---------------------------|-------------|
+| page                      | object                    |             |
+| page.title                | string                    |             |
+| page.slug                 | string                    |             |
+| notifications             | Notification[] *Paginator |             |
+| notifications.next_page   | ?string                   |             |
+| notifications.count       | int                       |             |
+| notifications[].is_new    | Bool                      |             |
+| notifications[].url       | string                    |             |
+| notifications[].sub_title | string                    |             |
+| notifications[].title     | string                    |             |
+| notifications[].date      | string                    |             |
 #}
 {% extends "layouts.customer" %}
 {% block inner_content %}
 	{% hook 'customer:notifications.items.start' %}
 
-	<salla-notifications class="bg-white dark:bg-gray-800"></salla-notifications> <!-- مكون عرض الإشعارات مع دعم الوضع الداكن -->
+	<salla-notifications></salla-notifications>
 
 	{% hook 'customer:notifications.items.end' %}
 {% endblock %}

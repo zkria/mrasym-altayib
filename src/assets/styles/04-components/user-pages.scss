@@ -1,90 +1,84 @@
-/* إعدادات عنصر رأس الطلب الفردي */
-.single-order-header-item {
+.single-order-header-item{
   @media (max-width: 768px) {
-    @apply flex justify-between items-center; // إعدادات المحاذاة في الشاشات الصغيرة
+    @apply flex justify-between items-center;
   }
 }
 
-/* إعدادات ملف الطلب */
-.order-file {
-  .s-button-text {
-    @apply flex gap-2; // إعدادات الزر
-  }
-}
-
-/* إعدادات العلامات */
+/* tags */
 .tag {
-  background-color: var(--tag-bg, #fff); // استخدام متغير للون الخلفية
-  color: var(--tag-text-color, #333); // استخدام متغير للون النص
-  border-color: var(--tag-border-color, #ccc); // استخدام متغير للون الحدود
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
-}
+  @apply px-3 pt-0.5 pb-1 inline-block text-sm rounded-2xl border border-gray-200;
 
-/* إعدادات قسم رأس الملف الشخصي */
-.profile-header {
-  background-color: var(--profile-header-bg, #f5f5f5); // استخدام متغير للون الخلفية
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-}
-
-/* إعدادات رفع صورة الملف الشخصي */
-.s-file-upload-profile-image .s-file-upload-has-error .filepond--file-status {
-  @apply ltr:-left-1/2 rtl:right-1/2; // إعدادات الموضع
-}
-
-/* إعدادات رأس التقييم */
-.rating-header {
-  background: linear-gradient(to right, var(--rating-gradient-from, #006d77), var(--rating-gradient-to, #83c5be)); // استخدام متغيرات للون التدرج
-  @apply dark:from-gray-700 dark:to-gray-900; // تدرج الألوان في الوضع الداكن
-}
-
-/* إعدادات الحقول الإضافية في الملف الشخصي */
-.form--user-profile {
-  .s-file-upload-wrapper {
-    background-color: var(--file-upload-bg, #e8e8e8); // استخدام متغير للون الخلفية
-    @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+  &--primary {
+    @apply text-primary border-primary;
   }
 }
 
-/* إعدادات صفحة الشكر */
-.thankyou-block {
-  background-color: var(--thankyou-bg, #fff); // استخدام متغير للون الخلفية
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-}
+/* Profile Header section */
+.profile-header {
+  @apply relative lg:h-48 overflow-hidden;
 
-/* إعدادات إجراءات تقييم الطلب */
-.rating-actions {
-  @apply flex items-center gap-2; // إعدادات المحاذاة
-  salla-button {
-    button {
-      @apply rounded mx-0 w-8 h-8 #{!important}; // إعدادات الزر
+  .breadcrumbs {
+    @screen lg {
+      @apply mt-2.5;
+    }
+
+    a {
+      @apply text-primary-reverse hover:opacity-80;
+    }
+
+    span {
+      @apply text-primary-reverse opacity-80;
+    }
+
+    .arrow {
+      @apply text-primary-reverse opacity-70;
     }
   }
 }
 
-/* إعدادات صفحة المدونة الفردية */
-.blog-single .s-comments-item-user-info-name {
-  @apply mx-0; // إعدادات الهوامش
-}
-
-.tag--primary {
-  @apply text-primary border-primary; // إعدادات العلامة الأساسية
-}
-
-.profile-header .breadcrumbs a,
-.profile-header .breadcrumbs span,
-.profile-header .breadcrumbs .arrow {
-  @apply text-primary-reverse; // إعدادات الروابط والنصوص
-}
 
 .rating-header {
-  @apply from-primary to-primary-d text-primary-reverse; // إعدادات الحاوية
+  @apply relative from-primary to-primary-d p-5 text-primary-reverse rounded-md;
 }
 
-.thankyou-block.sent {
-  @apply text-green-500; // إعدادات النص عند الإرسال
+/* Profile additional fields */
+.form--user-profile{
+  .s-file-upload-wrapper{
+    min-height: 120px;
+    .filepond--list-scroller{
+      overflow-y: inherit !important;
+    }
+    .filepond--drop-label {
+      min-height: 120px !important;
+      @apply bg-white cursor-pointer border-dashed rounded-md border border-gray-200;
+    }
+    .profile-filepond-placholder{
+      @apply flex flex-col justify-center items-center;
+      &-icon {
+        @apply mb-1;
+        i {
+          color: #7c8082;
+          @apply text-xl;
+        }
+      }
+    }
 
-  &:before {
-    @apply bg-green-100 text-green-500; // إعدادات الأيقونة
+  }
+}
+
+/* 
+* thank you page 
+*/
+.thankyou-block{
+  @apply duration-500 hover:shadow-default flex-1 bg-white p-8 rounded-md mb-6 md:mb-8 flex flex-col items-center justify-center;
+
+  &.sent{
+    @apply text-green-500 font-bold;
+
+    &:before{
+      @apply w-16 h-16 bg-green-100 text-green-500 flex items-center justify-center text-2xl rounded-full mb-2;
+      content: "\ea9d";
+      font-family: 'sallaicons';
+    }
   }
 }

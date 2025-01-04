@@ -1,45 +1,28 @@
-// إعدادات الأنماط للاتجاه من اليمين إلى اليسار
-:root {
-  --background-select-light: #fff; // لون خلفية الاختيار في الوضع الفاتح
-  --background-select-dark: #333; // لون خلفية الاختيار في الوضع الداكن
-  --text-color-light: #000; // لون النص في الوضع الفاتح
-  --text-color-dark: #fff; // لون النص في الوضع الداكن
-}
-
 .rtl,
 [dir="rtl"] {
   .rtl-range-slider {
-    transform: rotateY(180deg); // قلب شريط التمرير أفقيًا
+    transform: rotateY(180deg);
   }
 
   .rtl-range-numbers {
-    flex-direction: row-reverse; // عكس اتجاه الأرقام في شريط التمرير
+    flex-direction: row-reverse;
   }
 
   .form-select, select {
-    background-position: left 0.5rem center; // تعيين موضع الخلفية
-    padding-right: 12px; // إضافة حشوة على اليمين
-    background-color: var(--background-select-light); // استخدام المتغير للون الخلفية
-    color: var(--text-color-light); // استخدام المتغير للون النص
-    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-    @apply dark:text-gray-200; // لون النص في الوضع الداكن
-  }
-
-  .form-select.dark-mode, select.dark-mode {
-    background-color: var(--background-select-dark); // تغيير لون الخلفية في الوضع الداكن
-    color: var(--text-color-dark); // تغيير لون النص في الوضع الداكن
+    background-position: left 0.5rem center;
+    padding-right: 12px;
   }
 
   .fix-align {
-    transform: translateY(-2px); // تعديل موضع العنصر عموديًا
-    display: inline-block; // تعيين العرض ككتلة داخلية
+    transform: translateY(-2px);
+    display: inline-block;
   }
 
   .flatpickr {
     &-months {
       .numInputWrapper {
         .cur-year {
-          padding: 0 15px 0 0; // إضافة حشوة إلى السنة الحالية
+          padding: 0 15px 0 0;
         }
       }
     }

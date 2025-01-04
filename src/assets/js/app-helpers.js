@@ -1,37 +1,5 @@
 export default class AppHelpers {
 
-  constructor() {
-    this.darkMode = false;
-  }
-
-  /**
-   * تفعيل أو تعطيل الوضع الداكن
-   * @param {boolean} mode
-   */
-  setDarkMode(mode) {
-    this.darkMode = mode;
-    return this;
-  }
-
-  /**
-   * تطبيق الوضع الداكن على عناصر محددة
-   * @param {string} selector
-   * @param {string} darkClass
-   * @param {string} lightClass
-   */
-  applyDarkMode(selector, darkClass = 'dark-mode', lightClass = 'light-mode') {
-    document.querySelectorAll(selector).forEach(element => {
-      if (this.darkMode) {
-        element.classList.remove(lightClass);
-        element.classList.add(darkClass);
-      } else {
-        element.classList.remove(darkClass);
-        element.classList.add(lightClass);
-      }
-    });
-    return this;
-  }
-
   /**
    * @param {string} selector
    * @param {array<string>} classes1
@@ -149,7 +117,7 @@ export default class AppHelpers {
   }
 
   /**
-   * 💡 يمكنك تمرير عدة فئات: this.removeClass(element, 'class_1', 'class_2', ...)
+   * 💡 you can pass multi classes: this.removeClass(element, 'class_1', 'class_2', ...)
    * @param {string|HTMLElement} element
    * @param {string} className
    * @return {AppHelpers}
@@ -160,7 +128,7 @@ export default class AppHelpers {
   }
 
   /**
-   * 💡 يمكنك تمرير عدة فئات: this.addClass(element, 'class_1', 'class_2', ...)
+   * 💡 you can pass multi classes: this.addClass(element, 'class_1', 'class_2', ...)
    * @param {string|HTMLElement} element
    * @param {string} className
    * @return {AppHelpers}

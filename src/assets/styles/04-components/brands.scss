@@ -1,59 +1,43 @@
-// إعدادات شريط التنقل للعلامات التجارية
 .brands-nav {
-  @apply flex flex-wrap justify-center rtl:space-x-reverse space-x-2 space-y-2; // إعدادات التنسيق
+  @apply flex flex-wrap justify-center rtl:space-x-reverse space-x-2 space-y-2;
 
   &__item {
-    @apply flex items-center justify-center rounded-md hover:shadow-sm focus:border-primary text-sm w-10 h-10 p-1 transition; // إعدادات عنصر العلامة التجارية
-    background-color: var(--item-bg, #fff); // استخدام متغير للون الخلفية
-    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-    color: var(--item-text-color, #555); // استخدام متغير للون النص
-    @apply dark:text-gray-200; // لون النص في الوضع الداكن
+    @apply flex items-center justify-center rounded-md hover:shadow-sm focus:border-primary text-sm w-10 h-10 bg-white text-gray-500 p-1 transition;
 
-    &.is-selected {
-      @apply #{!important}; // تطبيق الأهمية
-      background-color: var(--item-selected-bg, #0056b3); // استخدام متغير للون الخلفية المحدد
-      @apply dark:bg-gray-700; // لون الخلفية المحدد في الوضع الداكن
-      color: var(--item-selected-text-color, #fff); // استخدام متغير للون النص المحدد
-      @apply dark:text-gray-200; // لون النص المحدد في الوضع الداكن
+    &.is-selected{
+      @apply bg-primary text-primary-reverse #{!important};
     }
 
-    span {
-      @apply pointer-events-none; // منع التفاعل مع النص داخل العنصر
+    span{
+      @apply pointer-events-none;
     }
   }
 
-  &.is-sticky {
-    @apply flex-col flex-wrap h-full fixed z-0 top-9 rtl:right-2 ltr:left-2 space-y-0.5 pt-16 pb-10; // إعدادات الشريط الثابت
+  &.is-sticky{
+    @apply flex-col flex-wrap h-full fixed z-0 top-9 rtl:right-2 ltr:left-2 space-y-0.5 pt-16 pb-10;
 
-    .brands-nav__item {
-      background-color: var(--sticky-item-bg, #fff); // استخدام متغير للون الخلفية للعنصر الثابت
-      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+    .brands-nav__item{
+      @apply bg-white;
 
       @media (max-width: 1280px) {
-        @apply w-6 h-6; // تعديل الأبعاد في الشاشات الصغيرة
+        @apply w-6 h-6;
       }
     }
   }
 }
 
-// إعدادات حرف العلامة التجارية
 .brand-char {
-  @apply rtl:ml-5 ltr:mr-5 rtl:md:ml-12 ltr:md:mr-12 rounded-md w-10 h-10 flex items-center transition justify-center hover:shadow-sm border border-transparent focus:border-primary text-sm; // إعدادات حرف العلامة التجارية
-  background-color: var(--char-bg, #fff); // استخدام متغير للون الخلفية
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  @apply rtl:ml-5 ltr:mr-5 rtl:md:ml-12 ltr:md:mr-12 bg-white rounded-md w-10 h-10 flex items-center transition justify-center hover:shadow-sm border border-transparent focus:border-primary text-sm;
 }
 
-// إعدادات عنصر العلامة التجارية
 .brand-item {
-  @apply flex justify-center items-center transition hover:opacity-95 bg-cover h-20 sm:h-24 md:h-32 text-white text-center p-3 sm:p-4 md:p-8 rounded-md overflow-hidden relative; // إعدادات عنصر العلامة التجارية
-  background-color: var(--brand-item-bg, #333); // استخدام متغير للون الخلفية
-  @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+  @apply flex justify-center items-center bg-white transition hover:opacity-95 bg-cover h-20 sm:h-24 md:h-32 text-white text-center p-3 sm:p-4 md:p-8 rounded-md overflow-hidden relative;
 
   .index & {
-    @apply p-4; // إضافة حشوة داخلية
+    @apply p-4;
 
-    img {
-      @apply xs:max-w-[150px] w-auto; // تعيين عرض الصورة
+    img{
+      @apply xs:max-w-[150px] w-auto;
     }
   }
 }

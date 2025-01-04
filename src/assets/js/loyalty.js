@@ -35,18 +35,8 @@ class Loyalty extends BasePage {
             delay: function (el, i) {
                 return i * 100;
             },
-        }, '-=3200');
-
-        this.applyDarkMode();
-    }
-
-    applyDarkMode() {
-        const loyaltyElements = document.querySelectorAll('.loyality-item, .star-anime, .btn-anime');
-        loyaltyElements.forEach(el => {
-            el.classList.toggle('dark-mode', this.darkMode);
-        });
+        }, '-=3200')
     }
 }
 
-// بدء الفئة عند جاهزية الصفحة
 Loyalty.initiateWhenReady(['loyalty']);

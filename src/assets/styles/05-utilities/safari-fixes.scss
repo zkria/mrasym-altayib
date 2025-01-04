@@ -1,15 +1,12 @@
-// إصلاحات مخصصة لمتصفح Safari
-@media not all and (min-resolution: .001dpcm) { 
-  @supports (-webkit-appearance: none) {
-    // إعدادات مخصصة لعناصر checkbox و radio
-    // [type='checkbox'], [type='radio'] {
-    //   @apply w-5; // تعيين العرض
+
+@media not all and (min-resolution:.001dpcm){ 
+  @supports (-webkit-appearance:none) {
+    // [type='checkbox'], [type='radio']{
+    //   @apply w-5;
     // }
 
-    .full-banner-entry {
-      background-attachment: initial; // تعيين خاصية الخلفية
-      background-color: var(--full-banner-bg, #fff); // استخدام متغير للون الخلفية
-      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+    .full-banner-entry{
+      background-attachment: initial;
     }
   }
 }

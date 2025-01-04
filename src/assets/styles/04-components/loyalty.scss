@@ -1,122 +1,102 @@
-// إعدادات برنامج الولاء
-.loyalty {
-  .breadcrumbs {
-    @apply pb-0 pt-4; // إعدادات الهوامش
 
-    ol {
-      @apply justify-center lg:justify-start; // إعدادات محاذاة القائمة
+.loyalty{
+  .breadcrumbs {
+    @apply pb-0 pt-4;
+
+    ol{
+      @apply justify-center lg:justify-start;
     }
     
     a,
     span,
     .arrow {
-      color: var(--breadcrumbs-text-color, #fff); // استخدام متغير للون النص
-      @apply dark:text-gray-200; // لون النص في الوضع الداكن
+      @apply text-white/90;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
     }
   }
 
-  &__banner {
-    @apply relative overflow-hidden m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default; // إعدادات لافتة الولاء
-    background-color: var(--banner-bg, #fff); // استخدام متغير للون الخلفية
-    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  &__banner{
+    @apply relative overflow-hidden bg-white m-auto p-10 lg:py-16 lg:px-20 rounded-md mb-28 mt-20 shadow-default;
 
-    &-inner {
-      @apply relative z-10 text-center sm:flex flex-1 items-center rtl:space-x-reverse sm:space-x-12; // إعدادات المحتوى الداخلي
+    &-inner{
+      @apply relative z-10 text-center sm:flex flex-1 items-center rtl:space-x-reverse sm:space-x-12;
     }
 
-    &-content {
-      @apply md:flex flex-1 justify-between items-center; // إعدادات محتوى اللافتة
+    &-content{
+      @apply md:flex flex-1 justify-between items-center;
 
-      .info {
-        @apply mb-6 md:mb-0; // إعدادات المعلومات
+      .info{
+        @apply mb-6 md:mb-0;
 
-        h1 {
-          @apply font-bold text-3xl mb-2.5; // إعدادات عنوان المعلومات
-          color: var(--info-title-color, #333); // استخدام متغير للون العنوان
-          @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
+        h1{
+          @apply font-bold text-3xl mb-2.5;
         }
 
-        p {
-          @apply max-w-xs leading-6 mb-2; // إعدادات وصف المعلومات
-          color: var(--info-desc-color, #666); // استخدام متغير للون الوصف
-          @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
+        p{
+          @apply text-gray-500 max-w-xs leading-6 mb-2;
         }
       }
     }
 
-    .loyalty-points {
-      @apply text-sm; // إعدادات نقاط الولاء
-      color: var(--points-text-color, #666); // استخدام متغير للون النص
-      @apply dark:text-gray-200; // لون النص في الوضع الداكن
+    .loyalty-points{
+      @apply text-sm text-gray-500;
 
-      .count-number {
-        @apply text-4xl; // إعدادات عدد النقاط
-        color: var(--points-number-color, #00796b); // استخدام متغير للون الأرقام
-        @apply dark:text-green-300; // لون الأرقام في الوضع الداكن
+      .count-number{
+        @apply text-4xl text-primary font-bold ltr:ml-2.5 rtl:mr-2.5;
       }
     }
   }
 
-  &-star {
-    @apply absolute z-0 transform opacity-70; // إعدادات النجوم
+  &-star{
+    @apply absolute z-0 transform opacity-70;
 
-    i {
-      color: var(--star-color, #ccc); // استخدام متغير للون الأيقونة
-      @apply dark:text-gray-400; // لون الأيقونة في الوضع الداكن
+    i{
+      @apply text-gray-100 text-[400px];
     }
 
-    &--first {
-      @apply -right-24 -top-48 -rotate-45; // إعدادات النجمة الأولى
+    &--first{
+      @apply -right-24 -top-48 -rotate-45;
     }
 
-    &--second {
-      @apply -left-16 -bottom-40 -rotate-90; // إعدادات النجمة الثانية
+    &--second{
+      @apply -left-16 -bottom-40 -rotate-90;
     }
   }
 
-  .product-entry__image {
-    flex-shrink: unset; // إعدادات صورة المنتج
+  .product-entry__image{
+      flex-shrink : unset;
   }
 }
 
-// إعدادات طرق كسب النقاط
-.points-ways {
-  &__list {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-8; // إعدادات تخطيط قائمة طرق كسب النقاط
+.points-ways{
+  &__list{
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-8;
 
-    .way-item {
-      @apply flex flex-col w-full opacity-100 rounded-md shadow-default p-6; // إعدادات عنصر طريقة كسب النقاط
-      background-color: var(--way-item-bg, #fff); // استخدام متغير للون الخلفية
-      @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+    .way-item{
+      @apply flex flex-col bg-white w-full opacity-100 rounded-md shadow-default p-6;
 
-      &__icon {
-        @apply flex shrink-0 items-center justify-center relative h-12 w-12; // إعدادات أيقونة طريقة كسب النقاط
+      &__icon{
+        @apply flex shrink-0 items-center justify-center relative h-12 w-12;
 
-        span {
-          @apply absolute z-0 w-full h-full inset-0 rounded-full opacity-10; // إعدادات الخلفية للرمز
-          background-color: var(--icon-bg-color, #eee); // استخدام متغير للون الخلفية
-          @apply dark:bg-gray-300; // لون الخلفية في الوضع الداكن
+        span{
+          @apply absolute z-0 w-full h-full inset-0 rounded-full opacity-10
         }
       }
 
-      &__content {
-        @apply flex flex-col justify-start; // إعدادات محتوى طريقة كسب النقاط
+      &__content{
+        @apply flex flex-col justify-start;
 
-        h4 {
-          @apply font-bold text-xl break-all; // إعدادات عنوان طريقة كسب النقاط
-          color: var(--content-title-color, #333); // استخدام متغير للون العنوان
-          @apply dark:text-gray-200; // لون العنوان في الوضع الداكن
+        h4{
+          @apply font-bold text-xl break-all;
         }
 
-        p {
-          @apply text-sm; // إعدادات وصف طريقة كسب النقاط
-          color: var(--content-desc-color, #666); // استخدام متغير للون الوصف
-          @apply dark:text-gray-200; // لون الوصف في الوضع الداكن
+        p{
+          @apply text-sm text-gray-400;
         }
       }
 
-      &__action {
-        @apply mt-auto pt-4; // إعدادات قسم الإجراءات
+      &__action{
+        @apply mt-auto pt-4;
       }
     }
   }

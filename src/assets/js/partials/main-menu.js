@@ -1,26 +1,35 @@
 class NavigationMenu extends HTMLElement {
-    constructor() {
-        super();
-        this.darkMode = false;
-    }
-
     connectedCallback() {
         salla.onReady()
             .then(() => salla.lang.onLoaded())
             .then(() => {
                 this.menus = [];
                 this.displayAllText = salla.lang.get('blocks.home.display_all');
+                /**
+                * Avoid saving the menu to localStorage (default) when in the development environment
+                * or when modifying the theme in the dashboard
+                */
+                const isPreview = salla.config.isDebug()
+                const cacheKey = `menus_${salla.lang.locale}`
+                const cachedMenus = salla.storage.getWithTTL(cacheKey, [])
+
+                if (cachedMenus.length > 0 && !isPreview) {
+                    this.menus = cachedMenus
+                    return this.render()
+                }
 
                 return salla.api.component.getMenus()
                 .then(({ data }) => {
                     this.menus = data;
-                    return this.render();
+                    !isPreview && salla.storage.setWithTTL(cacheKey, this.menus)
+                    return this.render()
+
                 }).catch((error) => salla.logger.error('salla-menu::Error fetching menus', error));
             });
     }
 
     /** 
-    * التحقق مما إذا كان للقائمة أطفال
+    * Check if the menu has children
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -29,7 +38,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * التحقق مما إذا كانت القائمة تحتوي على منتجات
+    * Check if the menu has products
     * @param {Object} menu
     * @returns {Boolean}
     */
@@ -38,39 +47,29 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على الفئات لقائمة سطح المكتب
+    * Get the classes for desktop menu
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
     */
     getDesktopClasses(menu, isRootMenu) {
         return `!hidden lg:!block ${isRootMenu ? 'root-level lg:!inline-block' : 'relative'} ${menu.products ? ' mega-menu' : ''}
-        ${this.hasChildren(menu) ? ' has-children' : ''}`;
+        ${this.hasChildren(menu) ? ' has-children' : ''}`
     }
 
     /**
-    * تطبيق الوضع الداكن أو العادي
-    * @param {boolean} darkMode
-    */
-    setDarkMode(darkMode) {
-        this.darkMode = darkMode;
-        this.render();
-    }
-
-    /**
-    * الحصول على قائمة الجوال
+    * Get the mobile menu
     * @param {Object} menu
     * @param {String} displayAllText
     * @returns {String}
     */
     getMobileMenu(menu, displayAllText) {
-        const textColor = this.darkMode ? 'text-white' : 'text-gray-500';
         const menuImage = menu.image ? `<img src="${menu.image}" class="rounded-full" width="48" height="48" alt="${menu.title}" />` : '';
 
         return `
         <li class="lg:hidden text-sm font-bold" ${menu.attrs}>
             ${!this.hasChildren(menu) ? `
-                <a href="${menu.url}" aria-label="${menu.title || 'category'}" class="${textColor} ${menu.image ? '!py-3' : ''}" ${menu.link_attrs}>
+                <a href="${menu.url}" aria-label="${menu.title || 'category'}" class="text-gray-500 ${menu.image ? '!py-3' : ''}" ${menu.link_attrs}>
                     ${menuImage}
                     <span>${menu.title || ''}</span>
                 </a>` :
@@ -81,7 +80,7 @@ class NavigationMenu extends HTMLElement {
                 </span>
                 <ul>
                     <li class="text-sm font-bold">
-                        <a href="${menu.url}" class="${textColor}">${displayAllText}</a>
+                        <a href="${menu.url}" class="text-gray-500">${displayAllText}</a>
                     </li>
                     ${menu.children.map((subMenu) => this.getMobileMenu(subMenu, displayAllText)).join('')}
                 </ul>
@@ -90,7 +89,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على قائمة سطح المكتب
+    * Get the desktop menu
     * @param {Object} menu
     * @param {Boolean} isRootMenu
     * @returns {String}
@@ -116,7 +115,7 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * الحصول على القوائم
+    * Get the menus
     * @returns {String}
     */
     getMenus() {
@@ -127,12 +126,11 @@ class NavigationMenu extends HTMLElement {
     }
 
     /**
-    * عرض قائمة الرأس
+    * Render the header menu
     */
     render() {
-        const menuBackground = this.darkMode ? 'bg-black' : 'bg-white';
         this.innerHTML =  `
-        <nav id="mobile-menu" class="mobile-menu ${menuBackground}">
+        <nav id="mobile-menu" class="mobile-menu">
             <ul class="main-menu">${this.getMenus()}</ul>
             <button class="btn--close close-mobile-menu sicon-cancel lg:hidden"></button>
         </nav>

@@ -1,36 +1,23 @@
-// إعدادات الاتجاه من اليسار إلى اليمين
 .sf-dump {
-  direction: ltr; // تعيين الاتجاه إلى اليسار إلى اليمين
-  color: var(--text-color, #000); // تعيين لون النص الافتراضي
-  background-color: var(--background-color, #fff); // تعيين لون الخلفية الافتراضي
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  direction: ltr;
 }
 
 [dir="ltr"] {
-  // تعيين أيقونات الأسهم عند الاتجاه من اليسار إلى اليمين
   .with-arrow .sicon-keyboard_arrow_left:before,
   nav .sicon-keyboard_arrow_left:before,
   .sub-menu .has-children > a:after {
-    content: "\e96c"; // رمز السهم
-    color: var(--arrow-icon-color, #000); // تعيين لون الأيقونة
-    @apply dark:text-gray-200; // لون الأيقونة في الوضع الداكن
+      content: "\e96c";
   }
-
   .flatpickr {
     &-months {
       .numInputWrapper {
         .cur-year {
-          padding: 0 0 0 15px; // إضافة حشوة إلى السنة الحالية
-          color: var(--year-color, #000); // تعيين لون السنة
-          @apply dark:text-gray-200; // لون السنة في الوضع الداكن
+          padding: 0 0 0 15px;
         }
       }
       [class^="arrow"] {
-        right: unset; // إزالة الحافة اليمنى
-        left: 0; // تعيين الحافة اليسرى
-        color: var(--arrow-color, #000); // تعيين لون الأسهم
-        @apply dark:text-gray-200; // لون الأسهم في الوضع الداكن
+        right: unset;
+        left: 0;
       }
     }
   }

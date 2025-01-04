@@ -1,82 +1,132 @@
-{# ############## المتغيرات المشتركة في جميع العروض ################
-| المتغيرات                                           | النوع     | الوصف                                                                                              |
-|----------------------------------------------------|----------|----------------------------------------------------------------------------------------------------|
-| store                                              | متجر     |                                                                                                    |
-| store.id                                           | عدد صحيح | معرف المتجر                                                                                        |
-| store.name                                         | سلسلة    | اسم المتجر                                                                                        |
-| store.username                                     | سلسلة    | اسم المستخدم للمتجر                                                                               |
-| store.description                                  | سلسلة    | وصف المتجر                                                                                        |
-| store.slogan                                       | ?سلسلة   | * إذا كانت ميزة في twilight.json                                                                   |
-| store.logo                                         | سلسلة    | رابط شعار المتجر                                                                                  |
-| store.url                                          | سلسلة    | رابط المتجر                                                                                       |
-| store.api                                          | سلسلة    | رابط API للمتجر الحالي                                                                            |
-| store.icon                                         | سلسلة    | رابط أيقونة المتجر                                                                                |
-| store.contacts                                     | كائن     | [موبايل، هاتف، بريد إلكتروني، واتساب، تيليجرام]، مثل store.contacts.email                      |
-| store.social                                       | كائن     | [إنستغرام، سناب شات، تويتر، يوتيوب، فيسبوك، بينتيريست، معروف، واتساب]، مثل store.social.twitter |
-| store.settings                                     | كائن     |                                                                                                    |
-| store.settings.auth.email_allowed                  | بولياني  | هل يُسمح باستخدام البريد الإلكتروني؟                                                              |
-| store.settings.auth.mobile_allowed                 | بولياني  | هل يُسمح باستخدام الهاتف المحمول؟                                                                 |
-| store.settings.auth.is_email_required              | بولياني  | هل البريد الإلكتروني مطلوب؟                                                                        |
-| store.settings.cart.apply_coupon_enabled           | بولياني  | هل يُسمح للزائر بتطبيق القسيمة في صفحة السلة؟                                                    |
-| store.settings.product.total_sold_enabled          | بولياني  | هل يتم تفعيل عدد المنتجات المباعة؟                                                                |
-| store.settings.product.fit_type                    | ?سلسلة   | null عندما تكون ميزة حجم بطاقة المنتج غير مفعلة، أو ['cover', 'contain']                         |
-| store.settings.category.testimonial_enabled        | بولياني  | عرض الشهادات العشوائية في صفحة الفئة                                                               |
-| store.settings.tax.number                          | ?سلسلة   | رقم الضريبة                                                                                        |
-| store.settings.tax.certificate                     | ?سلسلة   | رابط صورة الشهادة                                                                                 |
-| store.settings.tax.taxable_prices_enabled          | بولياني  | هل الضريبة مشمولة في الأسعار مثل سعر المنتج 100 والضريبة 15، سيكون السعر 115                     |
-| store.settings.rating_enabled                      | بولياني  | هل يتم تفعيل التقييمات؟                                                                            |
-| store.settings.arabic_numbers_enabled              | بولياني  | هل يرغب التاجر في عرض الأرقام بتنسيق عربي؟                                                       |
-| store.settings.is_multilingual                     | بولياني  | هل المتجر متعدد اللغات؟                                                                            |
-| store.settings.currencies_enabled                  | بولياني  | هل يتم تفعيل العملات؟                                                                              |
-| theme                                              | سمة      |                                                                                                    |
-| theme.id                                           | عدد صحيح | معرف السمة                                                                                        |
-| theme.name                                         | سلسلة    | اسم السمة                                                                                        |
-| theme.mode                                         | سلسلة    | `live`, `preview`                                                                                  |
-| theme.is_rtl                                       | بولياني  | هل السمة من اليمين لليسار؟                                                                        |
-| theme.translations_hash                            | عدد صحيح | يُستخدم في حالة تحديث التاجر لترجمات واجهة المتجر                                                 |
-| theme.color                                        | كائن     |                                                                                                    |
-| theme.color.primary                                | سلسلة    | اللون الأساسي للسمة                                                                                |
-| theme.color.text                                   | سلسلة    | لون النص المناسب مقارنة بـ `theme.primary.color`، مثل #000000، #FFFFFF                           |
-| theme.color.reverse_primary                        | سلسلة    | اللون المعاكس للون الأساسي                                                                        |
-| theme.color.reverse_text                           | سلسلة    | إذا كان `theme.text_color=#000000` يعني أن `theme.reverse_text_color=#FFFFFF`                     |
-| theme.color.is_dark                                | بولياني  | هل يعتبر اللون الرئيسي للمتجر `theme.primary.color` لونًا داكنًا؟                                 |
-| theme.color.darker(float alpha, ?string hexColor)  | سلسلة    | الحصول على لون أغمق من `theme.primary.color` أو من اللون الممرر، `alpha` يتراوح من 0.0-1.0      |
-| theme.color.lighter(float alpha, ?string hexColor) | سلسلة    | الحصول على لون أفتح من `theme.primary.color` أو من اللون الممرر، `alpha` يتراوح من 0.0-1.0      |
-| theme.font                                         | ?كائن    | خط محدد مسبقًا من Salla، null عندما لا تحتوي السمة على ميزة `fonts`                              |
-| theme.font.name                                    | سلسلة    | DINNextLTArabic-Regular، Amazon-Ember، Apple، Dubai، Estedad                                      |
-| theme.font.url                                     | سلسلة    | رابط CSS كامل مثل: 'https://my_store.test/dist/fonts/default.css'                                 |
-| theme.settings                                     | كائن     | كائن ديناميكي بقيم الإعدادات في twilight.json مثل `theme.settings.topnav_is_dark`                |
-| theme.settings.set(settingName, value)             | سلسلة    | تعيين متغير عالمي، ثم الحصول عليه {{theme.settings.get('my_var','fallback') }}                   |
-| theme.settings.get(settingName, default=null)      | مختلط    | الحصول على إعداد السمة مثل `theme.settings.get('my_var', 'fallback')`                             |
+{# ############## Shared Variables in all views ################
+| Variable                                           | Type     | Description                                                                                              |
+|----------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
+| store                                              | Store    |                                                                                                          |
+| store.id                                           | int      |                                                                                                          |
+| store.name                                         | string   |                                                                                                          |
+| store.username                                     | string   |                                                                                                          |
+| store.description                                  | string   |                                                                                                          |
+| store.slogan                                       | ?string  | * if feature in twilight.json                                                                            |
+| store.logo                                         | string   |                                                                                                          |
+| store.url                                          | string   |                                                                                                          |
+| store.api                                          | string   | the api url for current store                                                                            |
+| store.icon                                         | string   | *fav icon url                                                                                            |
+| store.contacts                                     | object   | [mobile, phone, email, whatsapp, telegram], ex. store.contacts.email                                     |
+| store.social                                       | object   | [instagram, snapchat, twitter, youtube, facebook, pinterest, maroof, whatsapp], ex. store.social.twitter |
+| store.settings                                     | object   |                                                                                                          |
+| store.settings.auth.email_allowed                  | bool     |                                                                                                          |
+| store.settings.auth.mobile_allowed                 | bool     |                                                                                                          |
+| store.settings.auth.is_email_required              | bool     |                                                                                                          |
+| store.settings.cart.apply_coupon_enabled           | bool     | Does visitor allowed to applay coupon in cart page                                                       |
+| store.settings.product.total_sold_enabled          | bool     |                                                                                                          |
+| store.settings.product.fit_type                    | ?string  | null when equal product card size is off, or ['cover', 'contain']                                        |
+| store.settings.category.testimonial_enabled        | bool     | Show random testimonials in category page                                                                |
+| store.settings.tax.number                          | ?string  |                                                                                                          |
+| store.settings.tax.certificate                     | ?string  | certificate image url                                                                                    |
+| store.settings.tax.taxable_prices_enabled          | bool     | Does tax included in the prices ex product_price 100 & tax is 15, price will be 115                      |
+| store.settings.rating_enabled                      | bool     | Is one of: store_enabled or shipping_enabled or products_enabled                                         |
+| store.settings.arabic_numbers_enabled              | bool     | Does the merchant wants the numbers to be shown as Arabic format                                         |
+| store.settings.is_multilingual                     | bool     |                                                                                                          |
+| store.settings.currencies_enabled                  | bool     |     
+| theme                                              | Theme    |                                                                                                          |
+| theme.id                                           | int      |                                                                                                          |
+| theme.name                                         | string   |                                                                                                          |
+| theme.mode                                         | string   | `live`, `preview`                                                                                        |
+| theme.is_rtl                                       | bool     |                                                                                                          |
+| theme.translations_hash                            | int      | to be used in case merchant updated frontend store translations                                          |
+| theme.color                                        | object   |                                                                                                          |
+| theme.color.primary                                | string   |                                                                                                          |
+| theme.color.text                                   | string   | suitable text color comparing to `theme.primary.color`, #000000, #FFFFFF                                 |
+| theme.color.reverse_primary                        | string   |                                                                                                          |
+| theme.color.reverse_text                           | string   | if `theme.text_color=#000000` means that `theme.reverse_text_color=#FFFFFF`                              |
+| theme.color.is_dark                                | bool     | Does main store color `theme.primary.color` considered as dim color?                                     |
+| theme.color.darker(float alpha, ?string hexColor)  | string   | get darker color from `theme.primary.color` or from passed color, `alpha` range from 0.0-1.0             |
+| theme.color.lighter(float alpha, ?string hexColor) | string   | get lighter color from `theme.primary.color` or from passed color, `alpha` range from 0.0-1.0            |
+| theme.font                                         | ?object  | Salla predefined font, null when the theme doesn't have `fonts` feature                                  |
+| theme.font.name                                    | string   | DINNextLTArabic-Regular, Amazon-Ember, Apple, Dubai, Estedad                                             |
+| theme.font.url                                     | string   | css full url ex: 'https://my_store.test/dist/fonts/default.css'                                          |
+| theme.settings                                     | object   | dynamic object with values of the `settings` in twilight.json ex. `theme.settings.topnav_is_dark`        |
+| theme.settings.set(settingName, value)             | string   | set global var, then get it {{theme.settings.get('my_var','fallback') }}                                 |
+| theme.settings.get(settingName, default=null)      | mixed    | get theme setting ex `theme.settings.get('my_var', 'fallback')`                                          |
 #}
 <!DOCTYPE html>
-<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}" class="dark">
+<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
 <!-- بسم الله الرحمن الرحيم -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
 
-    {% include 'pages.partials.loading-screen-assets' %}
+    <!-- To eliminate all render blocking CSS & JS and start with the critical css-->
+    <!-- To show loader to the user till the page content are  loaded-->
+    <style>
+      .loader-init {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          transition: opacity 0.75s, visibility 0.75s;
+          z-index: 9999;
+      }
 
+      .loader-init--hidden {
+          opacity: 0;
+          visibility: hidden;
+      }
+
+      .loader-init::after {
+          content: "";
+          width: 36px;
+          height: 36px;
+          border: 3px solid #eee;
+          border-top-color: #5bd5c4;
+          border-radius: 50%;
+          animation: loading 0.75s ease infinite;
+      }
+
+      @keyframes loading {
+          from {
+            transform: rotate(0turn);
+          }
+          to {
+            transform: rotate(1turn);
+          }
+      }
+    </style>
+    <script>
+      window.addEventListener("load", () => {
+        const loader = document.querySelector(".loader-init");
+        loader.classList.add("loader-init--hidden");
+        loader.addEventListener("transitionend", () => {
+		  if (!document.querySelector(".loader-init")) return;
+          document.body.removeChild(loader);
+          });
+      });
+    </script>
+  
     <script defer data-cfasync="false" src="{{ 'product-card.js'|asset }}"></script>
     <script defer src="{{ 'main-menu.js'|asset }}"></script>
 
     {% block head_scripts %}{% endblock %}
 
+
     <script data-cfasync="false">
         window.header_is_sticky = "{{theme.settings.get('header_is_sticky', 'Default Value')}}"
         window.imageZoom = "{{theme.settings.get('imageZoom')}}"
-        window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
     </script>
     
     {% hook 'head:start' %}
     {% hook head %}
     {% block styles %}{% endblock %}
     <link rel="stylesheet" href="{{ 'app.css' | asset }}">
-    <link rel="stylesheet" href="{{ theme.font.path|cdn }}">
-    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}">
+    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
+    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
     
     <style>
         :root {
@@ -85,17 +135,9 @@
             --color-primary-dark: {{ theme.color.darker(0.15) }};
             --color-primary-light: {{ theme.color.lighter(0.15) }};
             --color-primary-reverse: {{ theme.color.reverse_text }};
-            --color-text: {{ theme.color.text }};
-            --color-background: #FFFFFF;
-            --color-dark-background: #333333;
-            --color-dark-text: #FFFFFF;
-        }
-        body.dark {
-            background-color: var(--color-dark-background);
-            color: var(--color-dark-text);
         }
     </style>
-    {# خدمات التتبع، ميزة CSS مخصصة. #}
+    {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
 <body id="app" class="overflow-x-hidden {% hook 'body:classes' %}
@@ -105,9 +147,9 @@
   ">
   <div class="loader-init"></div>
 <noscript>
-    لتفعيل جميع وظائف هذا الموقع، تحتاج إلى تمكين JavaScript. إليك كيفية
+    To get full functionality of this site you need to enable JavaScript. Here is how
     <a href="https://www.enable-javascript.com/" rel="noreferrer"
-       target="_blank">تمكين JavaScript على صفحة الويب</a>.
+       target="_blank">To enable JavaScript on webpage</a>.
 </noscript>
 <div class="app-inner flex flex-col min-h-full">
     {% hook 'body:start' %}
@@ -118,7 +160,7 @@
 {% hook 'body:end' %}
 <script defer src="{{ 'app.js' | asset }}"></script>
 
-{# مكونات Twilight #}
+{# Twilight Components #}
 <salla-offer-modal></salla-offer-modal>
 <salla-search></salla-search>
 

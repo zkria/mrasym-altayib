@@ -1,221 +1,191 @@
-// إعدادات السلايدر الرئيسي
-salla-slider { 
-  @apply block; // تعيين السلايدر ككتلة
-
-  &.details-slider {
-    .s-slider-container { 
-      @apply bg-white border-[1px] rounded-md; // إعدادات حاوية السلايدر
-      background-color: var(--slider-bg, #fff); // استخدام متغير للون الخلفية
-      @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+salla-slider{ 
+  @apply block;
+  
+  &.details-slider{
+    .s-slider-container{ 
+      @apply bg-white border-[1px] rounded-md;
     }
 
-    .swiper-slide {
-      @apply relative rounded-md bg-white ring-1 ring-inset ring-gray-100; // إعدادات شريحة السلايدر
-      background-color: var(--slide-bg, #fff); // استخدام متغير للون الخلفية
-      @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
+    .swiper-slide{
+      @apply relative rounded-md bg-white ring-1 ring-inset ring-gray-100;
     }
 
-    salla-button.btn--wishlist {
-      @apply absolute rtl:right-4 ltr:left-4 bottom-4 z-[2] sm:hidden; // إعدادات زر قائمة الرغبات
+    salla-button.btn--wishlist{
+      @apply absolute rtl:right-4 ltr:left-4 bottom-4 z-[2] sm:hidden;
     }
 
-    .s-slider-block__title-nav {
-      @apply hidden sm:flex; // إعدادات عنوان السلايدر
+    .s-slider-block__title-nav{
+      @apply hidden sm:flex;
     }
   }
 
-  .slide--one-fourth {
-    @apply h-auto w-full sm:w-1/2 md:w-1/3 lg:w-1/4 max-w-[250px] sm:max-w-[320px]; // إعدادات عرض الشريحة
+  .slide--one-fourth{
+    @apply h-auto w-full sm:w-1/2 md:w-1/3 lg:w-1/4 max-w-[250px] sm:max-w-[320px];
   }
 
-  .slide--one-sixth {
-    @apply w-1/2 sm:w-2/6 md:w-1/4 lg:w-1/6; // إعدادات عرض الشريحة
+  .slide--one-sixth{
+    @apply w-1/2 sm:w-2/6 md:w-1/4 lg:w-1/6;
   }
 
-  // إصلاح الوميض في Safari 
-  .swiper-slide {
-    -webkit-transform: translateZ(0); // إصلاح الوميض
-    -webkit-backface-visibility: hidden; // إصلاح الوميض
+
+  // Fix Flickering in Safari 
+  .swiper-slide{
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
   }
 }
 
-// إعدادات عنوان الترويج
-.promotion-title {
-  @apply absolute z-10 top-4 rtl:right-0 ltr:left-0 font-bold text-sm bg-red-800 text-white rtl:rounded-l-md ltr:rounded-r-md; // إعدادات عنوان الترويج
-  @apply w-auto m-0 px-3 py-2 #{!important}; // إعدادات الحشوة
-  background-color: var(--promotion-bg, #d32f2f); // استخدام متغير للون الخلفية
-  color: var(--promotion-text-color, #fff); // استخدام متغير للون النص
-  @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
+.promotion-title{
+  @apply absolute z-10 top-4 rtl:right-0 ltr:left-0 font-bold text-sm bg-red-800 text-white rtl:rounded-l-md ltr:rounded-r-md;
+  @apply w-auto m-0 px-3 py-2 #{!important};
 }
 
-// إعدادات السلايدر المنزلي
 .home-slider {
   &__slide {
-    background-repeat: no-repeat; // عدم تكرار الخلفية
-    background-size: cover; // تغطية الخلفية
-    background-position: center; // محاذاة الخلفية في المنتصف
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
     &:not(.loaded) {
       .overlay {
-        background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5)); // استخدام متغير للون الخلفية
-        @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+        opacity: 0;
       }
     }
   }
 }
 
-// إعدادات سلايدر الصور
+// Photos block slider
 salla-slider.photos-slider {
-  .swiper-pagination-bullets.swiper-pagination-horizontal {
-    @apply bottom-0; // تعيين موضع النقاط
+  .swiper-pagination-bullets.swiper-pagination-horizontal{
+    @apply bottom-0;
   }
 
-  .swiper {
-    @apply rtl:pl-6 ltr:pr-6 rtl:md:pl-12 ltr:md:pr-12 pb-10; // إعدادات الحشوة
+  .swiper{
+    @apply rtl:pl-6 ltr:pr-6 rtl:md:pl-12 ltr:md:pr-12 pb-10;
   }
 
-  .swiper {
-    @apply w-full mx-0; // تعيين عرض السلايدر
+  .swiper{
+    @apply w-full mx-0;
   }
 
   &:not(.hydrated) > div {
-    @apply justify-center; // محاذاة العناصر في المنتصف
+    @apply justify-center;
   }
 
   .swiper-slide {
-    @apply h-auto w-full lg:w-[80%] relative rounded-md overflow-hidden mx-1.5 md:mx-3 lg:mx-4; // إعدادات شريحة السلايدر
+    @apply h-auto w-full lg:w-[80%] relative rounded-md overflow-hidden mx-1.5 md:mx-3 lg:mx-4;
   }
   
-  .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
-    @apply bg-gray-300; // لون النقاط غير النشطة
-    background-color: var(--inactive-bullet-bg, #ccc); // استخدام متغير للون النقاط غير النشطة
-    @apply dark:bg-gray-600; // لون النقاط غير النشطة في الوضع الداكن
+  .swiper-pagination-bullet:not(.swiper-pagination-bullet-active){
+    @apply bg-gray-300;
   }
   
   @media (max-width: 1024px) {
-    .swiper {
-      @apply rtl:pr-4 ltr:pl-4; // إعدادات الحشوة في الشاشات الصغيرة
+    .swiper{
+      @apply rtl:pr-4 ltr:pl-4;
     }
 
     .swiper-slide {
-      @apply px-0; // إزالة الحشوة
+      @apply px-0;
     }
   }
 }
 
-// إعدادات السلايدر عند عدم التهيئة
 .swiper:not(.swiper-initialized) {
   .swiper-button {
-    opacity: 0; // تعيين الشفافية
+    opacity: 0;
   }
 }
 
-// إعدادات سلايدر الشهادات
-.s-block--testimonials {
-  &.container {
-    @apply p-0 lg:px-2.5; // إعدادات الحشوة
+// testimonials-slider
+.s-block--testimonials{
+  &.container{
+    @apply p-0 lg:px-2.5;
   }
 
-  .s-slider-block__title {
-    @apply px-2.5 lg:px-0; // إعدادات عنوان السلايدر
+  .s-slider-block__title{
+    @apply px-2.5 lg:px-0;
 
-    &-nav {
-      @apply hidden lg:flex max-w-[88%] top-[65%] #{!important}; // إعدادات التنقل
+    &-nav{
+      @apply hidden lg:flex max-w-[88%] top-[65%] #{!important};
 
-      button { 
-        @apply border-gray-100 shadow-gray-300 #{!important}; // إعدادات زر التنقل
+      button{ 
+        @apply border-gray-100 shadow-gray-300 #{!important};
       }
     }
   }
 }
 
-// إعدادات سلايدر أفضل المنتجات
+
 .best-products-slider {
   .swiper-wrapper {
     @media screen and (min-width: 768px) {
-      height: 510px; // تعيين ارتفاع السلايدر
+      height: 510px;
 
       .swiper-slide {
-        height: calc((100% - 30px) / 2); // تعيين ارتفاع الشرائح
+        height: calc((100% - 30px) / 2);
       }
     }
   }
 }
 
-// إعدادات عامة
+//general
 .swiper-button-disabled {
-  opacity: 0.5; // تعيين الشفافية للأزرار المعطلة
+  opacity: 0.5;
 }
 
-// إعدادات النقاط في السلايدر
-salla-slider {
+// bullet pagination -------
+salla-slider{
   .swiper-pagination-bullet {
-    width: 20px; // عرض النقاط
-    border-radius: 5px; // زوايا النقاط
-    background: #fff; // لون النقاط
-    opacity: 0.3; // تعيين الشفافية
-    background-color: var(--bullet-bg, #fff); // استخدام متغير للون النقاط
+    width: 20px;
+    border-radius: 5px;
+    background: #fff;
+    opacity: 0.3;
 
     &-active {
-      opacity: 1; // زيادة الشفافية للنقاط النشطة
-      background-color: var(--active-bullet-bg, var(--color-primary)); // استخدام متغير للون النقاط النشطة
+      opacity: 1;
+      background-color: var(--color-primary);
     }
   }
 
-  .swiper-pagination-bullets.swiper-pagination-horizontal {
-    @apply bottom-3 sm:bottom-6; // تعيين موضع النقاط
+  .swiper-pagination-bullets.swiper-pagination-horizontal{
+    @apply bottom-3 sm:bottom-6; 
   }
 }
 
-// إعدادات سلايدر العروض
-.offer-slider .s-slider-block__title {
-  @apply mb-5 relative; // إعدادات عنوان السلايدر
 
-  &:before {
-    @apply text-5xl font-normal text-red-50 absolute leading-none top-4 rtl:right-0 ltr:left-0; // إعدادات الأيقونة
-    content: "\ee30"; // محتوى الأيقونة
-    font-family: 'sallaicons'; // تعيين خط الأيقونات
+// Offer slider
+.offer-slider .s-slider-block__title{
+  @apply mb-5 relative; 
+
+  &:before{
+    @apply text-5xl font-normal text-red-50 absolute leading-none top-4 rtl:right-0 ltr:left-0;
+    content: "\ee30";
+    font-family: 'sallaicons';
   }
 
-  h2 {
-    @apply text-lg text-red-400; // إعدادات عنوان العرض
-    color: var(--offer-title-color, #d32f2f); // استخدام متغير للون العنوان
+  h2{
+    @apply text-lg text-red-400;
   }
 
-  p {
-    @apply mt-1 leading-6 line-clamp-none; // إعدادات وصف العرض
+  p{
+    @apply mt-1 leading-6 line-clamp-none;
   }
 }
 
 .bank-offer .s-slider-block__title {
-  @apply hidden; // إخفاء عنوان العرض
+  @apply hidden;
 }
 
-// إعدادات عرض النموذج
-model-viewer[style*="width"]:before {
-  @apply hidden; // إخفاء النموذج
+// move to slider component
+model-viewer[style*="width"]:before{
+  @apply hidden;
 }
 
-// إعدادات سلايدر المدونة
-.blog-slider {
-  .swiper-slide img {
-    @apply min-h-[380px] max-h-[480px] md:max-h-[680px]; // إعدادات ارتفاع الصورة
+
+// Blog slider
+.blog-slider{
+  .swiper-slide img{
+    @apply min-h-[380px] max-h-[480px] md:max-h-[680px];
   }
-}
-
-.promotion-title {
-  @apply bg-red-800 text-white; // إعدادات عنوان الترويج
-}
-
-.offer-slider .s-slider-block__title:before {
-  @apply text-red-50; // إعدادات الأيقونة
-}
-
-.offer-slider .s-slider-block__title h2 {
-  @apply text-red-400; // إعدادات عنوان العرض
-}
-
-.salla-slider .swiper-pagination-bullet-active {
-  background-color: var(--color-primary); // لون النقاط النشطة
 }

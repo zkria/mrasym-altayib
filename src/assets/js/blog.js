@@ -84,6 +84,16 @@ class Blog extends BasePage {
             easing: 'easeInOutQuad',
         });
     }
+
+    applyDarkMode() {
+        const blogElements = document.querySelectorAll('#blog-like, .blog-post');
+        blogElements.forEach(el => {
+            // تطبيق الفئات الجديدة للوضع الداكن
+            el.classList.toggle('dark:bg-gray-800', this.darkMode); // تطبيق لون الخلفية الداكن
+            el.classList.toggle('dark:text-gray-200', this.darkMode); // تطبيق لون النص الداكن
+            el.classList.toggle('dark:bg-gray-700', this.darkMode); // تطبيق لون الخلفية البديل الداكن
+        });
+    }
 }
 
 // بدء الفئة عند جاهزية الصفحة

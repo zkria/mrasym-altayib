@@ -1,30 +1,30 @@
 {#
-| المتغيرات                | النوع          | الوصف                     |
-|---------------------------|----------------|---------------------------|
-| page                      | كائن           |                            |
-| page.title                | سلسلة          | عنوان الصفحة             |
-| page.slug                 | سلسلة          | رابط الصفحة              |
-| slides                    | ?مقال[]        | @see pages/blog/single.twig |
-| articles                  | مقال[]         |                            |
-| categories                | فئة المدونة[]   |                            |
-| category.is_current       | بولياني        | هل الفئة الحالية         |
-| category.name             | سلسلة          | اسم الفئة                |
-| category.url              | سلسلة          | رابط الفئة               |
+| Variable                | Type          | Description                 |
+|-------------------------|---------------|-----------------------------|
+| page                    | object        |                             |
+| page.title              | string        |                             |
+| page.slug               | string        |                             |
+| slides                  | ?Article[]    | @see pages/blog/single.twig |
+| articles                | Article[]     |                             |
+| categories              | BlogCategory[]|                             |
+| category.is_current     | bool          |                             |
+| category.name           | string        |                             |
+| category.url            | string        |                             |
 #}
 {% extends "layouts.master" %}
 
 {% block content %}
-    <div class="container mb-8 sm:mb-24 bg-white dark:bg-gray-800">
+    <div class=" container mb-8 sm:mb-24">
       <div class="center-between">
 
-        {# إضافة حاوية فتات الخبز في الصفحات لإنشاء مساحة في حالة إيقاف تشغيل فتات الخبز #}
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
         <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
 
-        {# قائمة تصفية الفئات #}
+        {# Categories filter dropdown #}
         <div class="dropdown-toggler cat-filter lg:hidden">
-          <button aria-label="تفعيل الفئات" type="button" class="dropdown__trigger rtl:space-x-reverse space-x-1.5 flex text-sm text-primary dark:text-gray-200" aria-expanded="true" aria-haspopup="true"> 
+          <button aria-label="Categories Trigger" type="button" class="dropdown__trigger rtl:space-x-reverse space-x-1.5 flex text-sm text-primary" aria-expanded="true" aria-haspopup="true"> 
             <i class="sicon-filter text-xs pointer-events-none"></i>
             <span class="fix-align pointer-events-none">{{ trans('pages.blog_categories.categories') }}</span>
           </button>
@@ -42,23 +42,24 @@
               <ul class="pb-4 lg:pb-2 py-2 px-2 lg:px-0 space-y-px">
                 {% for category in categories %}
                     <li>
-                        <a class="p-2.5 block text-sm hover:text-primary dark:hover:text-gray-300 {{ category.is_current ? ' is-active' : '' }}" href="{{ category.url }}">
+                        <a class="p-2.5 block text-sm hover:text-primary {{ category.is_current ? ' is-active' : '' }}" href="{{ category.url }}">
                             <span class="rtl:ml-auto ltr:mr-auto">{{ category.name }}</span>
                         </a>
                     </li>
                   {% endfor %}
               </ul>
             </div>
+
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-8 gap-8">
             <nav aria-label="Sidebar" class="hidden lg:block lg:sticky shrink-0 top-24 col-span-2" id="filters-menu">
-                <h2 class="font-bold mb-3 text-gray-800 dark:text-gray-200">{{ trans('pages.blog_categories.categories') }}</h2>
+                <h2 class="font-bold mb-3">{{ trans('pages.blog_categories.categories') }}</h2>
                 <ul>
                     {% for category in categories %}
-                        <li {{ category.is_current ? ' class="text-primary dark:text-gray-200"' : '' }}>
-                            <a class="py-3 block text-sm hover:text-primary dark:hover:text-gray-300" href="{{ category.url }}">
+                        <li {{ category.is_current ? ' class="text-primary"' : '' }}>
+                            <a class="py-3 block text-sm hover:text-primary" href="{{ category.url }}">
                                 {{ category.name }}
                             </a>
                         </li>
@@ -91,7 +92,7 @@
                                                             <span class="whitespace-nowrap">{{ article.created_at|date }}</span>
                                                         </div>
                                                         <a href="{{ article.author.url }}"
-                                                           class="flex items-center hover:underline">
+                                                           class=" flex items-center hover:underline">
                                                             <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
                                                             <span class="whitespace-nowrap">{{ article.author.name }}</span>
                                                         </a>
@@ -110,7 +111,7 @@
                     </salla-slider>
                 {% else %}
                     <div class="sr-only lg:not-sr-only ">
-                        <h1 class="blog-category__title font-bold text-lg mb-8 text-gray-800 dark:text-gray-200">{{ page.title }}</h1>
+                        <h1 class="blog-category__title font-bold text-lg mb-8">{{ page.title }}</h1>
                     </div>
                 {% endif %}
                 {% if articles|length %}
@@ -118,7 +119,7 @@
 
                     <salla-infinite-scroll class="grid md:grid-cols-2 gap-2.5 md:gap-8" next-page="{{ articles.next_page }}" autoload>
                         {% for article in articles %}
-                            <div class='list-block post-entry relative h-full transition-shadow duration-500 bg-white dark:bg-gray-700 hover:shadow-default rounded-lg justify-around overflow-hidden flex flex-col'>
+                            <div class='list-block post-entry relative h-full transition-shadow duration-500 bg-white hover:shadow-default rounded-lg justify-around overflow-hidden flex flex-col'>
                                 <a href="{{ article.url }}"
                                    class='post-entry__image relative overflow-hidden hover:opacity-90 w-full h-56 bg-border-color flex items-center justify-center'>
                                     <img class="{{ article.image.url|is_placeholder?'sm:h-full w-20 object-contain opacity-60':'h-full w-full object-cover' }}"
@@ -127,47 +128,30 @@
                                 </a>
 
                                 <div class="flex-1 px-5 pt-5 pb-7">
-                                    <div class="mb-2.5 text-gray-500 dark:text-gray-400 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
+                                    <div class="mb-2.5 text-gray-500 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
                                         <div class="flex items-center">
                                             <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1"></i>
                                             <span class="">{{ article.created_at|date }}</span>
                                         </div>
-                                        <a href="{{ article.author.url }}" class="flex items-center hover:text-dark dark:hover:text-gray-300">
+                                        <a href="{{ article.author.url }}" class="flex items-center hover:text-dark">
                                             <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
                                             <span class="">{{ article.author.name }}</span>
                                         </a>
                                     </div>
 
-                                    <h3 class="post-entry__title  text-sm font-bold text-gray-800 dark:text-gray-200 leading-6 mb-2.5">
+                                    <h3 class="post-entry__title  text-sm font-bold text-gray-800 leading-6 mb-2.5">
                                         <a href="{{ article.url }}">{{ article.title }}</a>
                                     </h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-6 mb-2.5">
+                                    <p class="text-sm text-gray-500 leading-6 mb-2.5">
                                         {{ article.summary }}
                                     </p>
-                                    
-                                    {% if store.settings.blog.allow_likes_and_comments %}
-                                        <div class="post-entry__icons flex items-center gap-2.5 text-gray-500 dark:text-gray-400 text-sm">
-                                            {% if article.likes_count %}
-                                                <div class="flex items-center gap-1">
-                                                    <i class="sicon-thumbs-up"></i>
-                                                    {{ article.likes_count }}
-                                                </div>
-                                            {% endif %}
-                                            {% if article.comments_count %}
-                                                <div class="flex items-center gap-1">
-                                                <i class="sicon-chat"></i>
-                                                    {{ article.comments_count }}
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
                                 </div>
 
                                 {% if article.tags|length %}
-                                    <div class="p-4 flex flex-wrap items-center border-t border-gray-200 dark:border-gray-600">
+                                    <div class="p-4 flex flex-wrap items-center border-t border-gray-200">
                                         {% for tag in article.tags %}
                                             <a href="{{ tag.url }}"
-                                               class="py-2 px-4 rounded-large inline-flex items-center text-gray-500 dark:text-gray-400 hover:text-dark dark:hover:text-gray-300 justify-center text-sm">
+                                               class="py-2 px-4 rounded-large inline-flex items-center text-gray-500 hover:text-dark justify-center text-sm">
                                                 <i class="font-medium sicon-tag rtl:ml-1.5 ltr:mr-1.5"></i>
                                                 <span class="fix-align whitespace-nowrap">{{ tag.name }}</span>
                                             </a>

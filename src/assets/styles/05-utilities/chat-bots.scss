@@ -1,96 +1,93 @@
-// إعدادات منع التمرير عند فتح النوافذ المنبثقة
 body.mm-ocd-opened,
 body.modal-is-open,
-body.fancybox-open {
-  overflow: hidden; // منع التمرير
+body.fancybox-open{
+  overflow: hidden;
 
   #tidio-chat,
   [id^="gb-widget"],
   [class$="__feedback"],
   #fb-root,
   .fb_reset,
-  #chat-widget-container {
-    display: none !important; // إخفاء عناصر الدردشة
+  #chat-widget-container{
+    display: none !important;
   }
 }
 
-/* CSS مخصص لأجهزة iOS */
+/* CSS specific to iOS devices */
 @supports (-webkit-touch-callout: none) {
   @media screen and (max-width: 767px) {
     .mobile #button {
-      transform: translateY(-58px); // تحريك الزر لأعلى
-      margin-left: 5px; // تعيين الهوامش
+      transform: translateY(-58px);
+      margin-left: 5px;
     }
   }
 }
 
-@media (max-width: 1024px) {
-  body.dropdown--is-opened {
-    overflow: hidden; // منع التمرير عند فتح القائمة المنسدلة
+@media(max-width: 1024px) {
+  body.dropdown--is-opened{
+    overflow: hidden;
 
     #tidio-chat,
     [id^="gb-widget"],
     [class$="__feedback"],
     #fb-root,
     .fb_reset,
-    #chat-widget-container {
-      display: none !important; // إخفاء عناصر الدردشة
+    #chat-widget-container{
+      display: none !important;
     }
   }
 
   #tidio-chat {
-    background: var(--chat-bg, transparent); // استخدام متغير للون الخلفية
-    @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-    z-index: 9999999999; // تعيين مستوى z-index
-    position: absolute; // تعيين الموضع
-    top: 0; // تعيين الموضع العلوي
-    right: 0; // تعيين الموضع الأيمن
-    bottom: 0; // تعيين الموضع السفلي
-    left: 0; // تعيين الموضع الأيسر
-    pointer-events: none; // منع التفاعل
+    z-index: 9999999999;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
 
     #tidio-chat-iframe {
-      bottom: 0 !important; // تعيين الموضع السفلي
-      pointer-events: auto; // السماح بالتفاعل
+      bottom: 0 !important;
+      pointer-events: auto;
     }
   }
 
   [id^="gb-widget"] {
-    bottom: 20px !important; // تعيين الموضع السفلي
-    z-index: 9999 !important; // تعيين مستوى z-index
+    bottom: 20px !important;
+    z-index: 9999 !important;
   }
 
   #fb-root {
     .fb_dialog {
       iframe[data-testid="bubble_iframe"] {
-        bottom: 20px !important; // تعيين الموضع السفلي
+        bottom: 20px !important;
       }
     }
   }
 
   iframe.tawk-widget {
-    bottom: 20px !important; // تعيين الموضع السفلي
+    bottom: 20px !important;
   }
 
   #chat-widget-container {
-    height: 100%; // تعيين الارتفاع
-    bottom: 0 !important; // تعيين الموضع السفلي
+    height: 100%;
+    bottom: 0 !important;
   }
 }
 
 iframe.tawk-widget {
-  display: block; // تعيين العرض
-  bottom: 20px; // تعيين الموضع السفلي
+  display: block;
+  bottom: 20px;
 }
 
-// إعدادات شريط المنتج الثابت
-.is-sticky-product-bar { 
-  &.product-single {
+
+.is-sticky-product-bar{ 
+  &.product-single{
     [id^="gb-widget"],
     iframe.tawk-widget,
     #fb-root .fb_dialog iframe[data-testid="bubble_iframe"],
-    iframe.tawk-widget {
-      bottom: 70px !important; // تعيين الموضع السفلي
+    iframe.tawk-widget{
+      bottom: 70px !important;
     }
   }
 }

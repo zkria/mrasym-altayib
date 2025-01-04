@@ -1,23 +1,15 @@
-// إعدادات نافذة الهدايا
-.s-gifting-modal {
-    .s-checkbox {
-        background-color: var(--checkbox-bg, #e0f7f7) !important; // استخدام متغير للون الخلفية
-        @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
-        border: 1px solid var(--checkbox-border, #004d40) !important; // استخدام متغير للون الحدود
-        @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
-
-        &:focus {
-            --tw-ring-color: transparent !important; // إزالة تأثير الحلقة عند التركيز
+.s-gifting-modal{
+    .s-checkbox{
+        background-color: #fff !important;
+        border: 1px solid #ccc !important;
+        &:focus{
+            --tw-ring-color: transparent !important;
         }
     }
-
-    .s-gifting-filepond-placeholder-icon svg {
-        fill: var(--icon-fill, #004d40) !important; // استخدام متغير للون الأيقونة
-        @apply dark:fill-gray-200; // لون الأيقونة في الوضع الداكن
+    .s-gifting-filepond-placeholder-icon svg{
+        fill: #ccc !important;
     }
 }
-
-// إعدادات عنصر واجهة المستخدم للهدايا
-.s-gifting-widget .s-list-tile-item {
-    @apply border-none rounded-t-none; // إزالة لحدود وتعيين الزوايا
+.s-gifting-widget .s-list-tile-item{
+    @apply border-none rounded-t-none;
 }

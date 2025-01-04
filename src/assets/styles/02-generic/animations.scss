@@ -1,105 +1,109 @@
-// تعريف تأثيرات الرسوم المتحركة
-
 @keyframes fadeInDown {
   from {
-    transform: translate3d(0, -15px, 0); // بدء الحركة من أعلى
-    opacity: 0.5; // بدء العنصر نصف شفاف في الوضع الداكن
+    transform: translate3d(0, -15px, 0)
   }
+
   to {
-    transform: translate3d(0, 0, 0); // الوصول إلى الموضع النهائي
-    opacity: 1; // جعل العنصر مرئيًا
+    transform: translate3d(0, 0, 0);
+    opacity: 1
   }
 }
 
 @-webkit-keyframes fadeInDown {
   from {
-    transform: translate3d(0, -15px, 0); // بدء الحركة من أعلى
-    opacity: 0.5; // بدء العنصر نصف شفاف في الوضع الداكن
+    transform: translate3d(0, -15px, 0)
   }
+
   to {
-    transform: translate3d(0, 0, 0); // الوصول إلى الموضع النهائي
-    opacity: 1; // جعل العنصر مرئيًا
+    transform: translate3d(0, 0, 0);
+    opacity: 1
   }
 }
 
 .animated {
-  animation-duration: 400ms; // مدة الرسوم المتحركة
-  animation-fill-mode: both; // الحفاظ على الحالة النهائية بعد الانتهاء
+  animation-duration: 400ms;
+  animation-fill-mode: both;
 }
 
 .animatedfadeInDown {
-  opacity: 0; // بدء العنصر غير مرئي
+  opacity: 0
 }
 
 .fadeInDown {
-  opacity: 0; // بدء العنصر غير مرئي
-  animation-name: fadeInDown; // تعيين اسم الرسوم المتحركة
-  -webkit-animation-name: fadeInDown; // دعم المتصفح
+  opacity: 0;
+  animation-name: fadeInDown;
+  -webkit-animation-name: fadeInDown;
 }
 
-// تأثير الحركة من اليمين إلى اليسار
+// toRightFromLeft
 @keyframes toRightFromLeft {
   49% {
-    transform: translate(100%); // الانتقال إلى اليمين
+    transform: translate(100%);
   }
   50% {
-    opacity: 0; // جعل العنصر غير مرئي
-    transform: translate(-100%); // الانتقال إلى اليسار
+    opacity: 0;
+    transform: translate(-100%);
   }
   51% {
-    opacity: 1; // جعل العنصر مرئيًا
+    opacity: 1;
   }
 }
 
-// تأثير الحركة من الأسفل إلى الأعلى
+// toRightFromLeft
 @keyframes toTopFromBottom {
   0% {
-    opacity: 0; // بدء العنصر غير مرئي
-    transform: translateX(50px); // بدء الحركة من اليمين
+    opacity: 0;
+    transform: translateX(50px);
   }
   100% {
-    opacity: 1 !important; // جعل العنصر مرئيًا
-    transform: translateX(0); // الوصول إلى الموضع النهائي
+    opacity: 1 !important;
+    transform: translateX(0);
   }
 }
 
 @keyframes delayKeyframe {
   0% {
-    opacity: 0; // بدء العنصر غير مرئي
+    opacity: 0;
   }
   100% {
-    opacity: 0; // الحفاظ على العنصر غير مرئي
+    opacity: 0;
   }
 }
 
-// تأثير الحركة "rubberBand"
+
 @keyframes rubberBand {
   from {
-    transform: scale3d(1, 1, 1); // الحجم الأصلي
+    transform: scale3d(1, 1, 1);
   }
+
   30% {
-    transform: scale3d(1.25, 0.75, 1); // تكبير العنصر
+    transform: scale3d(1.25, 0.75, 1);
   }
+
   40% {
-    transform: scale3d(0.75, 1.25, 1); // تصغير العنصر
+    transform: scale3d(0.75, 1.25, 1);
   }
+
   50% {
-    transform: scale3d(1.15, 0.85, 1); // تكبير العنصر مرة أخرى
+    transform: scale3d(1.15, 0.85, 1);
   }
+
   65% {
-    transform: scale3d(0.95, 1.05, 1); // تصغير العنصر قليلاً
+    transform: scale3d(0.95, 1.05, 1);
   }
+
   75% {
-    transform: scale3d(1.05, 0.95, 1); // تكبير العنصر قليلاً
+    transform: scale3d(1.05, 0.95, 1);
   }
+
   to {
-    transform: scale3d(1, 1, 1); // العودة إلى الحجم الأصلي
+    transform: scale3d(1, 1, 1);
   }
 }
 
 .rubberBand {
-  animation-name: rubberBand; // تعيين اسم الرسوم المتحركة
-  animation-duration: 1s; // مدة الرسوم المتحركة
-  animation-fill-mode: both; // الحفاظ على الحالة النهائية بعد الانتهاء
-  animation-iteration-count: 1; // عدد مرات تكرار الرسوم المتحركة
+  animation-name: rubberBand;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
 }

@@ -1,58 +1,38 @@
-// إعدادات عناصر النموذج
 input[type="radio"] {
   &.sr-only {
     div.absolute {
-      transition: all 0.3s; // تأثير الانتقال لجميع الخصائص
+      transition: all 0.3s;
     }
 
     &:checked ~ div.absolute {
-      border-color: var(--radio-border-checked, #004d40); // استخدام متغير للون الحدود عند تحديد الخيار
-      @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
+      border-color: var(--color-main);
     }
   }
 }
 
 input[type="text"]:disabled {
-  background: var(--input-disabled-bg, #f9f9f9); // استخدام متغير للون الخلفية عند التعطيل
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-  color: var(--input-disabled-text, #004d40); // استخدام متغير للون النص عند التعطيل
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
+  //background: #f9f9f9;
+  color: #838383;
 }
 
 .form-label {
-  @apply block text-sm font-bold mb-2.5 md:mb-0 sm:mt-px; // إعدادات تسمية النموذج
-  color: var(--label-text, #333); // استخدام متغير للون النص
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
+  @apply block text-sm font-bold text-gray-700 mb-2.5 md:mb-0 sm:mt-px;
 }
 
 .form-input {
-  @apply w-full h-10 transition-colors duration-300 focus:ring-transparent focus:border-primary text-sm border-gray-200 rounded-md; // إعدادات حقل الإدخال
-  appearance: none; // إزالة المظهر الافتراضي
-  -webkit-appearance: none; // إزالة المظهر الافتراضي في متصفحات WebKit
-  background-color: var(--input-bg, #fff); // استخدام متغير للون الخلفية
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
-  border-color: var(--input-border, #ccc); // استخدام متغير للون الحدود
-  @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
-  color: var(--input-text, #333); // استخدام متغير للون النص
-  @apply dark:text-gray-200; // لون النص في الوضع الداكن
-
-  &:focus {
-    border-color: var(--input-focus-border, #0056b3); // استخدام متغير للون الحدود عند التركيز
-    @apply dark:border-gray-600; // لون الحدود عند التركيز في الوضع الداكن
-  }
+  @apply w-full h-10 transition-colors duration-300 focus:ring-transparent focus:border-primary dark:focus:border-primary text-sm border-gray-200 dark:bg-gray-600 dark:border-gray-600 rounded-md;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 textarea.form-input {
-  @apply h-24; // تعيين ارتفاع حقل النص
-  @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
+  @apply h-24;
 }
 
 .has-error {
-  @apply border-red-400 focus:border-red-500; // إعدادات حقل الإدخال عند وجود خطأ
-  @apply dark:border-red-600 dark:focus:border-red-700; // لون الحدود في الوضع الداكن عند وجود خطأ
+  @apply border-red-400 focus:border-red-500;
 }
 
 .has-success {
-  @apply border-green-500 focus:border-green-600; // إعدادات حقل الإدخال عند النجاح
-  @apply dark:border-green-700 dark:focus:border-green-800; // لون الحدود في الوضع الداكن عند النجاح
+  @apply border-green-500 focus:border-green-600;
 }

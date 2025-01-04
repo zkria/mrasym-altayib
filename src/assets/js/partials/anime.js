@@ -3,16 +3,12 @@ import AnimeJS from 'animejs';
 window.anime = AnimeJS;
 
 class Anime {
-    constructor(selector, options, darkMode = false) {
-        this.darkMode = darkMode;
+    constructor(selector, options) {
         this.options = {
-            targets: selector,
-            opacity: [0, 1],
-            delay: (el, i) => i * 100,
+            targets : selector,
+            opacity : [0, 1],
+            delay   : (el, i) => i * 100,
             duration: 2000,
-            easing: 'easeInOutQuad',
-            color: darkMode ? '#FFFFFF' : '#000000',
-            backgroundColor: darkMode ? '#333333' : '#FFFFFF',
         };
         this.setOptions(options);
     }
@@ -22,7 +18,7 @@ class Anime {
      * @return {Anime}
      */
     setOptions(options) {
-        this.options = Object.assign({}, this.options, options || {});
+        this.options = Object.assign(this.options, options || {});
         return this;
     }
 
@@ -139,18 +135,6 @@ class Anime {
      */
     paddingTop(padding) {
         return this.set('padding-top', padding);
-    }
-
-    /**
-     * تطبيق الوضع الداكن أو العادي
-     * @param {boolean} darkMode
-     * @return {Anime}
-     */
-    setDarkMode(darkMode) {
-        this.darkMode = darkMode;
-        this.options.color = darkMode ? '#FFFFFF' : '#000000';
-        this.options.backgroundColor = darkMode ? '#333333' : '#FFFFFF';
-        return this;
     }
 
     /**
