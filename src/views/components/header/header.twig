@@ -1,22 +1,22 @@
 {#
-| Variable         | Type    | Description                     |
+| المتغيرات        | النوع    | الوصف                           |
 |------------------|---------|---------------------------------|
-| cart             | object  |                                 |
-| cart.items_count | int     |                                 |
-| cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
+| cart             | كائن    |                                 |
+| cart.items_count | عدد صحيح |                                 |
+| cart.total       | سلسلة   | المجموع المنسق مثل: "١٠٠ ر.س"   |
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
-  {# Top Nav #}
+  {# شريط التنقل العلوي #}
   <div class="top-navbar">
     <div class="container flex justify-between">
       <div class="flex-1 flex items-center gap-2">
-          {# Footer Menu #}
+          {# قائمة التذييل #}
           {% if important_links %}
             <salla-menu source="footer" topnav></salla-menu>
           {% endif %}
 
-          {# Language & Currency Component #}
+          {# مكون اللغة والعملات #}
           <div class="header-buttons">
               {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
                   <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
@@ -27,7 +27,7 @@
               {% endif %}
           </div>
 
-          {# Scopes | Branches #}
+          {# النطاقات | الفروع #}
           {% if store.scope %}
               <button class="btn--rounded-gray"
                       onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
@@ -35,7 +35,7 @@
               </button>
           {% endif %}
 
-          {# Search bar #}
+          {# شريط البحث #}
           <div class="header-search flex-1">
             <salla-search inline oval height="36"></salla-search>
           </div>
@@ -45,13 +45,13 @@
     </div>
   </div>
 
-  {# Main Nav #}
+  {# شريط التنقل الرئيسي #}
   <div id="mainnav" class="main-nav-container shadow-default bg-white">
       <div class="inner bg-inherit">
           <div class="container">
               <div class="flex items-stretch justify-between relative">
                   <div class="flex items-center">
-                      <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="Open-menu">
+                      <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="فتح القائمة">
                         <i class="sicon-menu text-primary text-2xl"></i>
                       </a>
                       <a class="navbar-brand" href="{{ store.url }}">
@@ -68,7 +68,7 @@
                       {% if user.type=='user' %}
                         <salla-user-menu avatar-only show-header></salla-user-menu>
                       {% else %}
-                          <button class="header-btn" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
+                          <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
                             <i class="header-btn__icon sicon-user-circle"></i>
                           </button>
                       {% endif %}
