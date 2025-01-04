@@ -1,0 +1,14 @@
+{#
+| المتغيرات                | النوع       | الوصف                                                         |
+|---------------------------|------------|---------------------------------------------------------------|
+| page                      | كائن      |                                                               |
+| page.title                | سلسلة     | *يمكن أن تكون HTML                                           |
+| page.slug                 | سلسلة     | مثال: "cat.show"                                            |
+#}
+{% extends "layouts.master" %}
+{% block content %}
+    {% component home %} <!-- مكون الصفحة الرئيسية -->
+{% endblock %}
+{% block scripts %}
+    <script defer src="{{ 'home.js' | asset }}"></script> <!-- سكربت الصفحة الرئيسية -->
+{% endblock %}

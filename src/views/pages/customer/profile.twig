@@ -7,5 +7,13 @@
 #}
 {% extends "layouts.customer" %}
 {% block inner_content %}
-    <salla-wallet></salla-wallet> <!-- مكون عرض المحفظة -->
+    {% hook 'customer:profile.form.start' %}
+
+    <salla-user-profile></salla-user-profile> <!-- مكون عرض ملف المستخدم -->
+
+    {% hook 'customer:profile.form.end' %}
+
+    <salla-verify></salla-verify> <!-- مكون التحقق من المستخدم -->
+
+    <salla-user-settings class="mt-10 block"></salla-user-settings> <!-- مكون إعدادات المستخدم -->
 {% endblock %}

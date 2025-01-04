@@ -1,0 +1,23 @@
+{#
+| المتغيرات                | النوع                 | الوصف                     |
+|---------------------------|----------------------|---------------------------|
+| page                      | كائن                 |                           |
+| page.title                | سلسلة                | عنوان الصفحة             |
+| page.slug                 | سلسلة                | رابط الصفحة              |
+#}
+{% extends "layouts.customer" %}
+{% block head_scripts %}
+	<script defer data-cfasync="false" src="{{ 'wishlist-card.js'|asset }}"></script> <!-- سكربت خاص بقائمة الرغبات -->
+{% endblock %}
+
+{% block inner_content %}
+	<div class="space-y-5" id="wishlist">
+		{% hook 'customer:wishlist.items.start' %}
+		<salla-products-list source="wishlist" row-cards product-card-component="custom-wishlist-card"></salla-products-list> <!-- مكون عرض المنتجات في قائمة الرغبات -->
+		{% hook 'customer:wishlist.items.end' %}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script defer src="{{ 'customer.js' | asset }}"></script> <!-- سكربت خاص بصفحة العميل -->
+{% endblock %}

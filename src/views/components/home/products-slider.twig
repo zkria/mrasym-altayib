@@ -1,0 +1,23 @@
+{#
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| products                      | منتج[]   | قائمة بالمنتجات                                                          |
+| title                         | سلسلة    | عنوان القسم                                                              |
+| display_all_url               | ?سلسلة   | إذا كانت موجودة، تعني أنه يجب عرض رابط "تحميل المزيد" إلى هذا الرابط   |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
+#}
+
+<section id="best-offers-{{ position }}-slider" class="s-block s-block--best-offers container overflow-hidden">
+  {% if products|length %}
+    <salla-products-slider
+            source="selected"
+            limit="{{ limit }}"
+            autoplay
+            source-value="[{{ products|map((product) => product.id)|join(',') }}]"
+            display-all-url="{{ display_all_url }}"
+            block-title="{{ title }}" <!-- عنوان القسم -->
+            block-subTitle="{{ sub_title|raw }}" <!-- عنوان فرعي للقسم -->
+            slider-id="slider-with-bg-{{ position }}"
+    ></salla-products-slider>
+  {% endif %}
+</section>

@@ -1,0 +1,106 @@
+// إعدادات أزرار الراديو المخصصة
+.custom-radios {
+  div {
+    display: inline-block; // تعيين العرض ككتلة داخلية
+  }
+
+  input[type="radio"] {
+    display: none; // إخفاء زر الراديو
+
+    + label {
+      cursor: pointer; // تغيير المؤشر عند التمرير فوق التسمية
+
+      span {
+        display: inline-block; // تعيين العرض ككتلة داخلية
+        width: 40px; // عرض الزر
+        height: 40px; // ارتفاع الزر
+        vertical-align: middle; // محاذاة عمودية
+        cursor: pointer; // تغيير المؤشر عند التمرير فوق الزر
+        border-radius: 6px; // تعيين الزوايا المدورة
+        border: 2px solid #007B7F; // لون الحدود
+        background-repeat: no-repeat; // عدم تكرار الخلفية
+        background-position: center; // تعيين موضع الخلفية
+        text-align: center; // محاذاة النص إلى المركز
+        line-height: 40px; // تعيين ارتفاع السطر
+        box-shadow: 0 1px 3px 0 rgba(#000, 0.075); // إضافة ظل
+
+        &::after {
+          opacity: 0; // تعيين الشفافية إلى 0
+          display: inline-block; // تعيين العرض ككتلة داخلية
+          transform: scale(0.4); // تعيين حجم الأيقونة
+          transition: all 0.3s ease; // تأثير الانتقال
+          font-family: "sallaicons" !important; // تعيين عائلة الخط
+          font-style: normal; // تعيين نمط الخط
+          font-weight: normal; // تعيين وزن الخط
+          font-variant: normal; // تعيين متغير الخط
+          text-transform: none; // عدم تحويل النص
+          line-height: 1; // تعيين ارتفاع السطر
+          -webkit-font-smoothing: antialiased; // تحسين عرض الخط
+          content: "\ea9d"; // رمز الأيقونة
+          color: #ffffff; // لون الأيقونة
+          font-size: 20px; // حجم الخط
+          font-weight: bold; // وزن الخط
+        }
+      }
+    }
+
+    &:checked + label span:after {
+      opacity: 1; // جعل الأيقونة مرئية عند التحديد
+      transform: scale(1); // تعيين حجم الأيقونة
+    }
+
+    &:disabled + label {
+      opacity: .45; // تعيين الشفافية عند التعطيل
+    }
+  }
+
+  &--rounded {
+    input[type="radio"] {
+      + label {
+        span {
+          border-radius: 50%; // تعيين الزوايا المدورة
+          width: 30px; // عرض الزر
+          height: 30px; // ارتفاع الزر
+          display: inline-flex; // تعيين العرض ككتلة مرنة
+          justify-content: center; // محاذاة المحتوى إلى المركز
+          align-items: center; // محاذاة المحتوى عموديًا
+          background-color: #f1f1f1; // لون الخلفية
+
+          &::after {
+            content: ""; // محتوى فارغ
+            width: 14px; // عرض الأيقونة
+            height: 14px; // ارتفاع الأيقونة
+            background-color: #ffffff; // لون الأيقونة
+            border-radius: 50%; // تعيين الزوايا المدورة
+          }
+        }
+      }
+    }
+  }
+
+  &--icons {
+    font-size: 40px; // حجم الخط
+    line-height: 42px; // ارتفاع السطر
+
+    input[type="radio"] {
+      + label {
+        transition: transform 0.2s, color 0.3s; // تأثير الانتقال
+        filter: grayscale(1); // تعيين اللون إلى رمادي
+
+        &:hover {
+          filter: grayscale(0); // إزالة اللون الرمادي عند التمرير
+        }
+      }
+
+      &:checked + label {
+        filter: grayscale(0); // إزالة اللون الرمادي عند التحديد
+        transform: scale(1.25) translateY(-3px); // تكبير الزر
+
+        .rate-title {
+          font-weight: bold; // تعيين وزن الخط إلى عريض
+          color: #2b2d34; // لون النص
+        }
+      }
+    }
+  }
+}

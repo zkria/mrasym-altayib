@@ -1,0 +1,27 @@
+{#
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| image                         | سلسلة    | رابط الصورة                                                              |
+| url                           | سلسلة    | رابط الوجهة                                                              |
+| title                         | سلسلة    | عنوان القسم                                                              |
+| link_text                     | سلسلة    | عنوان الرابط                                                             |
+| is_opacity                    | بولياني  | تحديد ما إذا كان يجب إضافة طبقة تغطية على الخلفية أم لا                 |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
+#}
+
+<section class="s-block s-block--full-banner s-block--full-bg">
+    <div class="full-banner-entry" style="background-image: url({{ image }});">
+        <div class="overlay h-full w-full {{ is_opacity ? 'bg-black' : '' }} opacity-60 absolute top-0 left-0"></div>
+        <div class="flex h-full items-center justify-center p-5 xs:p-11 relative">
+            <div>
+                {% if title %}
+                <h2 class="text-2xl font-bold leading-12">{{ title }}</h2>
+                {% endif %}
+
+                {% if url and link_text %}
+                    <a href="{{ url }}" class="inline-block text-white text-sm border rounded-md font-bold px-8 py-4">{{ link_text }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

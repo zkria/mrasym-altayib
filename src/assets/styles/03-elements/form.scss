@@ -1,0 +1,39 @@
+// إعدادات عناصر النموذج
+input[type="radio"] {
+  &.sr-only {
+    div.absolute {
+      transition: all 0.3s; // تأثير الانتقال لجميع الخصائص
+    }
+
+    &:checked ~ div.absolute {
+      border-color: var(--color-main); // تغيير لون الحدود عند تحديد الخيار
+    }
+  }
+}
+
+input[type="text"]:disabled {
+  // background: #f9f9f9; // لون الخلفية عند التعطيل
+  color: #838383; // لون النص عند التعطيل
+}
+
+.form-label {
+  @apply block text-sm font-bold text-gray-700 mb-2.5 md:mb-0 sm:mt-px; // إعدادات تسمية النموذج
+}
+
+.form-input {
+  @apply w-full h-10 transition-colors duration-300 focus:ring-transparent focus:border-primary dark:focus:border-primary text-sm border-gray-200 dark:bg-gray-600 dark:border-gray-600 rounded-md; // إعدادات حقل الإدخال
+  appearance: none; // إزالة المظهر الافتراضي
+  -webkit-appearance: none; // إزالة المظهر الافتراضي في متصفحات WebKit
+}
+
+textarea.form-input {
+  @apply h-24; // تعيين ارتفاع حقل النص
+}
+
+.has-error {
+  @apply border-red-400 focus:border-red-500; // إعدادات حقل الإدخال عند وجود خطأ
+}
+
+.has-success {
+  @apply border-green-500 focus:border-green-600; // إعدادات حقل الإدخال عند النجاح
+}

@@ -1,0 +1,7 @@
+// مزيج لتنسيق العناصر باستخدام Flexbox
+@mixin flexable($align: center, $justify: center, $direction: row) {
+  display: flex; // تعيين العرض إلى flex
+  align-items: $align; // محاذاة العناصر عموديًا
+  justify-content: $justify; // محاذاة العناصر أفقيًا
+  flex-direction: $direction; // تحديد اتجاه العناصر
+}

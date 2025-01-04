@@ -1,0 +1,103 @@
+// تعريف تأثيرات الرسوم المتحركة
+
+@keyframes fadeInDown {
+  from {
+    transform: translate3d(0, -15px, 0); // بدء الحركة من أعلى
+  }
+  to {
+    transform: translate3d(0, 0, 0); // الوصول إلى الموضع النهائي
+    opacity: 1; // جعل العنصر مرئيًا
+  }
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    transform: translate3d(0, -15px, 0); // بدء الحركة من أعلى
+  }
+  to {
+    transform: translate3d(0, 0, 0); // الوصول إلى الموضع النهائي
+    opacity: 1; // جعل العنصر مرئيًا
+  }
+}
+
+.animated {
+  animation-duration: 400ms; // مدة الرسوم المتحركة
+  animation-fill-mode: both; // الحفاظ على الحالة النهائية بعد الانتهاء
+}
+
+.animatedfadeInDown {
+  opacity: 0; // بدء العنصر غير مرئي
+}
+
+.fadeInDown {
+  opacity: 0; // بدء العنصر غير مرئي
+  animation-name: fadeInDown; // تعيين اسم الرسوم المتحركة
+  -webkit-animation-name: fadeInDown; // دعم المتصفح
+}
+
+// تأثير الحركة من اليمين إلى اليسار
+@keyframes toRightFromLeft {
+  49% {
+    transform: translate(100%); // الانتقال إلى اليمين
+  }
+  50% {
+    opacity: 0; // جعل العنصر غير مرئي
+    transform: translate(-100%); // الانتقال إلى اليسار
+  }
+  51% {
+    opacity: 1; // جعل العنصر مرئيًا
+  }
+}
+
+// تأثير الحركة من الأسفل إلى الأعلى
+@keyframes toTopFromBottom {
+  0% {
+    opacity: 0; // بدء العنصر غير مرئي
+    transform: translateX(50px); // بدء الحركة من اليمين
+  }
+  100% {
+    opacity: 1 !important; // جعل العنصر مرئيًا
+    transform: translateX(0); // الوصول إلى الموضع النهائي
+  }
+}
+
+@keyframes delayKeyframe {
+  0% {
+    opacity: 0; // بدء العنصر غير مرئي
+  }
+  100% {
+    opacity: 0; // الحفاظ على العنصر غير مرئي
+  }
+}
+
+// تأثير الحركة "rubberBand"
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1); // الحجم الأصلي
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1); // تكبير العنصر
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1); // تصغير العنصر
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1); // تكبير العنصر مرة أخرى
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1); // تصغير العنصر قليلاً
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1); // تكبير العنصر قليلاً
+  }
+  to {
+    transform: scale3d(1, 1, 1); // العودة إلى الحجم الأصلي
+  }
+}
+
+.rubberBand {
+  animation-name: rubberBand; // تعيين اسم الرسوم المتحركة
+  animation-duration: 1s; // مدة الرسوم المتحركة
+  animation-fill-mode: both; // الحفاظ على الحالة النهائية بعد الانتهاء
+  animation-iteration-count: 1; // عدد مرات تكرار الرسوم المتحركة
+}

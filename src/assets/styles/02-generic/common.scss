@@ -1,0 +1,381 @@
+// إعدادات عامة للأنماط
+
+html {
+  scroll-behavior: smooth; // سلاسة التمرير
+}
+
+// استخدام salla.document.onClick(...)، يصبح فعالًا عندما تكون جميع العناصر الفرعية بلا أحداث مؤشِّر.
+.cursor-pointer * {
+  pointer-events: none; // منع التفاعل مع العناصر الفرعية
+}
+
+.flip-x {
+  transform: scaleX(-1); // قلب العنصر أفقيًا
+}
+
+input[type="file"] {
+  display: none; // إخفاء حقل إدخال الملفات
+}
+
+body {
+  @apply bg-gray-50; // تعيين لون خلفية الجسم
+  [type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select {
+    @apply focus:ring-0; // إزالة تأثير الحلقة عند التركيز
+  }
+}
+
+.text-start {
+  @apply rtl:text-right ltr:text-left; // محاذاة النص حسب اتجاه الكتابة
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none; // إزالة مظهر الأزرار
+  margin: 0; // إزالة الهوامش
+}
+
+[type='submit'] {
+  -webkit-appearance: listitem; // إصلاح Safari، تعطيل CSS على مكونات الويب
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield; // إزالة مظهر حقل الإدخال
+}
+
+.unicode {
+  unicode-bidi: plaintext; // تعيين اتجاه النص
+}
+
+.spinner-loader {
+  border-right-color: var(--color-primary) !important; // تعيين لون الحدود
+
+  &.reverse {
+    border-right-color: #9f7171 !important; // لون مختلف عند التراجع
+    background-color: #f98181; // لون خلفية مختلف
+  }
+}
+
+.hide-scroll {
+  /* إخفاء شريط التمرير ولكن السماح بالتمرير */
+  -ms-overflow-style: none; // Internet Explorer و Edge
+  scrollbar-width: none; // Firefox
+  overflow-y: scroll; // السماح بالتمرير العمودي
+
+  &::-webkit-scrollbar {
+    display: none; // إخفاء شريط التمرير في Chrome و Safari و Opera
+  }
+}
+
+.remove-item-btn:after {
+  content: "\ea47"; // رمز لإزالة العنصر
+  font-family: "sallaicons" !important; // تعيين عائلة الخط
+  font-style: normal; // تعيين نمط الخط
+  font-weight: normal; // تعيين وزن الخط
+  font-variant: normal; // تعيين متغير الخط
+  text-transform: none; // عدم تحويل النص
+  line-height: 1; // تعيين ارتفاع السطر
+  -webkit-font-smoothing: antialiased; // تحسين عرض الخط
+  -moz-osx-font-smoothing: grayscale; // تحسين عرض الخط على macOS
+}
+
+.cart-thumb {
+  position: fixed; // تعيين موضع ثابت
+  z-index: 30; // تعيين مستوى الز-index
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1); // تعيين تأثير الانتقال
+}
+
+/* إخفاء شريط التمرير في Chrome و Safari و Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; // إخفاء شريط التمرير
+}
+
+/* إخفاء شريط التمرير في IE و Edge و Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; // IE و Edge
+  scrollbar-width: none; // Firefox
+}
+
+// إخفاء علامات الدردشة
+body {
+  &.fslightbox-open,
+  &.modal-open {
+    #tidio-chat-iframe,
+    .fb_reset,
+    [id^=gb-widget] {
+      display: none !important; // إخفاء عناصر الدردشة
+    }
+  }
+}
+
+// حالة زر التحميل
+.loader {
+  &:before {
+    content: ''; // محتوى فارغ
+    opacity: 1; // تعيين الشفافية
+    display: inline-block; // تعيين العرض
+    width: 20px; // عرض الدائرة
+    height: 20px; // ارتفاع الدائرة
+    border-radius: 50%; // جعلها دائرية
+    border: 2px solid; // تعيين الحدود
+    border-top-color: var(--color-primary); // لون الحدود العلوية
+    border-bottom-color: #eee; // لون الحدود السفلية
+    border-left-color: var(--color-primary); // لون الحدود اليسرى
+    border-right-color: #eee; // لون الحدود اليمنى
+    animation: loader 1s ease-in-out infinite; // تعيين الرسوم المتحركة
+
+    .btn--danger & {
+      border-top-color: #ff6767; // لون مختلف عند استخدام زر خطر
+      border-left-color: #ff6767; // لون مختلف عند استخدام زر خطر
+    }
+  }
+
+  &--small {
+    &:before {
+      width: 16px; // عرض أصغر للدائرة
+      height: 16px; // ارتفاع أصغر للدائرة
+    }
+  }
+}
+
+@keyframes loader {
+  from {
+    transform: rotate(0deg); // بدء التدوير من 0 درجة
+  }
+  to {
+    transform: rotate(360deg); // الانتهاء من التدوير عند 360 درجة
+  }
+}
+
+/* مؤثرات الرسوم المتحركة */
+.animated {
+  animation-duration: var(--animate-duration); // تعيين مدة الرسوم المتحركة
+  animation-fill-mode: both; // الحفاظ على الحالة النهائية
+}
+
+@keyframes pulse-anime {
+  from {
+    transform: scale3d(1, 1, 1); // الحجم الأصلي
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1); // تكبير العنصر
+  }
+  to {
+    transform: scale3d(1, 1, 1); // العودة إلى الحجم الأصلي
+  }
+}
+
+.pulse-anime {
+  animation-name: pulse-anime; // تعيين اسم الرسوم المتحركة
+  animation-timing-function: ease-in-out; // تعيين دالة توقيت الرسوم المتحركة
+}
+
+/*
+** صفحة واحدة
+*/
+.content {
+  .content-entry {
+    img {
+      margin: 15px 0 25px; // تعيين الهوامش للصورة
+    }
+    ul, li {
+      list-style: inherit !important; // استخدام نمط القائمة الافتراضي
+    }
+    ol {
+      list-style: auto !important; // استخدام نمط القائمة التلقائي
+    }
+  }
+}
+
+/* تهيئة المكونات */
+salla-modal {
+  &:not(.hydrated) { // إخفاء مكون المودال حتى يتم تحميله
+    display: none;
+  }
+}
+
+/* نسبة عرض الفيديو */
+.videoWrapper {
+  position: relative; // تعيين موضع نسبي
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+
+  > * {
+    position: absolute; // تعيين موضع مطلق
+    top: 0;
+    left: 0;
+    width: 100%; // عرض 100%
+    height: 100%; // ارتفاع 100%
+    max-width: initial; // تعيين الحد الأقصى للعرض
+  }
+}
+
+// مشغل الشبكة
+.grid-trigger {
+  @apply cursor-pointer mx-1 text-xl w-10 h-10 rounded-md flex items-center justify-center text-gray-400; // تعيين أنماط الشبكة
+}
+
+// فئات المركز
+.flex-center {
+  @apply flex justify-center items-center; // محاذاة العناصر في المنتصف
+}
+
+.center-between {
+  @apply flex justify-between items-center; // توزيع العناصر بالتساوي
+}
+
+.grow-0 {
+  flex-grow: 0 !important; // منع النمو
+}
+
+.basis-0 {
+  flex-basis: 0; // تعيين الأساس إلى 0
+}
+
+// خلفية متدرجة
+.gradient-bg {
+  @apply from-primary to-primary-d; // تعيين الألوان المتدرجة
+
+  [dir="ltr"] & {
+    @apply bg-gradient-to-r; // اتجاه التدرج لليسار
+  }
+
+  [dir="rtl"] & {
+    @apply bg-gradient-to-l; // اتجاه التدرج لليمين
+  }
+
+  @media (max-width: 1024px) {
+    &.profile-header {
+      background-image: none; // إزالة صورة الخلفية
+
+      .breadcrumbs {
+        a,
+        span,
+        .arrow {
+          @apply text-gray-600; // تعيين لون النص
+        }
+      }
+    }
+  }
+}
+
+// شارة صغيرة
+.badge {
+  @apply p-1 min-w-[20px] h-5 rounded-full inline-flex items-center justify-center text-xs; // تعيين أنماط الشارة
+
+  &--red {
+    @apply bg-red-400 text-white; // تعيين الألوان الحمراء
+  }
+}
+
+// أيقونة النسخ
+.copy-icon {
+  @apply text-xs; // تعيين حجم النص
+}
+
+.s-localization-modal-inner {
+  width: 100%; // تعيين عرض 100%
+}
+
+// إصلاح مودال التقييم عند وجود منتجات متعددة في الهاتف المحمول
+.s-rating-modal-wrap .s-modal-body {
+  position: relative !important; // تعيين موضع نسبي
+}
+
+.s-verify-back {
+  top: 0.5rem; // تعيين المسافة العلوية
+  svg {
+    max-width: 18px; // تعيين الحد الأقصى للعرض
+    fill: rgba(107, 114, 128, var(--tw-text-opacity)); // تعيين لون التعبئة
+  }
+}
+
+[dir=rtl] .s-verify-back {
+  right: 0.5rem; // تعيين المسافة اليمنى
+}
+
+[dir=ltr] .s-verify-back {
+  left: 0.5rem; // تعيين المسافة اليسرى
+}
+
+@media (max-width: 639px) {
+  .s-verify-back {
+    display: none; // إخفاء العنصر في الشاشات الصغيرة
+  }
+}
+
+.article {
+  &--main {
+    iframe {
+      width: 100%; // تعيين عرض 100%
+      height: 30vw; // تعيين ارتفاع 30vw
+      @media (max-width: 639px) {
+        height: 50vw; // تعيين ارتفاع 50vw في الشاشات الصغيرة
+      }
+    }
+  }
+}
+
+// أزرار إجراءات تقديم العربة
+.cart-submit-wrap {
+  @apply flex ltr:flex-wrap justify-between items-center -mx-[5px] gap-2.5; // تعيين أنماط العربة
+
+  > * {
+    @apply grow mx-[5px]; // تعيين أنماط العناصر
+  }
+}
+
+.s-button-btn, .s-price-range-number-input {
+  @apply rounded; // تعيين الزوايا المدورة
+}
+
+// لافتة تثبيت تطبيق سلا
+.s-app-install-banner {
+  @apply hidden flex-row items-center fixed left-0 right-0 w-[95%] my-4 mx-auto z-[999] rounded-md p-3 gap-2 drop-shadow-md; // تعيين أنماط اللافتة
+  background-color: color-mix(in srgb, var(--color-primary) 15%, white); // تعيين لون الخلفية
+  &[open=false] {
+    @apply hidden; // إخفاء اللافتة
+  }
+  &[open=true][position=top] {
+    @apply flex transform duration-500; // تعيين أنماط عند الفتح
+  }
+  &[open=true][position=bottom] {
+    @apply flex animate-slideUpFromBottom; // تعيين أنماط عند الفتح
+  }
+  &[position=top] {
+    @apply top-0 relative m-0 w-full rounded-none; // تعيين أنماط عند التثبيت في الأعلى
+  }
+  &[position=bottom] {
+    @apply bottom-0; // تعيين أنماط عند التثبيت في الأسفل
+  }
+  &[closing][position=bottom] {
+    @apply animate-slideDownFromBottom; // تعيين أنماط عند الإغلاق
+    animation-fill-mode: forwards; // الحفاظ على الحالة النهائية
+  }
+  &-title {
+    @apply text-base font-bold text-primary; // تعيين أنماط عنوان اللافتة
+  }
+  &-sub-title {
+    @apply text-sm font-normal max-w-[95%]; // تعيين أنماط العنوان الفرعي
+  }
+  &-cta {
+    @apply text-primary underline; // تعيين أنماط زر الدعوة للعمل
+  }
+  &-cancel-button {
+    @apply absolute top-2 rtl:left-3 ltr:right-3; // تعيين أنماط زر الإلغاء
+  }
+}
+
+.blog-category {
+  a {
+    @apply text-primary hover:text-primary-d; // تعيين أنماط الروابط
+  }
+  ul li {
+    list-style: disc; // تعيين نمط القائمة
+  }
+
+  ol li {
+    list-style: auto; // تعيين نمط القائمة التلقائي
+  }
+}

@@ -1,0 +1,110 @@
+/* إعدادات عنصر رأس الطلب الفردي */
+.single-order-header-item {
+  @media (max-width: 768px) {
+    @apply flex justify-between items-center; // إعدادات المحاذاة في الشاشات الصغيرة
+  }
+}
+
+/* إعدادات ملف الطلب */
+.order-file {
+  .s-button-text {
+    @apply flex gap-2; // إعدادات الزر
+  }
+}
+
+/* إعدادات العلامات */
+.tag {
+  @apply px-3 pt-0.5 pb-1 inline-block text-sm rounded-2xl border border-gray-200; // إعدادات العلامة
+
+  &--primary {
+    @apply text-primary border-primary; // إعدادات العلامة الأساسية
+  }
+}
+
+/* إعدادات قسم رأس الملف الشخصي */
+.profile-header {
+  @apply relative lg:h-48 overflow-hidden; // إعدادات الحاوية
+
+  .breadcrumbs {
+    @screen lg {
+      @apply mt-2.5; // إعدادات الهوامش في الشاشات الكبيرة
+    }
+
+    a {
+      @apply text-primary-reverse hover:opacity-80; // إعدادات الروابط
+    }
+
+    span {
+      @apply text-primary-reverse opacity-80; // إعدادات النص
+    }
+
+    .arrow {
+      @apply text-primary-reverse opacity-70; // إعدادات السهم
+    }
+  }
+}
+
+/* إعدادات رفع صورة الملف الشخصي */
+.s-file-upload-profile-image .s-file-upload-has-error .filepond--file-status {
+  @apply ltr:-left-1/2 rtl:right-1/2; // إعدادات الموضع
+}
+
+/* إعدادات رأس التقييم */
+.rating-header {
+  @apply relative from-primary to-primary-d p-5 text-primary-reverse rounded-md; // إعدادات الحاوية
+}
+
+/* إعدادات الحقول الإضافية في الملف الشخصي */
+.form--user-profile {
+  .s-file-upload-wrapper {
+    min-height: 120px; // تعيين الحد الأدنى للارتفاع
+    .filepond--list-scroller {
+      overflow-y: inherit !important; // إعدادات التمرير
+    }
+    .filepond--drop-label {
+      min-height: 120px !important; // تعيين الحد الأدنى للارتفاع
+      @apply bg-white cursor-pointer border-dashed rounded-md border border-gray-200; // إعدادات الحاوية
+    }
+    .profile-filepond-placholder {
+      @apply flex flex-col justify-center items-center; // إعدادات الحاوية
+
+      &-icon {
+        @apply mb-1; // إعدادات الهوامش السفلية
+        i {
+          color: #7c8082; // لون الأيقونة
+          @apply text-xl; // حجم الأيقونة
+        }
+      }
+    }
+  }
+}
+
+/* إعدادات صفحة الشكر */
+.thankyou-block {
+  @apply duration-500 hover:shadow-default flex-1 bg-white p-8 rounded-md mb-6 md:mb-8 flex flex-col items-center justify-center; // إعدادات الحاوية
+
+  &.sent {
+    @apply text-green-500 font-bold; // إعدادات النص عند الإرسال
+
+    &:before {
+      @apply w-16 h-16 bg-green-100 text-green-500 flex items-center justify-center text-2xl rounded-full mb-2; // إعدادات الأيقونة
+      content: "\ea9d"; // محتوى الأيقونة
+      font-family: 'sallaicons'; // تعيين خط الأيقونة
+    }
+  }
+}
+
+/* إعدادات إجراءات تقييم الطلب */
+.rating-actions {
+  @apply flex items-center gap-2; // إعدادات المحاذاة
+  salla-button {
+    button {
+      @apply rounded mx-0 w-8 h-8 #{!important}; // إعدادات الزر
+    }
+  }
+}
+
+/* إعدادات صفحة المدونة الفردية */
+.blog-single .s-comments-item-user-info-name {
+  @apply mx-0; // إعدادات الهوامش
+}

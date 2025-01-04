@@ -1,0 +1,30 @@
+// إعدادات الخطوط
+
+// استيراد الخطوط من Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+// إعداد الخطوط الأساسية
+body {
+  font-family: 'Roboto', sans-serif; // تعيين الخط الأساسي
+  font-weight: 400; // الوزن الافتراضي
+  font-size: 16px; // حجم الخط
+  line-height: 1.5; // ارتفاع السطر
+}
+
+// إعداد الخطوط للعناوين
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif; // تعيين خط العناوين
+  font-weight: 700; // وزن الخط للعناوين
+}
+
+// إعداد الخطوط الخاصة بالروابط
+a {
+  font-family: 'Roboto', sans-serif; // تعيين خط الروابط
+  font-weight: 600; // وزن الخط للروابط
+  text-decoration: none; // إزالة التزيين الافتراضي
+
+  &:hover {
+    text-decoration: underline; // إضافة التزيين عند التمرير فوق الرابط
+  }
+}

@@ -1,0 +1,24 @@
+{#
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| component                     | كائن     | يحتوي على إعدادات التاجر للحقول من قسم `component` في twilight.json     |
+| component.banners             | كائن[]   | قائمة باللافتات                                                          |
+| component.banners[].image      | سلسلة    | رابط الصورة                                                              |
+| component.banners[].url        | سلسلة    | رابط الوجهة عند النقر على اللافتة                                       |
+| component.banners[].title      | ?سلسلة   | عنوان اللافتة                                                             |
+| component.banners[].description | ?سلسلة   | وصف اللافتة                                                               |
+| position                      | عدد صحيح | رقم الترتيب يبدأ من الصفر                                               |
+#}
+
+<section class="s-block s-block--banners container">
+    <div class="grid {{ component.banners|length <= 3 ? 'md:grid-cols-' ~ component.banners|length : 'md:grid-cols-3 two-row' }} grid-flow-row gap-3 sm:gap-8">
+        {% for index, banner in component.banners %}
+            <a href="{{ banner.url }}" aria-label="{{ banner.title ? banner.title : 'square-banner-' ~ index }}" class="banner-entry lazy {{ banner.title ? 'has-overlay' : '' }} {{ component.banners|length <= 3 ? 'h-lg-banner' : 'h-banner' }}" data-bg="{{ banner.image }}">
+                <article class="banner-entry__text text-with-border">
+                    <h3 class="banner__title font-bold mb-1 leading-6">{{ banner.title }}</h3> <!-- عنوان اللافتة -->
+                    <p class="banner__description">{{ banner.description }}</p> <!-- وصف اللافتة -->
+                </article>
+            </a>
+        {% endfor %}
+    </div>
+</section>

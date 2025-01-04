@@ -1,0 +1,129 @@
+{#
+| المتغيرات                | النوع                       | الوصف                                                                                                 |
+|---------------------------|----------------------------|-------------------------------------------------------------------------------------------------------|
+| product.options           | ?خيارات المنتج *مجموعة     | قائمة خيارات المنتج                                                                                   |
+| product.options[].id      | عدد صحيح                   | معرف الخيار                                                                                           |
+| product.options[].name    | سلسلة                      | اسم الخيار                                                                                           |
+| product.options[].required | بولياني                   | هل الخيار مطلوب؟                                                                                     |
+| product.options[].type    | سلسلة                      | نوع الخيار: single-option, date, datetime, time, image, text, textarea, number, multi-options, splitter, color, thumbnail, donation |
+| product.options[].placeholder | ?سلسلة                  | نص توضيحي يظهر في حقل الإدخال                                                                         |
+| product.options[].not_same_day_order | بولياني         | هل لا يمكن الطلب في نفس اليوم؟                                                                        |
+| product.options[].availability_range | بولياني         | هل يتوفر خيار النطاق الزمني؟                                                                          |
+| product.options[].from_date_time | ?سلسلة              | تاريخ البداية، مثال: `2021-12-21 21:21:21`                                                            |
+| product.options[].to_date_time | ?سلسلة                | تاريخ النهاية، مثال: `2021-12-21 21:21:21`                                                            |
+| product.options[].visibility_condition | ?كائن         | شروط رؤية الخيار                                                                                      |
+| product.options[].visibility_condition.option | عدد صحيح | معرف خيار آخر من الأنواع (`checkbox`, `radio`)                                                       |
+| product.options[].visibility_condition.operator | سلسلة | `=` أو `!=`                                                                                           |
+| product.options[].visibility_condition.value | عدد صحيح | معرف تفاصيل الخيار                                                                                   |
+| product.options[].condition_attributes | ?سلسلة        | مثال: `data-show-when="options[123] = 123"`                                                          |
+| product.options[].element | سلسلة                     | محتوى HTML من الملفات `views/components/product/elements/*.twig`                                     |
+| product.options[].details | تفاصيل الخيار *مجموعة      | تفاصيل إضافية حول الخيار                                                                              |
+| product.options[].details[].id | عدد صحيح               | معرف التفاصيل                                                                                        |
+| product.options[].details[].name | سلسلة               | اسم فقط، مثال: `أحمر`                                                                                 |
+| product.options[].details[].full_name | سلسلة          | يشمل الاسم، السعر الإضافي، وOut Of Stock، مثال: `أحمر (+100SAR) - غير متوفر`                        |
+| product.options[].details[].additional_price | عدد      | مثال: `100`                                                                                          |
+| product.options[].details[].option_value | ?سلسلة       | قيمة `product.options[].type`، hexColor أو رابط الصورة لأنواع `color`، `image`                      |
+| product.options[].details[].image | ?سلسلة            | بديل لـ `.option_value`، يجب استخدامه عندما يكون `product.options[].type` = `image`                |
+| product.options[].details[].color | ?سلسلة            | لون hex، يجب استخدامه عندما يكون `product.options[].type` = `color`                                 |
+| product.options[].details[].is_selected | بولياني       | هل الخيار الحالي محدد؟ (مفيد في صفحة السلة)                                                          |
+| product.options[].details[].is_out | بولياني           | هل الخيار الحالي غير متوفر؟                                                                           |
+#}
+{% if product.options|length %}
+    <salla-product-options options="{{ product.options }}" product-id="{{ product.id }}"></salla-product-options>
+{% endif %}
+
+{% if product.weight or product.has_size_guide %}
+    <section class="bg-white p-5 rounded-md mb-5">
+        {% if product.weight %}
+            <div class="center-between {% if product.has_size_guide %} pb-5 mb-5 border-b-[1px] {% endif %}">
+                <b class="form-label rtl:space-x-reverse space-x-1"><i class="sicon-luggage-cart"></i>
+                    <span>{{ trans('pages.products.weight') }}</span></b>
+                <span class="text-sm">{{ product.weight }}</span>
+            </div>
+        {% endif %}
+        {% if product.has_size_guide %}
+            <div class="center-between">
+                <b class="form-label rtl:space-x-reverse space-x-1">
+                    <i class="sicon-pencil-ruler"></i>
+                    <span> {{ trans('pages.products.size_guides') }} </span>
+                </b>
+
+                <salla-button shape="link" color="primary" class="!p-0 text-sm with-arrow"
+                              onclick="salla.event.dispatch('size-guide::open', '{{ product.id }}')">
+                    {{ trans('pages.products.show_size_guides') }} <i class="sicon-keyboard_arrow_left"></i>
+                </salla-button>
+
+            </div>
+            <salla-product-size-guide></salla-product-size-guide>
+        {% endif %}
+    </section>
+{% endif %}
+
+
+{% if product.can_add_note or product.can_upload_file %}
+    <section class="bg-white p-5 rounded-md mb-5">
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
+            <label class="form-label">
+                <b class="block">
+                    {{ trans('pages.products.attachments') }}
+                </b>
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2 text-end">
+                <div class="flex rtl:space-x-reverse space-x-3">
+                    {% if product.can_add_note %}
+                        <button class="btn-tab btn--collapse"
+                                type="button"
+                                data-show="note_{{ product.id }}">
+                            <i class="font-medium sicon-chat-conversation-alt rtl:ml-1.5 ltr:mr-1.5"></i>
+                            <span class="fix-align">{{ trans('pages.products.add_note') }} </span>
+                        </button>
+                    {% endif %}
+                    {% if product.can_upload_file %}
+                        <button class="btn-tab btn--collapse"
+                                data-show="file_{{ product.id }}"
+                                type="button">
+                            <i class="font-medium sicon-paperclip rtl:ml-1.5 ltr:mr-1.5"></i>
+                            <span class="fix-align">{{ trans('pages.products.add_file') }}</span>
+                        </button>
+                    {% endif %}
+                </div>
+
+                {% if product.can_add_note %}
+                    <div class="h-0 overflow-hidden opacity-0 is-closed" id="note_{{ product.id }}">
+                        <div class="pt-4">
+                          <textarea
+                                  class="animated animatedfadeInDown fadeInDown form-input h-16 bg-gray-50 block"
+                                  placeholder="{{ trans('pages.products.notes_placeholder') }}"
+                                  name="notes"
+                                  cols="30"
+                                  rows="10">{{ product.notes }}</textarea>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if product.can_upload_file %}
+                    {# لاحظ أن "المنتج" هو في الواقع cart.items[*]، لذا {product.id} هو {item.id} #}
+                    <div class="h-0 overflow-hidden opacity-0 is-closed" id="file_{{ product.id }}">
+                        <div class="pt-4 px-1">
+                            <salla-file-upload
+                                accept="image/png, image/jpeg, image/jpg, image/gif, video/*, application/pdf"
+                                class="product-option-uploader"
+                                    {% if is_page('cart') %}
+                                        files="{{ product.attachments|json_encode }}"
+                                        cart-item-id="{{ product.id }}"
+                                    {% endif %}>
+                                <div class="product-option-uploader-placholder">
+                                    <span class="product-option-uploader-placholder-icon">
+                                        <i class="sicon-camera"></i>
+                                    </span>
+                                    <p class="profile-filepond-placholder-text">{{ trans('common.uploader.drag_and_drop') }}</p>
+                                    <span class="filepond--label-action">{{ trans('common.uploader.browse') }}</span>
+                                </div>
+                            </salla-file-upload>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endif %}

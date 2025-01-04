@@ -1,0 +1,23 @@
+{#
+| المتغيرات                | النوع                      | الوصف                     |
+|---------------------------|---------------------------|---------------------------|
+| page                      | كائن                      |                           |
+| page.title                | سلسلة                    | عنوان الصفحة             |
+| page.slug                 | سلسلة                    | رابط الصفحة              |
+| notifications             | إشعارات[] *صفحة         | قائمة الإشعارات         |
+| notifications.next_page   | ?سلسلة                   | رابط الصفحة التالية      |
+| notifications.count       | عدد صحيح                 | عدد الإشعارات            |
+| notifications[].is_new    | بولياني                  | هل الإشعار جديد؟        |
+| notifications[].url       | سلسلة                    | رابط الإشعار             |
+| notifications[].sub_title | سلسلة                    | العنوان الفرعي للإشعار   |
+| notifications[].title     | سلسلة                    | عنوان الإشعار            |
+| notifications[].date      | سلسلة                    | تاريخ الإشعار            |
+#}
+{% extends "layouts.customer" %}
+{% block inner_content %}
+	{% hook 'customer:notifications.items.start' %}
+
+	<salla-notifications></salla-notifications> <!-- مكون عرض الإشعارات -->
+
+	{% hook 'customer:notifications.items.end' %}
+{% endblock %}

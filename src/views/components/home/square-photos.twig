@@ -1,0 +1,32 @@
+{#
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| title                         | سلسلة    | عنوان القسم                                                              |
+| items[]                       | مصفوفة   | قائمة بالصور                                                             |
+| items[].url                   | سلسلة    | رابط الصورة أو الوجهة                                                    |
+| items[].link_type             | سلسلة    | نوع الرابط (فئة، منتج، عروض، صفحة، رابط خارجي، علامة تجارية)          |
+| items[].image.url             | سلسلة    | رابط الصورة                                                              |
+| items[].image.alt             | سلسلة    | نص بديل للصورة                                                          |
+| items[].text                  | سلسلة    | العنوان المرئي للصورة                                                   |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
+#}
+<section class="s-block s-block--banners container">
+    {% if title %}
+        <div class="s-block__title">
+            <div class="right-side">
+                <h2>{{ title }}</h2> <!-- عنوان القسم -->
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="grid {{ items|length <= 3 ? 'one-row md:grid-cols-' ~ items|length : 'md:grid-cols-3 two-row' }} grid-flow-row gap-3 sm:gap-8">
+        {% for item in items %}
+            <a class="banner-entry square-photos {{ item.text ? 'has-overlay with-hover' : '' }}" href="{{ item.url }}" {% if item.link_type == 'external_link' %}target="_blank"{% endif %}>
+                <div class="lazy__bg lazy" data-bg="{{ item.image.url }}"></div> <!-- صورة الخلفية -->
+                {% if item.text %}
+                        <h3 class="text-with-border"><span>{{ item.text }}</span></h3> <!-- العنوان المرئي للصورة -->
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+</section>

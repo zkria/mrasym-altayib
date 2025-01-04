@@ -1,0 +1,20 @@
+// إعدادات نافذة الهدايا
+.s-gifting-modal {
+    .s-checkbox {
+        background-color: #f9f9f9 !important; // لون الخلفية للزر
+        border: 1px solid #007B7F !important; // لون الحدود
+
+        &:focus {
+            --tw-ring-color: transparent !important; // إزالة تأثير الحلقة عند التركيز
+        }
+    }
+
+    .s-gifting-filepond-placeholder-icon svg {
+        fill: #007B7F !important; // لون الأيقونة
+    }
+}
+
+// إعدادات عنصر واجهة المستخدم للهدايا
+.s-gifting-widget .s-list-tile-item {
+    @apply border-none rounded-t-none; // إزالة الحدود وتعيين الزوايا
+}

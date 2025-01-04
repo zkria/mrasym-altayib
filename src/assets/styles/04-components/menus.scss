@@ -1,0 +1,214 @@
+// إعدادات القائمة الرئيسية
+.main-menu > li > a[href*="offer"] {
+  @apply text-red-800; // تعيين لون النص لعروض القائمة
+}
+
+@media only screen and (min-width: 1024px) {
+  .main-menu {
+    @apply hidden lg:flex flex-wrap items-center mx-6 pt-8 pb-0; // إعدادات القائمة الرئيسية في الشاشات الكبيرة
+
+    .fixed-pinned & {
+      padding-top: 0; // إزالة الحشوة العلوية عند تثبيت القائمة
+      padding-bottom: 0; // إزالة الحشوة السفلية عند تثبيت القائمة
+    }
+
+    li {
+      > a {
+        @apply flex justify-between items-center transition duration-300 p-3 text-sm hover:text-primary hover:no-underline; // إعدادات الروابط في القائمة
+      }
+
+      &.root-level {
+        @apply inline-block; // إعدادات العناصر الرئيسية
+
+        > a {
+          @apply font-bold pt-0 pb-8; // إعدادات الروابط الرئيسية
+        }
+      }
+    }
+
+    > .has-children:hover > a {
+      color: var(--color-primary); // تغيير لون النص عند التمرير فوق العناصر ذات الأطفال
+    }
+
+    .has-children {
+      li a:hover,
+      .has-children:hover > a {
+        color: var(--color-primary); // تغيير لون النص عند التمرير فوق الروابط
+        @apply bg-gray-200/20; // تعيين خلفية عند التمرير
+      }
+
+      > a:after {
+        font-family: 'sallaicons'; // تعيين خط الأيقونات
+        content: "\e970"; // تعيين محتوى الأيقونة
+        @apply inline-block transition-transform duration-300 self-end mx-0.5 text-lg opacity-50 leading-4; // إعدادات الأيقونة
+      }
+
+      &.root-level {
+        > a:after {
+          content: "\e96e"; // تعيين محتوى الأيقونة للعناصر الرئيسية
+        }
+
+        &:hover > a:after {
+          opacity: 1; // زيادة الشفافية عند التمرير
+          transform: scaleY(-1); // عكس الأيقونة عند التمرير
+        }
+      }
+    }
+
+    .sub-menu {
+      @apply z-20 transition opacity-0 invisible absolute bg-white -translate-y-3 shadow-default rounded-b-md border-t border-gray-300/30; // إعدادات القائمة الفرعية
+
+      .sub-menu {
+        top: -1px; // تعيين الموضع العلوي
+        right: 100%; // تعيين الموضع الأيمن
+
+        [dir="ltr"] & {
+          left: 100%; // تعيين الموضع الأيسر
+          right: auto; // إزالة الموضع الأيمن
+        }
+      }
+
+      .s-product-card-entry {
+        @apply border border-gray-100; // إعدادات حدود بطاقة المنتج
+      }
+
+      .btn {
+        padding: 8px 10px 10px; // إعدادات زر القائمة
+      }
+
+      li.mega-menu .container {
+        ul {
+          @apply p-0 m-0 border-none; // إعدادات القائمة داخل القائمة الضخمة
+        }
+
+        > div {
+          @apply hidden; // إخفاء العناصر
+        }
+      }
+    }
+
+    .change-menu-dir .sub-menu .sub-menu {
+      @apply rtl:left-full rtl:right-auto ltr:right-full ltr:left-auto; // إعدادات اتجاه القائمة الفرعية
+    }
+
+    li:hover {
+      > .sub-menu {
+        opacity: 1; // زيادة الشفافية عند التمرير
+        visibility: visible; // جعل القائمة مرئية
+        transform: translateY(0); // تعيين التحويل
+      }
+    }
+  }
+
+  .main-menu .sub-menu ul > li:not(:first-child) > .sub-menu {
+    border-top-right-radius: 0.375rem; // تعيين الزوايا العلوية
+    border-top-left-radius: 0.375rem; // تعيين الزوايا العلوية
+    border: none; // إزالة الحدود
+  }
+}
+
+// إعدادات قائمة التمرير في الشاشات الصغيرة
+@media only screen and (max-width: 1024px) {
+  .filters-opened {
+    .close-filters {
+      display: block !important; // إظهار زر إغلاق الفلاتر
+    }
+  } 
+
+  .menu-opened {
+    .btn--close-sm.close-mobile-menu {
+      display: block !important; // إظهار زر إغلاق القائمة
+    }
+  }
+
+  .mobile-menu {
+    display: none; // إخفاء القائمة في الشاشات الصغيرة
+    @apply lg:hidden overflow-hidden; // إعدادات القائمة
+  }
+
+  .mm-ocd__content {
+    overflow-y: auto; // تعيين التمرير العمودي
+  }
+
+  .mm-ocd-opened {
+    .mobile-menu {
+      display: block; // إظهار القائمة عند فتحها
+    }
+
+    @media (max-width: 480px) {
+      .btn--close-sm {
+        opacity: 1; // تعيين الشفافية
+        visibility: visible; // جعل الزر مرئيًا
+        transform: translateY(0); // تعيين التحويل
+        z-index: 99999999; // تعيين مستوى z-index
+      }
+    }
+  }
+
+  .mm-spn.mm-spn--light {
+    color: #000; // تعيين لون النص
+    background: #ffffff; // تعيين لون الخلفية
+  }
+
+  .mm-spn {
+    ul.main-menu li:before {
+      @apply w-2 h-2; // إعدادات الأيقونة
+    }
+
+    &.mm-spn--navbar {
+      &:after {
+        @apply transition-all duration-300 rtl:pr-12 ltr:pl-12 text-start opacity-90 font-bold; // إعدادات الأيقونة
+      }
+
+      &.mm-spn--main {
+        &:after {
+          @apply rtl:pr-3 ltr:pl-3; // إعدادات الأيقونة
+        }
+      }
+    }
+
+    &.mm-spn--navbar:before {
+      [dir="rtl"] & {
+        transform: rotate(135deg) translateY(77%); // تعيين التحويل
+        right: var(--mm-spn-item-indent); // تعيين الموضع الأيمن
+        left: auto; // إزالة الموضع الأيسر
+      }
+    }
+
+    li {
+      a,
+      > span {
+        padding: 18px; // تعيين الحشوة
+        @apply flex items-center gap-4; // إعدادات التنسيق
+      }
+
+      img {
+        @apply w-12 h-12 object-cover bg-[#f5f7f9] pointer-events-none; // إعدادات صورة المنتج
+      }
+
+      a span {
+        padding: 0; // إزالة الحشوة
+      }
+
+      &:before {
+        [dir="rtl"] & {
+          width: 6px; // تعيين العرض
+          height: 6px; // تعيين الارتفاع
+          top: 50%; // تعيين الموضع العلوي
+          left: 25px; // تعيين الموضع الأيسر
+          left: calc(var(--mm-spn-item-height) / 2); // تعيين الموضع الأيسر
+          right: auto; // إزالة الموضع الأيمن
+          border-bottom: 1px solid; // تعيين الحدود السفلية
+          border-left: 1px solid; // تعيين الحدود اليسرى
+          border-right: none; // إزالة الحدود اليمنى
+          border-top: none; // إزالة الحدود العلوية
+        }
+      }
+
+      &:after {
+        width: 100%; // تعيين العرض
+        border-color: var(--infinte-color); // تعيين لون الحدود
+      }
+    }
+  }
+}

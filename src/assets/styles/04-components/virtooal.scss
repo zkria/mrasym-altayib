@@ -1,0 +1,76 @@
+// إعدادات عنصر Virtooal
+.virtooal {
+  margin: 15px 0; // تعيين الهوامش
+  border-radius: 10px; // تعيين الزوايا
+  border: 1px solid rgb(229, 229, 229); // تعيين الحدود
+  background: white; // تعيين لون الخلفية
+
+  @media screen and (min-width: 992px) {
+    padding: 18px; // تعيين الحشوة في الشاشات الكبيرة
+  }
+
+  &--content {
+    @include flexable(center, space-between, row); // إعدادات المحتوى
+  }
+
+  &--details {
+    @include flexable(flex-start, center, column); // إعدادات التفاصيل
+    @include desktop {
+      display: none; // إخفاء التفاصيل في الشاشات الكبيرة
+    }
+
+    &--title {
+      font-size: 16px; // حجم خط العنوان
+      font-weight: 700; // وزن خط العنوان
+      color: #1F2937; // لون العنوان
+    }
+
+    &--desc {
+      font-size: 13px; // حجم خط الوصف
+      color: #7C8082; // لون الوصف
+      font-weight: 400; // وزن خط الوصف
+    }
+  }
+
+  &--action {
+    @include desktop {
+      width: 100%; // تعيين العرض في الشاشات الكبيرة
+    }
+
+    & button {
+      @include flexable(center, center, row); // إعدادات الزر
+      border: 1px solid var(--color-primary); // تعيين لون الحدود
+      font-weight: 700; // وزن خط الزر
+      font-size: 14px; // حجم خط الزر
+      padding: 8px 30px; // تعيين الحشوة
+      font-size: 0.875rem; // حجم خط الزر
+      padding: 0.5rem 1.5rem 0.625rem 1.5rem; // تعيين الحشوة
+      line-height: 1.25rem; // ارتفاع السطر
+      background: var(--color-primary); // لون الخلفية
+      color: var(--color-primary-reverse); // لون النص
+      border-radius: 5px; // تعيين الزوايا
+
+      &:hover {
+        background: var(--color-primary-dark); // لون الخلفية عند التمرير
+        opacity: 0.8 !important; // تعيين الشفافية
+      }
+
+      @include desktop {
+        width: 100%; // تعيين العرض في الشاشات الكبيرة
+      }
+
+      & .icon {
+        width: 14px; // عرض الأيقونة
+        height: 14px; // ارتفاع الأيقونة
+
+        [dir="rtl"] & {
+          margin-left: 0.75rem; // تعيين الهوامش في الاتجاه من اليمين لليسار
+        }
+
+        [dir="ltr"] & {
+          margin-right: 0.75rem; // تعيين الهوامش في الاتجاه من اليسار لليمين
+        }
+      }
+    }
+  }
+}

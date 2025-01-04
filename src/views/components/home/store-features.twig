@@ -1,0 +1,22 @@
+{#
+| المتغيرات                     | النوع     | الوصف                                                                      |
+|-------------------------------|----------|---------------------------------------------------------------------------|
+| items[]                       | مصفوفة   | قائمة بـ 3 ميزات                                                         |
+| items[].icon                  | سلسلة    | فئة أيقونة SallaIcons `sicon-*`                                          |
+| items[].title                 | سلسلة    | عنوان الميزة                                                             |
+| items[].text                  | سلسلة    | العنوان الفرعي للميزة                                                    |
+| position                      | عدد صحيح | رقم ترتيب يبدأ من الصفر                                                 |
+#}
+<section class="s-block s-block--features container">
+    <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] md:grid-cols-[repeat(3,minmax(0,1fr))] gap-4 sm:gap-6 xl:gap-8">
+      {% for item in items %}
+          <div class="s-block--features__item">
+            <div class="feature-icon">
+              <i class="{{ item.icon }}"></i> <!-- أيقونة الميزة -->
+            </div>
+            <h2>{{ item.title }}</h2> <!-- عنوان الميزة -->
+            <p>{{ item.text }}</p> <!-- العنوان الفرعي للميزة -->
+          </div>
+      {% endfor %}
+    </div>
+</section>

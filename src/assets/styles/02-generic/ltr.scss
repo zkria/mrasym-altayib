@@ -1,0 +1,27 @@
+// إعدادات الاتجاه من اليسار إلى اليمين
+.sf-dump {
+  direction: ltr; // تعيين الاتجاه إلى اليسار إلى اليمين
+}
+
+[dir="ltr"] {
+  // تعيين أيقونات الأسهم عند الاتجاه من اليسار إلى اليمين
+  .with-arrow .sicon-keyboard_arrow_left:before,
+  nav .sicon-keyboard_arrow_left:before,
+  .sub-menu .has-children > a:after {
+    content: "\e96c"; // رمز السهم
+  }
+
+  .flatpickr {
+    &-months {
+      .numInputWrapper {
+        .cur-year {
+          padding: 0 0 0 15px; // إضافة حشوة إلى السنة الحالية
+        }
+      }
+      [class^="arrow"] {
+        right: unset; // إزالة الحافة اليمنى
+        left: 0; // تعيين الحافة اليسرى
+      }
+    }
+  }
+}

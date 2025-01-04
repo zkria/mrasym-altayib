@@ -1,0 +1,13 @@
+// إصلاحات مخصصة لمتصفح Safari
+@media not all and (min-resolution: .001dpcm) { 
+  @supports (-webkit-appearance: none) {
+    // إعدادات مخصصة لعناصر checkbox و radio
+    // [type='checkbox'], [type='radio'] {
+    //   @apply w-5; // تعيين العرض
+    // }
+
+    .full-banner-entry {
+      background-attachment: initial; // تعيين خاصية الخلفية
+    }
+  }
+}

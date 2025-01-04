@@ -1,0 +1,31 @@
+// إعدادات الأنماط للاتجاه من اليمين إلى اليسار
+.rtl,
+[dir="rtl"] {
+  .rtl-range-slider {
+    transform: rotateY(180deg); // قلب شريط التمرير أفقيًا
+  }
+
+  .rtl-range-numbers {
+    flex-direction: row-reverse; // عكس اتجاه الأرقام في شريط التمرير
+  }
+
+  .form-select, select {
+    background-position: left 0.5rem center; // تعيين موضع الخلفية
+    padding-right: 12px; // إضافة حشوة على اليمين
+  }
+
+  .fix-align {
+    transform: translateY(-2px); // تعديل موضع العنصر عموديًا
+    display: inline-block; // تعيين العرض ككتلة داخلية
+  }
+
+  .flatpickr {
+    &-months {
+      .numInputWrapper {
+        .cur-year {
+          padding: 0 15px 0 0; // إضافة حشوة إلى السنة الحالية
+        }
+      }
+    }
+  }
+}

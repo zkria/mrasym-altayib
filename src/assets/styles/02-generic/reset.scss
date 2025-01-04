@@ -1,0 +1,94 @@
+// إعدادات إعادة تعيين الأنماط الأساسية
+body {
+  font-size: 15px; // حجم الخط الأساسي
+  font-weight: 400; // وزن الخط
+  line-height: 26px; // ارتفاع السطر
+  color: var(--main-text-color); // لون النص الرئيسي
+  position: relative; // تعيين الموضع النسبي
+}
+
+// p {
+//   font-size: 16px;
+// }
+
+html {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  border: 0; // إزالة الحدود
+  margin: 0; // إزالة الهوامش
+  padding: 0; // إزالة الحشوات
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-weight: 600; // وزن الخط للعناوين
+  margin-bottom: 0px; // إزالة الهوامش السفلية
+}
+
+a {
+  text-decoration: none; // إزالة التزيين الافتراضي
+  transition: color 0.2s; // تأثير الانتقال على اللون
+}
+
+img {
+  max-width: 100%; // تعيين الحد الأقصى للعرض
+}
+
+a:focus {
+  outline: none; // إزالة الإطار عند التركيز
+  text-decoration: none; // إزالة التزيين عند التركيز
+}
+
+ul,
+li {
+  margin: 0; // إزالة الهوامش
+  padding: 0; // إزالة الحشوات
+  list-style: none; // إزالة نمط القائمة
+}
+
+h1 {
+  @apply text-3xl; // تعيين حجم الخط
+}
+
+h2 {
+  @apply text-xl; // تعيين حجم الخط
+}
+
+h3 {
+  @apply text-xl; // تعيين حجم الخط
+  line-height: 38px; // ارتفاع السطر
+}
+
+// h4 {
+//   font-size: 22px; // حجم الخط
+//   line-height: 32px; // ارتفاع السطر
+// }
+
+// h5 {
+//   font-size: 16px; // حجم الخط
+//   line-height: 24px; // ارتفاع السطر
+// }
+
+// h6 {
+//   font-size: 14px; // حجم الخط
+//   line-height: 26px; // ارتفاع السطر
+// }
+
+.f-color {
+  color: #FF6767; // لون خاص
+}
+
+h5.subtitle {
+  font-size: 16px; // حجم الخط
+  font-weight: 400; // وزن الخط
+}
