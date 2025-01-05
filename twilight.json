@@ -880,6 +880,213 @@
                     "source": "brands"
                 }
             ]
+        },
+        {
+            "key": "6526b2cc-0837-4ca4-90ab-5d8eaf42b4bd",
+            "title": "News Ticker",
+            "title_ar": "شريط الأخبار المتحرك",
+            "icon": "sicon-fresh-arrival",
+            "path": "home.News",
+            "fields": [
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": {
+                        "ar": "عنوان القسم",
+                        "en": "Section Title"
+                    },
+                    "multilanguage": true,
+                    "id": "title",
+                    "value": {
+                        "ar": "آخر الأخبار",
+                        "en": "Latest News"
+                    },
+                    "required": true,
+                    "format": "text",
+                    "placeholder": {
+                        "ar": "أدخل عنوان القسم هنا...",
+                        "en": "Enter section title here..."
+                    },
+                    "maxLength": 50,
+                    "minLength": 3
+                },
+                {
+                    "id": "news_items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 15,
+                    "label": {
+                        "ar": "قائمة الأخبار",
+                        "en": "News List"
+                    },
+                    "item_label": {
+                        "ar": "خبر",
+                        "en": "News Item"
+                    },
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": {
+                                "ar": "نص الخبر",
+                                "en": "News Text"
+                            },
+                            "multilanguage": true,
+                            "id": "news_items.text",
+                            "required": true,
+                            "format": "text",
+                            "placeholder": {
+                                "ar": "أدخل نص الخبر هنا...",
+                                "en": "Enter news text here..."
+                            },
+                            "maxLength": 300,
+                            "minLength": 10
+                        },
+                        {
+                            "type": "number",
+                            "icon": "sicon-sort",
+                            "label": {
+                                "ar": "أولوية العرض",
+                                "en": "Display Priority"
+                            },
+                            "id": "news_items.priority",
+                            "format": "number",
+                            "required": false,
+                            "minimum": 1,
+                            "maximum": 10,
+                            "default": 5
+                        },
+                        {
+                            "type": "items",
+                            "icon": "sicon-link",
+                            "label": {
+                                "ar": "رابط الخبر",
+                                "en": "News Link"
+                            },
+                            "id": "news_items.url",
+                            "format": "variable-list",
+                            "required": false,
+                            "searchable": true,
+                            "source": "custom",
+                            "sources": [
+                                {
+                                    "label": {"ar": "منتج", "en": "Product"},
+                                    "key": "products",
+                                    "value": "products"
+                                },
+                                {
+                                    "label": {"ar": "تصنيف", "en": "Category"},
+                                    "key": "categories",
+                                    "value": "categories"
+                                },
+                                {
+                                    "label": {"ar": "صفحة تعريفية", "en": "Page"},
+                                    "key": "pages",
+                                    "value": "pages"
+                                },
+                                {
+                                    "label": {"ar": "رابط خارجي", "en": "External Link"},
+                                    "key": "custom",
+                                    "value": "custom"
+                                },
+                                {
+                                    "label": {"ar": "عروض خاصة", "en": "Special Offers"},
+                                    "key": "special_offers",
+                                    "value": "special_offers"
+                                },
+                                {
+                                    "label": {"ar": "مقالات المدونة", "en": "Blog Posts"},
+                                    "key": "blog",
+                                    "value": "blog"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "number",
+                    "icon": "sicon-speed-fast",
+                    "label": {
+                        "ar": "سرعة حركة النص",
+                        "en": "Text Animation Speed"
+                    },
+                    "id": "speed",
+                    "format": "units",
+                    "value": 15,
+                    "required": true,
+                    "minimum": 3,
+                    "maximum": 60,
+                    "unit": {"ar": "ثانية", "en": "seconds"},
+                    "step": 1
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-magic-wand",
+                    "label": {
+                        "ar": "نمط الحركة",
+                        "en": "Animation Style"
+                    },
+                    "id": "animation_style",
+                    "format": "dropdown-list",
+                    "required": false,
+                    "value": "slide",
+                    "options": [
+                        {
+                            "label": {"ar": "تمرير أفقي", "en": "Slide"},
+                            "value": "slide"
+                        },
+                        {
+                            "label": {"ar": "تلاشي", "en": "Fade"},
+                            "value": "fade"
+                        },
+                        {
+                            "label": {"ar": "نط", "en": "Bounce"},
+                            "value": "bounce"
+                        }
+                    ]
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-fill",
+                    "label": {
+                        "ar": "لون خلفية العنوان",
+                        "en": "Title Background Color"
+                    },
+                    "id": "label_bg_color",
+                    "format": "color",
+                    "value": "#dc3545",
+                    "required": false,
+                    "opacity": true
+                },
+                {
+                    "type": "items",
+                    "icon": "sicon-desktop-devices",
+                    "label": {
+                        "ar": "عرض الشريط",
+                        "en": "Display Options"
+                    },
+                    "id": "display_options",
+                    "format": "dropdown-list",
+                    "required": false,
+                    "multichoice": true,
+                    "options": [
+                        {
+                            "label": {"ar": "الشاشة الرئيسية", "en": "Home Page"},
+                            "value": "home"
+                        },
+                        {
+                            "label": {"ar": "صفحات المنتجات", "en": "Product Pages"},
+                            "value": "products"
+                        },
+                        {
+                            "label": {"ar": "صفحات التصنيفات", "en": "Category Pages"},
+                            "value": "categories"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "support_url": "",

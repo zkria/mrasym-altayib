@@ -36,6 +36,7 @@ class App extends AppHelpers {
     this.commonThings();
     this.initiateNotifier();
     this.initiateMobileMenu();
+    this.initDarkMode();
     if (header_is_sticky) {
       this.initiateStickyMenu();
     }
@@ -341,6 +342,33 @@ isElementLoaded(selector){
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
   }
+
+  initDarkMode() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+
+    // تحقق من الوضع المحفوظ
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      toggle.querySelector('.header-btn__icon').classList.replace('sicon-moon', 'sicon-sun');
+    }
+
+    // إضافة مستمع الحدث
+    toggle.addEventListener('click', () => {
+      const icon = toggle.querySelector('.header-btn__icon');
+      const isDark = document.documentElement.classList.toggle('dark');
+      
+      // تبديل الأيقونة
+      icon.classList.toggle('sicon-moon', !isDark);
+      icon.classList.toggle('sicon-sun', isDark);
+      
+      // حفظ الحالة
+      localStorage.setItem('darkMode', isDark);
+      
+      console.log('Dark mode:', isDark); // للتأكد من عمل الكود
+    });
+  }
 }
 
 salla.onReady(() => (new App).loadTheApp());
@@ -402,52 +430,3 @@ document.addEventListener('DOMContentLoaded', function() {
   // تهيئة القائمة عند تحميل الصفحة
   initMenu();
 });
-
-// دالة لتهيئة شريط الأخبار المتحرك
-function initNewsTicker() {
-    const tickerWrapper = document.querySelector('.ticker-wrapper');
-    const tickerItems = document.querySelector('.ticker-items');
-    
-    if (!tickerItems) return;
-
-    // نسخ العناصر لإنشاء تأثير التكرار المستمر
-    const clone = tickerItems.cloneNode(true);
-    tickerWrapper.appendChild(clone);
-
-    let currentScroll = 0;
-    let isHovered = false;
-
-    // سرعة التحريك
-    const speed = 1;
-
-    function animate() {
-        if (!isHovered) {
-            currentScroll += speed;
-            
-            // إعادة تعيين الموضع عند اكتمال التمرير
-            if (currentScroll >= tickerItems.offsetWidth) {
-                currentScroll = 0;
-            }
-            
-            // تحريك العناصر
-            tickerWrapper.style.transform = `translateX(-${currentScroll}px)`;
-        }
-        requestAnimationFrame(animate);
-    }
-
-    // إيقاف الحركة عند تمرير المؤشر
-    tickerWrapper.addEventListener('mouseenter', () => {
-        isHovered = true;
-    });
-
-    // استئناف الحركة عند إزالة المؤشر
-    tickerWrapper.addEventListener('mouseleave', () => {
-        isHovered = false;
-    });
-
-    // بدء الحركة
-    animate();
-}
-
-// تشغيل الدالة عند اكتمال تحميل الصفحة
-document.addEventListener('DOMContentLoaded', initNewsTicker);
