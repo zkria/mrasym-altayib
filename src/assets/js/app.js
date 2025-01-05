@@ -402,3 +402,52 @@ document.addEventListener('DOMContentLoaded', function() {
   // تهيئة القائمة عند تحميل الصفحة
   initMenu();
 });
+
+// دالة لتهيئة شريط الأخبار المتحرك
+function initNewsTicker() {
+    const tickerWrapper = document.querySelector('.ticker-wrapper');
+    const tickerItems = document.querySelector('.ticker-items');
+    
+    if (!tickerItems) return;
+
+    // نسخ العناصر لإنشاء تأثير التكرار المستمر
+    const clone = tickerItems.cloneNode(true);
+    tickerWrapper.appendChild(clone);
+
+    let currentScroll = 0;
+    let isHovered = false;
+
+    // سرعة التحريك
+    const speed = 1;
+
+    function animate() {
+        if (!isHovered) {
+            currentScroll += speed;
+            
+            // إعادة تعيين الموضع عند اكتمال التمرير
+            if (currentScroll >= tickerItems.offsetWidth) {
+                currentScroll = 0;
+            }
+            
+            // تحريك العناصر
+            tickerWrapper.style.transform = `translateX(-${currentScroll}px)`;
+        }
+        requestAnimationFrame(animate);
+    }
+
+    // إيقاف الحركة عند تمرير المؤشر
+    tickerWrapper.addEventListener('mouseenter', () => {
+        isHovered = true;
+    });
+
+    // استئناف الحركة عند إزالة المؤشر
+    tickerWrapper.addEventListener('mouseleave', () => {
+        isHovered = false;
+    });
+
+    // بدء الحركة
+    animate();
+}
+
+// تشغيل الدالة عند اكتمال تحميل الصفحة
+document.addEventListener('DOMContentLoaded', initNewsTicker);
