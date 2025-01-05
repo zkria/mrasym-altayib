@@ -423,3 +423,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+salla.onReady(() => {
+    // تسجيل المكون
+    salla.components.News_slider = {
+        onMount() {
+            // تهيئة المكون
+            new Swiper('.news-slider', {
+                // إعدادات Swiper
+            });
+        }
+    };
+});

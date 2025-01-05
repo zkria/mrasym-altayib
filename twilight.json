@@ -882,10 +882,10 @@
             ]
         },
         {
-            "name": "news-slider",
-            "title": "شريط الأخبار المتحرك",
+            "name": "News_slider",
+            "title": "شريط نصي متحرك",
             "icon": "sicon-newspaper",
-            "path": "home.news-slider",
+            "path": "home.News_slider",
             "fields": [
                 {
                     "id": "news_items",
@@ -933,6 +933,9 @@
     "assets": {
         "styles": [
             "News.scss"
+        ],
+        "scripts": [
+            "app.js"
         ]
     }
 }
