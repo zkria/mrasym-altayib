@@ -930,6 +930,57 @@
                     "maxLength": 255
                 }
             ]
+        },
+        {
+            "name": "pro-news",
+            "title": "شريط الأخبار المتطور",
+            "icon": "sicon-newspaper",
+            "path": "components.home.News",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "عنوان الشريط",
+                    "placeholder": "مثال: آخر الأخبار"
+                },
+                {
+                    "id": "style",
+                    "type": "select",
+                    "label": "نمط العرض",
+                    "options": [
+                        {"label": "أفقي", "value": "horizontal"},
+                        {"label": "عمودي", "value": "vertical"},
+                        {"label": "تلاشي", "value": "fade"}
+                    ],
+                    "default": "horizontal"
+                },
+                {
+                    "id": "news_items",
+                    "type": "collection",
+                    "label": "الأخبار",
+                    "required": true,
+                    "fields": [
+                        {
+                            "id": "text",
+                            "type": "string",
+                            "label": "نص الخبر",
+                            "required": true
+                        },
+                        {
+                            "id": "link",
+                            "type": "string",
+                            "format": "url",
+                            "label": "رابط الخبر"
+                        },
+                        {
+                            "id": "icon",
+                            "type": "string",
+                            "label": "أيقونة",
+                            "placeholder": "مثال: sicon-star"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "support_url": "",
