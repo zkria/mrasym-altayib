@@ -886,7 +886,6 @@
             "title": "شريط الأخبار المتحرك",
             "icon": "sicon-fresh-arrival",
             "path": "home.News",
-            "image": "https://cdn.salla.network/images/themes/news-ticker.png",
             "fields": [
                 {
                     "type": "string",
@@ -951,7 +950,8 @@
                                     "key": "custom",
                                     "value": "custom"
                                 }
-                            ]
+                            ],
+                            "value": []
                         }
                     ]
                 },
@@ -975,6 +975,33 @@
                     "format": "switch",
                     "value": true,
                     "selected": true,
+                    "required": false
+                },
+                {
+                    "id": "alns_alaaalane",
+                    "type": "string",
+                    "format": "richtext",
+                    "label": "النص الاعلاني",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Your text here ..",
+                    "icon": "sicon-touch-type",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 60,
+                    "maxLength": 1000
+                },
+                {
+                    "id": "lon__alkht",
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "label": "لون  الخط",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-format-fill",
+                    "value": "#004956",
                     "required": false
                 },
                 {
