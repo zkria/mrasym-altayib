@@ -886,7 +886,50 @@
             "title": "شريط  اخباري",
             "icon": "sicon-fresh-arrival",
             "path": "home.News",
-            "fields": []
+            "fields": [
+                {
+                    "id": "units",
+                    "type": "number",
+                    "format": "units",
+                    "label": "Units",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Insert value",
+                    "icon": "sicon-percentage",
+                    "value": null,
+                    "required": false,
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                {
+                    "id": "color",
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "label": "Color",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-format-fill",
+                    "value": "#004956",
+                    "required": false
+                },
+                {
+                    "id": "text_area",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "Text Area",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Your text here",
+                    "icon": "sicon-typography",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 20,
+                    "maxLength": 255
+                }
+            ]
         }
     ],
     "support_url": "",
