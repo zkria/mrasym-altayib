@@ -1,168 +1,26 @@
 {# @deprecated file, will be deleted soon #}
-{% if (comments|length or user.can_comment) and show_comments %}
-    <section class="comments-section py-8 sm:py-12">
-        <div class="container {{ type == 'page' ? 'px-0' : '' }}">
-            {# رأس قسم التعليقات #}
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-xl font-bold">
-                    {{ trans('blocks.comments.title') }}
-                    {% if comments|length %}
-                        <span class="text-sm text-gray-500 font-normal">
-                            ({{ comments.total|number }})
-                        </span>
-                    {% endif %}
-                </h2>
+{% if (comments|length or user.can_comment) and show_comments  %}
+<div class="s-comments s-comments-{{ type }}">
+    <div class="container {{ type == 'page' ? 'px-0':'' }}">
+        <h2 class="mb-2 sm:mb-5 text-lg font-bold text-dark">{{ trans('blocks.comments.title') }}</h2>
+        
+        {% if user.can_comment %}
+        <salla-comment-form type="{{ type }}" item-id="{{ id }}"></salla-comment-form>
+        {% endif %} 
 
-                {# فرز التعليقات #}
-                {% if comments|length > 1 %}
-                    <div class="relative">
-                        <select class="form-select text-sm" id="comments-sort">
-                            <option value="newest">{{ trans('common.sort.newest') }}</option>
-                            <option value="oldest">{{ trans('common.sort.oldest') }}</option>
-                            <option value="rated">{{ trans('common.sort.most_rated') }}</option>
-                        </select>
-                    </div>
-                {% endif %}
+        {% if comments|length %}
+            <h2 class="text-lg font-bold text-gray-500 mb-8"> {{ pluralize('blocks.comments.comment', comments.total|number)|raw }}</h2>
+            <salla-infinite-scroll next-page="{{ comments.next_page }}">
+                {% for comment in comments %}
+                    {% include 'pages.partials.single-comment' %}
+                {% endfor %}
+            </salla-infinite-scroll>
+        {% else %}
+            <div class="no-content-placeholder--comments">
+                <i class="sicon-chat-bubbles text-5xl block mb-5 text-gray-400"></i>
+                <p class="text-sm">{{ trans('blocks.comments.no_comments') }}</p>
             </div>
-
-            {# نموذج إضافة تعليق #}
-            {% if user.can_comment %}
-                <div class="mb-8">
-                    <salla-comment-form 
-                        type="{{ type }}" 
-                        item-id="{{ id }}"
-                        class="bg-white rounded-lg shadow-sm p-6"
-                        avatar="{{ user.avatar }}"
-                        placeholder="{{ trans('blocks.comments.write_comment') }}"
-                    >
-                        {# إضافة زر التقييم إذا كان متاحاً #}
-                        {% if type == 'product' %}
-                            <div class="rating-wrapper mb-4" slot="before-textarea">
-                                <label class="text-sm text-gray-500 mb-2 block">
-                                    {{ trans('blocks.comments.rate_product') }}
-                                </label>
-                                <salla-rating></salla-rating>
-                            </div>
-                        {% endif %}
-                    </salla-comment-form>
-                </div>
-            {% endif %}
-
-            {# قائمة التعليقات #}
-            {% if comments|length %}
-                <div class="comments-list space-y-4">
-                    <salla-infinite-scroll 
-                        next-page="{{ comments.next_page }}"
-                        loading-template="comments"
-                        class="space-y-4">
-                        {% for comment in comments %}
-                            <article class="comment-item bg-white rounded-lg shadow-sm p-6 animate-fade-in"
-                                    id="comment-{{ comment.id }}">
-                                {# رأس التعليق #}
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <img src="{{ comment.author.avatar }}"
-                                             alt="{{ comment.author.name }}"
-                                             class="w-10 h-10 rounded-full object-cover"
-                                        />
-                                        <div>
-                                            <h3 class="font-bold">{{ comment.author.name }}</h3>
-                                            <time class="text-sm text-gray-500">
-                                                {{ comment.created_at|date }}
-                                            </time>
-                                        </div>
-                                    </div>
-
-                                    {# التقييم إذا كان موجوداً #}
-                                    {% if comment.rating %}
-                                        <div class="rating text-primary">
-                                            {% for i in 1..5 %}
-                                                <i class="sicon-star{{ i <= comment.rating ? '-fill' : '' }}"></i>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-
-                                {# نص التعليق #}
-                                <p class="text-gray-600 mb-4">{{ comment.content }}</p>
-
-                                {# أزرار التفاعل #}
-                                <div class="flex items-center gap-4 text-sm">
-                                    <button onclick="likeComment({{ comment.id }})"
-                                            class="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors">
-                                        <i class="sicon-heart{{ comment.is_liked ? '-fill text-primary' : '' }}"></i>
-                                        <span>{{ comment.likes_count|number }}</span>
-                                    </button>
-
-                                    <button onclick="replyToComment({{ comment.id }})"
-                                            class="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors">
-                                        <i class="sicon-reply"></i>
-                                        {{ trans('common.reply') }}
-                                    </button>
-                                </div>
-
-                                {# الردود #}
-                                {% if comment.replies|length %}
-                                    <div class="replies-list mt-4 rtl:pr-12 ltr:pl-12 space-y-4">
-                                        {% for reply in comment.replies %}
-                                            {% include 'components.comment-reply' with {reply: reply} %}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </article>
-                        {% endfor %}
-                    </salla-infinite-scroll>
-                </div>
-            {% else %}
-                {# رسالة عند عدم وجود تعليقات #}
-                <div class="text-center py-12 bg-gray-50 rounded-lg">
-                    <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                        <i class="sicon-chat-bubbles text-3xl text-gray-400"></i>
-                    </span>
-                    <p class="text-gray-500">{{ trans('blocks.comments.no_comments') }}</p>
-                </div>
-            {% endif %}
-        </div>
-    </section>
+        {% endif %}
+    </div>
+</div>
 {% endif %}
-
-{% block scripts %}
-<script>
-const comments = {
-    init() {
-        this.initializeSorting();
-    },
-
-    initializeSorting() {
-        const select = document.getElementById('comments-sort');
-        if (!select) return;
-
-        select.addEventListener('change', (e) => {
-            const component = document.querySelector('salla-infinite-scroll');
-            if (component) {
-                component.setAttribute('sort', e.target.value);
-            }
-        });
-    },
-
-    async likeComment(id) {
-        try {
-            const response = await salla.comment.like(id);
-            // تحديث واجهة المستخدم
-        } catch (error) {
-            salla.notify.error(error.message);
-        }
-    },
-
-    replyToComment(id) {
-        const comment = document.getElementById(`comment-${id}`);
-        if (!comment) return;
-
-        // التمرير إلى نموذج الرد
-        comment.scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-document.addEventListener('DOMContentLoaded', () => comments.init());
-</script>
-{% endblock %}
