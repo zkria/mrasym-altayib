@@ -9,57 +9,29 @@
 #}
 
 <section class="pro-news-ticker s-block" 
-         data-style="{{ component.style|default('horizontal') }}"
          data-speed="{{ component.speed|default(3) }}"
          data-autoplay="{{ component.auto_play|default(true) }}">
-    
-    {% if component.title %}
-        <div class="ticker-label">
-            <span class="label-text">{{ component.title }}</span>
-            <span class="label-arrow"></span>
-        </div>
-    {% endif %}
-
     <div class="ticker-wrapper">
-        <div class="swiper">
-            <div class="swiper-wrapper">
+        <div class="news-marquee">
+            <div class="news-track">
                 {% for item in component.news_items %}
-                    <div class="swiper-slide news-item">
+                    <div class="news-item">
                         <div class="news-content">
-                            {% if component.show_time %}
-                                <span class="news-time">
-                                    {{ item.time|default('now'|date('H:i')) }}
-                                </span>
-                            {% endif %}
-                            
-                            {% if item.icon %}
-                                <i class="news-icon {{ item.icon }}"></i>
-                            {% endif %}
-
-                            {% if item.link %}
-                                <a href="{{ item.link }}" class="news-link">
-                                    <span class="news-text">{{ item.text }}</span>
-                                </a>
-                            {% else %}
-                                <span class="news-text">{{ item.text }}</span>
-                            {% endif %}
+                            <span class="news-text">{{ item.text }}</span>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-        </div>
-
-        <div class="ticker-controls">
-            <button type="button" class="control-btn control-prev">
-                <i class="sicon-chevron-right"></i>
-            </button>
-            <button type="button" class="control-btn control-play">
-                <i class="sicon-play"></i>
-                <i class="sicon-pause"></i>
-            </button>
-            <button type="button" class="control-btn control-next">
-                <i class="sicon-chevron-left"></i>
-            </button>
+            {# تكرار الأخبار للحركة المستمرة #}
+            <div class="news-track" aria-hidden="true">
+                {% for item in component.news_items %}
+                    <div class="news-item">
+                        <div class="news-content">
+                            <span class="news-text">{{ item.text }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>

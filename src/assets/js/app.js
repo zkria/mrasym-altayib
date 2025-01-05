@@ -410,68 +410,22 @@ salla.onReady(() => {
             const ticker = this.querySelector('.pro-news-ticker');
             if (!ticker) return;
             
-            const swiperElement = ticker.querySelector('.swiper');
-            const style = ticker.dataset.style;
+            const track = ticker.querySelector('.news-track');
             const speed = parseInt(ticker.dataset.speed || 3);
-            const autoplay = ticker.dataset.autoplay !== 'false';
             
-            // تهيئة Swiper
-            const swiper = new Swiper(swiperElement, {
-                direction: style === 'vertical' ? 'vertical' : 'horizontal',
-                loop: true,
-                allowTouchMove: true,
-                autoHeight: false,
-                
-                // التشغيل التلقائي
-                autoplay: autoplay ? {
-                    delay: speed * 1000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true
-                } : false,
-                
-                // أزرار التنقل
-                navigation: {
-                    nextEl: ticker.querySelector('.control-next'),
-                    prevEl: ticker.querySelector('.control-prev')
-                },
-                
-                // تأثيرات الانتقال
-                effect: style === 'fade' ? 'fade' : 'slide',
-                fadeEffect: {
-                    crossFade: true
-                },
-                speed: 800,
-                
-                // تحسينات الأداء
-                observer: true,
-                observeParents: true,
-                preloadImages: false,
-                lazy: true
+            // تحديث سرعة الحركة
+            if (track) {
+                track.style.setProperty('--animation-duration', `${speed * 10}s`);
+            }
+
+            // إيقاف الحركة عند تحويم الماوس
+            ticker.addEventListener('mouseenter', () => {
+                track.style.animationPlayState = 'paused';
             });
-            
-            // زر التشغيل/الإيقاف
-            const playBtn = ticker.querySelector('.control-play');
-            if (playBtn) {
-                playBtn.addEventListener('click', () => {
-                    if (playBtn.classList.contains('is-paused')) {
-                        swiper.autoplay.start();
-                        playBtn.classList.remove('is-paused');
-                    } else {
-                        swiper.autoplay.stop();
-                        playBtn.classList.add('is-paused');
-                    }
-                });
-            }
-            
-            // تخزين مرجع Swiper
-            ticker.swiper = swiper;
-        },
-        
-        onUnmount() {
-            const ticker = this.querySelector('.pro-news-ticker');
-            if (ticker && ticker.swiper) {
-                ticker.swiper.destroy();
-            }
+
+            ticker.addEventListener('mouseleave', () => {
+                track.style.animationPlayState = 'running';
+            });
         }
     };
 });

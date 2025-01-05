@@ -5,125 +5,67 @@
 */
 
 .pro-news-ticker {
-    --ticker-height: 50px;
-    --ticker-bg: var(--color-main);
-    --ticker-text: var(--color-text);
-    --ticker-primary: var(--color-primary);
+    --ticker-height: 40px;
+    --ticker-bg: #FFF1F3;
+    --ticker-text: #E4526E;
+    --ticker-primary: #E4526E;
+    --animation-duration: 30s;
     
-    @apply flex items-stretch;
+    @apply flex items-stretch w-full;
     background: var(--ticker-bg);
     height: var(--ticker-height);
     direction: rtl;
     overflow: hidden;
+    border: 1px solid var(--ticker-primary);
     
-    // عنوان الشريط
-    .ticker-label {
-        @apply flex items-center font-bold relative;
-        background: var(--ticker-primary);
-        padding: 0 15px;
-        color: #fff;
-        min-width: 120px;
-        
-        .label-arrow {
-            @apply absolute;
-            left: -10px;
-            border: 10px solid transparent;
-            border-right-color: var(--ticker-primary);
-        }
-    }
-    
-    // منطقة الأخبار
     .ticker-wrapper {
         @apply flex-1 relative overflow-hidden;
-        padding: 0 40px;
-        
-        .swiper {
-            height: 100%;
+        padding: 0 15px;
+    }
+
+    .news-marquee {
+        @apply flex whitespace-nowrap;
+        will-change: transform;
+    }
+
+    .news-track {
+        @apply flex min-w-full;
+        animation: news-scroll var(--animation-duration) linear infinite;
+
+        &:hover {
+            animation-play-state: paused;
         }
     }
     
-    // عنصر الخبر
     .news-item {
+        @apply flex-shrink-0;
+        padding: 0 20px;
         height: var(--ticker-height);
         
         .news-content {
-            @apply flex items-center h-full gap-2.5;
-        }
-        
-        .news-time {
-            @apply text-sm font-medium;
-            color: var(--ticker-primary);
-        }
-        
-        .news-icon {
-            @apply text-base;
-            color: var(--ticker-primary);
-        }
-        
-        .news-link {
-            @apply no-underline;
-            color: inherit;
+            @apply flex items-center h-full gap-2;
             
-            &:hover .news-text {
-                color: var(--ticker-primary);
+            &::before {
+                content: "";
+                @apply w-1.5 h-1.5 rounded-full;
+                background-color: var(--ticker-primary);
             }
         }
         
         .news-text {
-            @apply text-sm transition-colors;
+            @apply text-sm transition-colors font-medium;
             color: var(--ticker-text);
         }
     }
-    
-    // أزرار التحكم
-    .ticker-controls {
-        @apply absolute left-0 top-0 h-full flex items-center gap-1.5;
-        padding: 0 5px;
-        background: linear-gradient(to left, transparent, var(--ticker-bg) 20%);
-        
-        .control-btn {
-            @apply w-6 h-6 rounded-full cursor-pointer transition-all;
-            border: none;
-            background: rgba(255,255,255,0.1);
-            color: var(--ticker-text);
-            
-            &:hover {
-                background: rgba(255,255,255,0.2);
-            }
-            
-            &.control-play {
-                .sicon-pause { @apply hidden; }
-                
-                &.is-paused {
-                    .sicon-play { @apply hidden; }
-                    .sicon-pause { @apply block; }
-                }
-            }
-        }
-    }
-    
-    // أنماط العرض المختلفة
-    &[data-style="vertical"] {
-        .swiper { direction: ltr; }
-        .swiper-wrapper { flex-direction: column; }
-    }
-    
-    &[data-style="fade"] {
-        .swiper-slide { 
-            @apply opacity-0 transition-opacity;
-            &-active { @apply opacity-100; }
-        }
-    }
-}
 
-// التجاوب مع الشاشات
-@screen md-down {
-    .pro-news-ticker {
-        --ticker-height: 60px;
-        
-        .ticker-label {
-            @apply hidden;
-        }
+    @keyframes news-scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    }
+
+    @media (max-width: 768px) {
+        --ticker-height: 35px;
+        --animation-duration: 20s;
         
         .news-text {
             @apply text-xs;
