@@ -9,33 +9,20 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
-    <div class="container px-4 py-8">
-        {# شريط التنقل #}
-        <nav class="breadcrumbs mb-8">
+    <div class="container">
+
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
+        <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
 
-        {# المحتوى الرئيسي #}
-        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm">
-            {# رأس الصفحة #}
-            <header class="p-6 border-b border-gray-100">
-                <h1 class="text-2xl font-bold text-gray-900">{{ page.title }}</h1>
-            </header>
-
-            {# محتوى الصفحة #}
-            <div class="p-6 prose prose-lg max-w-none">
-                {{ page.content|raw }}
-            </div>
-
-            {# التعليقات #}
-            <div class="border-t border-gray-100">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-4">التعليقات</h2>
-                    <salla-comments 
-                        item-id="{{page.id}}" 
-                        type="page">
-                    </salla-comments>
+        <div class="flex justify-center">
+            <div class="content content--single-page w-full lg:w-10/12 bg-white rounded p-6 lg:p-8 mt-4 lg:mt-12">
+                <h1 class="font-bold text-2xl mb-6">{{ page.title }}</h1>
+                <div class="content-entry">
+                    {{ page.content|raw }}
                 </div>
+                <salla-comments item-id="{{page.id}}" type="page"></salla-comments>
             </div>
         </div>
     </div>

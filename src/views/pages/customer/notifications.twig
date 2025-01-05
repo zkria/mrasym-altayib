@@ -14,10 +14,171 @@
 | notifications[].date      | string                    |             |
 #}
 {% extends "layouts.customer" %}
+
 {% block inner_content %}
-	{% hook 'customer:notifications.items.start' %}
+    <div class="notifications-container">
+        {# رأس الصفحة #}
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-2xl font-bold">{{ page.title }}</h1>
+                <p class="text-gray-500 mt-2">
+                    {{ trans('pages.notifications.description') }}
+                </p>
+            </div>
 
-	<salla-notifications></salla-notifications>
+            {# أزرار التحكم #}
+            <div class="flex items-center gap-4">
+                {# تحديد الكل كمقروء #}
+                {% if notifications.count > 0 %}
+                    <salla-button 
+                        fill="outline"
+                        color="primary"
+                        id="mark-all-read">
+                        <i class="sicon-check-circle mx-2"></i>
+                        {{ trans('pages.notifications.mark_all_read') }}
+                    </salla-button>
+                {% endif %}
 
-	{% hook 'customer:notifications.items.end' %}
+                {# فلتر الإشعارات #}
+                <select class="form-select text-sm" id="notifications-filter">
+                    <option value="all">{{ trans('common.all') }}</option>
+                    <option value="unread">{{ trans('pages.notifications.unread') }}</option>
+                    <option value="orders">{{ trans('pages.notifications.orders') }}</option>
+                    <option value="offers">{{ trans('pages.notifications.offers') }}</option>
+                </select>
+            </div>
+        </div>
+
+        {% hook 'customer:notifications.items.start' %}
+
+        {# قائمة الإشعارات #}
+        <div class="notifications-list space-y-4">
+            <salla-notifications 
+                infinite-scroll="true"
+                items-per-page="10"
+                filter="{{ app.request.get('filter', 'all') }}"
+                class="notifications-component">
+            </salla-notifications>
+
+            {# رسالة عند عدم وجود إشعارات #}
+            <div id="empty-notifications" class="hidden text-center py-16">
+                <img src="{{ 'images/empty-notifications.svg'|asset }}" 
+                     class="mx-auto w-40 mb-6" 
+                     alt="{{ trans('pages.notifications.empty') }}">
+                <h3 class="text-xl font-bold mb-2">
+                    {{ trans('pages.notifications.empty') }}
+                </h3>
+                <p class="text-gray-500">
+                    {{ trans('pages.notifications.empty_message') }}
+                </p>
+            </div>
+        </div>
+
+        {% hook 'customer:notifications.items.end' %}
+    </div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .notification-item {
+        @apply bg-white rounded-lg shadow-sm p-4 transition-all duration-300;
+    }
+
+    .notification-item.unread {
+        @apply bg-primary/5 border-r-4 border-primary;
+    }
+
+    .notification-item:hover {
+        @apply transform -translate-y-1 shadow-md;
+    }
+
+    .notification-date {
+        @apply text-xs text-gray-500;
+    }
+
+    .notification-title {
+        @apply font-bold mb-1;
+    }
+
+    .notification-subtitle {
+        @apply text-sm text-gray-600;
+    }
+
+    /* تحريك الإشعارات */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .notification-item {
+        animation: slideIn 0.3s ease-out;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const notifications = {
+        init() {
+            this.bindEvents();
+            this.checkEmpty();
+        },
+
+        bindEvents() {
+            // فلترة الإشعارات
+            const filter = document.getElementById('notifications-filter');
+            if (filter) {
+                filter.addEventListener('change', (e) => {
+                    const component = document.querySelector('salla-notifications');
+                    if (component) {
+                        component.setAttribute('filter', e.target.value);
+                    }
+                });
+            }
+
+            // تحديد الكل كمقروء
+            const markAllBtn = document.getElementById('mark-all-read');
+            if (markAllBtn) {
+                markAllBtn.addEventListener('click', () => this.markAllAsRead());
+            }
+
+            // مراقبة تحديثات الإشعارات
+            window.addEventListener('notifications::updated', () => this.checkEmpty());
+        },
+
+        async markAllAsRead() {
+            try {
+                await salla.notifications.markAllAsRead();
+                salla.notify.success('{{ trans("pages.notifications.marked_as_read") }}');
+                
+                // تحديث واجهة المستخدم
+                document.querySelectorAll('.notification-item.unread')
+                    .forEach(item => item.classList.remove('unread'));
+            } catch (error) {
+                salla.notify.error(error.message);
+            }
+        },
+
+        checkEmpty() {
+            const hasNotifications = document.querySelector('salla-notifications')
+                ?.querySelectorAll('.notification-item').length > 0;
+            
+            document.getElementById('empty-notifications')
+                ?.classList.toggle('hidden', hasNotifications);
+            
+            document.getElementById('notifications-filter')
+                ?.parentElement.classList.toggle('hidden', !hasNotifications);
+        }
+    };
+
+    notifications.init();
+});
+</script>
 {% endblock %}

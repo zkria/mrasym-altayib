@@ -18,81 +18,199 @@
 | article.tags[].url      | string         |             |
 #}
 {% extends "layouts.master" %}
+
 {% block content %}
-    <div class="container mb-8 sm:mb-24">
-        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
-        <nav class="breadcrumbs w-full py-5 center-between">
+    <div class="article-container container mb-8 sm:mb-24">
+        {# التنقل #}
+        <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
-        <div class="md:flex items-start">
-            <div class="main-content blog-category md:w-96 flex-1 bg-white p-8 rounded-md mb-10 md:mb-0">
-                <h1 class="font-bold text-3xl mb-5 leading-10">{{ article.title }}</h1>
-                <div class="mb-10 text-gray-500 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
-                    <div class=" flex items-center">
-                        <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1"></i>
-                        <span class="">{{ article.created_at|date }}</span>
-                    </div>
-                    <a href="{{ article.author.url }}" class=" flex items-center hover:text-dark">
-                        <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
-                        <span class="">{{ article.author.name }}</span>
-                    </a>
-                </div>
-                {% if article.has_image %}
-                    <img src="{{ article.image.url }}" alt="{{ article.image.alt }}" title="{{ article.image.alt }}"
-                         class="h-80 mb-10 w-full object-cover rounded-md"/>
-                {% endif %}
-                <article class="leading-7 text-sm mb-10">{{ article.body|raw }}</article>
-                {% if article.tags|length %}
-                    <div class="p-4 flex flex-wrap items-center border-t border-gray-200">
-                        {% for tag in article.tags %}
-                            <a href="{{ tag.url }}"
-                               class="py-2 px-4 rounded-large inline-flex items-center text-gray-500 hover:text-dark justify-center text-sm">
-                                <i class="font-medium sicon-tag rtl:ml-1.5 ltr:mr-1.5"></i>
-                                <span class="fix-align whitespace-nowrap">{{ tag.name }}</span>
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
 
-            <aside aria-label="Sidebar" class="sticky shrink-0 top-24 md:w-96 rtl:lg:mr-8 ltr:lg:ml-8 pb-11">
-                {% if related|length %}
-                    <h2 class="font-bold mb-3">{{ trans('pages.blog_articles.related') }}</h2>
+        <div class="md:grid md:grid-cols-3 gap-8">
+            {# المحتوى الرئيسي #}
+            <div class="col-span-2">
+                <article class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    {# صورة المقال #}
+                    {% if article.has_image %}
+                        <div class="relative h-[400px]">
+                            <img src="{{ article.image.url }}" 
+                                 alt="{{ article.image.alt }}"
+                                 class="w-full h-full object-cover"
+                            />
+                            {# معلومات المقال على الصورة #}
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                                <div class="p-8 text-white">
+                                    <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
+                                    
+                                    <div class="flex items-center gap-6 text-white/80">
+                                        {# التاريخ #}
+                                        <div class="flex items-center gap-2">
+                                            <i class="sicon-calendar-date"></i>
+                                            <time datetime="{{ article.created_at }}">
+                                                {{ article.created_at|date }}
+                                            </time>
+                                        </div>
 
-                    {% hook 'blog:single.items.start' %}
-
-                    {% for article in related %}
-                        <div class="mt-5 flex items-center bg-white p-5 rounded-md">
-                            <div class="shrink-0">
-                                <a href="{{ article.url }}"
-                                   class="bg-border-color h-24 w-24 rounded-md overflow-hidden flex items-center justify-center">
-                                    <span class="sr-only">{{ article.name }}</span>
-
-                                    {% if article.has_image %}
-                                        <img class="h-full w-full object-cover" src="{{ article.image.url }}"
-                                             alt="{{ article.image.alt }}">
-                                    {% else %}
-                                        <img class="sm:h-full w-10 object-contain opacity-60"
-                                             src="{{ 'images/placeholder.png' | asset }}" alt="post image"/>
-                                    {% endif %}
-                                </a>
-                            </div>
-                            <div class="rtl:mr-3 ltr:ml-3">
-                                <div class="flex items-center text-sm text-gray-500 mb-2">
-                                    <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1 rtl:pl-px ltr:pr-px"></i>
-                                    <time>{{ article.created_at|date }}</time>
+                                        {# الكاتب #}
+                                        <a href="{{ article.author.url }}" 
+                                           class="flex items-center gap-2 hover:text-white">
+                                            <i class="sicon-user"></i>
+                                            <span>{{ article.author.name }}</span>
+                                        </a>
+                                    </div>
                                 </div>
-
-                                <h3 class="text-sm font-bold text-gray-800 leading-6">
-                                    <a href="{{ article.url }}" class="hover:underline">{{ article.title }}</a>
-                                </h3>
                             </div>
                         </div>
-                    {% endfor %}
+                    {% endif %}
 
-                    {% hook 'blog:single.items.end' %}
+                    {# محتوى المقال #}
+                    <div class="p-8">
+                        {% if not article.has_image %}
+                            <h1 class="text-3xl font-bold mb-6">{{ article.title }}</h1>
+                            
+                            <div class="flex items-center gap-6 text-gray-500 mb-8">
+                                <div class="flex items-center gap-2">
+                                    <i class="sicon-calendar-date"></i>
+                                    <time datetime="{{ article.created_at }}">
+                                        {{ article.created_at|date }}
+                                    </time>
+                                </div>
+                                <a href="{{ article.author.url }}" class="flex items-center gap-2 hover:text-primary">
+                                    <i class="sicon-user"></i>
+                                    <span>{{ article.author.name }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        {# نص المقال #}
+                        <div class="article-content prose max-w-none">
+                            {{ article.body|raw }}
+                        </div>
+
+                        {# الوسوم #}
+                        {% if article.tags|length %}
+                            <div class="flex flex-wrap gap-2 mt-8 pt-8 border-t">
+                                {% for tag in article.tags %}
+                                    <a href="{{ tag.url }}"
+                                       class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                        <i class="sicon-tag"></i>
+                                        <span>{{ tag.name }}</span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {# أزرار المشاركة #}
+                        <div class="share-buttons flex items-center gap-4 mt-8 pt-8 border-t">
+                            <span class="text-gray-500">{{ trans('common.share') }}:</span>
+                            <salla-button 
+                                fill="outline"
+                                color="gray"
+                                onclick="shareArticle('twitter')">
+                                <i class="sicon-twitter"></i>
+                            </salla-button>
+                            <salla-button 
+                                fill="outline"
+                                color="gray"
+                                onclick="shareArticle('facebook')">
+                                <i class="sicon-facebook"></i>
+                            </salla-button>
+                            <salla-button 
+                                fill="outline"
+                                color="gray"
+                                onclick="shareArticle('whatsapp')">
+                                <i class="sicon-whatsapp"></i>
+                            </salla-button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            {# الشريط الجانبي #}
+            <aside class="mt-8 md:mt-0">
+                {% if related|length %}
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h2 class="text-xl font-bold mb-6">
+                            {{ trans('pages.blog_articles.related') }}
+                        </h2>
+
+                        <div class="space-y-6">
+                            {% for article in related %}
+                                <a href="{{ article.url }}" 
+                                   class="related-article group block">
+                                    <div class="flex gap-4">
+                                        {# صورة المقال المرتبط #}
+                                        <div class="w-24 h-24 rounded-lg overflow-hidden bg-gray-100">
+                                            {% if article.has_image %}
+                                                <img src="{{ article.image.url }}"
+                                                     alt="{{ article.image.alt }}"
+                                                     class="w-full h-full object-cover transition-transform group-hover:scale-110"
+                                                />
+                                            {% else %}
+                                                <div class="w-full h-full flex items-center justify-center">
+                                                    <i class="sicon-image text-3xl text-gray-400"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div>
+                                            <time class="text-sm text-gray-500 mb-2 block">
+                                                {{ article.created_at|date }}
+                                            </time>
+                                            <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">
+                                                {{ article.title }}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endif %}
             </aside>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function shareArticle(platform) {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent('{{ article.title }}');
+    
+    const platforms = {
+        twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        whatsapp: `https://wa.me/?text=${title}%20${url}`
+    };
+    
+    window.open(platforms[platform], '_blank', 'width=600,height=400');
+}
+
+// تتبع وقت القراءة
+const readingTime = {
+    init() {
+        const content = document.querySelector('.article-content');
+        if (!content) return;
+
+        const words = content.textContent.trim().split(/\s+/).length;
+        const minutes = Math.ceil(words / 200); // متوسط سرعة القراءة
+
+        this.displayReadingTime(minutes);
+    },
+
+    displayReadingTime(minutes) {
+        const timeElement = document.createElement('div');
+        timeElement.className = 'text-sm text-gray-500 mb-4';
+        timeElement.innerHTML = `
+            <i class="sicon-clock"></i>
+            <span>${minutes} {{ trans('common.minutes_read') }}</span>
+        `;
+
+        document.querySelector('.article-content').insertAdjacentElement('beforebegin', timeElement);
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => readingTime.init());
+</script>
 {% endblock %}

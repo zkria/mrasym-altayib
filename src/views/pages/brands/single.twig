@@ -13,46 +13,121 @@
 | brand.description | string               |                                                           |
 #}
 {% extends "layouts.master" %}
+
 {% block content %}
-
-  {# Brand banner #} 
-  {% if brand.banner %} 
-        <div class="brand-page__banner">
-            <img loading="eager" width="1200" height="300" class="w-full max-h-[300px] object-cover rounded-md bg-gray-100" src="{{ brand.banner }}" alt="{{ brand.name }}"/>
-        </div>
-    {% endif %}
-
-    <div class="container">
-        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
-        <nav class="breadcrumbs w-full py-5">
-            <salla-breadcrumb></salla-breadcrumb>
-        </nav>
-        {% hook 'brands:single.details.start' %}
-   
-        {# brand header #}
-        <header class="flex flex-col md:flex-row items-center md:items-start text-center rtl:md:text-right ltr:md:text-left mt-2 mb-12 md:mb-20">
-            <img class="rounded-md w-40 h-24 object-contain shadow-md p-4 bg-white lazy shrink-0" data-src="{{ brand.logo }}" src="{{ 'images/s-empty.png' | cdn }}" alt="{{ brand.name }}">
-            <div class="px-5 pt-3 rtl:text-right">
-                <h1 class="text-2xl font-bold mb-1">{{ brand.name }}</h1>
-                <h2 class="text-base text-gray-500 font-medium">{{ brand.description|raw }}</h2>
+    <div class="brand-container">
+        {# صورة الغلاف #}
+        {% if brand.banner %}
+            <div class="relative h-[300px] mb-8">
+                <img src="{{ brand.banner }}"
+                     class="w-full h-full object-cover"
+                     loading="eager"
+                     alt="{{ brand.name }}"
+                />
+                {# طبقة التظليل #}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                
+                {# معلومات العلامة التجارية على الغلاف #}
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <div class="container">
+                        <div class="flex items-center gap-6">
+                            <img src="{{ brand.logo }}"
+                                 class="w-32 h-32 rounded-lg bg-white p-4 shadow-lg object-contain"
+                                 alt="{{ brand.name }}"
+                            />
+                            <div>
+                                <h1 class="text-3xl font-bold mb-2">{{ brand.name }}</h1>
+                                <p class="text-white/80">{{ brand.description|raw }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </header>
+        {% endif %}
 
-        {% hook 'brands:single.details.end' %}
+        <div class="container">
+            {# التنقل #}
+            <nav class="breadcrumbs w-full py-5">
+                <salla-breadcrumb></salla-breadcrumb>
+            </nav>
 
-        <div class="flex items-start flex-col md:flex-row">
-            <div class="main-content w-full">
+            {% hook 'brands:single.details.start' %}
+
+            {# رأس الصفحة - يظهر فقط إذا لم يكن هناك غلاف #}
+            {% if not brand.banner %}
+                <header class="brand-header bg-white rounded-lg shadow-sm p-6 mb-8">
+                    <div class="flex items-center gap-6">
+                        <img src="{{ brand.logo }}"
+                             class="w-32 h-32 rounded-lg bg-white p-4 shadow-sm object-contain"
+                             alt="{{ brand.name }}"
+                        />
+                        <div>
+                            <h1 class="text-2xl font-bold mb-2">{{ brand.name }}</h1>
+                            <p class="text-gray-500">{{ brand.description|raw }}</p>
+                        </div>
+                    </div>
+                </header>
+            {% endif %}
+
+            {% hook 'brands:single.details.end' %}
+
+            {# قسم المنتجات #}
+            <div class="products-section">
+                {# شريط التصفية #}
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-bold">
+                        {{ trans('pages.brands.products') }}
+                        {% if products_count %}
+                            <span class="text-sm text-gray-500">({{ products_count }})</span>
+                        {% endif %}
+                    </h2>
+
+                    <div class="flex items-center gap-4">
+                        {# الترتيب #}
+                        <select class="form-select text-sm" id="products-sort">
+                            <option value="latest">{{ trans('common.latest') }}</option>
+                            <option value="price-asc">{{ trans('common.price_low_to_high') }}</option>
+                            <option value="price-desc">{{ trans('common.price_high_to_low') }}</option>
+                            <option value="name-asc">{{ trans('common.alphabetical') }}</option>
+                        </select>
+
+                        {# عرض الشبكة/القائمة #}
+                        <div class="view-switcher flex items-center gap-2">
+                            <button class="view-btn active" data-view="grid">
+                                <i class="sicon-grid"></i>
+                            </button>
+                            <button class="view-btn" data-view="list">
+                                <i class="sicon-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {# قائمة المنتجات #}
                 {% if products|length %}
                     {% hook 'brands:single.items.start' %}
-                        <salla-products-list source="{{page.slug}}" source-value="{{page.id}}"></salla-products-list>
+                    <div class="products-wrapper" id="products-wrapper">
+                        <salla-products-list 
+                            source="{{page.slug}}"
+                            source-value="{{page.id}}"
+                            limit="12"
+                            infinite-scroll="true"
+                            sort-by="latest"
+                            class="products-grid">
+                        </salla-products-list>
+                    </div>
                     {% hook 'brands:single.items.end' %}
                 {% else %}
-                    <div class="no-content-placeholder">
-                            <span class="rounded-icon !w-36 !h-36 bg-gray-100 mb-6">
-                                <i class="sicon-award-ribbon text-6xl block text-gray-400"></i>
-                            </span>
-                        <p class="text-sm mb-5 text-center">
-                            <span>{{ trans('pages.brands.non_products') }}</span>
+                    {# رسالة عند عدم وجود منتجات #}
+                    <div class="empty-products text-center py-16">
+                        <span class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
+                            <i class="sicon-award-ribbon text-4xl text-gray-400"></i>
+                        </span>
+                        <h3 class="text-xl font-bold mb-2">
+                            {{ trans('pages.brands.no_products_title') }}
+                        </h3>
+                        <p class="text-gray-500">
+                            {{ trans('pages.brands.non_products') }}
                             {{ brand.name }}
                         </p>
                     </div>
@@ -60,4 +135,84 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .view-btn {
+        @apply p-2 rounded-md text-gray-500 hover:bg-gray-100 transition-colors;
+    }
+
+    .view-btn.active {
+        @apply bg-primary text-white hover:bg-primary/90;
+    }
+
+    .products-grid {
+        @apply grid gap-4;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .products-list .product-entry {
+        @apply flex items-start gap-4 bg-white rounded-lg p-4 shadow-sm;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .product-entry {
+        animation: fadeIn 0.3s ease-out;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const brandPage = {
+    init() {
+        this.bindEvents();
+        this.initializeViewSwitcher();
+    },
+
+    bindEvents() {
+        // ترتيب المنتجات
+        const sortSelect = document.getElementById('products-sort');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', (e) => {
+                const component = document.querySelector('salla-products-list');
+                if (component) {
+                    component.setAttribute('sort-by', e.target.value);
+                }
+            });
+        }
+    },
+
+    initializeViewSwitcher() {
+        const wrapper = document.getElementById('products-wrapper');
+        const buttons = document.querySelectorAll('.view-btn');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const view = btn.dataset.view;
+                
+                // تحديث الأزرار
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // تحديث العرض
+                wrapper.className = `products-wrapper products-${view}`;
+            });
+        });
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => brandPage.init());
+</script>
 {% endblock %}

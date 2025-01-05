@@ -7,15 +7,180 @@
 | orders[]          | Orders[] *Collection |             |
 #}
 {% extends "layouts.customer" %}
+
 {% block inner_content %}
-    {% if orders|length %}
-        {% hook 'customer:orders.index.items.start' %}
-          <salla-orders></salla-orders>
-        {% hook 'customer:orders.index.items.end' %}
-    {% else %}
-        <div class="no-content-placeholder">
-            <i class="sicon-packed-box icon"></i>
-            <p>{{ trans('pages.orders.non_orders') }}</p>
+    <div class="orders-container">
+        {# رأس الصفحة #}
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold mb-2">{{ page.title }}</h1>
+                    <p class="text-gray-500">{{ trans('pages.orders.description') }}</p>
+                </div>
+
+                {# فلتر الطلبات #}
+                <div class="flex items-center gap-4">
+                    <select class="form-select text-sm" id="orders-filter">
+                        <option value="all">{{ trans('common.all') }}</option>
+                        <option value="pending">{{ trans('pages.orders.pending') }}</option>
+                        <option value="processing">{{ trans('pages.orders.processing') }}</option>
+                        <option value="completed">{{ trans('pages.orders.completed') }}</option>
+                        <option value="canceled">{{ trans('pages.orders.canceled') }}</option>
+                    </select>
+                </div>
+            </div>
         </div>
-    {% endif %}
+
+        {% if orders|length %}
+            {% hook 'customer:orders.index.items.start' %}
+            
+            {# قائمة الطلبات #}
+            <div class="orders-list space-y-4">
+                <salla-orders 
+                    infinite-scroll="true"
+                    filter="{{ app.request.get('status', 'all') }}"
+                    items-per-page="10">
+                </salla-orders>
+            </div>
+
+            {% hook 'customer:orders.index.items.end' %}
+        {% else %}
+            {# رسالة عند عدم وجود طلبات #}
+            <div class="empty-orders text-center py-16">
+                <div class="mb-6">
+                    <i class="sicon-packed-box text-6xl text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                    {{ trans('pages.orders.no_orders_title') }}
+                </h3>
+                <p class="text-gray-500 mb-6">
+                    {{ trans('pages.orders.no_orders_message') }}
+                </p>
+                <salla-button href="{{ link('/') }}">
+                    {{ trans('pages.orders.start_shopping') }}
+                </salla-button>
+            </div>
+        {% endif %}
+
+        {# شريط الإحصائيات #}
+        {% if orders|length %}
+            <div class="orders-stats fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t p-4 transform transition-transform duration-300"
+                 id="orders-stats">
+                <div class="container">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="stat-item text-center">
+                            <div class="text-2xl font-bold text-primary">
+                                {{ orders_count.total|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('pages.orders.total_orders') }}
+                            </div>
+                        </div>
+                        <div class="stat-item text-center">
+                            <div class="text-2xl font-bold text-yellow-500">
+                                {{ orders_count.pending|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('pages.orders.pending_orders') }}
+                            </div>
+                        </div>
+                        <div class="stat-item text-center">
+                            <div class="text-2xl font-bold text-green-500">
+                                {{ orders_count.completed|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('pages.orders.completed_orders') }}
+                            </div>
+                        </div>
+                        <div class="stat-item text-center">
+                            <div class="text-2xl font-bold text-red-500">
+                                {{ orders_count.canceled|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('pages.orders.canceled_orders') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .orders-container {
+        min-height: calc(100vh - 200px);
+        padding-bottom: 100px;
+    }
+
+    .stat-item {
+        @apply p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200;
+    }
+
+    .empty-orders {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const orders = {
+    init() {
+        this.bindEvents();
+        this.initializeStats();
+    },
+
+    bindEvents() {
+        // فلترة الطلبات
+        const filter = document.getElementById('orders-filter');
+        if (filter) {
+            filter.addEventListener('change', (e) => {
+                const component = document.querySelector('salla-orders');
+                if (component) {
+                    component.setAttribute('filter', e.target.value);
+                }
+            });
+        }
+
+        // مراقبة التمرير لإظهار/إخفاء شريط الإحصائيات
+        window.addEventListener('scroll', () => {
+            const stats = document.getElementById('orders-stats');
+            if (stats) {
+                stats.style.transform = `translateY(${window.scrollY > 100 ? '0' : '100%'})`;
+            }
+        });
+    },
+
+    initializeStats() {
+        // تحديث الإحصائيات عند تغيير الفلتر
+        window.addEventListener('orders::filtered', (event) => {
+            this.updateStats(event.detail);
+        });
+    },
+
+    updateStats(stats) {
+        Object.entries(stats).forEach(([key, value]) => {
+            const element = document.querySelector(`.stat-item[data-type="${key}"] .value`);
+            if (element) {
+                element.textContent = value;
+            }
+        });
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => orders.init());
+</script>
 {% endblock %}

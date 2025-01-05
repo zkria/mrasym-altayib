@@ -1,51 +1,147 @@
 {% extends "layouts.master" %}
+
 {% block content %}
-    <div class="profile-header gradient-bg">
-        <div class="container relative flex justify-between h-full items-center">
-            {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
-            <nav class="breadcrumbs w-full py-5 self-start">
-                <salla-breadcrumb></salla-breadcrumb>
+    {# رأس الصفحة #}
+    <header class="profile-header relative">
+        {# خلفية متدرجة #}
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary"></div>
+        
+        <div class="container relative py-8">
+            {# التنقل #}
+            <nav class="breadcrumbs text-white/80">
+                <salla-breadcrumb theme="light"></salla-breadcrumb>
             </nav>
-        </div>
-    </div>
 
-    <div class="container lg:mb-24">
-        <div class="flex items-start flex-col lg:flex-row ">
-            <nav aria-label="Sidebar"
-                 class="shrink-0 lg:sticky top-24 lg:-mt-28 lg:shadow-default rounded-md lg:bg-white w-full lg:w-72 rtl:lg:ml-8 ltr:lg:mr-8 lg:pt-8 lg:pb-11 sidebar space-y-px">
-
-                {% if is_page('customer.profile') %}
-                    <div class="text-center md:mb-9">
-                        <div class="h-20 w-20 m-auto avatar-wrap bg-gray-100 rounded-full">
-                            <salla-file-upload profile-image value="{{ user.avatar }}">
-                                <span class='avatar-placeholder flex justify-center items-center flex-col'>
-                                    <span class='sicon-user'></span>
-                                    <span class='text'>{{ trans('common.uploader.choose_suitable_picture') }}</span>
+            {# معلومات المستخدم #}
+            <div class="flex items-center gap-6 mt-6 text-white">
+                {# الصورة الشخصية #}
+                <div class="relative">
+                    {% if is_page('customer.profile') %}
+                        <div class="h-24 w-24 rounded-full overflow-hidden bg-white/10 backdrop-blur">
+                            <salla-file-upload 
+                                profile-image 
+                                value="{{ user.avatar }}"
+                                class="h-full">
+                                <span class="avatar-placeholder flex items-center justify-center h-full">
+                                    <i class="sicon-user text-3xl"></i>
                                 </span>
                             </salla-file-upload>
                         </div>
-                    </div>
-                {% endif %}
-
-                <div class="hidden lg:block">
-                    <salla-user-menu inline></salla-user-menu>
+                    {% else %}
+                        <img src="{{ user.avatar }}" 
+                             alt="{{ user.name }}"
+                             class="h-24 w-24 rounded-full object-cover"
+                        />
+                    {% endif %}
                 </div>
-            </nav>
-            <div class="main-content w-full flex-1 lg:pt-10 ">
-                <h1 class="font-bold text-lg text-center sm:text-start mb-2">{{ page.title }}
 
-                  {% if is_current_url('order') and order.source is same as('buy_as_gift') %}
-                    <span class="inline-block text-primary mx-2"><i class="sicon-gift-sharing"></i>&nbsp;{{ trans('pages.orders.gift_tag') }}</span>
-                  {% endif %}
-
-                </h1>
-                {#
-                All customer pages have same header, this layout will wrap the different content.
-                Use it like: `{% extends "layouts.customer" %}` instead of `{% extends "layouts.master" %}`
-                Then body: `{% block inner_content %}` instead of `{% block content %}`
-                #}
-                {% block inner_content %}{% endblock %}
+                {# معلومات المستخدم #}
+                <div>
+                    <h1 class="text-2xl font-bold mb-2">{{ user.name }}</h1>
+                    <div class="flex items-center gap-4 text-sm">
+                        <span>
+                            <i class="sicon-mail"></i>
+                            {{ user.email }}
+                        </span>
+                        {% if user.mobile %}
+                            <span>
+                                <i class="sicon-phone"></i>
+                                {{ user.mobile }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
+
+    <div class="container py-8 lg:py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            {# القائمة الجانبية #}
+            <aside class="lg:w-72 shrink-0">
+                <div class="sticky top-24 bg-white rounded-lg shadow-sm overflow-hidden">
+                    {# إحصائيات سريعة #}
+                    <div class="grid grid-cols-2 divide-x divide-y">
+                        <div class="p-4 text-center">
+                            <div class="text-2xl font-bold text-primary mb-1">
+                                {{ user.orders_count|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('common.orders') }}
+                            </div>
+                        </div>
+                        <div class="p-4 text-center">
+                            <div class="text-2xl font-bold text-primary mb-1">
+                                {{ user.points|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('common.points') }}
+                            </div>
+                        </div>
+                        <div class="p-4 text-center">
+                            <div class="text-2xl font-bold text-primary mb-1">
+                                {{ user.wallet_balance|money }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('common.wallet') }}
+                            </div>
+                        </div>
+                        <div class="p-4 text-center">
+                            <div class="text-2xl font-bold text-primary mb-1">
+                                {{ user.wishlist_count|number }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ trans('common.wishlist') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# قائمة التنقل #}
+                    <nav class="p-4">
+                        <salla-user-menu 
+                            class="space-y-1"
+                            item-class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                            active-class="!bg-primary/5 !text-primary"
+                        ></salla-user-menu>
+                    </nav>
+                </div>
+            </aside>
+
+            {# المحتوى الرئيسي #}
+            <main class="flex-1">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    {# عنوان الصفحة #}
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold">{{ page.title }}</h2>
+                        
+                        {% if is_current_url('order') and order.source is same as('buy_as_gift') %}
+                            <span class="inline-flex items-center gap-2 text-primary">
+                                <i class="sicon-gift-sharing"></i>
+                                {{ trans('pages.orders.gift_tag') }}
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    {# محتوى الصفحة #}
+                    {% block inner_content %}{% endblock %}
+                </div>
+            </main>
+        </div>
     </div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.profile-header {
+    background-image: url('{{ "images/profile-pattern.svg"|asset }}');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        background-size: 200% auto;
+    }
+}
+</style>
 {% endblock %}

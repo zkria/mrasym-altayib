@@ -103,16 +103,15 @@
                         <div class="promotion-title">{{ product.promotion_title }}</div>
                     {% endif %}
 
-                    <div class="product-card__actions"
-                         data-product-id="{{ product.id }}"
-                         x-data="{ loading: false }">
-                        <button 
-                            @click="loading = true; salla.wishlist.toggle($event.target.closest('[data-product-id]').dataset.productId)"
-                            :disabled="loading"
-                            class="action-btn">
-                            <i class="sicon-heart"></i>
-                        </button>
-                    </div>
+                    <salla-button
+                            class="btn--wishlist animated sws"
+                            data-id="{{ product.id }}"
+                            onclick="salla.wishlist.toggle({{ product.id }})"
+                            shape="icon"
+                            fill="outline"
+                            color="light">
+                        <i class="sicon-heart"></i>
+                    </salla-button>
 
                     {# Calories Badge #}
                     {% if product.calories %}
@@ -257,16 +256,16 @@
                 <div class="flex rtl:space-x-reverse space-x-3">
                     <salla-social-share class="inline-flex mb-5" aria-label="social share"></salla-social-share>
 
-                    <div class="product-card__actions"
-                         data-product-id="{{ product.id }}"
-                         x-data="{ loading: false }">
-                        <button 
-                            @click="loading = true; salla.wishlist.toggle($event.target.closest('[data-product-id]').dataset.productId)"
-                            :disabled="loading"
-                            class="action-btn">
-                            <i class="sicon-heart"></i>
-                        </button>
-                    </div>
+                    <salla-button
+                            class="btn--wishlist animated hidden sm:inline-flex"
+                            data-id="{{ product.id }}"
+                            onclick="salla.wishlist.toggle({{ product.id }})"
+                            shape="icon"
+                            fill="outline"
+                            color="light"
+							aria-label="add to wishlist">
+                        <i class="sicon-heart"></i>
+                    </salla-button>
                 </div>
 
                 {% if product.sold_quantity or product.can_show_remained_quantity %}
@@ -412,15 +411,6 @@
     <div class="container">
         <salla-products-slider source="related" source-value="{{product.id}}" block-title="{{trans('pages.products.similar_products')}}" display-all-url></salla-products-slider>
     </div>
-
-    {# إضافة skeleton loading #}
-    <div class="product-card-skeleton animate-pulse">
-        <div class="h-48 bg-gray-200"></div>
-        <div class="p-4">
-            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div class="h-4 bg-gray-200 rounded w-1/2 mt-2"></div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block scripts %}
@@ -428,29 +418,5 @@
     {% if product.has_3d_image %}
         <script type="module" defer src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     {% endif %}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.product-card').forEach(card => {
-                observer.observe(card);
-            });
-        });
-    </script>
 {% endblock %}
-
-{% set cache_key = 'product_card_' ~ product.id ~ '_' ~ product.updated_at %}
-{% cache cache_key 3600 %}
-    {# محتوى البطاقة #}
-{% endcache %}
-
-<link rel="preconnect" href="{{ settings.cdn_url }}">
-<link rel="dns-prefetch" href="{{ settings.cdn_url }}">
 
