@@ -974,6 +974,47 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "news-ticker",
+            "title": "الشريط الإخباري",
+            "icon": "sicon-newspaper",
+            "path": "home.news-ticker",
+            "fields": [
+                {
+                    "id": "news_items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "label": "الأخبار",
+                    "fields": [
+                        {
+                            "id": "text",
+                            "type": "string",
+                            "label": "نص الخبر",
+                            "required": true
+                        },
+                        {
+                            "id": "link",
+                            "type": "string",
+                            "format": "url",
+                            "label": "رابط الخبر"
+                        },
+                        {
+                            "id": "color",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون النص"
+                        }
+                    ]
+                },
+                {
+                    "id": "speed",
+                    "type": "number",
+                    "label": "سرعة التحريك",
+                    "default": 3
+                }
+            ]
         }
     ],
     "support_url": "",

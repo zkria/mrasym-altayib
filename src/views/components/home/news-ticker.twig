@@ -1,0 +1,22 @@
+<section class="news-ticker-wrapper">
+    <div class="news-ticker" data-speed="{{ component.speed|default(3) }}">
+        <div class="news-ticker-container">
+            {% for item in component.news_items %}
+                <div class="news-item">
+                    {% if item.link %}
+                        <a href="{{ item.link }}" 
+                           class="news-link"
+                           style="color: {{ item.color|default('#000') }}">
+                            {{ item.text }}
+                        </a>
+                    {% else %}
+                        <span class="news-text"
+                              style="color: {{ item.color|default('#000') }}">
+                            {{ item.text }}
+                        </span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

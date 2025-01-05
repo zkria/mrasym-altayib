@@ -1,0 +1,42 @@
+.news-ticker-wrapper {
+    background: #f8f9fa;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    direction: rtl;
+}
+
+.news-ticker {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.news-ticker-container {
+    display: flex;
+    animation: ticker linear infinite;
+}
+
+.news-item {
+    white-space: nowrap;
+    padding: 0 20px;
+}
+
+.news-link,
+.news-text {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.news-link:hover {
+    text-decoration: underline;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+} 
