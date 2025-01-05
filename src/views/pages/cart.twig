@@ -60,79 +60,86 @@
             <div class="main-content flex-1 w-full">
                 {% hook 'cart:items.start' %}
 
-                {% for item in cart.items %}
-                    <form onchange="salla.form.onChange('cart.updateItem', event)" id="item-{{ item.id }}">
-                        <section class="cart-item bg-white p-5 xs:p-7 rounded-md mb-5 relative">
-                            <input type="hidden" name="id" value="{{ item.id }}">
-                                <!-- product -->
-                                <div class="md:flex rtl:space-x-reverse md:space-x-12 items-start justify-between mb-8 last:mb-0">
-                                    <div class="flex flex-1 rtl:space-x-reverse space-x-4">
-                                        <a href="{{ item.url }}" class="shrink-0">
-                                            {% if loop.first %}
-												<img src="{{ item.product_image }}"
-													alt="{{ item.product_name }}"
-													class="flex-none w-24 h-20 border border-gray-200 bg-gray-100 rounded-md object-center object-cover">
-											{% else %}
-												<img src="{{ 'images/s-empty.png' | cdn }}"
-													data-src="{{ item.product_image }}"
-													alt="{{ item.product_name }}"
-													class="lazy flex-none w-24 h-20 border border-gray-200 bg-gray-100 rounded-md object-center object-cover">
-											{% endif %}
-                                        </a>
-                                        <div class="space-y-1">
-                                            <h1 class="text-gray-900 leading-6 text-lg">
-                                                <a href="{{ item.url }}" class="text-base">{{ item.product_name }}</a>
-                                            </h1>
-                                            <span class="text-sm text-gray-500 line-through item-regular-price {{ item.offer?'':'hidden' }}">{{ item.product_price|money }}</span>
-                                            <span class="item-price {{ item.offer?'text-red-800':'text-sm text-gray-500' }}">{{ item.price|money }}</span>
-                                            {% if item.weight_label %}
-                                            <p class="text-sm text-gray-500 "> {{ trans('pages.products.weight') }}
-                                             <span>{{ item.weight_label }}</span>
-                                            </p>
+                {% set cache_key = 'cart_' ~ cart.id ~ '_' ~ cart.updated_at %}
+                {% cache cache_key 300 %}
+                    {% for item in cart.items %}
+                        <form onchange="salla.form.onChange('cart.updateItem', event)" id="item-{{ item.id }}">
+                            <section class="cart-item bg-white p-5 xs:p-7 rounded-md mb-5 relative">
+                                <input type="hidden" name="id" value="{{ item.id }}">
+                                    <!-- product -->
+                                    <div class="md:flex rtl:space-x-reverse md:space-x-12 items-start justify-between mb-8 last:mb-0">
+                                        <div class="flex flex-1 rtl:space-x-reverse space-x-4">
+                                            <a href="{{ item.url }}" class="shrink-0">
+                                                {% if loop.first %}
+													<img src="{{ item.product_image }}"
+														alt="{{ item.product_name }}"
+														class="flex-none w-24 h-20 border border-gray-200 bg-gray-100 rounded-md object-center object-cover">
+												{% else %}
+													<img src="{{ 'images/placeholder.jpg' | cdn }}"
+														data-src="{{ item.product_image }}"
+														alt="{{ item.product_name }}"
+														class="lazy flex-none w-24 h-20 border border-gray-200 bg-gray-100 rounded-md object-center object-cover">
+												{% endif %}
+                                            </a>
+                                            <div class="space-y-1">
+                                                <h1 class="text-gray-900 leading-6 text-lg">
+                                                    <a href="{{ item.url }}" class="text-base">{{ item.product_name }}</a>
+                                                </h1>
+                                                <span class="text-sm text-gray-500 line-through item-regular-price {{ item.offer?'':'hidden' }}">{{ item.product_price|money }}</span>
+                                                <span class="item-price {{ item.offer?'text-red-800':'text-sm text-gray-500' }}">{{ item.price|money }}</span>
+                                                {% if item.weight_label %}
+                                                <p class="text-sm text-gray-500 "> {{ trans('pages.products.weight') }}
+                                                 <span>{{ item.weight_label }}</span>
+                                                </p>
+                                                {% endif %}
+                                                <i class="sicon-discount-calculator text-gray-500 offer-icon {{ item.offer?'':'hidden' }}"></i>
+                                                <span class="text-sm text-gray-500 offer-name {{ item.offer?'':'hidden' }}">{{ item.offer.names }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-1 border-t border-b border-gray-200 py-3 md:p-0 md:border-none mt-5 md:mt-0 flex justify-between items-center md:items-start">
+                                            {% if item.type == 'donating' %}
+                                                <span></span>
+                                            {% elseif item.is_hidden_quantity %}
+                                                <input type="hidden" value="{{ item.quantity }}" name="quantity" aria-label="Quantity"/>
+                                                <span class="w-10 text-center">{{ item.quantity }}</span>
+                                            {% else %}
+                                                <salla-quantity-input 
+                                                    cart-item-id="{{ item.id }}"
+                                                    debounce="300"
+                                                    class="quantity-input"
+                                                    @change="updateQuantity($event)">
+                                                </salla-quantity-input>
                                             {% endif %}
-                                            <i class="sicon-discount-calculator text-gray-500 offer-icon {{ item.offer?'':'hidden' }}"></i>
-                                            <span class="text-sm text-gray-500 offer-name {{ item.offer?'':'hidden' }}">{{ item.offer.names }}</span>
+
+                                            <p class="text-primary flex-none font-bold text-sm rtl:md:pl-12 ltr:md:pr-12">
+                                                <span>{{ trans('pages.cart.total') }}:</span>
+                                                <span class="inline-block item-total">{{ item.is_available?item.total|money: trans('pages.cart.out_of_stock') }}</span>
+                                            </p>
                                         </div>
                                     </div>
 
-                                    <div class="flex-1 border-t border-b border-gray-200 py-3 md:p-0 md:border-none mt-5 md:mt-0 flex justify-between items-center md:items-start">
-                                        {% if item.type == 'donating' %}
-                                            <span></span>
-                                        {% elseif item.is_hidden_quantity %}
-                                            <input type="hidden" value="{{ item.quantity }}" name="quantity" aria-label="Quantity"/>
-                                            <span class="w-10 text-center">{{ item.quantity }}</span>
-                                        {% else %}
-                                            <salla-quantity-input cart-item-id="{{ item.id }}"  max="{{ product.max_quantity }}"
-                                                class="transtion transition-color duration-300"
-												aria-label="Quantity"
-                                                value="{{ item.quantity }}" name="quantity">
-                                            </salla-quantity-input>
-                                        {% endif %}
-
-                                        <p class="text-primary flex-none font-bold text-sm rtl:md:pl-12 ltr:md:pr-12">
-                                            <span>{{ trans('pages.cart.total') }}:</span>
-                                            <span class="inline-block item-total">{{ item.is_available?item.total|money: trans('pages.cart.out_of_stock') }}</span>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {% include 'pages.partials.product.options' with {product:item} %}
-                            <span class="absolute top-1.5 rtl:left-1.5 ltr:right-1.5 rtl:xs:left-5 ltr:xs:right-5 xs:top-5">
-                                <salla-button type="button" shape="icon" size="small" color="danger" class="btn--delete" aria-label="Remove from the cart"
-                                        onclick="salla.cart.deleteItem({{ item.id }}).then(() => document.querySelector('#item-{{ item.id }}').remove())">
-                                    <i class="sicon-cancel"></i>
-                                </salla-button>
-                            </span>
-                        </section>
-                    </form>
-                {% else %}
-                    <div class="no-content-placeholder">
-                        <i class="sicon-shopping-bag icon"></i>
-                        <p>{{ trans('pages.cart.empty_cart') }}</p>
-                        <a href="{{ link('/') }}"
-                           class="btn btn--outline-primary btn--rounded-full">{{ trans('common.elements.back_home') }}</a>
-                    </div>
-                {% endfor %}
+                                    {% include 'pages.partials.product.options' with {product:item} %}
+                                <span class="absolute top-1.5 rtl:left-1.5 ltr:right-1.5 rtl:xs:left-5 ltr:xs:right-5 xs:top-5">
+                                    <salla-button 
+                                        @click="removeItem($event)"
+                                        data-id="{{ item.id }}"
+                                        loading-text="{{ trans('pages.cart.removing') }}"
+                                        class="remove-btn">
+                                        <i class="sicon-cancel"></i>
+                                    </salla-button>
+                                </span>
+                            </section>
+                        </form>
+                    {% else %}
+                        <div class="no-content-placeholder">
+                            <i class="sicon-shopping-bag icon"></i>
+                            <p>{{ trans('pages.cart.empty_cart') }}</p>
+                            <a href="{{ link('/') }}"
+                               class="btn btn--outline-primary btn--rounded-full">{{ trans('common.elements.back_home') }}</a>
+                        </div>
+                    {% endfor %}
+                {% endcache %}
 
                 {% if cart.options|length %}
                   <div class="cart-options">
@@ -271,8 +278,29 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="cart-skeleton animate-pulse" v-if="loading">
+        <div class="h-24 bg-gray-200 rounded mb-4"></div>
+        <div class="h-24 bg-gray-200 rounded mb-4"></div>
+    </div>
+
+    <div class="alert alert--success hidden" id="cart-message">
+        {{ trans('pages.cart.item_updated') }}
+    </div>
+
+    <div class="cart-actions flex gap-2">
+        <button class="btn btn--light" @click="saveForLater(item)">
+            {{ trans('pages.cart.save_for_later') }}
+        </button>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-    <script defer src="{{ 'checkout.js' | asset }}"></script>
+    <script defer async src="{{ 'checkout.js' | asset }}"></script>
+    
+    {# تحميل مكونات Salla عند الحاجة #}
+    <script type="module">
+        import { defineCustomElements } from '@salla/components/loader';
+        defineCustomElements();
+    </script>
 {% endblock %}
