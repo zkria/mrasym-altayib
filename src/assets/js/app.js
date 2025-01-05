@@ -402,3 +402,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // تهيئة القائمة عند تحميل الصفحة
   initMenu();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const newsSlider = document.querySelector('.news-slider');
+    if (newsSlider) {
+        const autoplay = newsSlider.dataset.autoplay === 'true';
+        const speed = parseInt(newsSlider.dataset.speed) || 3000;
+
+        new Swiper('.news-slider', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: autoplay ? {
+                delay: speed,
+                disableOnInteraction: false
+            } : false,
+            navigation: {
+                nextEl: '.news-nav.news-next',
+                prevEl: '.news-nav.news-prev'
+            }
+        });
+    }
+});

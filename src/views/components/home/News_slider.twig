@@ -1,0 +1,30 @@
+<section class="news-slider-section">
+    {% if component.title %}
+        <h3 class="news-slider-title">{{ component.title }}</h3>
+    {% endif %}
+
+    <div class="news-slider" 
+         data-autoplay="{{ component.auto_play }}"
+         data-speed="{{ component.speed * 1000 }}">
+        <div class="swiper-wrapper">
+            {% for item in component.news_items %}
+                <div class="swiper-slide news-item">
+                    {% if item.link %}
+                        <a href="{{ item.link }}" class="news-link">
+                            {{ item.text }}
+                        </a>
+                    {% else %}
+                        <span class="news-text">{{ item.text }}</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button class="news-nav news-prev">
+            <i class="sicon-chevron-right"></i>
+        </button>
+        <button class="news-nav news-next">
+            <i class="sicon-chevron-left"></i>
+        </button>
+    </div>
+</section> 

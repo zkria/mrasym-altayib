@@ -882,39 +882,43 @@
             ]
         },
         {
-            "name": "text-slider",
-            "title": "شريط نصي متحرك",
-            "icon": "sicon-text-size",
-            "path": "home.text-slider",
+            "name": "news-slider",
+            "title": "شريط الأخبار المتحرك",
+            "icon": "sicon-newspaper",
+            "path": "home.news-slider",
             "fields": [
                 {
-                    "id": "items",
+                    "id": "news_items",
                     "type": "collection",
                     "format": "collection",
                     "required": true,
                     "minLength": 1,
                     "maxLength": 10,
-                    "label": "النصوص المتحركة",
+                    "label": "الأخبار",
                     "fields": [
                         {
-                            "id": "text",
+                            "id": "title",
                             "type": "string",
-                            "label": "النص",
+                            "label": "عنوان الخبر",
                             "required": true
+                        },
+                        {
+                            "id": "description",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "تفاصيل الخبر"
                         },
                         {
                             "id": "url",
                             "type": "string",
                             "format": "url",
-                            "label": "الرابط (اختياري)",
-                            "required": false
+                            "label": "رابط الخبر"
                         },
                         {
-                            "id": "color",
+                            "id": "background",
                             "type": "string",
                             "format": "color",
-                            "label": "لون النص",
-                            "required": false
+                            "label": "لون الخلفية"
                         }
                     ]
                 }
@@ -925,5 +929,10 @@
     "description": {
         "ar": null,
         "en": null
+    },
+    "assets": {
+        "styles": [
+            "News.scss"
+        ]
     }
 }
