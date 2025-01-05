@@ -6,46 +6,9 @@
 | page.slug        | string     | ex: "cat.show"                                                      |
 #}
 {% extends "layouts.master" %}
-
 {% block content %}
-    {# إضافة الشريط الإخباري #}
-    {% component 'news-ticker' with {
-        news_items: [
-            {
-                text: 'عروض خاصة! خصم 30% على جميع المنتجات',
-                link: '/offers',
-                color: '#ff0000'
-            },
-            {
-                text: 'شحن مجاني للطلبات فوق 200 ريال',
-                color: '#0066cc'
-            }
-        ],
-        speed: 5
-    } %}
-
-    {# القسم الرئيسي #}
-    <main class="home-main">
-        {# العروض المميزة #}
-        <section class="featured-section">
-            {% component 'featured-products-enhanced' %}
-        </section>
-
-        {# المنتجات الجديدة #}
-        <section class="new-products">
-            {% component 'latest-products' %}
-        </section>
-
-        {# التصنيفات المميزة #}
-        <section class="categories-section">
-            {% component 'enhanced-categories' %}
-        </section>
-    </main>
-
-    {# المكونات الافتراضية #}
     {% component home %}
 {% endblock %}
-
 {% block scripts %}
-    <script defer src="{{ asset('dist/home.js') }}"></script>
+    <script defer src="{{ 'home.js' | asset }}"></script>
 {% endblock %}
