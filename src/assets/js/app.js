@@ -487,32 +487,55 @@ salla.onReady(() => {
     // تهيئة الشريط الإخباري
     salla.components.NewsTicker = {
         onMount() {
-            // تحديد العنصر
+            // تحديد العناصر
             const ticker = this.querySelector('.news-ticker');
             if (!ticker) return;
-
+            
+            const swiperElement = ticker.querySelector('.swiper');
+            const speed = parseInt(ticker.dataset.speed || 3);
+            const autoplay = ticker.dataset.autoplay !== 'false';
+            
             // تهيئة Swiper
-            new Swiper(ticker, {
+            const swiper = new Swiper(swiperElement, {
                 direction: 'horizontal',
                 loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false
-                },
+                allowTouchMove: true,
+                autoHeight: false,
+                
+                // التشغيل التلقائي
+                autoplay: autoplay ? {
+                    delay: speed * 1000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                } : false,
+                
+                // أزرار التنقل
                 navigation: {
-                    nextEl: '.news-nav.news-next',
-                    prevEl: '.news-nav.news-prev'
-                }
+                    nextEl: ticker.querySelector('.news-next'),
+                    prevEl: ticker.querySelector('.news-prev')
+                },
+                
+                // تأثيرات الانتقال
+                effect: 'slide',
+                speed: 800,
+                
+                // تحسينات الأداء
+                observer: true,
+                observeParents: true,
+                preloadImages: false,
+                lazy: true
             });
-
-            // إيقاف الحركة عند تحويم الماوس
-            ticker.addEventListener('mouseenter', () => {
-                ticker.swiper.autoplay.stop();
-            });
-
-            ticker.addEventListener('mouseleave', () => {
-                ticker.swiper.autoplay.start();
-            });
+            
+            // تخزين مرجع Swiper للاستخدام لاحقاً
+            ticker.swiper = swiper;
+        },
+        
+        onUnmount() {
+            // تنظيف عند إزالة المكون
+            const ticker = this.querySelector('.news-ticker');
+            if (ticker && ticker.swiper) {
+                ticker.swiper.destroy();
+            }
         }
     };
 });

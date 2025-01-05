@@ -1,51 +1,85 @@
 .news-ticker-section {
+    --ticker-height: 40px;
     background: var(--color-main);
-    padding: 10px 0;
+    padding: 0;
     margin: 0;
+    height: var(--ticker-height);
+    overflow: hidden;
     direction: rtl;
     
     .news-ticker {
         position: relative;
-        max-width: 1200px;
+        max-width: var(--container-width);
         margin: 0 auto;
-        overflow: hidden;
+        height: 100%;
+        
+        .swiper {
+            height: 100%;
+        }
     }
     
     .news-item {
-        text-align: center;
-        padding: 5px 40px;
+        height: var(--ticker-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 40px;
     }
     
-    .news-link,
-    .news-text {
-        color: var(--color-text);
+    .news-link {
         text-decoration: none;
-        font-size: 16px;
+        color: inherit;
         display: block;
+        width: 100%;
+        text-align: center;
         
-        &:hover {
+        &:hover .news-text {
             color: var(--color-primary);
         }
     }
     
-    .news-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255,255,255,0.1);
-        border: none;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        z-index: 10;
+    .news-text {
         color: var(--color-text);
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+    
+    .news-controls {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
         
-        &.news-prev { right: 5px; }
-        &.news-next { left: 5px; }
+        .news-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--color-text);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                background: rgba(255,255,255,0.2);
+            }
+            
+            &.news-prev { right: 5px; }
+            &.news-next { left: 5px; }
+        }
+    }
+}
+
+// التجاوب مع الشاشات
+@media (max-width: 767px) {
+    .news-ticker-section {
+        --ticker-height: 50px;
         
-        &:hover {
-            background: rgba(255,255,255,0.2);
+        .news-text {
+            font-size: 12px;
         }
     }
 } 
