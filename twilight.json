@@ -883,70 +883,25 @@
         },
         {
             "key": "259bd8ca-7272-4033-9aaf-0aa9f49f53b9",
-            "title": "شريط  اخباري",
-            "icon": "sicon-fresh-arrival",
-            "path": "home.News",
-            "fields": [
-                {
-                    "id": "units",
-                    "type": "number",
-                    "format": "units",
-                    "label": "Units",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Insert value",
-                    "icon": "sicon-percentage",
-                    "value": null,
-                    "required": false,
-                    "unit": "%",
-                    "minimum": 0,
-                    "maximum": 100
-                },
-                {
-                    "id": "color",
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "label": "Color",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-format-fill",
-                    "value": "#004956",
-                    "required": false
-                },
-                {
-                    "id": "text_area",
-                    "type": "string",
-                    "format": "textarea",
-                    "label": "Text Area",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Your text here",
-                    "icon": "sicon-typography",
-                    "value": null,
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 20,
-                    "maxLength": 255
-                }
-            ]
-        },
-        {
-            "name": "pro-news",
+            "name": "news-ticker",
             "title": "شريط الأخبار المتطور",
             "icon": "sicon-newspaper",
-            "path": "components.home.News",
+            "path": "home.News",
             "fields": [
                 {
                     "id": "title",
                     "type": "string",
                     "label": "عنوان الشريط",
-                    "placeholder": "مثال: آخر الأخبار"
+                    "icon": "sicon-typography",
+                    "placeholder": "مثال: آخر الأخبار",
+                    "required": false
                 },
                 {
                     "id": "style",
-                    "type": "select",
+                    "type": "string",
+                    "format": "select",
                     "label": "نمط العرض",
+                    "icon": "sicon-layout",
                     "options": [
                         {"label": "أفقي", "value": "horizontal"},
                         {"label": "عمودي", "value": "vertical"},
@@ -955,30 +910,88 @@
                     "default": "horizontal"
                 },
                 {
+                    "id": "speed",
+                    "type": "number",
+                    "format": "units",
+                    "label": "سرعة التحريك",
+                    "icon": "sicon-speedometer",
+                    "unit": "ثانية",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "default": 3
+                },
+                {
+                    "id": "bg_color",
+                    "type": "string",
+                    "format": "color",
+                    "label": "لون الخلفية",
+                    "icon": "sicon-format-fill",
+                    "default": "#004956"
+                },
+                {
+                    "id": "text_color",
+                    "type": "string",
+                    "format": "color",
+                    "label": "لون النص",
+                    "icon": "sicon-typography",
+                    "default": "#ffffff"
+                },
+                {
                     "id": "news_items",
                     "type": "collection",
+                    "format": "collection",
                     "label": "الأخبار",
                     "required": true,
+                    "minLength": 1,
+                    "maxLength": 10,
                     "fields": [
                         {
                             "id": "text",
                             "type": "string",
+                            "format": "textarea",
                             "label": "نص الخبر",
-                            "required": true
+                            "icon": "sicon-typography",
+                            "required": true,
+                            "minLength": 3,
+                            "maxLength": 255
                         },
                         {
                             "id": "link",
                             "type": "string",
                             "format": "url",
-                            "label": "رابط الخبر"
+                            "label": "رابط الخبر",
+                            "icon": "sicon-link",
+                            "placeholder": "https://..."
                         },
                         {
                             "id": "icon",
                             "type": "string",
                             "label": "أيقونة",
-                            "placeholder": "مثال: sicon-star"
+                            "icon": "sicon-image",
+                            "placeholder": "sicon-star"
+                        },
+                        {
+                            "id": "color",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون مخصص",
+                            "icon": "sicon-format-fill"
                         }
                     ]
+                },
+                {
+                    "id": "show_time",
+                    "type": "boolean",
+                    "label": "إظهار الوقت",
+                    "icon": "sicon-clock",
+                    "default": false
+                },
+                {
+                    "id": "auto_play",
+                    "type": "boolean",
+                    "label": "تشغيل تلقائي",
+                    "icon": "sicon-play",
+                    "default": true
                 }
             ]
         }
