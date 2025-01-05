@@ -402,30 +402,3 @@ document.addEventListener('DOMContentLoaded', function() {
   // تهيئة القائمة عند تحميل الصفحة
   initMenu();
 });
-
-salla.onReady(() => {
-    salla.components.News = {
-        onMount() {
-            // تحديد العناصر
-            const ticker = this.querySelector('.pro-news-ticker');
-            if (!ticker) return;
-            
-            const track = ticker.querySelector('.news-track');
-            const speed = parseInt(ticker.dataset.speed || 3);
-            
-            // تحديث سرعة الحركة
-            if (track) {
-                track.style.setProperty('--animation-duration', `${speed * 10}s`);
-            }
-
-            // إيقاف الحركة عند تحويم الماوس
-            ticker.addEventListener('mouseenter', () => {
-                track.style.animationPlayState = 'paused';
-            });
-
-            ticker.addEventListener('mouseleave', () => {
-                track.style.animationPlayState = 'running';
-            });
-        }
-    };
-});
