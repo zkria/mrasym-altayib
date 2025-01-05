@@ -886,7 +886,66 @@
             "title": "شريط  اخباري",
             "icon": "sicon-fresh-arrival",
             "path": "home.News",
-            "fields": []
+            "fields": [
+                {
+                    "id": "units",
+                    "type": "number",
+                    "format": "units",
+                    "label": "Units",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Insert value",
+                    "icon": "sicon-percentage",
+                    "value": null,
+                    "required": false,
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                {
+                    "id": "time",
+                    "type": "string",
+                    "format": "time",
+                    "inputType": "time",
+                    "label": "Time",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-time",
+                    "value": "01:00",
+                    "required": false
+                },
+                {
+                    "id": "switch",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "Switch",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "color",
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "label": "Color",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-format-fill",
+                    "value": "#004956",
+                    "required": false
+                },
+                {
+                    "id": "line",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line",
+                    "icon": "sicon-minus"
+                }
+            ]
         }
     ],
     "support_url": "",
