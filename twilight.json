@@ -880,6 +880,13 @@
                     "source": "brands"
                 }
             ]
+        },
+        {
+            "key": "259bd8ca-7272-4033-9aaf-0aa9f49f53b9",
+            "title": "شريط  اخباري",
+            "icon": "sicon-fresh-arrival",
+            "path": "home.News",
+            "fields": []
         }
     ],
     "support_url": "",
