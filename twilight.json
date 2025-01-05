@@ -883,67 +883,117 @@
         },
         {
             "key": "6526b2cc-0837-4ca4-90ab-5d8eaf42b4bd",
-            "title": "شريط  اخباري",
+            "title": "شريط الأخبار المتحرك",
             "icon": "sicon-fresh-arrival",
             "path": "home.News",
+            "image": "https://cdn.salla.network/images/themes/news-ticker.png",
             "fields": [
                 {
-                    "id": "units",
-                    "type": "number",
-                    "format": "units",
-                    "label": "Units",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Insert value",
-                    "icon": "sicon-percentage",
-                    "value": null,
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "عنوان القسم",
+                    "multilanguage": true,
+                    "id": "title",
+                    "value": "آخر الأخبار",
                     "required": false,
-                    "unit": "%",
-                    "minimum": 0,
-                    "maximum": 100
+                    "format": "text",
+                    "placeholder": "أدخل عنوان القسم هنا...",
+                    "maxLength": 50
                 },
                 {
-                    "id": "time",
-                    "type": "string",
-                    "format": "time",
-                    "inputType": "time",
-                    "label": "Time",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-time",
-                    "value": "01:00",
-                    "required": false
+                    "id": "news_items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 10,
+                    "label": "قائمة الأخبار",
+                    "item_label": "خبر",
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "نص الخبر",
+                            "multilanguage": true,
+                            "id": "news_items.text",
+                            "required": true,
+                            "format": "text",
+                            "placeholder": "أدخل نص الخبر هنا...",
+                            "maxLength": 200
+                        },
+                        {
+                            "type": "items",
+                            "icon": "sicon-link",
+                            "label": "رابط الخبر",
+                            "id": "news_items.url",
+                            "format": "variable-list",
+                            "required": false,
+                            "searchable": true,
+                            "source": "custom",
+                            "sources": [
+                                {
+                                    "label": "منتج",
+                                    "key": "products",
+                                    "value": "products"
+                                },
+                                {
+                                    "label": "تصنيف",
+                                    "key": "categories",
+                                    "value": "categories"
+                                },
+                                {
+                                    "label": "صفحة تعريفية",
+                                    "key": "pages",
+                                    "value": "pages"
+                                },
+                                {
+                                    "label": "رابط خارجي",
+                                    "key": "custom",
+                                    "value": "custom"
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
-                    "id": "switch",
+                    "type": "number",
+                    "icon": "sicon-speed-fast",
+                    "label": "سرعة حركة النص",
+                    "id": "speed",
+                    "format": "units",
+                    "value": 20,
+                    "required": false,
+                    "minimum": 5,
+                    "maximum": 50,
+                    "unit": "ثانية"
+                },
+                {
                     "type": "boolean",
-                    "format": "switch",
-                    "label": "Switch",
-                    "description": null,
-                    "labelHTML": null,
                     "icon": "sicon-toggle-off",
+                    "label": "إيقاف الحركة عند التحويم",
+                    "id": "pause_on_hover",
+                    "format": "switch",
                     "value": true,
-                    "selected": false,
+                    "selected": true,
                     "required": false
                 },
                 {
-                    "id": "color",
                     "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "label": "Color",
-                    "description": null,
-                    "labelHTML": null,
                     "icon": "sicon-format-fill",
-                    "value": "#004956",
+                    "label": "لون خلفية العنوان",
+                    "id": "label_bg_color",
+                    "format": "color",
+                    "value": "#dc3545",
                     "required": false
                 },
                 {
-                    "id": "line",
-                    "type": "static",
-                    "format": "line",
-                    "label": "Line",
-                    "icon": "sicon-minus"
+                    "type": "string",
+                    "icon": "sicon-format-fill",
+                    "label": "لون خلفية الشريط",
+                    "id": "ticker_bg_color",
+                    "format": "color",
+                    "value": "#f8f9fa",
+                    "required": false
                 }
             ]
         }
