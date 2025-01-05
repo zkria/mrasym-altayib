@@ -1,22 +1,30 @@
-<section class="news-ticker-wrapper">
+{# 
+| المتغيرات المتاحة:
+| component.news_items - مصفوفة الأخبار
+| component.speed - سرعة الحركة
+#}
+
+<section class="news-ticker-section">
     <div class="news-ticker" data-speed="{{ component.speed|default(3) }}">
-        <div class="news-ticker-container">
+        <div class="swiper-wrapper">
             {% for item in component.news_items %}
-                <div class="news-item">
+                <div class="swiper-slide news-item">
                     {% if item.link %}
-                        <a href="{{ item.link }}" 
-                           class="news-link"
-                           style="color: {{ item.color|default('#000') }}">
+                        <a href="{{ item.link }}" class="news-link">
                             {{ item.text }}
                         </a>
                     {% else %}
-                        <span class="news-text"
-                              style="color: {{ item.color|default('#000') }}">
-                            {{ item.text }}
-                        </span>
+                        <span class="news-text">{{ item.text }}</span>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
+        
+        <button class="news-nav news-prev">
+            <i class="sicon-chevron-right"></i>
+        </button>
+        <button class="news-nav news-next">
+            <i class="sicon-chevron-left"></i>
+        </button>
     </div>
 </section> 

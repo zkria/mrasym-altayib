@@ -882,102 +882,8 @@
             ]
         },
         {
-            "name": "News_slider",
-            "title": "شريط نصي متحرك",
-            "icon": "sicon-newspaper",
-            "path": "home.News_slider",
-            "fields": [
-                {
-                    "id": "news_items",
-                    "type": "collection",
-                    "format": "collection",
-                    "required": true,
-                    "minLength": 1,
-                    "maxLength": 10,
-                    "label": "الأخبار",
-                    "fields": [
-                        {
-                            "id": "title",
-                            "type": "string",
-                            "label": "عنوان الخبر",
-                            "required": true
-                        },
-                        {
-                            "id": "description",
-                            "type": "string",
-                            "format": "textarea",
-                            "label": "تفاصيل الخبر"
-                        },
-                        {
-                            "id": "url",
-                            "type": "string",
-                            "format": "url",
-                            "label": "رابط الخبر"
-                        },
-                        {
-                            "id": "background",
-                            "type": "string",
-                            "format": "color",
-                            "label": "لون الخلفية"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "enhanced-news-ticker",
-            "title": "شريط أخبار متطور",
-            "icon": "sicon-newspaper",
-            "path": "home.enhanced-news-ticker",
-            "fields": [
-                {
-                    "id": "style",
-                    "type": "string",
-                    "format": "select",
-                    "label": "نمط العرض",
-                    "options": [
-                        {"label": "أفقي", "value": "horizontal"},
-                        {"label": "عمودي", "value": "vertical"},
-                        {"label": "متلاشي", "value": "fade"}
-                    ]
-                },
-                {
-                    "id": "news_items",
-                    "type": "collection",
-                    "format": "collection",
-                    "required": true,
-                    "label": "الأخبار",
-                    "fields": [
-                        {
-                            "id": "title",
-                            "type": "string",
-                            "label": "العنوان"
-                        },
-                        {
-                            "id": "description",
-                            "type": "string",
-                            "format": "textarea",
-                            "label": "التفاصيل"
-                        },
-                        {
-                            "id": "image",
-                            "type": "string",
-                            "format": "image",
-                            "label": "الصورة"
-                        },
-                        {
-                            "id": "link",
-                            "type": "string",
-                            "format": "url",
-                            "label": "الرابط"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "news-ticker",
-            "title": "الشريط الإخباري",
+            "title": "شريط الأخبار المتحرك",
             "icon": "sicon-newspaper",
             "path": "home.news-ticker",
             "fields": [
@@ -986,6 +892,8 @@
                     "type": "collection",
                     "format": "collection",
                     "required": true,
+                    "minLength": 1,
+                    "maxLength": 10,
                     "label": "الأخبار",
                     "fields": [
                         {
@@ -999,12 +907,6 @@
                             "type": "string",
                             "format": "url",
                             "label": "رابط الخبر"
-                        },
-                        {
-                            "id": "color",
-                            "type": "string",
-                            "format": "color",
-                            "label": "لون النص"
                         }
                     ]
                 },
@@ -1012,7 +914,9 @@
                     "id": "speed",
                     "type": "number",
                     "label": "سرعة التحريك",
-                    "default": 3
+                    "default": 3,
+                    "min": 1,
+                    "max": 10
                 }
             ]
         }
@@ -1021,13 +925,5 @@
     "description": {
         "ar": null,
         "en": null
-    },
-    "assets": {
-        "styles": [
-            "News.scss"
-        ],
-        "scripts": [
-            "app.js"
-        ]
     }
 }

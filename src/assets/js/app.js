@@ -482,3 +482,37 @@ salla.onReady(() => {
     initComponents();
     enhanceUX();
 });
+
+salla.onReady(() => {
+    // تهيئة الشريط الإخباري
+    salla.components.NewsTicker = {
+        onMount() {
+            // تحديد العنصر
+            const ticker = this.querySelector('.news-ticker');
+            if (!ticker) return;
+
+            // تهيئة Swiper
+            new Swiper(ticker, {
+                direction: 'horizontal',
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                },
+                navigation: {
+                    nextEl: '.news-nav.news-next',
+                    prevEl: '.news-nav.news-prev'
+                }
+            });
+
+            // إيقاف الحركة عند تحويم الماوس
+            ticker.addEventListener('mouseenter', () => {
+                ticker.swiper.autoplay.stop();
+            });
+
+            ticker.addEventListener('mouseleave', () => {
+                ticker.swiper.autoplay.start();
+            });
+        }
+    };
+});
