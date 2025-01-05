@@ -880,6 +880,45 @@
                     "source": "brands"
                 }
             ]
+        },
+        {
+            "name": "text-slider",
+            "title": "شريط نصي متحرك",
+            "icon": "sicon-text-size",
+            "path": "home.text-slider",
+            "fields": [
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 10,
+                    "label": "النصوص المتحركة",
+                    "fields": [
+                        {
+                            "id": "text",
+                            "type": "string",
+                            "label": "النص",
+                            "required": true
+                        },
+                        {
+                            "id": "url",
+                            "type": "string",
+                            "format": "url",
+                            "label": "الرابط (اختياري)",
+                            "required": false
+                        },
+                        {
+                            "id": "color",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون النص",
+                            "required": false
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "support_url": "",

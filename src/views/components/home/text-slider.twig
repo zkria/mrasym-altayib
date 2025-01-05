@@ -1,0 +1,27 @@
+<section id="text-slider-{{ position }}" class="text-slider-container">
+    <div class="text-slider" data-id="text-slider-{{ position }}">
+        <div class="swiper-wrapper">
+            {% for item in items %}
+                <div class="swiper-slide text-slide">
+                    {% if item.url %}
+                        <a href="{{ item.url }}" 
+                           style="color: {{ item.color|default('#000000') }}">
+                            {{ item.text }}
+                        </a>
+                    {% else %}
+                        <span style="color: {{ item.color|default('#000000') }}">
+                            {{ item.text }}
+                        </span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button aria-label="السابق" class="slider-prev">
+            <i class="sicon-chevron-right"></i>
+        </button>
+        <button aria-label="التالي" class="slider-next">
+            <i class="sicon-chevron-left"></i>
+        </button>
+    </div>
+</section> 
