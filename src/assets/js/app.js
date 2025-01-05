@@ -435,3 +435,50 @@ salla.onReady(() => {
         }
     };
 });
+
+salla.onReady(() => {
+    // تهيئة المكونات
+    const initComponents = () => {
+        // شريط الأخبار
+        salla.components.EnhancedNewsTicker = {
+            onMount() {
+                new Swiper('.news-ticker', {
+                    direction: this.props.style || 'horizontal',
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false
+                    }
+                });
+            }
+        };
+
+        // المنتجات المميزة
+        salla.components.FeaturedProductsEnhanced = {
+            onMount() {
+                // تهيئة عرض المنتجات
+            }
+        };
+    };
+
+    // تحسين تجربة المستخدم
+    const enhanceUX = () => {
+        // تحميل تدريجي للصور
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    };
+
+    // تنفيذ التحسينات
+    initComponents();
+    enhanceUX();
+});

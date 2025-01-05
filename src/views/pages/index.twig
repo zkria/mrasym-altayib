@@ -6,9 +6,33 @@
 | page.slug        | string     | ex: "cat.show"                                                      |
 #}
 {% extends "layouts.master" %}
+
 {% block content %}
+    {# شريط الأخبار المتحرك #}
+    {% component 'enhanced-news-ticker' %}
+    
+    {# القسم الرئيسي #}
+    <main class="home-main">
+        {# العروض المميزة #}
+        <section class="featured-section">
+            {% component 'featured-products-enhanced' %}
+        </section>
+
+        {# المنتجات الجديدة #}
+        <section class="new-products">
+            {% component 'latest-products' %}
+        </section>
+
+        {# التصنيفات المميزة #}
+        <section class="categories-section">
+            {% component 'enhanced-categories' %}
+        </section>
+    </main>
+
+    {# المكونات الافتراضية #}
     {% component home %}
 {% endblock %}
+
 {% block scripts %}
-    <script defer src="{{ 'home.js' | asset }}"></script>
+    <script defer src="{{ asset('dist/home.js') }}"></script>
 {% endblock %}

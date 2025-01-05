@@ -923,6 +923,57 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "enhanced-news-ticker",
+            "title": "شريط أخبار متطور",
+            "icon": "sicon-newspaper",
+            "path": "home.enhanced-news-ticker",
+            "fields": [
+                {
+                    "id": "style",
+                    "type": "string",
+                    "format": "select",
+                    "label": "نمط العرض",
+                    "options": [
+                        {"label": "أفقي", "value": "horizontal"},
+                        {"label": "عمودي", "value": "vertical"},
+                        {"label": "متلاشي", "value": "fade"}
+                    ]
+                },
+                {
+                    "id": "news_items",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "label": "الأخبار",
+                    "fields": [
+                        {
+                            "id": "title",
+                            "type": "string",
+                            "label": "العنوان"
+                        },
+                        {
+                            "id": "description",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "التفاصيل"
+                        },
+                        {
+                            "id": "image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصورة"
+                        },
+                        {
+                            "id": "link",
+                            "type": "string",
+                            "format": "url",
+                            "label": "الرابط"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "support_url": "",
