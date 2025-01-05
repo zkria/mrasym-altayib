@@ -880,45 +880,6 @@
                     "source": "brands"
                 }
             ]
-        },
-        {
-            "name": "news-ticker",
-            "title": "شريط الأخبار المتحرك",
-            "icon": "sicon-newspaper",
-            "path": "components.home.news-ticker",
-            "fields": [
-                {
-                    "id": "news_items",
-                    "type": "collection",
-                    "format": "collection",
-                    "required": true,
-                    "minLength": 1,
-                    "maxLength": 10,
-                    "label": "الأخبار",
-                    "fields": [
-                        {
-                            "id": "text",
-                            "type": "string",
-                            "label": "نص الخبر",
-                            "required": true
-                        },
-                        {
-                            "id": "link",
-                            "type": "string",
-                            "format": "url",
-                            "label": "رابط الخبر"
-                        }
-                    ]
-                },
-                {
-                    "id": "speed",
-                    "type": "number",
-                    "label": "سرعة التحريك",
-                    "default": 3,
-                    "min": 1,
-                    "max": 10
-                }
-            ]
         }
     ],
     "support_url": "",

@@ -880,9 +880,6 @@ select{
 .-mt-1{
   margin-top: -0.25rem;
 }
-.-mt-62{
-  margin-top: -248px;
-}
 .mb-1{
   margin-bottom: 0.25rem;
 }
@@ -1140,9 +1137,6 @@ select{
 }
 .max-w-full{
   max-width: 100%;
-}
-.max-w-lg{
-  max-width: 32rem;
 }
 .max-w-none{
   max-width: none;
@@ -20135,9 +20129,6 @@ lite-youtube.lyt-activated > .lty-playbtn {
   }
   .sm\:pt-12{
     padding-top: 3rem;
-  }
-  .sm\:pt-20{
-    padding-top: 5rem;
   }
 }
 
