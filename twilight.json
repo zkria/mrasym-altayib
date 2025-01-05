@@ -885,7 +885,7 @@
             "name": "news-ticker",
             "title": "شريط الأخبار المتحرك",
             "icon": "sicon-newspaper",
-            "path": "home.news-ticker",
+            "path": "components.home.news-ticker",
             "fields": [
                 {
                     "id": "news_items",
