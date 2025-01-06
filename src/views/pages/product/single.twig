@@ -85,171 +85,228 @@
 {% extends "layouts.master" %}
 {% block content %}
     <div class="container">
-        <div class="product-details">
-            {# الجانب الأيسر - تفاصيل المنتج #}
-            <div class="product-info space-y-6">
-                {# عنوان المنتج #}
-                <h1 class="text-xl lg:text-2xl font-bold">{{ product.name }}</h1>
-
-                {# التقييمات والمشاركة في نفس السطر #}
-                <div class="flex items-center gap-6">
-                    {# التقييمات #}
-                    <div class="rating-wrapper flex items-center gap-2">
-                        <salla-rating-stars 
-                            value="{{ product.rating.stars }}"
-                            readonly>
-                        </salla-rating-stars>
-                        <span class="text-sm text-gray-500">
-                            ({{ product.rating.count }} تقييم)
-                        </span>
-                    </div>
-
-                    {# خط فاصل عمودي #}
-                    <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>
-
-                    {# مشاركة المنتج #}
-                    <div class="share-product flex items-center gap-2">
-                        <span class="text-sm text-gray-500">مشاركة:</span>
-                        <salla-social-share></salla-social-share>
-                    </div>
-                </div>
-
-                {# السعر #}
-                <div class="price-wrapper">
-                    <div class="flex items-center gap-3">
-                        <h2 class="text-2xl font-bold text-primary">
-                            {{ product.price|money }}
-                        </h2>
-                        {% if product.is_on_sale %}
-                            <span class="text-gray-500 line-through">
-                                {{ product.regular_price|money }}
-                            </span>
-                        {% endif %}
-                    </div>
-                    <div class="text-sm text-gray-500 mt-1">
-                        السعر شامل الضريبة
-                    </div>
-                </div>
-
-                {# اختيار الوزن #}
-                <div class="weight-section bg-gray-50 rounded-lg p-4">
-                    <label class="block text-sm font-medium mb-3">الوزن <span class="text-red-500">*</span></label>
-                    <div class="weight-options grid grid-cols-3 gap-2">
-                        <button type="button" 
-                                class="weight-option active"
-                                data-weight="250">
-                            250 جرام
-                        </button>
-                        <button type="button" 
-                                class="weight-option"
-                                data-weight="500">
-                            500 جرام
-                        </button>
-                        <button type="button" 
-                                class="weight-option"
-                                data-weight="1000">
-                            1 كيلو
-                        </button>
-                    </div>
-                </div>
-
-                {# الكمية #}
-                <div class="quantity-section bg-gray-50 rounded-lg p-4">
-                    <label class="block text-sm font-medium mb-2">الكمية</label>
-                    <div class="flex items-center gap-4">
-                        <salla-quantity-input
-                            min="1"
-                            max="{{ product.max_quantity }}"
-                            class="custom-quantity">
-                        </salla-quantity-input>
-                        <span class="text-sm text-gray-500">
-                            المتوفر: {{ product.quantity }}
-                        </span>
-                    </div>
-                </div>
-
-                {# أزرار الشراء #}
-                <div class="purchase-buttons">
-                    <salla-add-product-button
-                        product-id="{{ product.id }}"
-                        class="!h-[60px]">
-                        <span class="add-to-cart-content">
-                            <i class="sicon-cart"></i>
-                            <span>إضافة للسلة</span>
-                        </span>
-                    </salla-add-product-button>
-
-                    <button type="button" 
-                            class="wishlist-btn"
-                            data-product-id="{{ product.id }}"
-                            aria-label="إضافة للمفضلة">
-                        <i class="sicon-heart"></i>
-                    </button>
-                </div>
-            </div>
-
-            {# القسم الأيمن - معرض الصور #}
-            <div class="product-gallery">
-                {# حاوية الصورة الرئيسية مع المصغرات #}
-                <div class="main-image-container">
-                    {# الصورة الرئيسية #}
-                    <div class="main-image-wrapper">
-                        {% if product.promotion_title %}
-                            <div class="promotion-badge">{{ product.promotion_title }}</div>
-                        {% endif %}
+        <nav class="breadcrumbs w-full py-5">
+            <salla-breadcrumb></salla-breadcrumb>
+        </nav>
+        
+        <div class="product-details flex flex-col md:flex-row gap-8">
+            {# قسم الصور مع المصغرات في الأسفل #}
+            <div class="md:w-1/2">
+                <div class="product-gallery sticky top-24">
+                    <salla-slider 
+                        class="product-slider"
+                        id="product-{{ product.id }}"
+                        thumbs="true"
+                        thumbs-position="bottom">
                         
-                        <img src="{{ product.images[0].url }}" 
-                             alt="{{ product.name }}"
-                             id="main-product-image"
-                             class="main-image">
-                    </div>
-
-                    {# المصغرات - الآن داخل الصورة الرئيسية #}
-                    <div class="thumbnails-wrapper">
-                        <div class="thumbnails">
+                        {# الصور الرئيسية #}
+                        <div slot="items">
                             {% for image in product.images %}
-                                <div class="thumbnail {% if loop.first %}active{% endif %}" 
-                                     data-index="{{ loop.index0 }}">
-                                    <img src="{{ image.url }}" 
-                                         alt="{{ product.name }}"
-                                         loading="{{ loop.first ? 'eager' : 'lazy' }}">
+                                <div class="magnify-wrapper">
+                                    <img src="{{ image.url }}"
+                                         alt="{{ image.alt }}"
+                                         id="image-{{ image.id }}"
+                                         class="w-full aspect-square object-cover">
                                 </div>
                             {% endfor %}
                         </div>
-                    </div>
+                        
+                        {# المصغرات #}
+                        <div slot="thumbs" class="product-thumbs">
+                            {% for image in product.images %}
+                                <div class="thumb-item">
+                                    <img src="{{ image.url }}" 
+                                         alt="{{ image.alt }}"
+                                         class="w-full h-full object-cover">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </salla-slider>
                 </div>
+            </div>
+
+            {# قسم المعلومات #}
+            <div class="md:w-1/2">
+                {# العلامة التجارية #}
+                {% if product.brand %}
+                    <a href="{{ product.brand.url }}" class="brand-logo mb-4 block">
+                        <img src="{{ product.brand.logo }}" 
+                             alt="{{ product.brand.name }}"
+                             class="h-12 object-contain">
+                    </a>
+                {% endif %}
+
+                {# اسم المنتج والتقييم #}
+                <h1 class="text-2xl font-bold mb-4">{{ product.name }}</h1>
+                {% if product.rating %}
+                    <div class="product-rating mb-4">
+                        <salla-rating-stars 
+                            value="{{ product.rating.stars }}"
+                            reviews="{{ product.rating.count }}">
+                        </salla-rating-stars>
+                    </div>
+                {% endif %}
+
+                {# معلومات المخزون #}
+                {% if product.can_show_remained_quantity or product.sold_quantity %}
+                    <div class="stock-info mb-4 bg-gray-50 p-4 rounded-lg">
+                        {% if product.sold_quantity and product.can_show_sold %}
+                            <div class="sold-quantity mb-2">
+                                <i class="sicon-fire text-red-600"></i>
+                                <span>{{ pluralize('pages.products.sold_times', product.sold_quantity)|raw }}</span>
+                            </div>
+                        {% endif %}
+                        {% if product.can_show_remained_quantity %}
+                            <div class="remaining-quantity">
+                                <i class="sicon-box-bankers text-primary"></i>
+                                <span>{{ trans('pages.products.remained') }}: {{ product.quantity }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {# السعر والخيارات #}
+                <div class="product-purchase-details bg-white p-6 rounded-lg shadow-sm">
+                    {# السعر #}
+                    <div class="price-section mb-6">
+                        <div class="flex items-center gap-3">
+                            {% if product.is_on_sale %}
+                                <h2 class="text-xl font-bold text-red-600">
+                                    {{ product.sale_price|money }}
+                                </h2>
+                                <span class="text-gray-400 line-through">
+                                    {{ product.regular_price|money }}
+                                </span>
+                            {% else %}
+                                <h2 class="text-xl font-bold">
+                                    {{ product.price|money }}
+                                </h2>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# خيارات المنتج #}
+                    {% if product.has_options %}
+                        {% include 'pages.partials.product.options' %}
+                    {% endif %}
+
+                    {# نموذج الشراء #}
+                    <form class="product-form space-y-6" method="post"
+                          onsubmit="return salla.form.onSubmit('cart.addItem', event)">
+                        <input type="hidden" name="id" value="{{ product.id }}">
+
+                        {# الكمية #}
+                        {% if not product.is_hidden_quantity %}
+                            <div class="quantity-wrapper">
+                                <label class="block text-sm font-medium mb-2">
+                                    {{ trans('pages.products.quantity') }}
+                                </label>
+                                <salla-quantity-input
+                                    max="{{ product.max_quantity }}"
+                                    value="1"
+                                    name="quantity"
+                                    class="w-full">
+                                </salla-quantity-input>
+                            </div>
+                        {% endif %}
+
+                        {# زر الإضافة للسلة #}
+                        <div class="add-to-cart-wrapper">
+                            <salla-add-product-button
+                                product-id="{{ product.id }}"
+                                product-status="{{ product.status }}"
+                                product-type="{{ product.type }}"
+                                class="w-full h-12"
+                                {{ product.is_require_shipping ? 'required-shipping' : '' }}>
+                                {{ product.add_to_cart_label }}
+                            </salla-add-product-button>
+                        </div>
+                    </form>
+                </div>
+
+                {# الوصف #}
+                <div class="product-description prose mt-8">
+                    <h3 class="text-lg font-bold mb-4">{{ trans('pages.products.description') }}</h3>
+                    {{ product.description|raw }}
+                </div>
+
+                {# معلومات إضافية #}
+                {% if product.sku or product.weight %}
+                    <div class="product-meta mt-6 p-4 bg-gray-50 rounded-lg space-y-2">
+                        {% if product.sku %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-600">{{ trans('pages.products.sku') }}:</span>
+                                <span class="font-medium">{{ product.sku }}</span>
+                            </div>
+                        {% endif %}
+                        {% if product.weight %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-600">{{ trans('pages.products.weight') }}:</span>
+                                <span class="font-medium">{{ product.weight }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
+        {# المنتجات المشابهة #}
+        <div class="related-products mt-16">
+            <salla-products-slider 
+                source="related" 
+                source-value="{{product.id}}" 
+                block-title="{{trans('pages.products.similar_products')}}" 
+                display-all-url>
+            </salla-products-slider>
+        </div>
+
+        {# التعليقات #}
+        <salla-comments 
+            item-id="{{product.id}}" 
+            type="product"
+            class="mt-16">
+        </salla-comments>
+
         {# التبويبات #}
-        <div class="product-tabs-container">
-            <div class="tabs-header">
-                <button class="tab-btn" data-tab="questions">
-                    الأسئلة
-                </button>
-                
-                <button class="tab-btn" data-tab="reviews">
-                    التقييمات
-                </button>
-                
-                <button class="tab-btn active" data-tab="details">
-                    تفاصيل المنتج
-                </button>
-            </div>
-
-            <div class="tabs-content">
-                <div class="tab-panel" data-tab="questions">
-                    <salla-product-questions></salla-product-questions>
+        <div class="product-tabs mt-12">
+            <salla-tabs>
+                {# وصف المنتج #}
+                <div slot="tabs">
+                    <button class="tab-trigger" data-tab="description">
+                        {{ trans('pages.products.description') }}
+                    </button>
+                    <button class="tab-trigger" data-tab="reviews">
+                        {{ trans('pages.products.reviews') }}
+                    </button>
+                    <button class="tab-trigger" data-tab="questions">
+                        {{ trans('pages.products.questions') }}
+                    </button>
                 </div>
 
-                <div class="tab-panel" data-tab="reviews">
-                    <salla-product-reviews></salla-product-reviews>
-                </div>
+                {# محتوى التبويبات #}
+                <div slot="panels">
+                    {# وصف المنتج #}
+                    <div class="tab-panel" data-tab="description">
+                        <div class="prose max-w-none">
+                            {{ product.description|raw }}
+                        </div>
+                    </div>
 
-                <div class="tab-panel active" data-tab="details">
-                    {{ product.description | raw }}
+                    {# التقييمات #}
+                    <div class="tab-panel" data-tab="reviews">
+                        <salla-product-reviews 
+                            product-id="{{ product.id }}">
+                        </salla-product-reviews>
+                    </div>
+
+                    {# الأسئلة #}
+                    <div class="tab-panel" data-tab="questions">
+                        <salla-product-questions
+                            product-id="{{ product.id }}">
+                        </salla-product-questions>
+                    </div>
                 </div>
-            </div>
+            </salla-tabs>
         </div>
     </div>
 {% endblock %}
