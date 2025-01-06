@@ -86,100 +86,168 @@
 {% block content %}
     <div class="container">
         <div class="product-details">
-            {# القسم الأيسر - معلومات المنتج #}
-            <div class="product-info">
-                {# عنوان المنتج والتقييم #}
-                <div class="product-header">
-                    <h1 class="product-title">{{ product.name }}</h1>
-                    {% if product.rating %}
-                        <div class="product-rating">
-                            <div class="stars">
-                                {% for i in 1..5 %}
-                                    <i class="sicon-star{{ i <= product.rating.stars ? ' filled' : '' }}"></i>
-                                {% endfor %}
-                            </div>
-                            <span class="rating-count">({{ product.rating.count }})</span>
-                        </div>
-                    {% endif %}
+            {# الجانب الأيسر - تفاصيل المنتج #}
+            <div class="product-info space-y-6">
+                {# عنوان المنتج #}
+                <h1 class="text-xl lg:text-2xl font-bold">{{ product.name }}</h1>
+
+                {# التقييمات والمشاركة في نفس السطر #}
+                <div class="flex items-center gap-6">
+                    {# التقييمات #}
+                    <div class="rating-wrapper flex items-center gap-2">
+                        <salla-rating-stars 
+                            value="{{ product.rating.stars }}"
+                            readonly>
+                        </salla-rating-stars>
+                        <span class="text-sm text-gray-500">
+                            ({{ product.rating.count }} تقييم)
+                        </span>
+                    </div>
+
+                    {# خط فاصل عمودي #}
+                    <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>
+
+                    {# مشاركة المنتج #}
+                    <div class="share-product flex items-center gap-2">
+                        <span class="text-sm text-gray-500">مشاركة:</span>
+                        <salla-social-share></salla-social-share>
+                    </div>
                 </div>
 
                 {# السعر #}
-                <div class="product-price">
-                    {% if product.is_on_sale %}
-                        <div class="sale-price">{{ product.sale_price | money }}</div>
-                        <div class="regular-price">{{ product.regular_price | money }}</div>
-                    {% else %}
-                        <div class="regular-price">{{ product.price | money }}</div>
-                    {% endif %}
-                </div>
-
-                {# شارات المنتج #}
-                <div class="product-badges">
-                    {% if product.is_on_sale %}
-                        <span class="badge sale">{{ product.discount_percentage }}</span>
-                    {% endif %}
-                    {% if product.quantity and product.quantity < 10 %}
-                        <span class="badge stock">{{ trans('pages.products.remaining_quantity', {quantity: product.quantity}) }}</span>
-                    {% endif %}
-                </div>
-
-                {# نموذج إضافة للسلة #}
-                <form class="add-to-cart-form">
-                    {# الكمية #}
-                    <div class="quantity-wrapper">
-                        <label>{{ trans('pages.products.quantity') }}</label>
-                        <salla-quantity-input max="{{ product.max_quantity }}"></salla-quantity-input>
+                <div class="price-wrapper">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-primary">
+                            {{ product.price|money }}
+                        </h2>
+                        {% if product.is_on_sale %}
+                            <span class="text-gray-500 line-through">
+                                {{ product.regular_price|money }}
+                            </span>
+                        {% endif %}
                     </div>
+                    <div class="text-sm text-gray-500 mt-1">
+                        السعر شامل الضريبة
+                    </div>
+                </div>
 
-                    {# زر الإضافة للسلة #}
-                    <salla-add-to-cart-button 
-                        class="add-to-cart-btn"
+                {# اختيار الوزن #}
+                <div class="weight-section bg-gray-50 rounded-lg p-4">
+                    <label class="block text-sm font-medium mb-3">الوزن <span class="text-red-500">*</span></label>
+                    <div class="weight-options grid grid-cols-3 gap-2">
+                        <button type="button" 
+                                class="weight-option active"
+                                data-weight="250">
+                            250 جرام
+                        </button>
+                        <button type="button" 
+                                class="weight-option"
+                                data-weight="500">
+                            500 جرام
+                        </button>
+                        <button type="button" 
+                                class="weight-option"
+                                data-weight="1000">
+                            1 كيلو
+                        </button>
+                    </div>
+                </div>
+
+                {# الكمية #}
+                <div class="quantity-section bg-gray-50 rounded-lg p-4">
+                    <label class="block text-sm font-medium mb-2">الكمية</label>
+                    <div class="flex items-center gap-4">
+                        <salla-quantity-input
+                            min="1"
+                            max="{{ product.max_quantity }}"
+                            class="custom-quantity">
+                        </salla-quantity-input>
+                        <span class="text-sm text-gray-500">
+                            المتوفر: {{ product.quantity }}
+                        </span>
+                    </div>
+                </div>
+
+                {# أزرار الشراء #}
+                <div class="purchase-buttons">
+                    <salla-add-product-button
                         product-id="{{ product.id }}"
-                        product-status="{{ product.status }}"
-                        product-type="{{ product.type }}">
-                    </salla-add-to-cart-button>
-                </form>
+                        class="!h-[60px]">
+                        <span class="add-to-cart-content">
+                            <i class="sicon-cart"></i>
+                            <span>إضافة للسلة</span>
+                        </span>
+                    </salla-add-product-button>
+
+                    <button type="button" 
+                            class="wishlist-btn"
+                            data-product-id="{{ product.id }}"
+                            aria-label="إضافة للمفضلة">
+                        <i class="sicon-heart"></i>
+                    </button>
+                </div>
             </div>
 
             {# القسم الأيمن - معرض الصور #}
             <div class="product-gallery">
-                {# الصورة الرئيسية #}
-                <div class="main-image-wrapper">
-                    {% if product.promotion_title %}
-                        <div class="promotion-title">{{ product.promotion_title }}</div>
-                    {% endif %}
+                {# حاوية الصورة الرئيسية مع المصغرات #}
+                <div class="main-image-container">
+                    {# الصورة الرئيسية #}
+                    <div class="main-image-wrapper">
+                        {% if product.promotion_title %}
+                            <div class="promotion-badge">{{ product.promotion_title }}</div>
+                        {% endif %}
+                        
+                        <img src="{{ product.images[0].url }}" 
+                             alt="{{ product.name }}"
+                             id="main-product-image"
+                             class="main-image">
+                    </div>
 
-                    <img src="{{ product.images[0].url }}" 
-                         alt="{{ product.name }}"
-                         id="main-product-image"
-                         class="main-image">
-
-                    {# أزرار التحكم #}
-                    <div class="gallery-controls">
-                        <button class="control-btn prev">
-                            <i class="sicon-chevron-right"></i>
-                        </button>
-                        <button class="control-btn next">
-                            <i class="sicon-chevron-left"></i>
-                        </button>
-                        <button class="control-btn zoom">
-                            <i class="sicon-zoom-in"></i>
-                        </button>
+                    {# المصغرات - الآن داخل الصورة الرئيسية #}
+                    <div class="thumbnails-wrapper">
+                        <div class="thumbnails">
+                            {% for image in product.images %}
+                                <div class="thumbnail {% if loop.first %}active{% endif %}" 
+                                     data-index="{{ loop.index0 }}">
+                                    <img src="{{ image.url }}" 
+                                         alt="{{ product.name }}"
+                                         loading="{{ loop.first ? 'eager' : 'lazy' }}">
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                {# المصغرات #}
-                <div class="thumbnails-wrapper">
-                    <div class="thumbnails">
-                        {% for image in product.images %}
-                            <div class="thumbnail {% if loop.first %}active{% endif %}" 
-                                 data-index="{{ loop.index0 }}">
-                                <img src="{{ image.url }}" 
-                                     alt="{{ product.name }}"
-                                     loading="{{ loop.first ? 'eager' : 'lazy' }}">
-                            </div>
-                        {% endfor %}
-                    </div>
+        {# التبويبات #}
+        <div class="product-tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn" data-tab="questions">
+                    الأسئلة
+                </button>
+                
+                <button class="tab-btn" data-tab="reviews">
+                    التقييمات
+                </button>
+                
+                <button class="tab-btn active" data-tab="details">
+                    تفاصيل المنتج
+                </button>
+            </div>
+
+            <div class="tabs-content">
+                <div class="tab-panel" data-tab="questions">
+                    <salla-product-questions></salla-product-questions>
+                </div>
+
+                <div class="tab-panel" data-tab="reviews">
+                    <salla-product-reviews></salla-product-reviews>
+                </div>
+
+                <div class="tab-panel active" data-tab="details">
+                    {{ product.description | raw }}
                 </div>
             </div>
         </div>

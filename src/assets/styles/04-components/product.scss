@@ -396,38 +396,23 @@ salla-quantity-input[max='1']{
 
     // القسم الأيسر - معلومات المنتج
     .product-info {
-        @apply flex flex-col gap-6;
+        @apply md:order-2;
 
-        // عنوان المنتج والتقييم
-        .product-header {
-            .product-title {
-                @apply text-2xl font-bold mb-2;
-            }
+        .product-title {
+            @apply text-2xl font-bold mb-4;
+        }
 
-            .product-rating {
-                @apply flex items-center gap-2;
+        .product-tags {
+            @apply flex flex-wrap gap-2 mb-6;
 
-                .stars {
-                    @apply flex gap-0.5;
-                    
-                    i {
-                        @apply text-gray-200 text-lg;
-                        
-                        &.filled {
-                            @apply text-amber-400;
-                        }
-                    }
-                }
-
-                .rating-count {
-                    @apply text-sm text-gray-400;
-                }
+            .tag {
+                @apply px-3 py-1 bg-gray-100 dark:bg-gray-700 
+                       rounded-full text-sm text-gray-600 dark:text-gray-300;
             }
         }
 
-        // السعر
         .product-price {
-            @apply flex items-center gap-3;
+            @apply flex items-center gap-3 mb-6;
 
             .sale-price {
                 @apply text-2xl font-bold text-primary;
@@ -441,108 +426,52 @@ salla-quantity-input[max='1']{
                 }
             }
         }
-
-        // شارات المنتج
-        .product-badges {
-            @apply flex flex-wrap gap-2;
-
-            .badge {
-                @apply px-3 py-1 rounded-full text-sm font-medium;
-
-                &.sale {
-                    @apply bg-red-100 text-red-600;
-                }
-
-                &.stock {
-                    @apply bg-amber-100 text-amber-600;
-                }
-            }
-        }
-
-        // نموذج إضافة للسلة
-        .add-to-cart-form {
-            @apply flex flex-col gap-4 mt-4;
-
-            .quantity-wrapper {
-                @apply flex flex-col gap-2;
-
-                label {
-                    @apply text-sm text-gray-600;
-                }
-            }
-
-            .add-to-cart-btn {
-                @apply mt-2;
-            }
-        }
     }
 
     // القسم الأيمن - معرض الصور
     .product-gallery {
-        @apply relative;
+        @apply md:order-1;
 
-        // الصورة الرئيسية
-        .main-image-wrapper {
-            @apply relative bg-white rounded-lg overflow-hidden;
-            aspect-ratio: 1;
+        .main-image-container {
+            @apply relative rounded-lg overflow-hidden;
+            
+            // الصورة الرئيسية
+            .main-image-wrapper {
+                @apply relative aspect-square;
 
-            .promotion-title {
-                @apply absolute top-4 right-4 z-10
-                       bg-primary text-white px-3 py-1
-                       rounded-full text-sm font-medium;
-            }
+                .main-image {
+                    @apply w-full h-full object-cover;
+                }
 
-            .main-image {
-                @apply w-full h-full object-contain;
-            }
-
-            // أزرار التحكم
-            .gallery-controls {
-                @apply absolute inset-0 flex items-center justify-between
-                       opacity-0 transition-opacity duration-200
-                       bg-black/5 backdrop-blur-sm;
-
-                .control-btn {
-                    @apply w-10 h-10 flex items-center justify-center
-                           bg-white/80 rounded-full mx-4
-                           text-gray-600 transition-all
-                           hover:bg-white hover:text-primary;
-
-                    &.zoom {
-                        @apply absolute bottom-4 right-4 mx-0;
-                    }
+                .promotion-badge {
+                    @apply absolute top-4 right-4 z-10
+                           px-3 py-1 bg-primary text-white
+                           rounded-full text-sm;
                 }
             }
 
-            &:hover .gallery-controls {
-                @apply opacity-100;
-            }
-        }
+            // المصغرات
+            .thumbnails-wrapper {
+                @apply absolute bottom-4 left-0 right-0
+                       px-4 z-20;
 
-        // المصغرات
-        .thumbnails-wrapper {
-            @apply mt-4;
+                .thumbnails {
+                    @apply flex gap-2 justify-center;
 
-            .thumbnails {
-                @apply grid grid-cols-5 gap-2;
+                    .thumbnail {
+                        @apply w-12 h-12 rounded-md overflow-hidden
+                               cursor-pointer
+                               ring-1 ring-gray-200 dark:ring-gray-700
+                               transition-all duration-200
+                               opacity-80 hover:opacity-100;
 
-                .thumbnail {
-                    @apply relative cursor-pointer
-                           border-2 border-transparent
-                           rounded-lg overflow-hidden
-                           transition-all duration-200;
-                    aspect-ratio: 1;
+                        img {
+                            @apply w-full h-full object-cover;
+                        }
 
-                    img {
-                        @apply w-full h-full object-contain;
-                    }
-
-                    &.active {
-                        @apply border-primary;
-                    }
-
-                    &:hover {
-                        @apply border-primary border-opacity-50;
+                        &.active {
+                            @apply ring-2 ring-primary opacity-100;
+                        }
                     }
                 }
             }
@@ -553,8 +482,325 @@ salla-quantity-input[max='1']{
 // تحسينات للموبايل
 @media (max-width: 768px) {
     .product-details {
+        .product-info,
         .product-gallery {
-            @apply order-first;
+            @apply order-none;
+        }
+    }
+}
+
+// حاوية التبويبات
+.product-tabs-container {
+    @apply mt-12 mb-8;
+
+    // رأس التبويبات
+    .tabs-header {
+        @apply flex flex-row-reverse gap-0
+               border rounded-lg overflow-hidden
+               border-gray-200 dark:border-gray-700;
+
+        .tab-btn {
+            @apply flex-1 text-center py-4 px-6
+                   text-gray-500 dark:text-gray-400
+                   bg-white dark:bg-gray-800
+                   transition-all duration-200
+                   border-l border-gray-200 dark:border-gray-700
+                   last:border-l-0;
+
+            // حالة النشاط
+            &.active {
+                @apply text-primary 
+                       bg-gray-50 dark:bg-gray-700
+                       font-medium;
+            }
+
+            // تأثير التحويم
+            &:hover:not(.active) {
+                @apply bg-gray-50/50 dark:bg-gray-700/50;
+            }
+        }
+    }
+
+    // محتوى التبويبات
+    .tabs-content {
+        @apply py-6 px-4;
+
+        .tab-panel {
+            @apply hidden opacity-0;
+            transition: opacity 0.3s ease;
+
+            &.active {
+                @apply block opacity-100;
+            }
+
+            // تنسيق المحتوى
+            p {
+                @apply mb-4 leading-relaxed 
+                       text-gray-600 dark:text-gray-300;
+            }
+
+            ul {
+                @apply list-disc list-inside mb-4 space-y-2 
+                       text-gray-600 dark:text-gray-300;
+            }
+        }
+    }
+}
+
+// تحسينات للموبايل
+@media (max-width: 768px) {
+    .product-tabs-container {
+        .tabs-header {
+            @apply overflow-x-auto flex-nowrap;
+            
+            .tab-btn {
+                @apply whitespace-nowrap flex-none px-4;
+                min-width: 33.333%;
+            }
+        }
+    }
+}
+
+// تحسينات للموبايل
+@media (max-width: 768px) {
+    .product-gallery {
+        .thumbnails-wrapper {
+            .thumbnails {
+                @apply overflow-x-auto;
+                
+                .thumbnail {
+                    @apply w-10 h-10 flex-shrink-0;
+                }
+            }
+        }
+    }
+}
+
+// اختيار الوزن
+.weight-selector {
+    .weight-options {
+        @apply grid grid-cols-3 gap-2;
+    }
+
+    .weight-option {
+        @apply px-4 py-2 text-sm rounded-lg
+               border border-gray-200 dark:border-gray-700
+               text-gray-600 dark:text-gray-300
+               hover:bg-gray-50 dark:hover:bg-gray-800
+               transition-all duration-200;
+
+        &.active {
+            @apply border-primary bg-opacity-10 bg-primary
+                   text-primary font-medium;
+        }
+    }
+}
+
+// أزرار الإجراءات
+.actions-buttons {
+    @apply flex flex-wrap items-center gap-2 mb-4;
+
+    .wishlist-btn,
+    .share-btn {
+        @apply p-3 rounded-lg border border-gray-200 
+               dark:border-gray-700 hover:bg-gray-50 
+               dark:hover:bg-gray-800;
+
+        i {
+            @apply text-xl text-gray-600 dark:text-gray-400;
+        }
+    }
+}
+
+// قائمة المشاركة
+.share-menu {
+    @apply fixed bottom-0 left-0 right-0 
+           bg-white dark:bg-gray-800 
+           rounded-t-2xl shadow-lg
+           transform translate-y-full
+           transition-transform duration-300 ease-in-out
+           z-50;
+
+    &.active {
+        @apply translate-y-0;
+    }
+
+    .share-options {
+        @apply grid grid-cols-4 gap-4 p-6;
+
+        .share-option {
+            @apply flex flex-col items-center gap-2
+                   text-gray-600 dark:text-gray-400
+                   hover:text-primary dark:hover:text-primary
+                   transition-colors duration-200;
+
+            i {
+                @apply text-2xl;
+            }
+
+            span {
+                @apply text-sm;
+            }
+        }
+    }
+}
+
+.product-actions {
+    @apply space-y-6;
+
+    // السعر
+    .product-price {
+        @apply flex items-center gap-3;
+
+        .sale-price {
+            @apply text-2xl font-bold text-primary;
+        }
+
+        .regular-price {
+            @apply text-lg line-through text-gray-400;
+        }
+    }
+
+    // حقل اختيار الوزن
+    .weight-field {
+        @apply space-y-2;
+
+        label {
+            @apply block text-sm font-medium;
+            
+            &.required-field:after {
+                content: '*';
+                @apply text-red-500 mr-1;
+            }
+        }
+
+        .weight-select {
+            select {
+                @apply w-full px-4 py-2 rounded-lg
+                       border border-gray-200 dark:border-gray-700
+                       bg-white dark:bg-gray-800
+                       text-gray-900 dark:text-gray-100;
+            }
+        }
+    }
+
+    // حقل الكمية
+    .quantity-field {
+        @apply space-y-2;
+
+        label {
+            @apply block text-sm font-medium;
+        }
+
+        .quantity-input {
+            @apply flex items-center;
+
+            .quantity-btn {
+                @apply w-10 h-10 flex items-center justify-center
+                       border border-gray-200 dark:border-gray-700
+                       text-gray-600 dark:text-gray-400
+                       hover:bg-gray-50 dark:hover:bg-gray-800;
+
+                &.minus {
+                    @apply rounded-r-lg rtl:rounded-r-none rtl:rounded-l-lg;
+                }
+
+                &.plus {
+                    @apply rounded-l-lg rtl:rounded-l-none rtl:rounded-r-lg;
+                }
+            }
+
+            input {
+                @apply w-20 h-10 text-center border-y border-x-0
+                       border-gray-200 dark:border-gray-700
+                       bg-white dark:bg-gray-800
+                       text-gray-900 dark:text-gray-100;
+            }
+        }
+    }
+
+    // أزرار الشراء
+    .purchase-buttons {
+        @apply grid grid-cols-2 gap-4;
+
+        .buy-now-btn {
+            @apply flex items-center justify-center gap-2
+                   px-6 py-3 rounded-lg
+                   bg-white text-gray-900
+                   border border-gray-200
+                   hover:bg-gray-50
+                   transition-colors duration-200;
+
+            i {
+                @apply text-lg;
+            }
+        }
+
+        .add-to-cart-btn {
+            @apply px-6 py-3 rounded-lg
+                   bg-primary text-white
+                   hover:opacity-90
+                   transition-all duration-200;
+        }
+    }
+}
+
+// تحسينات للموبايل
+@media (max-width: 768px) {
+    .purchase-buttons {
+        @apply grid-cols-1;
+    }
+}
+
+// اختيار الوزن
+.weight-section {
+    .weight-selector {
+        @apply relative;
+
+        .weight-select-btn {
+            @apply w-full p-3 
+                   bg-white dark:bg-gray-800
+                   border border-gray-200 dark:border-gray-700
+                   rounded-lg
+                   transition duration-150;
+
+            &:hover {
+                @apply border-gray-300;
+            }
+
+            &.active {
+                @apply border-primary;
+
+                i {
+                    @apply rotate-180;
+                }
+            }
+        }
+
+        .weight-options-list {
+            @apply absolute w-full mt-2 
+                   bg-white dark:bg-gray-800 
+                   border border-gray-200 dark:border-gray-700
+                   rounded-lg shadow-lg 
+                   overflow-hidden
+                   z-50
+                   hidden;
+
+            &.show {
+                @apply block;
+            }
+
+            .weight-option {
+                @apply flex items-center justify-between
+                       px-4 py-3
+                       cursor-pointer
+                       hover:bg-gray-50 dark:hover:bg-gray-700
+                       transition duration-150;
+
+                .price {
+                    @apply text-primary font-medium;
+                }
+            }
         }
     }
 }

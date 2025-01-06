@@ -3,6 +3,55 @@ import BasePage from './base-page';
 class Product extends BasePage {
     onReady() {
         this.initProductGallery();
+        this.initProductTabs();
+        this.weightSelector = {
+            toggle: (button) => {
+                const optionsList = button.nextElementSibling;
+                const isVisible = optionsList.classList.contains('show');
+
+                // إغلاق جميع القوائم المفتوحة
+                document.querySelectorAll('.weight-options-list').forEach(list => {
+                    list.classList.remove('show');
+                    list.previousElementSibling.classList.remove('active');
+                });
+
+                // إذا كانت القائمة مغلقة، افتحها
+                if (!isVisible) {
+                    button.classList.add('active');
+                    optionsList.classList.add('show');
+                }
+            },
+
+            select: (option) => {
+                const weight = option.dataset.weight;
+                const price = option.dataset.price;
+                const button = option.closest('.weight-selector').querySelector('.weight-select-btn');
+                
+                // تحديث النص المعروض
+                button.querySelector('.selected-weight').textContent = option.querySelector('span').textContent;
+                
+                // إغلاق القائمة
+                this.weightSelector.toggle(button);
+                
+                // إرسال حدث تغيير الوزن
+                salla.event.dispatch('product::weightChanged', { weight, price });
+            }
+        };
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.weight-selector')) {
+                document.querySelectorAll('.weight-options-list').forEach(list => {
+                    list.classList.remove('show');
+                    list.previousElementSibling.classList.remove('active');
+                });
+            }
+        });
+
+        // إضافة مستمع النقر لخيارات الوزن
+        document.querySelectorAll('.weight-option').forEach(option => {
+            option.addEventListener('click', () => this.weightSelector.select(option));
+        });
     }
 
     initProductGallery() {
@@ -143,6 +192,74 @@ class Product extends BasePage {
             img.src = thumbnail.querySelector('img').src;
         });
     }
+
+    initProductTabs() {
+        const tabsContainer = document.querySelector('.product-tabs-container');
+        if (!tabsContainer) return;
+
+        const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
+        const tabPanels = tabsContainer.querySelectorAll('.tab-panel');
+
+        // إخفاء جميع المحتويات ما عدا المحتوى النشط
+        const hideAllPanels = () => {
+            tabPanels.forEach(panel => {
+                panel.style.display = 'none';
+            });
+        };
+
+        // إزالة الحالة النشطة من جميع الأزرار
+        const deactivateAllTabs = () => {
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+        };
+
+        // تفعيل التبويب المحدد
+        const activateTab = (tabId) => {
+            // إخفاء جميع المحتويات
+            hideAllPanels();
+            
+            // إزالة الحالة النشطة من جميع الأزرار
+            deactivateAllTabs();
+
+            // تفعيل الزر المحدد
+            const selectedButton = tabsContainer.querySelector(`[data-tab="${tabId}"]`);
+            selectedButton.classList.add('active');
+
+            // إظهار المحتوى المحدد
+            const selectedPanel = tabsContainer.querySelector(`.tab-panel[data-tab="${tabId}"]`);
+            selectedPanel.style.display = 'block';
+
+            // حفظ التبويب النشط في localStorage
+            localStorage.setItem('activeProductTab', tabId);
+        };
+
+        // إضافة مستمع الأحداث لكل زر
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                activateTab(tabId);
+            });
+        });
+
+        // تفعيل التبويب المحفوظ أو التبويب الافتراضي
+        const savedTab = localStorage.getItem('activeProductTab');
+        if (savedTab && tabsContainer.querySelector(`[data-tab="${savedTab}"]`)) {
+            activateTab(savedTab);
+        } else {
+            // تفعيل تبويب "تفاصيل المنتج" كافتراضي
+            activateTab('details');
+        }
+
+        // تحديث التبويب النشط عند تغيير الـ URL
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && tabsContainer.querySelector(`[data-tab="${hash}"]`)) {
+                activateTab(hash);
+            }
+        });
+    }
 }
 
+// تصدير الصفحة
 Product.initiateWhenReady(['product.single']);
