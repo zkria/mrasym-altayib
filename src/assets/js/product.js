@@ -1,79 +1,147 @@
-import 'lite-youtube-embed';
 import BasePage from './base-page';
-import Fslightbox from 'fslightbox';
-window.fslightbox = Fslightbox;
-import { zoom } from './partials/image-zoom';
 
 class Product extends BasePage {
     onReady() {
-        app.watchElements({
-            totalPrice: '.total-price',
-            beforePrice: '.before-price',
-            startingPriceTitle: '.starting-price-title',
+        this.initProductGallery();
+    }
+
+    initProductGallery() {
+        const mainImage = document.getElementById('main-product-image');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainWrapper = document.querySelector('.main-image-wrapper');
+        const prevButton = document.querySelector('.control-btn.prev');
+        const nextButton = document.querySelector('.control-btn.next');
+        const zoomButton = document.querySelector('.control-btn.zoom');
+
+        if (!mainImage || !thumbnails.length) return;
+
+        let currentIndex = 0;
+        const maxIndex = thumbnails.length - 1;
+        let isZoomed = false;
+
+        // تحديث الصورة الرئيسية مع تأثير انتقالي
+        const updateMainImage = (index, direction = 'next') => {
+            const targetThumbnail = thumbnails[index].querySelector('img');
+            
+            // إضافة تأثير انتقالي للصورة
+            mainImage.style.opacity = '0';
+            mainImage.style.transform = `translateX(${direction === 'next' ? '-10px' : '10px'})`;
+            
+            setTimeout(() => {
+                mainImage.src = targetThumbnail.src;
+                mainImage.style.opacity = '1';
+                mainImage.style.transform = 'translateX(0)';
+            }, 200);
+
+            // تحديث حالة المصغرات
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            thumbnails[index].classList.add('active');
+            
+            currentIndex = index;
+        };
+
+        // معالجة التكبير
+        const handleZoom = (e) => {
+            if (!isZoomed) return;
+
+            const rect = mainImage.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+
+            mainImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+        };
+
+        // تفعيل/تعطيل التكبير
+        const toggleZoom = () => {
+            isZoomed = !isZoomed;
+            mainWrapper.classList.toggle('zoomed');
+            
+            if (isZoomed) {
+                mainImage.style.transform = 'scale(2.5)';
+                zoomButton.querySelector('i').className = 'sicon-zoom-out';
+                mainWrapper.addEventListener('mousemove', handleZoom);
+            } else {
+                mainImage.style.transform = 'scale(1)';
+                zoomButton.querySelector('i').className = 'sicon-zoom-in';
+                mainWrapper.removeEventListener('mousemove', handleZoom);
+            }
+        };
+
+        // معالجة النقر على المصغرات
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', () => {
+                if (index === currentIndex) return;
+                const direction = index > currentIndex ? 'next' : 'prev';
+                updateMainImage(index, direction);
+            });
         });
 
-        this.initProductOptionValidations();
-
-        if(imageZoom){
-            // call the function when the page is ready
-            this.initImagesZooming();
-            // listen to screen resizing
-            window.addEventListener('resize', () => this.initImagesZooming());
+        // معالجة أزرار التنقل
+        if (prevButton) {
+            prevButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+                updateMainImage(newIndex, 'prev');
+            });
         }
-    }
 
-    initProductOptionValidations() {
-      document.querySelector('.product-form')?.addEventListener('change', function(){
-        this.reportValidity() && salla.product.getPrice(new FormData(this));
-      });
-    }
+        if (nextButton) {
+            nextButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+                updateMainImage(newIndex, 'next');
+            });
+        }
 
-    initImagesZooming() {
-      // skip if the screen is not desktop or if glass magnifier
-      // is already crated for the image before
-      const imageZoom = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active .img-magnifier-glass');
-      if (window.innerWidth  < 1024 || imageZoom) return;
-      setTimeout(() => {
-          // set delay after the resizing is done, start creating the glass
-          // to create the glass in the proper position
-          const image = document.querySelector('.image-slider .swiper-slide-active img');
-          zoom(image?.id, 2);
-      }, 250);
-  
+        // زر التكبير
+        if (zoomButton) {
+            zoomButton.addEventListener('click', toggleZoom);
+        }
 
-      document.querySelector('salla-slider.details-slider').addEventListener('slideChange', (e) => {
-          // set delay till the active class is ready
-          setTimeout(() => {
-              const imageZoom = document.querySelector('.image-slider .swiper-slide-active .img-magnifier-glass');
-    
-              // if the zoom glass is already created skip
-              if (window.innerWidth  < 1024 || imageZoom) return;
-              const image = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active img');
-              zoom(image?.id, 2);
-          }, 250)
-      })
-    }
+        // معالجة التنقل باللمس للموبايل
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-    registerEvents() {
-      salla.product.event.onPriceUpdated((res) => {
-        let data = res.data,
-            is_on_sale = data.has_sale_price && data.regular_price > data.price;
+        mainWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
 
-        app.startingPriceTitle?.classList.add('hidden');
+        mainWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            
+            if (Math.abs(diff) > 50) { // تأكد من أن السحب كافٍ
+                if (diff > 0) {
+                    prevButton?.click();
+                } else {
+                    nextButton?.click();
+                }
+            }
+        }, { passive: true });
 
-        app.totalPrice.forEach((el) => {el.innerText = salla.money(data.price)});
-        app.beforePrice.forEach((el) => {el.innerText = salla.money(data.regular_price)});
+        // معالجة أزرار لوحة المفاتيح
+        document.addEventListener('keydown', (e) => {
+            if (!mainWrapper.matches(':hover')) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    prevButton?.click();
+                    break;
+                case 'ArrowRight':
+                    nextButton?.click();
+                    break;
+                case ' ': // مسافة
+                    e.preventDefault();
+                    zoomButton?.click();
+                    break;
+            }
+        });
 
-        app.toggleClassIf('.price_is_on_sale','showed','hidden', ()=> is_on_sale)
-        app.toggleClassIf('.starting-or-normal-price','hidden','showed', ()=> is_on_sale)
-
-        app.anime('.total-price', { scale: [0.88, 1] });
-      });
-
-      app.onClick('#btn-show-more', e => app.all('#more-content', div => {
-        e.target.classList.add('is-expanded');
-        div.style = `max-height:${div.scrollHeight}px`;
-      }) || e.target.remove());
+        // تحميل مسبق للصور
+        thumbnails.forEach(thumbnail => {
+            const img = new Image();
+            img.src = thumbnail.querySelector('img').src;
+        });
     }
 }
 

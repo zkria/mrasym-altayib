@@ -390,3 +390,171 @@ salla-quantity-input[max='1']{
     @apply cursor-not-allowed
   }
 }
+
+.product-details {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8 py-8;
+
+    // القسم الأيسر - معلومات المنتج
+    .product-info {
+        @apply flex flex-col gap-6;
+
+        // عنوان المنتج والتقييم
+        .product-header {
+            .product-title {
+                @apply text-2xl font-bold mb-2;
+            }
+
+            .product-rating {
+                @apply flex items-center gap-2;
+
+                .stars {
+                    @apply flex gap-0.5;
+                    
+                    i {
+                        @apply text-gray-200 text-lg;
+                        
+                        &.filled {
+                            @apply text-amber-400;
+                        }
+                    }
+                }
+
+                .rating-count {
+                    @apply text-sm text-gray-400;
+                }
+            }
+        }
+
+        // السعر
+        .product-price {
+            @apply flex items-center gap-3;
+
+            .sale-price {
+                @apply text-2xl font-bold text-primary;
+            }
+
+            .regular-price {
+                @apply text-lg;
+                
+                &:not(:only-child) {
+                    @apply line-through text-gray-400;
+                }
+            }
+        }
+
+        // شارات المنتج
+        .product-badges {
+            @apply flex flex-wrap gap-2;
+
+            .badge {
+                @apply px-3 py-1 rounded-full text-sm font-medium;
+
+                &.sale {
+                    @apply bg-red-100 text-red-600;
+                }
+
+                &.stock {
+                    @apply bg-amber-100 text-amber-600;
+                }
+            }
+        }
+
+        // نموذج إضافة للسلة
+        .add-to-cart-form {
+            @apply flex flex-col gap-4 mt-4;
+
+            .quantity-wrapper {
+                @apply flex flex-col gap-2;
+
+                label {
+                    @apply text-sm text-gray-600;
+                }
+            }
+
+            .add-to-cart-btn {
+                @apply mt-2;
+            }
+        }
+    }
+
+    // القسم الأيمن - معرض الصور
+    .product-gallery {
+        @apply relative;
+
+        // الصورة الرئيسية
+        .main-image-wrapper {
+            @apply relative bg-white rounded-lg overflow-hidden;
+            aspect-ratio: 1;
+
+            .promotion-title {
+                @apply absolute top-4 right-4 z-10
+                       bg-primary text-white px-3 py-1
+                       rounded-full text-sm font-medium;
+            }
+
+            .main-image {
+                @apply w-full h-full object-contain;
+            }
+
+            // أزرار التحكم
+            .gallery-controls {
+                @apply absolute inset-0 flex items-center justify-between
+                       opacity-0 transition-opacity duration-200
+                       bg-black/5 backdrop-blur-sm;
+
+                .control-btn {
+                    @apply w-10 h-10 flex items-center justify-center
+                           bg-white/80 rounded-full mx-4
+                           text-gray-600 transition-all
+                           hover:bg-white hover:text-primary;
+
+                    &.zoom {
+                        @apply absolute bottom-4 right-4 mx-0;
+                    }
+                }
+            }
+
+            &:hover .gallery-controls {
+                @apply opacity-100;
+            }
+        }
+
+        // المصغرات
+        .thumbnails-wrapper {
+            @apply mt-4;
+
+            .thumbnails {
+                @apply grid grid-cols-5 gap-2;
+
+                .thumbnail {
+                    @apply relative cursor-pointer
+                           border-2 border-transparent
+                           rounded-lg overflow-hidden
+                           transition-all duration-200;
+                    aspect-ratio: 1;
+
+                    img {
+                        @apply w-full h-full object-contain;
+                    }
+
+                    &.active {
+                        @apply border-primary;
+                    }
+
+                    &:hover {
+                        @apply border-primary border-opacity-50;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// تحسينات للموبايل
+@media (max-width: 768px) {
+    .product-details {
+        .product-gallery {
+            @apply order-first;
+        }
+    }
+}
