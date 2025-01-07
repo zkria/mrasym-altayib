@@ -25,6 +25,25 @@ class Product extends BasePage {
 
         // تهيئة الخيارات والأحداث
         this.initOptions();
+
+        // إضافة تأثير Sticky للتنقل
+        document.addEventListener('DOMContentLoaded', function() {
+            const breadcrumbs = document.querySelector('.breadcrumbs-wrapper');
+            if (!breadcrumbs) return;
+
+            const observer = new IntersectionObserver(
+                ([e]) => {
+                    if (e.intersectionRatio < 1) {
+                        breadcrumbs.classList.add('is-sticky');
+                    } else {
+                        breadcrumbs.classList.remove('is-sticky');
+                    }
+                },
+                { threshold: [1] }
+            );
+
+            observer.observe(breadcrumbs);
+        });
     }
 
     initProductOptionValidations() {
