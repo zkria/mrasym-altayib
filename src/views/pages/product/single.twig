@@ -42,7 +42,7 @@
 | product.images[].type                  | string                      | `صورة` `فيديو`                                                        |
 | product.brand                          | ?object                     |                                                                        |
 | product.brand.id                       | int                         |                                                                        |
-| product.brand.url                      | ?string                     |                                                                        |
+| product.brand.url                      | ?string                      |                                                                        |
 | product.brand.name                     | ?string                     |                                                                        |
 | product.brand.logo                     | ?string                     |                                                                        |
 | product.tags                           | ?Tags[] *Collection         |                                                                        |
@@ -85,130 +85,191 @@
 {% extends "layouts.master" %}
 {% block content %}
     {# إضافة أزرار التنقل في أعلى الصفحة #}
-    <nav class="breadcrumbs-wrapper">
-        <div class="container">
-            <salla-breadcrumb>
-                {# يمكننا إضافة محتوى إضافي هنا إذا أردنا تخصيص المكون #}
-            </salla-breadcrumb>
-        </div>
+    <nav class="breadcrumbs w-full py-5">
+        <salla-breadcrumb></salla-breadcrumb>
     </nav>
-
-    {# باقي محتوى الصفحة #}
-    <div class="container">
-        <div class="product-details">
-            {# الجانب الأيسر - تفاصيل المنتج #}
-            <div class="product-info space-y-6">
-                {# عنوان المنتج #}
-                <h1 class="text-xl lg:text-2xl font-bold">{{ product.name }}</h1>
-
-                {# التقييمات والمشاركة في نفس السطر #}
-                <div class="flex items-center gap-6">
-                    {# التقييمات #}
-                    <div class="rating-wrapper flex items-center gap-2">
-                        <salla-rating-stars 
-                            value="{{ product.rating.stars }}"
-                            readonly>
-                        </salla-rating-stars>
-                        <span class="text-sm text-gray-500">
-                            ({{ product.rating.count }} تقييم)
-                        </span>
-                    </div>
-
-                    {# خط فاصل عمودي #}
-                    <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>
-
-                    {# مشاركة المنتج #}
-                    <div class="share-product flex items-center gap-2">
-                        <span class="text-sm text-gray-500">مشاركة:</span>
-                        <salla-social-share></salla-social-share>
-                    </div>
-                </div>
-
-                {# السعر #}
-                <div class="price-wrapper">
-                    {% if product.price != '-' %}
-                        <div class="flex whitespace-nowrap gap-4 items-center">
-                            <div class="{{ product.is_on_sale ? '' : 'hidden' }} space-x-2 rtl:space-x-reverse whitespace-nowrap">
-                                <h4 class="text-red-800 font-bold text-xl inline-block">{{product.sale_price|money}}</h4>
-                                <span class="text-gray-500 line-through">{{product.regular_price|money}}</span>
-                            </div>
-                            <div class="gap-4 {{ product.is_on_sale ? 'hidden' : 'flex' }}">
-                                {% if product.starting_price %} 
-                                    <span class="">{{ trans('pages.products.starting_price') }}</span>
-                                {% endif %} 
-                                <h2 class="font-bold text-xl inline-block">{{product.starting_price ? product.starting_price|money : product.price|money }}</h2>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="text-gray-500">السعر غير متوفر</div>
-                    {% endif %}
-                    <div class="text-sm text-gray-500 mt-1">
-                        السعر شامل الضريبة
-                    </div>
-                </div>
+    {# بداية عرض المنتج - يحتوي على قسمين رئيسيين #}
+    <div class="flex flex-col items-start md:flex-row" id="product-{{ product.id }}">
+            
+        {# القسم الأول: عرض الصور #}
+        <div class="sidebar md:sticky top-24 w-full md:!w-2/4 rtl:ml-8 ltr:mr-8 pb-8 md:pb-16 overflow-hidden shrink-0">
+            {% set has_many_images = product.images|length > 1 %}
+            
+            {# مكون عرض الصور مع المصغرات #}
+            <salla-slider
+                    id="details-slider-{{ product.id }}"
+                    class="details-slider rounded-md image-slider"
+                    type="thumbs"
+                    loop="false"
+                    auto-height
+                    listen-to-thumbnails-option
+                    show-thumbs-controls="false">
                 
-            </div>
+                {# عرض عنوان العرض الترويجي إن وجد #}
+                {% if product.promotion_title %}
+                    <div class="promotion-title">{{ product.promotion_title }}</div>
+                {% endif %}
 
-            {# القسم الأيمن - معرض الصور #}
-            <div class="product-gallery">
-                {% if product.images|length > 0 %}
-                    <div class="main-image-container relative overflow-hidden rounded-lg">
-                        {# زر المفضلة #}
-                        <salla-button
-                            class="btn--wishlist animated absolute top-3 rtl:left-3 ltr:right-3 z-50"
-                            data-id="{{ product.id }}"
-                            onclick="salla.wishlist.toggle({{ product.id }})"
-                            shape="icon"
-                            color="light"
-                            aria-label="إضافة إلى قائمة الرغبات">
-                            <i class="sicon-heart {{ product.is_in_wishlist ? 'is-favorite' : '' }}"></i>
-                        </salla-button>
+                {# زر إضافة للمفضلة #}
+                <salla-button
+                        class="btn--wishlist animated sws"
+                        data-id="{{ product.id }}"
+                        onclick="salla.wishlist.toggle({{ product.id }})"
+                        shape="icon"
+                        fill="outline"
+                        color="light">
+                    <i class="sicon-heart"></i>
+                </salla-button>
 
-                        {# شارة العرض الترويجي #}
-                        {% if product.promotion_title %}
-                            <div class="promotion-badge absolute top-3 rtl:right-3 ltr:left-3 z-40 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                                {{ product.promotion_title }}
-                            </div>
-                        {% endif %}
-                        
-                        {# الصورة الرئيسية #}
-                        <div class="main-image-wrapper aspect-square">
-                            <img src="{{ product.images[0].url }}" 
-                                 alt="{{ product.name }}"
-                                 id="main-product-image"
-                                 class="main-image w-full h-full object-cover">
-                        </div>
-
-                        {# المصغرات #}
-                        {% if product.images|length > 1 %}
-                            <div class="thumbnails-wrapper mt-4">
-                                <div class="thumbnails grid grid-cols-5 gap-2">
-                                    {% for image in product.images %}
-                                        <div class="thumbnail-item aspect-square rounded-md overflow-hidden cursor-pointer 
-                                                  {{ loop.first ? 'ring-2 ring-primary' : '' }}"
-                                             onclick="updateMainImage('{{ image.url }}', this)">
-                                            <img src="{{ image.url }}" 
-                                                 alt="{{ product.name }}"
-                                                 loading="{{ loop.first ? 'eager' : 'lazy' }}"
-                                                 class="w-full h-full object-cover">
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% else %}
-                    <div class="no-image-placeholder aspect-square rounded-lg bg-gray-100 flex items-center justify-center">
-                        <i class="sicon-image text-4xl text-gray-400"></i>
+                {# عرض السعرات الحرارية إن وجدت #}
+                {% if product.calories %}
+                    <div class="absolute z-[2] top-4 rtl:left-4 ltr:right-4 bg-white shadow-sm flex flex-col justify-center items-center rounded-full w-20 h-20 md:w-24 md:h-24">
+                        <span class="text-red-500 text-xl leading-none font-bold">{{ product.calories }}</span>
+                        <span class="text-xs text-gray-500">{{ trans('pages.products.calories') }}</span>
                     </div>
                 {% endif %}
-            </div>
+
+                {# عرض الصور الرئيسية #}
+                <div slot="items">
+                    {% for image in product.images %}
+                        {# التحقق من وجود صور ثلاثية الأبعاد #}
+                        {% if image.three_d_image_url %}
+                            <model-viewer style="min-height: 500px;" 
+                                class="swiper-slide model-entry w-full h-full"
+                                loading="eager" camera-controls
+                                touch-action="pan-y" auto-rotate
+                                poster="{{ image.url }}"
+                                src="{{ image.three_d_image_url }}"
+                                shadow-intensity="1" 
+                                alt="{{ image.alt }}">
+                            </model-viewer>
+                        {% else %}
+                            {# عرض الصور العادية #}
+                            <a data-fslightbox="product_{{ product.id }}"
+                               data-img-id="{{ image.id }}"
+                               data-slid-index="{{ loop.index-1 }}"
+                               {% if image.video_url %} 
+                               data-video-src="{{ image.video_url }}"
+                               {% endif %}
+                               data-caption="{{ image.alt }}"
+                               data-infinite="false"
+                               data-type="{{ image.video_url ? 'youtube' : 'image' }}"
+                               href="{{ image.video_url ? image.video_url : image.url }}"
+                               aria-label="{{ product.name }}"
+                               class="swiper-slide magnify-wrapper homeslider__slide {{ image.video_url ? 'video-entry' : '' }}">
+                                {# تحميل الصورة الأولى مباشرة والباقي بشكل كسول #}
+                                {% if loop.first %}
+                                    <img id="{{ image.id }}" 
+                                         fetchpriority="high" 
+                                         loading="eager" 
+                                         src="{{ image.url }}"
+                                         alt="{{ image.alt }}"
+                                         class="h-full object-{{ theme.settings.get('slider_background_size') }} w-full {{ image.three_d_image_url ? 'model-poster' : '' }}">
+                                {% else %}
+                                    <img id="{{ image.id }}" 
+                                         src="{{ 'images/s-empty.png' | cdn }}" 
+                                         data-src="{{ image.url }}"
+                                         alt="{{ image.alt }}"
+                                         class="lazy h-full object-{{ theme.settings.get('slider_background_size') }} w-full {{ image.three_d_image_url ? 'model-poster' : '' }}">
+                                {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {# عرض المصغرات إذا كان هناك أكثر من صورة #}
+                {% if has_many_images %}
+                    <div slot="thumbs">
+                        {% for image in product.images %}
+                            <div class="slide--one-fourth {{ image.video_url ? 'video-entry' : '' }} {{ image.three_d_image_url ? 'model-entry' : '' }}">
+                                {% if loop.index < 5 %}
+                                    <img src="{{ image.url }}"
+                                         loading="eager"
+                                         class="object-cover w-full h-full bg-gray-100 rounded-md overflow-hidden"
+                                         title="{{ image.alt }}"
+                                         alt="{{ image.alt }}"/>
+                                {% else %}
+                                    <img data-src="{{ image.url }}" 
+                                         src="{{ 'images/s-empty.png' | cdn }}"
+                                         class="object-cover w-full h-full lazy bg-gray-100 rounded-md overflow-hidden"
+                                         title="{{ image.alt }}"
+                                         alt="{{ image.alt }}"/>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </salla-slider>
         </div>
 
+        {# القسم الثاني: تفاصيل المنتج #}
+        <div class="main-content md:sticky md:overflow-hidden top-24 w-full md:w-2/4 md:pb-16">
+            {% hook 'product:single.description.start' %}
+
+            {# عرض العلامة التجارية إن وجدت #}
+            {% if product.brand.name %}
+                <div class="product-brand mb-5 w-12">
+                    <a class="brand-logo" href="{{ product.brand.url }}" title="{{ product.brand.name }}">
+                        <img width="100%" height="100%" 
+                             class="max-h-full object-contain"
+                             src="{{ product.brand.logo }}"
+                             title="{{ product.brand.name }}"
+                             alt="{{ product.brand.name }}">
+                    </a>
+                </div>
+            {% endif %}
+
+            {# عرض معلومات الضريبة #}
+            {% if product.is_taxable %}
+                <small class="color-grey">{{ trans('pages.products.tax_included') }}</small>
+            {% endif %}
+
+            {# اسم المنتج #}
+            <h1 class="text-xl md:text-2xl leading-10 font-bold mb-6 text-gray-800">{{ product.name }}</h1>
+
+            {# العنوان الفرعي للمنتج #}
+            {% if product.subtitle %}
+                <h2 class="product-entry__sub-title text-sm text-gray-500 leading-6 mb-2.5">
+                    {{ product.subtitle }}
+                </h2>
+            {% endif %}
+
+            {# تقييم المنتج #}
+            {% if product.rating %}
+                <salla-rating-stars value="{{ product.rating.stars }}"
+                                  reviews="{{ product.rating.count }}">
+                </salla-rating-stars>
+            {% endif %}
+
+            {# عرض الأسعار #}
+            <div class="flex whitespace-nowrap gap-4 items-center">
+                {# سعر التخفيض والسعر الأصلي #}
+                <div class="{{ product.is_on_sale ? '' : 'hidden' }} space-x-2 rtl:space-x-reverse whitespace-nowrap">
+                    <h4 class="text-red-800 font-bold text-xl inline-block">{{ product.sale_price | money }}</h4>
+                    <span class="text-gray-500 line-through">{{ product.regular_price | money }}</span>
+                </div>
+                
+                {# السعر العادي أو سعر البداية #}
+                <div class="gap-4 {{ product.is_on_sale ? 'hidden' : 'flex' }}">
+                    {% if product.starting_price %}
+                        <span class="">{{ trans('pages.products.starting_price') }}</span>
+                    {% endif %}
+                    <h2 class="font-bold text-xl inline-block">
+                        {{ product.starting_price ? product.starting_price | money : product.price | money }}
+                    </h2>
+                </div>
+            </div>
        {# ... existing code ... #}
 
         {# التبويبات #}
-        <div class="product-tabs-container" x-data="{ activeTab: 'description' }">
+        <div class="product-tabs-container" x-data="{ 
+            activeTab: 'description',
+            tabs: {
+                description: true,
+                reviews: {{ product.rating ? 'true' : 'false' }},
+                questions: true
+            }
+        }">
             <div class="tabs-header">
                 <button class="tab-btn" 
                         :class="{ 'active': activeTab === 'questions' }"

@@ -1,9 +1,7 @@
 module.exports = {
     important: false,
     content: [
-        "src/views/**/*.twig",
-        "src/assets/js/**/*.js",
-        'node_modules/@salla.sa/twilight-tailwind-theme/safe-list-css.txt',
+        "./src/**/*.{html,js,jsx,ts,tsx,vue,twig}",
     ],
     darkMode: 'class',
     theme: {
@@ -141,5 +139,6 @@ module.exports = {
       require('@salla.sa/twilight-tailwind-theme'),
       require('@tailwindcss/forms'),
       require('@tailwindcss/line-clamp'),
+      require('@tailwindcss/typography'),
     ],
 }

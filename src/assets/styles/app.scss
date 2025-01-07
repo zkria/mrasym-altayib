@@ -49,48 +49,67 @@
  * MMenu................Specific styles for mmenu addon.
  *
 */
+// 1. إعدادات Tailwind والمتغيرات الأساسية
+@import './01-settings/tailwind';      // تكوينات Tailwind CSS
+@import './01-settings/fonts';         // تعريفات الخطوط
+@import './01-settings/global';        // المتغيرات العامة والألوان
+@import './01-settings/breakpoints';   // نقاط الكسر للتصميم المتجاوب
 
-@import './01-settings/tailwind';
-@import './01-settings/fonts';
-@import './01-settings/global';
-@import './01-settings/breakpoints';
+// 2. الأنماط العامة والتصحيحات
+@import './02-generic/reset';          // إعادة تعيين الأنماط الافتراضية
+@import './02-generic/common';         // الأنماط المشتركة
+@import './02-generic/tooltip';        // تلميحات الأدوات
+@import './02-generic/animations';     // التأثيرات الحركية
+@import './02-generic/lazyload';       // تحميل الصور الكسول
+@import './02-generic/rtl';           // دعم اللغة العربية
+@import './02-generic/ltr';           // دعم اللغة الإنجليزية
+@import './02-generic/mixins';        // الدوال المساعدة
 
-@import './02-generic/reset';
-@import './02-generic/common';
-@import './02-generic/tooltip';
-@import './02-generic/animations';
-@import './02-generic/lazyload';
-@import './02-generic/rtl';
-@import './02-generic/ltr';
-@import './02-generic/mixins';
+// 3. العناصر الأساسية
+@import './03-elements/form';          // النماذج
+@import './03-elements/buttons';       // الأزرار
+@import './03-elements/radio';         // أزرار الراديو
+@import './03-elements/radio-images';  // اختيار الصور
 
-@import './03-elements/form';
-@import './03-elements/buttons';
-@import './03-elements/radio';
-@import './03-elements/radio-images';
+// 4. المكونات
+@import './04-components/header';      // الرأس
+@import './04-components/footer';      // التذييل
+@import './04-components/menus';       // القوائم
+@import './04-components/user-menu';   // قائمة المستخدم
+@import './04-components/user-pages';  // صفحات المستخدم
+@import './04-components/home-blocks'; // كتل الصفحة الرئيسية
+@import './04-components/slider';      // عارض الشرائح
+@import './04-components/product';     // صفحة المنتج
+@import './04-components/brands';      // العلامات التجارية
+@import './04-components/no-content-placeholder';  // محتوى فارغ
+@import './04-components/gifting';     // نظام الهدايا
+@import './04-components/loyalty';     // نظام الولاء
+@import './04-components/virtooal';    // المكون الافتراضي
+@import './04-components/landing-page'; // صفحة الهبوط
+@import './04-components/filters';     // المرشحات
 
-@import './04-components/header';
-@import './04-components/footer';
-@import './04-components/menus';
-@import './04-components/user-menu';
-@import './04-components/user-pages';
-@import './04-components/home-blocks';
-@import './04-components/slider';
-@import './04-components/product';
-@import './04-components/brands';
-@import './04-components/no-content-placeholder';
-@import './04-components/gifting';
-@import './04-components/loyalty';
-@import './04-components/virtooal';
-@import './04-components/landing-page';
-@import './04-components/filters';
+// 5. الأدوات المساعدة
+@import './05-utilities/chat-bots';    // روبوتات الدردشة
+@import './05-utilities/swal';         // تنبيهات Sweet Alert
+@import './05-utilities/safari-fixes'; // إصلاحات متصفح Safari
+@import './05-utilities/font-customization'; // تخصيص الخطوط
+@import './05-utilities/dark-mode';    // الوضع الداكن
 
-@import './05-utilities/chat-bots';
-@import './05-utilities/swal';
-@import './05-utilities/safari-fixes';
-@import './05-utilities/font-customization';
-@import './05-utilities/dark-mode';
+// 6. المكتبات الخارجية
+@import 'lite-youtube-embed';          // تضمين يوتيوب المخفف
+//@import 'swiper/css/bundle';         // مكتبة Swiper (معطلة حالياً)
+@import 'mmenu-light/dist/mmenu-light.css'; // قائمة الموبايل
 
-@import 'lite-youtube-embed';
-//@import 'swiper/css/bundle';
-@import 'mmenu-light/dist/mmenu-light.css';
+@layer components {
+  .prose {
+    @apply max-w-none text-base text-gray-700 leading-relaxed;
+  }
+  
+  .prose-sm {
+    @apply text-sm;
+  }
+  
+  .prose-base {
+    @apply text-base;
+  }
+}

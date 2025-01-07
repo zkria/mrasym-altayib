@@ -1,16 +1,16 @@
-// Colors
+// الألوان الأساسية
 $main-color: var(--color-primary);
-$infinte-color: var(--infinte-color);
+$infinite-color: var(--infinite-color);
 $main-text-color: var(--main-text-color);
 
 :root {
-  --infinte-color: #c9c9c9;
+  // الألوان الأساسية
+  --infinite-color: #c9c9c9;
   --main-text-color: #231f1e;
   --main-text-color-dark: #2b2d34;
 
-  /* current */
+  /* الألوان الحالية */
   --color-primary: #5cd5c4;
-  --color-primary: #414042;
   --color-primary-d: #272628;
   --color-primary-l: #676668;
   --color-primary-reverse: #ff6767;
@@ -18,12 +18,14 @@ $main-text-color: var(--main-text-color);
   --bg-gray: #c6c7ce1a;
   --color-grey: #f5f7f9;
   --color-light-grey: #eeeeee;
-  /* font-size */
+
+  /* أحجام الخطوط */
   --font-sm: 0.8685714286rem;
-  /* font-family: ; */
+  
+  /* الخطوط */
   --font-main: "DINNextLTArabic";
 
-  /* plugins */
+  /* إضافات */
   --mm-ocd-width: calc(100% - 51px);
 
   /* متغيرات الوضع الداكن */
@@ -32,7 +34,7 @@ $main-text-color: var(--main-text-color);
   --color-dark-border: #2d2d2d;
   --color-dark-hover: #2d2d2d;
 
-  /* تأكد من تعريف الألوان الأساسية */
+  /* الألوان الأساسية */
   --color-primary: #5cd5c4;
   --color-text: #231f1e;
 
@@ -42,7 +44,7 @@ $main-text-color: var(--main-text-color);
   --border-color: #eeeeee;
 }
 
-/* تعريف صريح للوضع الداكن */
+/* تعريفات الوضع الداكن */
 [data-theme="dark"] {
   --color-primary: #5cd5c4;
   --color-primary-d: #ffffff;
@@ -53,7 +55,7 @@ $main-text-color: var(--main-text-color);
   --color-light-grey: #2d2d2d;
 }
 
-/* سيتم تجاوز هذه القيم في الوضع الداكن */
+/* تعريفات الوضع الداكن للكلاس .dark */
 .dark {
   --bg-primary: #1a1a1a;
   --text-primary: #ffffff;
