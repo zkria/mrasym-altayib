@@ -277,52 +277,98 @@ class ProductGallery {
 
 class ProductTabs {
     constructor() {
-        this.tabs = document.querySelectorAll('.tab-btn');
-        this.panels = document.querySelectorAll('.tab-panel');
+        this.tabsContainer = document.querySelector('.product-tabs-container');
+        if (!this.tabsContainer) return;
+
+        this.tabs = this.tabsContainer.querySelectorAll('.tab-btn');
+        this.panels = this.tabsContainer.querySelectorAll('.tab-panel');
+        
         this.init();
     }
 
     init() {
+        // إضافة مستمعي الأحداث للأزرار
         this.tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                const target = tab.dataset.tab;
-                this.switchTab(target);
+                const targetId = tab.getAttribute('data-tab');
+                this.switchTab(targetId);
             });
         });
     }
 
-    switchTab(target) {
+    switchTab(targetId) {
+        // إلغاء تنشيط جميع الأزرار واللوحات
         this.tabs.forEach(tab => {
-            tab.classList.toggle('active', tab.dataset.tab === target);
+            if (tab.getAttribute('data-tab') === targetId) {
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+            }
         });
 
         this.panels.forEach(panel => {
-            panel.classList.toggle('active', panel.dataset.tab === target);
+            if (panel.getAttribute('data-tab') === targetId) {
+                panel.classList.add('active');
+            } else {
+                panel.classList.remove('active');
+            }
         });
     }
 }
 
+// تهيئة التبويبات عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    new ProductTabs();
+});
+
 Product.initiateWhenReady(['product.single']);
 
-function initTabs() {
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-panel');
+export default function initProductTabs() {
+    const tabsContainer = document.querySelector('.product-tabs');
+    if (!tabsContainer) return;
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const target = btn.dataset.tab;
+    const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
+    const tabPanels = tabsContainer.querySelectorAll('.tab-panel');
+
+    // تفعيل التبويب
+    function activateTab(tabId) {
+        // إزالة الحالة النشطة من جميع الأزرار واللوحات
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+
+        // تفعيل الزر واللوحة المحددة
+        const selectedButton = tabsContainer.querySelector(`[data-tab="${tabId}"]`);
+        const selectedPanel = tabsContainer.querySelector(`#${tabId}`);
+
+        if (selectedButton && selectedPanel) {
+            selectedButton.classList.add('active');
+            selectedPanel.classList.add('active');
+
+            // تمرير إلى الزر المحدد
+            selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+    }
+
+    // إضافة مستمعي الأحداث
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            activateTab(tabId);
             
-            // تحديث الأزرار النشطة
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // تحديث المحتوى النشط
-            tabPanels.forEach(panel => {
-                panel.classList.toggle('active', panel.dataset.tab === target);
-            });
+            // تحديث URL مع معرف التبويب النشط
+            history.replaceState({}, '', `#${tabId}`);
         });
     });
-}
 
-// تهيئة التبويبات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', initTabs);
+    // التحقق من وجود تبويب في URL
+    const hashTab = window.location.hash.slice(1);
+    if (hashTab) {
+        activateTab(hashTab);
+    } else {
+        // تفعيل التبويب الأول افتراضياً
+        const firstTab = tabButtons[0]?.getAttribute('data-tab');
+        if (firstTab) activateTab(firstTab);
+    }
+}

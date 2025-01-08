@@ -37,7 +37,8 @@ module.exports = {
                 'bg-lazy-loaded': '#000',
                 'gray-800': '#1e293b',
                 'gray-200': '#e5e7eb',
-                'gray-700': '#374151'
+                'gray-700': '#374151',
+                'primary-dark': '#123456',
             },
             spacing: {
                 '3.75': '15px',
@@ -132,6 +133,11 @@ module.exports = {
                 slideUpFromBottom: 'slideUpFromBottom .6s linear',
                 slideDownFromBottom: 'slideDownFromBottom .6s linear',
             },
+            ringColor: {
+                'primary-20': 'rgba(var(--primary-color-rgb), 0.2)',
+                'primary-30': 'rgba(var(--primary-color-rgb), 0.3)',
+                'primary/30': 'rgba(var(--color-primary), 0.3)',
+            }
         },
     },
     corePlugins: {
