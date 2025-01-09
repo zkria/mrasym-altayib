@@ -130,6 +130,87 @@ Theme Raed will be installed as the default theme when you install Twilight. We'
             |       single.twig
 ```
 
+├── src/
+│   ├── assets/
+│   │   ├── images/                  # الصور
+│   │   │   ├── delivery-bro.svg
+│   │   │   ├── placeholder.png
+│   │   │   ├── s-empty-small.png
+│   │   │   ├── s-empty-square.png
+│   │   │   ├── s-empty-wide.png
+│   │   │   └── s-empty.png
+│   │   │
+│   │   ├── js/                     # JavaScript ملفات
+│   │   │   ├── core/              # الملفات الأساسية
+│   │   │   │   ├── app.js
+│   │   │   │   ├── app-helpers.js
+│   │   │   │   └── base-page.js
+│   │   │   │
+│   │   │   ├── pages/             # سكربتات الصفحات
+│   │   │   │   ├── home.js
+│   │   │   │   ├── product.js
+│   │   │   │   ├── products.js
+│   │   │   │   ├── cart.js
+│   │   │   │   ├── wishlist.js
+│   │   │   │   ├── order.js
+│   │   │   │   ├── blog.js
+│   │   │   │   ├── brands.js
+│   │   │   │   ├── loyalty.js
+│   │   │   │   ├── testimonials.js
+│   │   │   │   └── thankyou.js
+│   │   │   │
+│   │   │   ├── partials/          # المكونات المشتركة
+│   │   │   │   ├── anime.js
+│   │   │   │   ├── image-zoom.js
+│   │   │   │   ├── main-menu.js
+│   │   │   │   ├── product-card.js
+│   │   │   │   ├── tooltip.js
+│   │   │   │   └── wishlist-card.js
+│   │   │   │
+│   │   │   └── utilities/         # الأدوات المساعدة
+│   │   │       └── twilight.js
+│   │   │
+│   │   └── styles/                # التنسيقات
+│   │       ├── 01-settings/       # الإعدادات الأساسية
+│   │       ├── 02-generic/        # الأنماط العامة
+│   │       ├── 03-elements/       # العناصر الأساسية
+│   │       ├── 04-components/     # المكونات
+│   │       ├── 05-utilities/      # الأدوات المساعدة
+│   │       ├── pages/            # الصفحات الخاصة
+│   │       └── app.scss          # الملف الرئيسي
+│   │
+│   ├── locales/                  # ملفات الترجمة
+│   │   ├── ar.json              # العربية
+│   │   └── en.json              # الإنجليزية
+│   │
+│   └── views/                    # العرض
+│       ├── components/           # المكونات
+│       │   ├── footer/
+│       │   ├── header/
+│       │   └── home/
+│       │
+│       ├── layouts/              # القوالب
+│       │   ├── customer.twig
+│       │   └── master.twig
+│       │
+│       └── pages/               # الصفحات
+│           ├── blog/
+│           ├── brands/
+│           ├── customer/
+│           ├── orders/
+│           ├── partials/
+│           └── product/
+│
+├── .gitignore
+├── CHANGELOG.md
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── README.md
+├── tailwind.config.js
+├── twilight.json
+└── webpack.config.js
+
 ### Theme Preview  
 Usin [Salla CLI](https://github.com/SallaApp/Salla-CLI), the developer can preview the theme as they are being developed.  The `preview` command helps the developer to get a look at the theme in live mode.
 
