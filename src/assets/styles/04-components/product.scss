@@ -1,1167 +1,393 @@
-src/assets/styles/04-components/product.scss
-@import '../01-settings/global';
-
-// متغيرات قابلة لإعادة الاستخدام
-$card-padding: 1.5rem;
-$card-border-radius: 1rem;
-$shadow-sm: var(--shadow-sm);
-$transition: all 0.3s ease;
-$primary-color: var(--color-primary);
-$primary-dark-color: var(--color-primary-dark);
-$text-color: var(--color-text);
-$text-light-color: var(--color-text-light);
-$bg-color: var(--color-bg);
-$bg-secondary-color: var(--color-bg-secondary);
-$border-color: var(--color-border);
-$white-color: var(--color-white);
-$danger-color: var(--color-danger);
-$warning-color: var(--color-warning);
-$dark-bg-color: var(--color-bg-dark);
-$dark-bg-secondary-color: var(--color-bg-secondary-dark);
-$dark-border-color: var(--color-border-dark);
-$dark-text-color: var(--color-text-dark);
-$dark-text-light-color: var(--color-text-dark-light);
-
-// تنسيقات عامة للبطاقات
-.product-card {
-    @apply bg-white rounded-xl shadow-md p-6 mb-6;
-
-    // بطاقة معرض الصور
-    .gallery-section {
-        @apply md:sticky top-24 w-full md:w-2/4 rtl:ml-8 ltr:mr-8 pb-8 md:pb-16;
-
-        // العناصر العائمة
-        .floating-elements {
-            @apply absolute top-4 rtl:left-4 ltr:right-4 z-10 flex flex-col gap-3;
-
-            .promotion-title {
-                @apply bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm;
-            }
-
-            .calories-badge {
-                @apply bg-white shadow-sm flex flex-col justify-center items-center rounded-full w-20 h-20 md:w-24 md:h-24;
-
-                .calories-value {
-                    @apply text-red-500 text-xl leading-none font-bold;
-                }
-
-                .calories-label {
-                    @apply text-xs text-gray-500;
-                }
-            }
-        }
-
-        // الصور الرئيسية
-        .main-slider {
-            @apply relative w-full rounded-lg overflow-hidden mb-4;
-
-            img {
-                @apply w-full h-auto transition-transform duration-300;
-
-                &:hover {
-                    transform: scale(1.02);
-                }
-            }
-        }
-
-        // المصغرات
-        .thumbnails {
-            @apply flex gap-2 justify-center mt-4 mb-4;
-
-            .thumbnail-wrapper {
-                @extend .button-base;
-                width: 60px;
-                height: 60px;
-                border-radius: 0.5rem;
-                overflow: hidden;
-                border: 2px solid transparent;
-                background: $bg-secondary-color;
-
-                img {
-                    @apply w-full h-full object-cover;
-                    transition: transform 0.3s ease;
-                }
-
-                &:hover img {
-                    transform: scale(1.1);
-                }
-
-                &.is-active {
-                    border-color: $primary-color;
-                }
-            }
-        }
-
-        // أزرار المشاركة والمفضلة
-        .product-actions {
-            @apply mt-4 flex items-center justify-center gap-2;
-
-            .action-btn {
-                @apply flex items-center px-4 py-2 rounded-lg transition-all duration-300;
-
-                i {
-                    @apply rtl:ml-2 ltr:mr-2;
-                }
-
-                &:hover {
-                    @apply bg-primary text-white;
-                }
-            }
-        }
+// إعدادات إدخال المنتج في قائمة الرغبات
+.product-entry {
+    @apply h-full transition-shadow duration-300 bg-white hover:shadow-default rounded-lg justify-between flex relative; // إعدادات الحاوية
+  
+    &--wishlist {
+      @apply justify-between p-4 flex-col sm:flex-row; // إعدادات قائمة الرغبات
+  
+      .product-entry__image {
+        @apply overflow-hidden w-16 h-12 md:w-20 md:h-16 rounded-md; // إعدادات صورة المنتج
+      }
+  
+      salla-button {
+        @apply flex; // إعدادات زر السلة
+      }
     }
-
-    // بطاقة تفاصيل المنتج
-    .product-details {
-        @apply md:sticky md:top-24 w-full md:w-2/4 md:pb-16;
-        background: $bg-color;
-        border-radius: $card-border-radius;
-        padding: $card-padding;
-        box-shadow: var(--shadow-md);
-
-        // ترويسة المنتج
-        .product-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-
-            .product-brand {
-                display: flex;
-                align-items: center;
-                margin-bottom: 1rem;
-
-                img {
-                    width: 50px;
-                    height: 50px;
-                    object-fit: contain;
-                    border-radius: 0.5rem;
-                }
-
-                .brand-name {
-                    margin-inline-start: 0.5rem;
-                    font-size: 0.875rem;
-                    color: $text-light-color;
-                }
-            }
-
-            h1 {
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: $text-color;
-                line-height: 1.2;
-            }
-        }
-
-        // تنسيقات قسم السعر
-        .price-section {
-            @apply flex p-5 sm:pb-0 rounded-md;
-            background: $bg-secondary-color !important;
-            border: 1px solid $border-color;
-
-            .form-label {
-                b {
-                    @apply block font-medium;
-                    color: $text-color;
-                }
-            }
-
-            .price-wrapper {
-                @apply flex items-center gap-4;
-
-                .price_is_on_sale {
-                    @apply space-x-2 rtl:space-x-reverse whitespace-nowrap;
-
-                    .total-price {
-                        @apply font-bold text-xl inline-block;
-                        color: $primary-color;
-                    }
-
-                    .before-price {
-                        @apply text-gray-500 line-through;
-                    }
-                }
-
-                .starting-or-normal-price {
-                    @apply gap-4;
-
-                    .total-price {
-                        @apply font-bold text-xl inline-block;
-                        color: $primary-color;
-                    }
-                }
-            }
-        }
-
-        // خيارات المنتج
-        .product-options {
-            margin-bottom: 1.5rem;
-
-            .option-title {
-                font-weight: 500;
-                margin-bottom: 0.5rem;
-                color: $text-color;
-            }
-
-            .option-items {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-        }
-
-        // أزرار الإضافة للسلة
-        .add-to-cart-wrapper {
-            margin-top: 1.5rem;
-
-            .quantity-input {
-                margin-bottom: 1rem;
-
-                label {
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    color: $text-color;
-                }
-
-                input {
-                    background: $bg-secondary-color;
-                    border: 1px solid $border-color;
-                    color: $text-color;
-
-                    &:focus {
-                        border-color: $primary-color;
-                    }
-                }
-            }
-
-            .add-to-cart-btn {
-                width: 100%;
-                padding: 1rem;
-                background: $primary-color;
-                color: $white-color;
-                border-radius: 0.5rem;
-                font-weight: 500;
-                transition: background 0.3s ease;
-
-                &:hover {
-                    background: $primary-dark-color;
-                }
-            }
-        }
-
-        // التقييمات
-        .product-rating {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-
-            .rating-stars {
-                color: $warning-color;
-                margin-inline-end: 0.5rem;
-            }
-
-            .rating-count {
-                font-size: 0.875rem;
-                color: $text-light-color;
-            }
-        }
+  }
+  
+  // إعدادات التعليقات
+  .s-comments {
+    &-page {
+      @apply pt-16; // إعدادات الحشوة العلوية
     }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .product-card {
-        @apply bg-gray-800;
-
-        .gallery-section {
-            .floating-elements {
-                .calories-badge {
-                    @apply bg-gray-700 border border-gray-600;
-                }
-            }
+  
+    &-product {
+      @apply bg-gray-100 mb-4 md:mb-14 py-4 md:py-14; // إعدادات حاوية التعليقات
+  
+      .s-comments-container {
+        @apply container; // إعدادات حاوية التعليقات
+      }
+    }
+  }
+  
+  // إعدادات أزرار المشاركة
+  .share-btns-list {
+    @apply absolute z-10 overflow-hidden opacity-0 top-12 bg-white flex items-center flex-col shadow-huge rounded-3xl; // إعدادات قائمة الأزرار
+  
+    a {
+      @apply block p-3 hover:text-primary; // إعدادات الروابط
+    }
+  }
+  
+  // إعدادات سلة التسوق
+  .cart-item {
+    salla-conditional-fields > section {
+      @apply px-0 pt-0 last:mb-0 last:pb-0; // إعدادات الحشوة
+    }
+  }
+  
+  // إعدادات تقييم المنتج (SVG)
+  .s-product-card-content-pie-svg-base {
+    transition: stroke-dashoffset 1s linear; // إعدادات التحويل
+    stroke: #E8EDF2; // لون الحدود
+    stroke-width: 2px; // عرض الحدود
+    stroke-linecap: round; // شكل نهاية الحدود
+    fill: none; // عدم ملء الشكل
+  }
+  
+  .s-product-card-content-pie-svg-bar {
+    fill: none; // عدم ملء الشكل
+    stroke: var(--color-primary); // لون الحدود
+    stroke-dasharray: 100 100; // إعدادات التدرج
+    stroke-dashoffset: 100; // إعدادات التحويل
+  }
+  
+  .s-product-card {
+    &-content-sub {
+      @apply justify-start gap-3; // إعدادات المحتوى الفرعي
+    }
+  
+    &-starting-price {
+      @apply w-auto; // إعدادات سعر البداية
+    }
+  }
+  
+  .pie-wrapper {
+    @apply w-[72px] h-[72px] absolute top-2.5 rtl:left-5 ltr:right-5 text-primary flex items-center justify-center; // إعدادات حاوية الدائرة
+  
+    .pie-svg {
+      circle {
+        transition: stroke-dashoffset 1s linear; // إعدادات التحويل
+        stroke: #E8EDF2; // لون الحدود
+        stroke-width: 2px; // عرض الحدود
+        stroke-linecap: round; // شكل نهاية الحدود
+        fill: none; // عدم ملء الشكل
+  
+        &.circle_bar {
+          stroke: var(--color-primary); // لون الحدود
+          stroke-dasharray: 100 100; // إعدادات التدرج
+          stroke-dashoffset: 100; // إعدادات التحويل
         }
-
-        .product-details {
-            .product-header h1 {
-                @apply text-gray-100;
-            }
-
-            .price-section {
-                background: $dark-bg-secondary-color !important;
-                border-color: rgba(255, 255, 255, 0.1);
-
-                .form-label {
-                    b {
-                        color: $dark-text-color;
-                    }
-                }
-
-                .price-wrapper {
-                    .price_is_on_sale,
-                    .starting-or-normal-price {
-                        .total-price {
-                            color: $primary-color;
-                        }
-
-                        .before-price {
-                            color: $dark-text-light-color;
-                        }
-                    }
-                }
-            }
-
-            .product-options .option-title {
-                @apply text-gray-300;
-            }
+      }
+    }
+  
+    span {
+      display: block; // إعدادات النص
+      font-size: var(--font-xsm); // حجم الخط
+      color: var(--color-text); // لون النص
+      text-align: center; // محاذاة النص
+      position: absolute; // تعيين الموضع
+      top: 50%; // تعيين الموضع العلوي
+      left: 50%; // تعيين الموضع الأيسر
+      transform: translate(-50%, -50%); // تعيين التحويل
+      line-height: 1; // ارتفاع السطر
+      font-size: var(--font-xsm); // حجم الخط
+  
+      b {
+        font-size: var(--font-md) !important; // حجم الخط العريض
+        margin-bottom: 3px; // الهوامش السفلية
+        color: var(--color-primary); // لون النص
+      }
+    }
+  }
+  
+  /* إعدادات شريط الإضافة إلى السلة الثابت */
+  @media (max-width: 640px) {
+    .is-sticky-product-bar {
+      &.product-single {
+        @apply pb-28; // إعدادات الحشوة السفلية
+      }
+  
+      .sticky-product-bar {
+        @apply flex flex-wrap flex-col gap-2.5 sm:gap-4 fixed z-[2] bottom-0 left-0 p-3 w-full justify-between items-center shadow-[-1px_-2px_9px_0_rgba(0,0,0,0.05)] transition duration-700 delay-500 translate-y-100 opacity-0 ease-elastic; // إعدادات الشريط الثابت
+  
+        &__quantity,
+        salla-add-product-button {
+          @apply translate-y-5 opacity-0 transition duration-700 ease-elastic w-full; // إعدادات الكمية وزر الإضافة
         }
-    }
-}
-
-// تنسيقات معرض الصور
-.product-gallery {
-    .image-card {
-        @extend .card-style;
-        margin-bottom: 1rem;
-
-        // المصغرات
-        .thumbnails {
-            @apply flex gap-2 justify-center mt-4 mb-4;
-
-            .thumbnail-wrapper {
-                width: 60px;
-                height: 60px;
-                border-radius: 0.5rem;
-                overflow: hidden;
-                cursor: pointer;
-                transition: $transition;
-                border: 2px solid transparent;
-
-                &:hover {
-                    transform: scale(1.05);
-                    border-color: $primary-color;
-                }
-
-                &.is-active {
-                    border-color: $primary-color;
-                }
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
+  
+        &__price,
+        .form-label {
+          @apply hidden; // إخفاء السعر
         }
-
-        // شريط الأزرار أسفل المصغرات
-        .product-actions-wrapper {
-            @apply mt-4;
-            background: $bg-secondary-color;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            box-shadow: $shadow-sm;
-
-            .actions-buttons {
-                @apply flex items-center justify-center gap-3;
-
-                .share-button,
-                .btn--wishlist {
-                    @apply flex-1 flex items-center justify-center px-4 py-2.5 rounded-md;
-                    background: $bg-color;
-                    color: $text-color;
-                    transition: $transition;
-                    border: 1px solid $border-color;
-                    font-size: 0.875rem;
-
-                    i {
-                        @apply rtl:ml-2 ltr:mr-2 text-lg;
-                    }
-
-                    &:hover {
-                        background: $primary-color;
-                        color: $white-color;
-                        border-color: $primary-color;
-                    }
-
-                    &:active {
-                        transform: translateY(1px);
-                    }
-                }
-
-                .btn--wishlist {
-                    &.is-in-wishlist {
-                        background: $primary-color;
-                        color: $white-color;
-                        border-color: $primary-color;
-
-                        i {
-                            animation: heartBeat 0.3s ease;
-                        }
-                    }
-                }
+  
+        &__quantity {
+          salla-quantity-input {
+            @apply w-full; // إعدادات حقل الكمية
+            .s-quantity-input-container {
+              @apply w-full; // إعدادات حاوية حقل الكمية
             }
+            .s-quantity-input-input {
+              @apply w-[80%]; // إعدادات حقل إدخال الكمية
+            }
+          }
+          @apply m-0 delay-[900ms]; // إعدادات الهوامش
         }
-    }
-}
-
-// تأثير نبض القلب
-@keyframes heartBeat {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .product-gallery {
-        .image-card {
-            background: $dark-bg-color;
-
-            .product-actions-wrapper {
-                background: $dark-bg-secondary-color;
-
-                .actions-buttons {
-                    .share-button,
-                    .btn--wishlist {
-                        background: $dark-bg-color;
-                        color: $dark-text-color;
-                        border-color: $dark-border-color;
-
-                        &:hover {
-                            background: $primary-color;
-                            color: $white-color;
-                            border-color: $primary-color;
-                        }
-                    }
-                }
-            }
+  
+        salla-add-product-button {
+          @apply w-auto m-0 flex-1 delay-1000; // إعدادات زر الإضافة
         }
-    }
-}
-
-// تنسيقات التبويبات
-.product-tabs-container {
-    @apply border-b;
-    border-color: $border-color;
-
-    .tabs-header {
-        @apply flex border-b;
-        border-color: $border-color;
-
-        .tab-btn {
-            @extend .button-base;
-            @apply flex-1 py-3 flex items-center justify-center;
-            color: $text-light-color;
-            position: relative;
-
-            i {
-                @apply rtl:ml-2 ltr:mr-2 text-lg;
-            }
-
-            // خط التنشيط
-            &::after {
-                content: '';
-                @apply absolute bottom-0 left-0 w-full h-0.5;
-                background: $primary-color;
-                transform: scaleX(0);
-                transition: transform 0.3s ease;
-            }
-
-            &:hover {
-                color: $primary-color;
-            }
-
-            &.active {
-                color: $primary-color;
-
-                &::after {
-                    transform: scaleX(1);
-                }
-            }
+  
+        .hydrated & {
+          &,
+          &__quantity,
+          salla-add-product-button {
+            @apply translate-y-0 opacity-100; // إعدادات الحركة عند التحميل
+          }
         }
+      }
     }
-
-    .tabs-content {
-        @apply py-6;
-
-        .tab-panel {
-            display: none;
-            animation: fadeIn 0.3s ease;
-
-            &.active {
-                display: block;
-            }
+  }
+  
+  // إصلاح علامات التبويب
+  .s-tabs-header * {
+    pointer-events: auto !important; // تعيين تفاعلية العناصر
+  }
+  
+  .product__description {
+    ul,
+    li {
+      list-style: inherit !important; // تعيين نمط القائمة
+    }
+  
+    ul,
+    ol {
+      @apply px-6; // إعدادات الهوامش
+    }
+  
+    ol {
+      list-style: auto !important; // تعيين نمط القائمة
+    }
+  
+    a {
+      @apply text-blue-700; // تعيين لون الروابط
+    }
+  }
+  
+  // إعدادات عرض الصورة ثلاثية الأبعاد
+  .model-viewer-wrapper {
+    @apply relative mb-4 md:mb-0 w-full; // إعدادات الحاوية
+  }
+  
+  .switcher-3d-view {
+    @apply absolute top-5 rtl:left-4 ltr:right-4; // إعدادات موضع المحول
+  }
+  
+  .model-viewer {
+    @apply w-full h-full; // إعدادات عرض النموذج
+  
+    &__poster {
+      @apply absolute inset-0 bg-contain bg-no-repeat bg-center; // إعدادات صورة الخلفية
+    }
+  }
+  
+  .s-toggle .s-toggle-switcher-has-text:before {
+    @apply content-[attr(data-switcher-text)] font-bold text-center text-gray-400 text-xs leading-[22px]; // إعدادات النص
+    font-family: arial, serif; // تعيين خط النص
+  }
+  
+  .s-toggle .s-toggle-input:checked + div.s-toggle-switcher-bg-white:before {
+    @apply text-gray-600 border-white bg-white; // إعدادات الزر عند التحقق
+  }
+  
+  // إعدادات تحميل ملفات خيارات المنتج
+  .product-option-uploader {
+    .s-file-upload-wrapper {
+      min-height: 120px; // تعيين الحد الأدنى للارتفاع
+      .filepond--list-scroller {
+        overflow-y: inherit !important; // إعدادات التمرير
+      }
+      .filepond--drop-label {
+        min-height: 120px !important; // تعيين الحد الأدنى للارتفاع
+        @apply bg-white cursor-pointer border-dashed rounded-md border border-gray-200; // إعدادات حقل السحب
+      }
+      .product-option-uploader-placholder {
+        @apply flex flex-col justify-center items-center; // إعدادات الحاوية
+        &-icon {
+          @apply mb-1; // إعدادات الأيقونة
+          i {
+            color: #7c8082; // لون الأيقونة
+            @apply text-xl; // حجم الأيقونة
+          }
         }
+      }
     }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .product-tabs-container {
-        @apply border-gray-700;
-
-        .tabs-header {
-            @apply border-gray-700;
-
-            .tab-btn {
-                color: $dark-text-color;
-
-                &:hover,
-                &.active {
-                    color: $primary-color;
-                }
-            }
-        }
+  }
+  
+  // إصلاح عرض النافذة المنبثقة
+  @media (max-width: 640px) {
+    .s-offer-modal-slider-centered .s-offer-modal-slider-item {
+      max-width: 46% !important; // تعيين الحد الأقصى للعرض
     }
-}
-
-// تنسيقات المنتجات المشابهة
-.similar-products {
-    margin-top: 2rem;
-    padding: 2rem 0;
-    background: $bg-secondary-color;
-
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: $text-color;
-        margin-bottom: 1.5rem;
-        text-align: center;
+  }
+  
+  .s-product {
+    &-card {
+      &-full-image salla-add-product-button {
+        @apply bg-white rounded; // إعدادات زر الإضافة
+      }
+  
+      &-wishlist-added i {
+        @apply text-red-500; // لون الأيقونة عند الإضافة إلى قائمة الرغبات
+      }
+  
+      &-fit-height.s-product-card-vertical .s-product-card-image {
+        @apply flex-none sm:flex-1; // إعدادات صورة المنتج
+      }
     }
-}
-
-// تنسيقات العروض
-.product-offers {
-    display: block;
-    margin: 1.5rem 0;
-
-    .offer-container {
-        background: $bg-color;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        box-shadow: $shadow-sm;
-        border: 1px solid $border-color;
+  
+    &-options-colors-wrapper {
+      @apply flex flex-wrap gap-4; // إعدادات حاوية خيارات الألوان
+  
+      .s-product-options-colors-item {
+        @apply m-0 rtl:m-0 ltr:m-0 w-auto; // إعدادات خيارات الألوان
+      }
     }
-}
-
-// تنسيقات الأزرار المشتركة
-.button-common {
-    @apply rounded-lg py-3 px-6 font-bold inline-flex items-center justify-center transition-all duration-300;
-
-    svg {
-        @apply rtl:mr-2 ltr:ml-2 fill-current;
+  }
+  
+  // إعدادات البطاقة البسيطة
+  .s-product-card-minimal .s-product-card-image {
+    @apply rtl:rounded-r ltr:rounded-l; // إعدادات الزوايا
+  }
+  
+  .s-product-card-starting-price {
+    @apply justify-start gap-2.5; // إعدادات سعر البداية
+  }
+  
+  .s-product-card-minimal salla-button.s-product-card-wishlist-btn {
+    @apply rtl:left-2.5 ltr:right-2.5 top-2.5; // إعدادات زر قائمة الرغبات
+  }
+  
+  // إعدادات تكبير الصورة
+  .magnify-wrapper {
+    .img-magnifier-glass {
+      @apply hidden sm:block; // إخفاء الزجاج المكبر في الشاشات الصغيرة
+      position: absolute; // تعيين الموضع
+      z-index: 3; // تعيين مستوى z-index
+      border-radius: 50%; // تعيين الزوايا
+      cursor: none; // إزالة المؤشر
+      width: 300px; // تعيين العرض
+      height: 300px; // تعيين الارتفاع
+      opacity: 0; // تعيين الشفافية
+      pointer-events: none; // منع التفاعل
+      transform: scale(0); // تعيين التحويل
+      transition: transform .5s ease; // إعدادات التحويل
+      box-shadow: inset 0px 0px 30px #949494; // إضافة ظل
     }
-}
-
-// زر الشراء السريع
-.quick-buy-button {
-    @extend .button-common;
-    background: $primary-color;
-    color: $white-color;
-    border: 2px solid $primary-dark-color;
-
     &:hover {
-        background: $primary-dark-color;
+      .img-magnifier-glass {
+        opacity: 1; // زيادة الشفافية عند التمرير
+        pointer-events: initial; // السماح بالتفاعل
+        transform: scale(1); // تعيين التحويل
+        transition-delay: 0.3s; // تأخير التحويل
+      }
     }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .product-tabs {
-        background: $dark-bg-color;
-
-        .tabs-header {
-            border-color: $dark-border-color;
-
-            .tab-btn {
-                color: $dark-text-color;
-
-                &:hover {
-                    color: $primary-color;
-                }
-            }
-        }
+  }
+  
+  // إعدادات البطاقة الأفقية
+  .s-product-card-horizontal {
+    .s-product-card-content {
+      @apply mb-0; // إعدادات المحتوى
     }
-}
-
-// تحسينات للنموذج
-.product-form {
-    .form-label {
-        color: $text-color;
+  
+    @media(max-width: 480px) {
+      salla-button.s-product-card-wishlist-btn {
+        @apply absolute bottom-2.5 rtl:-right-12 ltr:-left-12; // إعدادات زر قائمة الرغبات
+      }
     }
-
-    .form-control {
-        background: $bg-secondary-color;
-        color: $text-color;
-        border: 1px solid $border-color;
-
-        &:focus {
-            border-color: $primary-color;
-        }
+  
+    salla-progress-bar {
+      @apply flex flex-col grow; // إعدادات شريط التقدم
     }
-}
-
-// تنسيقات أزرار المشاركة والمفضلة
-.product-actions-wrapper {
-    @apply mt-4 p-3;
-    background: $bg-secondary-color;
-    border-radius: 0.5rem;
-
-    .actions-buttons {
-        @apply flex items-center justify-center gap-3;
-
-        .share-button,
-        .btn--wishlist {
-            @apply flex items-center justify-center px-6 py-2.5 rounded-md;
-            background: $bg-color;
-            color: $text-color;
-            transition: $transition;
-            min-width: 120px;
-            border: 1px solid $border-color;
-
-            i {
-                @apply rtl:ml-2 ltr:mr-2 text-lg;
-            }
-
-            &:hover {
-                background: $primary-color;
-                color: $white-color;
-                border-color: $primary-color;
-                transform: translateY(-1px);
-            }
-
-            &:active {
-                transform: translateY(0);
-            }
-        }
-
-        // تنسيق خاص لزر المفضلة عند الإضافة
-        .btn--wishlist {
-            &.is-in-wishlist {
-                background: $primary-color;
-                color: $white-color;
-                border-color: $primary-color;
-
-                i {
-                    animation: heartBeat 0.3s ease;
-                }
-            }
-        }
+  }
+  
+  .s-rating-stars-reviews {
+    @apply text-gray-500; // إعدادات تقييم النجوم
+  }
+  
+  .s-product-card-promotion-title {
+    @apply bg-red-800 text-white; // إعدادات عنوان الترويج
+  }
+  
+  .s-product-card-sale-price {
+    h4 {
+      @apply text-red-800 #{!important}; // إعدادات سعر البيع
     }
-}
-
-// تأثير نبض القلب
-@keyframes heartBeat {
-    0% {
-        transform: scale(1);
+  
+    span {
+      @apply text-inherit; // تعيين لون النص
     }
-
-    50% {
-        transform: scale(1.2);
+  }
+  
+  // إعدادات الفلاتر
+  @media (max-width: 1024px) {
+    salla-filters {
+      &,
+      > * {
+        @apply px-5 #{!important}; // إعدادات الهوامش
+      }
     }
-
-    100% {
-        transform: scale(1);
+  }
+  
+  // إعدادات شارة عرض البنك
+  #offer-corner-badge {
+    @apply float-left absolute bg-red-600 text-white transform rtl:-rotate-45 ltr:rotate-45 px-12 py-1 h-auto w-auto border-0 m-0 z-1 rtl:top-3 ltr:top-5 rtl:-left-12 ltr:-right-14; // إعدادات الشارة
+  }
+  
+  // إعدادات خيارات السلة
+  .cart-options {
+    @apply bg-white border-dashed border border-gray-400 rounded-md; // إعدادات حاوية خيارات السلة
+    salla-product-options {
+      @apply mb-0 pt-0; // إعدادات الحشوة
+  
+      .s-product-options-option:not(div.s-product-options-option-booking) {
+        @apply block #{!important}; // إعدادات خيارات المنتج
+      }
+  
+      &-label {
+        @apply mb-3; // إعدادات تسمية الخيارات
+      }
+  
+      .s-form-control {
+        @apply rounded-md border-gray-200; // إعدادات حقل النموذج
+      }
+  
+      .s-datetime-picker-input {
+        @apply rounded-md border-gray-200; // إعدادات حقل اختيار التاريخ
+      }
+  
+      .s-product-options-multiple-options-wrapper {
+        @apply block #{!important}; // إعدادات خيارات متعددة
+      }
     }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .product-actions-wrapper {
-        background: $dark-bg-color;
-
-        .actions-buttons {
-            .share-button,
-            .btn--wishlist {
-                background: $dark-bg-secondary-color;
-                color: $dark-text-color;
-                border-color: $dark-border-color;
-
-                &:hover {
-                    background: $primary-color;
-                    color: $white-color;
-                    border-color: $primary-color;
-                }
-            }
-        }
+  }
+  
+  salla-quantity-input[max='1'] {
+    input {
+      @apply pointer-events-none opacity-50; // إعدادات حقل الكمية
     }
-}
-
-// تنسيقات مشتركة للبطاقات
-.card-style {
-    background: $white-color;
-    border-radius: $card-border-radius;
-    padding: $card-padding;
-    box-shadow: $shadow-sm;
-    height: 100%;
-}
-
-// تنسيقات بيانات المنتج
-.main-content {
-    @apply md:sticky md:top-24 w-full md:w-2/4 md:pb-16;
-    @extend .card-style;
-    margin-bottom: 1rem;
-    background: var(--color-bg-light);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
-    .product-header {
-        @apply flex items-start justify-between mb-6;
-
-        .product-brand {
-            @apply flex items-center mb-4;
-
-            img {
-                @apply w-12 h-12 object-contain rounded-lg;
-            }
-
-            .brand-name {
-                @apply rtl:mr-3 ltr:ml-3 text-sm;
-                color: $text-color;
-            }
-        }
-
-        h1 {
-            @apply text-2xl font-bold;
-            color: $text-color;
-            line-height: 1.5;
-        }
+  
+    .s-quantity-input-button {
+      @apply cursor-not-allowed; // إعدادات زر الكمية
     }
-
-    .price-section {
-        @apply mb-6 p-4 rounded-lg;
-        background: $bg-secondary-color;
-
-        .total-price {
-            @apply text-2xl font-bold;
-            color: $primary-color;
-        }
-
-        .before-price {
-            @apply text-sm line-through rtl:mr-2 ltr:ml-2;
-            color: $text-light-color;
-        }
-    }
-
-    .product-options {
-        @apply mb-6;
-
-        .option-title {
-            @apply mb-2 font-medium;
-            color: $text-color;
-        }
-
-        .s-product-options-option-container {
-            @apply mb-4;
-
-            .s-product-options-option-label {
-                @apply block mb-2;
-
-                b {
-                    @apply font-medium;
-                    color: $text-color;
-
-                    span {
-                        color: $danger-color;
-                    }
-                }
-
-                small {
-                    @apply text-sm rtl:mr-2 ltr:ml-2;
-                    color: $text-light-color;
-                }
-            }
-
-            .s-form-control {
-                @apply w-full px-4 py-3 rounded-lg appearance-none;
-                background: var(--color-bg-light);
-                border: 1px solid $border-color;
-                color: $text-color;
-                transition: $transition;
-                font-size: 1rem;
-
-                &::-ms-expand {
-                    display: none;
-                }
-
-                option {
-                    background: $bg-secondary-color;
-                    color: $text-color;
-                    padding: 8px;
-                }
-
-                &:focus {
-                    border-color: $primary-color;
-                    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
-                }
-
-                &:hover {
-                    background: var(--color-bg-hover);
-                }
-            }
-
-            .s-product-options-option-content {
-                position: relative;
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    left: 1rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 0;
-                    height: 0;
-                    border-left: 5px solid transparent;
-                    border-right: 5px solid transparent;
-                    border-top: 5px solid $text-color;
-                    pointer-events: none;
-                }
-            }
-        }
-    }
-
-    .add-to-cart-wrapper {
-        @apply mt-6;
-
-        .quantity-input {
-            @apply mb-4;
-
-            label {
-                @apply block mb-2;
-                color: $text-color;
-            }
-        }
-
-        .add-to-cart-btn {
-            @apply w-full py-3 px-6 rounded-lg font-medium;
-            background: $primary-color;
-            color: $white-color;
-            transition: $transition;
-            font-size: 1.1rem;
-
-            &:hover {
-                background: $primary-dark-color;
-                transform: scale(1.05);
-            }
-        }
-    }
-}
-
-// تحسينات للوضع الداكن
-.dark {
-    .card-style {
-        background: $dark-bg-color;
-    }
-
-    .product-gallery .image-card,
-    .main-content {
-        background: #151521;
-    }
-
-    .product-options {
-        .s-product-options-option-container {
-            .s-product-options-option-label {
-                b {
-                    color: $dark-text-color;
-                }
-
-                small {
-                    color: $dark-text-light-color;
-                }
-            }
-
-            .s-form-control {
-                background: $dark-bg-color;
-                border-color: rgba(255, 255, 255, 0.1);
-                color: $dark-text-color;
-
-                option {
-                    background: $dark-bg-secondary-color;
-                    color: $dark-text-color;
-                }
-
-                &:focus {
-                    border-color: $primary-color;
-                    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
-                }
-
-                &:hover {
-                    background: var(--color-bg-hover-dark);
-                }
-            }
-
-            .s-product-options-option-content::after {
-                border-top-color: $dark-text-color;
-            }
-        }
-    }
-}
-
-// تحسين الأزرار والعناصر التفاعلية
-.button-base {
-    @apply rounded-lg transition-all duration-300;
-
-    &:hover {
-        transform: translateY(-1px);
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-}
-
-// تنسيقات حيارات المنتج
-.s-product-options-option-container {
-    @apply mb-4;
-
-    // تنسيق العنوان
-    .s-product-options-option-label {
-        @apply block mb-2;
-
-        b {
-            @apply font-medium;
-            color: $text-color;
-
-            span {
-                color: $danger-color;
-            }
-        }
-
-        small {
-            @apply text-sm rtl:mr-2 ltr:ml-2;
-            color: $text-light-color;
-        }
-    }
-
-    // تنسيق القائمة المنسدلة
-    .s-form-control {
-        @apply w-full px-4 py-3 rounded-lg appearance-none;
-        background: transparent !important;
-        border: 1px solid $border-color;
-        color: $text-color;
-        transition: $transition;
-        font-size: 1rem;
-
-        // إزالة السهم الافتراضي
-        &::-ms-expand {
-            display: none;
-        }
-
-        // تنسيق الخيارات
-        option {
-            background: $bg-secondary-color;
-            color: $text-color;
-            padding: 8px;
-        }
-
-        &:focus {
-            border-color: $primary-color;
-            box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
-        }
-
-        // تأثير عند التحويم
-        &:hover {
-            background: var(--color-bg-hover);
-        }
-    }
-
-    // إضافة سهم مخصص
-    .s-product-options-option-content {
-        position: relative;
-
-        &::after {
-            content: '';
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid $text-color;
-            pointer-events: none;
-        }
-    }
-}
-
-// الوضع الداكن
-.dark {
-    .s-product-options-option-container {
-        .s-product-options-option-label {
-            b {
-                color: $dark-text-color;
-            }
-
-            small {
-                color: $dark-text-light-color;
-            }
-        }
-
-        .s-form-control {
-            background: transparent !important;
-            border-color: rgba(255, 255, 255, 0.1);
-            color: $dark-text-color;
-
-            option {
-                background: $dark-bg-secondary-color;
-                color: $dark-text-color;
-            }
-
-            &:focus {
-                border-color: $primary-color;
-                box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
-            }
-
-            // تأثير عند التحويم
-            &:hover {
-                background: var(--color-bg-hover-dark);
-            }
-        }
-
-        .s-product-options-option-content::after {
-            border-top-color: $dark-text-color;
-        }
-    }
-}
-
-// تنسيقات أزرار المشاركة والمفضلة
-.product-actions-wrapper {
-    @apply mt-4 p-3;
-    background: $bg-secondary-color;
-    border-radius: 0.5rem;
-
-    .actions-buttons {
-        @apply flex items-center justify-center gap-3;
-
-        .share-button,
-        .btn--wishlist {
-            @extend .button-base;
-            @apply flex items-center justify-center px-6 py-2.5;
-            background: $bg-color;
-            color: $text-color;
-            min-width: 120px;
-            border: 1px solid $border-color;
-
-            i {
-                @apply rtl:ml-2 ltr:mr-2 text-lg;
-            }
-
-            &:hover {
-                background: $primary-color;
-                color: $white-color;
-                border-color: $primary-color;
-            }
-        }
-    }
-}
-
-// تحسين النصوص والعناوين
-.product-header {
-    h1 {
-        color: $text-color;
-        @apply text-xl font-bold leading-relaxed;
-    }
-
-    .brand-name {
-        color: $text-light-color;
-    }
-}
-
-.price-section {
-    background: $bg-secondary-color;
-    @apply rounded-lg p-4 mb-6;
-
-    .total-price {
-        color: $primary-color;
-        @apply text-xl font-bold;
-    }
-
-    .before-price {
-        color: $text-light-color;
-        @apply text-sm line-through opacity-75;
-    }
-}
-
-// تحسينات الوضع الداكن
-.dark {
-    // تحسين النصوص
-    .product-header {
-        h1 {
-            color: $white-color;
-        }
-
-        .brand-name {
-            color: $dark-text-color;
-        }
-    }
-
-    // تحسين الأقسام
-    .price-section {
-        background: rgba(255, 255, 255, 0.05);
-
-        .total-price {
-            color: $primary-color;
-        }
-
-        .before-price {
-            color: $dark-text-color;
-        }
-    }
-
-    // تحسين الأزرار
-    .add-to-cart-btn {
-        background: $primary-color;
-        color: $white-color;
-
-        &:hover {
-            background: $primary-dark-color;
-        }
-    }
-
-    // تحسين التبويبات
-    .product-tabs-container {
-        .tabs-header {
-            border-color: rgba(255, 255, 255, 0.1);
-
-            .tab-btn {
-                color: $dark-text-color;
-
-                &:hover,
-                &.active {
-                    color: $primary-color;
-                }
-            }
-        }
-    }
-
-    // تحسين المدخلات
-    .form-control {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: $dark-text-color;
-
-        &:focus {
-            border-color: $primary-color !important;
-        }
-    }
-
-    // تحسين المصغرات
-    .thumbnails {
-        .thumbnail-wrapper {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-
-            &.is-active {
-                border-color: $primary-color !important;
-            }
-        }
-    }
-}
+  }

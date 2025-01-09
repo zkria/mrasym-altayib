@@ -27,12 +27,10 @@ $main-text-color: var(--main-text-color);
   --color-danger: #ef4444;
   --color-info: #3b82f6;
   
-  // ألوان النص
+  // ألوان النص والخلفية
   --color-text: var(--color-gray-800);
   --color-text-light: var(--color-gray-600);
   --color-text-lighter: var(--color-gray-400);
-  
-  // ألوان الخلفية
   --color-bg: #ffffff;
   --color-bg-alt: var(--color-gray-50);
   --color-bg-dark: var(--color-gray-100);
@@ -95,4 +93,9 @@ $main-text-color: var(--main-text-color);
 
 .focus\:border-primary:focus {
   border-color: var(--color-primary);
+}
+
+// إضافة انتقال سلس عند التبديل بين الأوضاع
+:root, .dark {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
