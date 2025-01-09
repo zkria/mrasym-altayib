@@ -1948,6 +1948,11 @@ select {
   padding-bottom: 0.5rem;
 }
 
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -2157,6 +2162,11 @@ select {
 
 .\!text-primary {
   color: var(--color-primary) !important;
+}
+
+.\!text-red-800 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1)) !important;
 }
 
 .text-amber-400 {
@@ -15822,6 +15832,11 @@ salla-user-menu div[slot='trigger'] {
   padding-bottom: 0px;
 }
 
+.even\:border-gray-200:nth-child(even) {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
+}
+
 .target\:btn:target {
   display: inline-flex;
   flex: 1 1 0%;
@@ -15959,6 +15974,10 @@ salla-user-menu div[slot='trigger'] {
 
   .sm\:block {
     display: block;
+  }
+
+  .sm\:inline-flex {
+    display: inline-flex;
   }
 
   .sm\:grid {
@@ -16416,6 +16435,10 @@ salla-user-menu div[slot='trigger'] {
   padding-right: 1.25rem;
 }
 
+.ltr\:even\:border-l:nth-child(even):where([dir="ltr"], [dir="ltr"] *) {
+  border-left-width: 1px;
+}
+
 @media (min-width: 768px) {
   .ltr\:md\:pl-16:where([dir="ltr"], [dir="ltr"] *) {
     padding-left: 4rem;
@@ -16547,6 +16570,10 @@ salla-user-menu div[slot='trigger'] {
 
 .rtl\:pr-8:where([dir="rtl"], [dir="rtl"] *) {
   padding-right: 2rem;
+}
+
+.rtl\:even\:border-r:nth-child(even):where([dir="rtl"], [dir="rtl"] *) {
+  border-right-width: 1px;
 }
 
 @media (min-width: 768px) {

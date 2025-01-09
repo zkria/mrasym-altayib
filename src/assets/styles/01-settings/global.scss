@@ -1,101 +1,29 @@
-// الألوان الأساسية
+
+// Colors
 $main-color: var(--color-primary);
-$infinite-color: var(--infinite-color);
+$infinte-color: var(--infinte-color);
 $main-text-color: var(--main-text-color);
 
 :root {
-  // الألوان الأساسية
-  --color-primary: #0ea5e9;          // اللون الرئيسي
-  --color-primary-light: #38bdf8;    // نسخة أفتح
-  --color-primary-dark: #0284c7;     // نسخة أغمق
-  
-  // الألوان الرمادية
-  --color-gray-50: #f8fafc;
-  --color-gray-100: #f1f5f9;
-  --color-gray-200: #e2e8f0;
-  --color-gray-300: #cbd5e1;
-  --color-gray-400: #94a3b8;
-  --color-gray-500: #64748b;
-  --color-gray-600: #475569;
-  --color-gray-700: #334155;
-  --color-gray-800: #1e293b;
-  --color-gray-900: #0f172a;
-  
-  // ألوان الحالات
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-info: #3b82f6;
-  
-  // ألوان النص والخلفية
-  --color-text: var(--color-gray-800);
-  --color-text-light: var(--color-gray-600);
-  --color-text-lighter: var(--color-gray-400);
-  --color-bg: #ffffff;
-  --color-bg-alt: var(--color-gray-50);
-  --color-bg-dark: var(--color-gray-100);
-}
+  --infinte-color: #c9c9c9;
+  --main-text-color: #231f1e;
+  --main-text-color-dark: #2b2d34;
 
-// الوضع الداكن
-.dark {
-  // الألوان الأساسية في الوضع الداكن
-  --color-primary: #38bdf8;          // أفتح قليلاً للتباين
-  --color-primary-light: #7dd3fc;    // أفتح أكثر
-  --color-primary-dark: #0ea5e9;     // أغمق
-  
-  // ألوان النص في الوضع الداكن
-  --color-text: var(--color-gray-100);
-  --color-text-light: var(--color-gray-300);
-  --color-text-lighter: var(--color-gray-400);
-  
-  // ألوان الخلفية في الوضع الداكن
-  --color-bg: var(--color-gray-900);
-  --color-bg-alt: var(--color-gray-800);
-  --color-bg-dark: var(--color-gray-700);
-  
-  // ألوان الحالات في الوضع الداكن
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --color-info: #60a5fa;
-}
+  /* current */
+  --color-primary: #5cd5c4;
+  --color-primary: #414042;
+  --color-primary-d: #272628;
+  --color-primary-l: #676668;
+  --color-primary-reverse: #ff6767;
+  --color-text: #7c8082;
+  --bg-gray: #c6c7ce1a;
+  --color-grey: #f5f7f9;
+  --color-light-grey: #eeeeee;
+  /* font-size */
+  --font-sm: 0.8685714286rem;
+  /* font-family: ; */
+  --font-main: "DINNextLTArabic";
 
-// الفئات المساعدة
-.text-primary {
-  color: var(--color-primary);
-}
-
-.bg-primary {
-  background-color: var(--color-primary);
-}
-
-.border-primary {
-  border-color: var(--color-primary);
-}
-
-// تأثيرات التحويم
-.hover\:text-primary:hover {
-  color: var(--color-primary);
-}
-
-.hover\:bg-primary:hover {
-  background-color: var(--color-primary);
-}
-
-.hover\:border-primary:hover {
-  border-color: var(--color-primary);
-}
-
-// تأثيرات التركيز
-.focus\:ring-primary:focus {
-  --tw-ring-color: var(--color-primary);
-}
-
-.focus\:border-primary:focus {
-  border-color: var(--color-primary);
-}
-
-// إضافة انتقال سلس عند التبديل بين الأوضاع
-:root, .dark {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* plugins */
+  --mm-ocd-width: calc(100% - 51px);
 }
