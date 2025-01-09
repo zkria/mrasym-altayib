@@ -1,0 +1,47 @@
+@use '../01-settings/variables' as vars;
+@use '../01-settings/colors' as colors;
+
+// Variables
+:root {
+  --product-shadow: #{vars.$shadow-sm};
+  --product-border: 1px solid #{map-get(colors.$theme-colors, 'gray', 200)};
+  --transition-duration: 0.3s;
+}
+
+// Mixins
+@mixin product-card {
+  @apply bg-white rounded-lg;
+  box-shadow: var(--product-shadow);
+  border: var(--product-border);
+}
+
+@mixin flex-center {
+  @apply flex items-center justify-center;
+}
+
+// Components
+.product-entry {
+  @include product-card;
+  color: map-get(colors.$theme-colors, 'text', 'base');
+  transition: box-shadow var(--transition-duration) ease;
+  
+  &:hover {
+    box-shadow: 0 4px 6px #{map-get(colors.$theme-colors, 'gray', 300)};
+  }
+}
+
+// Dark Mode
+.dark {
+  --product-shadow: 0 2px 4px #{map-get(colors.$theme-colors, 'gray', 800)};
+  --product-border: 1px solid #{map-get(colors.$theme-colors, 'gray', 700)};
+
+  .product-entry {
+    background-color: map-get(colors.$theme-colors, 'bg', 'alt');
+    
+    &:hover {
+      box-shadow: 0 4px 6px #{map-get(colors.$theme-colors, 'gray', 700)};
+    }
+  }
+}
+
+// ...existing code...

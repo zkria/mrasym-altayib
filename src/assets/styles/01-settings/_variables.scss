@@ -1,0 +1,23 @@
+@use 'colors' as *;
+
+$colors: (
+  'primary': var(--color-primary),
+  'gray': (
+    50: var(--color-gray-50),
+    100: var(--color-gray-100),
+    200: var(--color-gray-200),
+    300: var(--color-gray-300),
+    400: var(--color-gray-400),
+    500: var(--color-gray-500)
+  ),
+  'text': var(--color-text),
+  'danger': var(--color-danger)
+);
+
+$transitions: (
+  'default': 0.3s ease,
+  'fast': 0.15s ease
+);
+
+$transition-duration: 0.3s;
+$shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
