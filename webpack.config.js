@@ -31,7 +31,7 @@ module.exports = {
                 test   : /\.js$/,
                 exclude: [
                     /(node_modules)/,
-                    asset('js/utilities/twilight.js')
+                    asset('js/twilight.js')
                 ],
                 use    : {
                     loader : 'babel-loader',

@@ -1,7 +1,7 @@
 import 'lite-youtube-embed';
-import BasePage from './base-page';
+import BasePage from '../core/base-page';
 import Fslightbox from 'fslightbox';
-import { zoom } from './partials/image-zoom';
+import { zoom } from '../partials/image-zoom';
 
 window.fslightbox = Fslightbox;
 
@@ -35,7 +35,6 @@ class Product extends BasePage {
             this.initZoom();
         }
 
-        // مراقبة تغيير حجم النافذة
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024) {
                 this.initZoom();
@@ -54,15 +53,13 @@ class Product extends BasePage {
 
         const mainImage = document.querySelector('.image-slider .swiper-slide-active img');
         if (!mainImage) return;
-        
-        // تأكد من وجود معرف للصورة
+
         if (!mainImage.id) {
             mainImage.id = 'product-main-image';
         }
 
         zoom(mainImage.id);
 
-        // تحديث عند تغيير الصورة
         document.querySelector('salla-slider.details-slider')?.addEventListener('slideChange', () => {
             setTimeout(() => {
                 const newImage = document.querySelector('.image-slider .swiper-slide-active img');
@@ -108,7 +105,6 @@ class Product extends BasePage {
     }
 
     initZoom() {
-        // تطبيق التكبير على الصورة النشطة
         const activeSlide = document.querySelector('.swiper-slide-active');
         if (!activeSlide) return;
 
@@ -117,7 +113,6 @@ class Product extends BasePage {
 
         zoom(image.id);
 
-        // تحديث عند تغيير الصورة
         document.querySelector('salla-slider.details-slider')?.addEventListener('slideChange', () => {
             setTimeout(() => {
                 const newSlide = document.querySelector('.swiper-slide-active');
@@ -136,13 +131,13 @@ class ProductGallery {
         this.thumbs = document.querySelectorAll('.thumb');
         this.currentIndex = 0;
         this.isAnimating = false;
-        
+
         this.init();
     }
 
     init() {
         if (!this.mainImage || !this.thumbs.length) return;
-        
+
         this.initGallery();
         this.initVideoThumbs();
     }
@@ -152,28 +147,22 @@ class ProductGallery {
         const thumbs = document.querySelectorAll('.thumb');
         const prevBtn = document.querySelector('.nav-button.prev');
         const nextBtn = document.querySelector('.nav-button.next');
-        
+
         let currentIndex = 0;
 
-        // تحديث الصورة الرئيسية
         function updateMainImage(index) {
             const thumb = thumbs[index];
             if (!thumb) return;
 
-            // إزالة الفئة النشطة من جميع الصور المصغرة
             thumbs.forEach(t => t.classList.remove('active'));
-            
-            // إضافة الفئة النشطة للصورة الحالية
             thumb.classList.add('active');
-            
-            // تحديث الصورة الرئيسية
+
             const newSrc = thumb.querySelector('img').src;
             mainImage.src = newSrc;
-            
+
             currentIndex = index;
         }
 
-        // التنقل بين الصور
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
                 const newIndex = currentIndex - 1;
@@ -192,7 +181,6 @@ class ProductGallery {
             });
         }
 
-        // تحديث الصورة عند النقر على الصور المصغرة
         thumbs.forEach((thumb, index) => {
             thumb.addEventListener('click', () => {
                 updateMainImage(index);
@@ -239,7 +227,7 @@ class ProductGallery {
         newImage.src = currentThumb.dataset.image;
 
         this.mainImage.style.opacity = '0';
-        
+
         newImage.onload = () => {
             setTimeout(() => {
                 this.mainImage.src = newImage.src;
@@ -282,12 +270,11 @@ class ProductTabs {
 
         this.tabs = this.tabsContainer.querySelectorAll('.tab-btn');
         this.panels = this.tabsContainer.querySelectorAll('.tab-panel');
-        
+
         this.init();
     }
 
     init() {
-        // إضافة مستمعي الأحداث للأزرار
         this.tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const targetId = tab.getAttribute('data-tab');
@@ -297,7 +284,6 @@ class ProductTabs {
     }
 
     switchTab(targetId) {
-        // إلغاء تنشيط جميع الأزرار واللوحات
         this.tabs.forEach(tab => {
             if (tab.getAttribute('data-tab') === targetId) {
                 tab.classList.add('active');
@@ -318,7 +304,6 @@ class ProductTabs {
     }
 }
 
-// تهيئة التبويبات عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
     new ProductTabs();
 });
@@ -332,13 +317,10 @@ export default function initProductTabs() {
     const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
     const tabPanels = tabsContainer.querySelectorAll('.tab-panel');
 
-    // تفعيل التبويب
     function activateTab(tabId) {
-        // إزالة الحالة النشطة من جميع الأزرار واللوحات
         tabButtons.forEach(btn => btn.classList.remove('active'));
         tabPanels.forEach(panel => panel.classList.remove('active'));
 
-        // تفعيل الزر واللوحة المحددة
         const selectedButton = tabsContainer.querySelector(`[data-tab="${tabId}"]`);
         const selectedPanel = tabsContainer.querySelector(`#${tabId}`);
 
@@ -346,28 +328,23 @@ export default function initProductTabs() {
             selectedButton.classList.add('active');
             selectedPanel.classList.add('active');
 
-            // تمرير إلى الزر المحدد
             selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
     }
 
-    // إضافة مستمعي الأحداث
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const tabId = button.getAttribute('data-tab');
             activateTab(tabId);
-            
-            // تحديث URL مع معرف التبويب النشط
+
             history.replaceState({}, '', `#${tabId}`);
         });
     });
 
-    // التحقق من وجود تبويب في URL
     const hashTab = window.location.hash.slice(1);
     if (hashTab) {
         activateTab(hashTab);
     } else {
-        // تفعيل التبويب الأول افتراضياً
         const firstTab = tabButtons[0]?.getAttribute('data-tab');
         if (firstTab) activateTab(firstTab);
     }

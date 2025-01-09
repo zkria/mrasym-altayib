@@ -1,6 +1,5 @@
 // استيراد المتغيرات العامة
 @use '../01-settings/global' as *;
-@use '../01-settings/colors' as *;
 
 // المتغيرات الأساسية
 $primary-color: var(--color-primary);

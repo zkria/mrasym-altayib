@@ -1,9 +1,10 @@
 import MobileMenu from 'mmenu-light';
 import Swal from 'sweetalert2';
-import Anime from './partials/anime';
-import initTootTip from './partials/tooltip';
+import Anime from '../partials/anime';
+import initTootTip from '../partials/tooltip';
 import AppHelpers from "./app-helpers";
 
+// إدارة حالة التطبيق
 class AppState {
   constructor() {
     this.menuOpen = false;
@@ -25,6 +26,7 @@ class AppState {
   }
 }
 
+// التطبيق الرئيسي
 class App extends AppHelpers {
   constructor() {
     super();
