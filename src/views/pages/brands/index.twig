@@ -7,88 +7,53 @@
 | brands     | Collection[] | Brands grouped by char, ex:{b:[{'name':'brand1',...},...]} |
 #}
 {% extends "layouts.master" %}
-
 {% block content %}
-    <div class="brands-container container mb-20">
-        {# التنقل #}
+    <div class="container mb-20">
+
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
         <nav class="breadcrumbs w-full py-5">
             <salla-breadcrumb></salla-breadcrumb>
         </nav>
 
-        {# رأس الصفحة #}
-        <div class="page-header flex items-center justify-between mb-8">
-            <div>
-                <h1 class="text-2xl font-bold mb-2">{{ page.title }}</h1>
-                <p class="text-gray-500">{{ trans('pages.brands.description') }}</p>
-            </div>
-
-            {# البحث عن العلامات التجارية #}
-            <div class="search-wrapper relative">
-                <input type="search" 
-                       id="brands-search"
-                       class="form-input pl-10 pr-4"
-                       placeholder="{{ trans('pages.brands.search') }}"
-                />
-                <i class="sicon-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-            </div>
+        <div class="flex justify-between pt-2 pb-6">
+            <h2 class="font-bold mb-6 md:mb-0">{{ page.title }}</h2>
         </div>
 
         {% if brands|length %}
-            {# شريط التنقل بين الأحرف #}
-            <div class="brands-nav-wrap sticky top-0 bg-white shadow-sm z-10">
-                <ul id="brands-nav" class="brands-nav flex items-center justify-center gap-2 py-4">
+            <!-- brands nav -->
+            <div class="brands-nav-wrap">
+                <ul id="brands-nav" class="brands-nav">
+                    <li></li>
                     {% for char,brands_group in brands %}
                         <li>
-                            <a href="#brand-section-{{ loop.index }}"
-                               class="brands-nav__item inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-primary hover:text-white transition-colors"
+                            <a class="brands-nav__item"
+                               href="#brand-section-{{ loop.index }}"
                                data-id="{{ loop.index }}">
-                                {{ char }}
+                               <span class="fix-align">{{ char }}</span>
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
+            <!-- end:: brands nav -->
 
-            {# مجموعات العلامات التجارية #}
-            <div class="brands-sections px-8 xl:px-0">
+            <div class="px-8 xl:px-0">
+
                 {% hook 'brands:index.items.start' %}
 
                 {% for char,brandGroup in brands %}
-                    <section id="brand-section-{{ loop.index }}" 
-                             class="brand-section pt-16 first:pt-8">
-                        {# رأس القسم #}
-                        <div class="section-header flex items-center gap-4 mb-8">
-                            <span class="brand-char text-2xl font-bold w-12 h-12 flex items-center justify-center bg-primary text-white rounded-lg">
-                                {{ char }}
+                    <section id="brand-section-{{ loop.index }}" class="pt-24 first:pt-16 md:first:pt-24">
+                        <!-- separator -->
+                        <div class="flex items-center mb-10">
+                            <span data-id="{{ loop.index }}" class="brand-char">
+                              <span class="fix-align">{{ char }}</span>
                             </span>
-                            <div class="h-px flex-1 bg-gray-200"></div>
+                            <div class="bg-border-color h-px flex-1"></div>
                         </div>
-
-                        {# شبكة العلامات التجارية #}
-                        <div class="brands-grid">
+                        <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 grid-flow-row gap-4 md:gap-8">
                             {% for brand in brandGroup %}
-                                <a href="{{ brand.url }}" 
-                                   class="brand-item group">
-                                    <div class="relative bg-white rounded-lg shadow-sm p-6 transition-all duration-300 hover:shadow-md">
-                                        {# صورة العلامة التجارية #}
-                                        <img src="{{ brand.logo }}"
-                                             class="w-full h-32 object-contain mb-4 transition-transform duration-300 group-hover:scale-110"
-                                             loading="lazy"
-                                             alt="{{ brand.name }}"
-                                        />
-                                        
-                                        {# اسم العلامة التجارية #}
-                                        <h3 class="text-center font-medium text-gray-800">
-                                            {{ brand.name }}
-                                        </h3>
-
-                                        {# عدد المنتجات #}
-                                        {% if brand.products_count %}
-                                            <div class="text-center text-sm text-gray-500 mt-2">
-                                                {{ brand.products_count }} {{ trans('pages.brands.products') }}
-                                            </div>
-                                        {% endif %}
-                                    </div>
+                                <a href="{{ brand.url }}" class="brand-item">
+                                    <img class="max-h-full" width="400" height="300" src="{{ brand.logo }}" alt="{{ brand.name }}">
                                 </a>
                             {% endfor %}
                         </div>
@@ -96,141 +61,19 @@
                 {% endfor %}
 
                 {% hook 'brands:index.items.end' %}
+
             </div>
         {% else %}
-            {# رسالة عند عدم وجود علامات تجارية #}
-            <div class="empty-brands text-center py-16">
-                <span class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
-                    <i class="sicon-award-ribbon text-4xl text-gray-400"></i>
+            <div class="no-content-placeholder">
+                <span class="rounded-icon !w-36 !h-36 bg-gray-100 mb-6">
+                    <i class="sicon-award-ribbon text-6xl block text-gray-400"></i>
                 </span>
-                <h3 class="text-xl font-bold mb-2">
-                    {{ trans('pages.brands.no_brands_title') }}
-                </h3>
-                <p class="text-gray-500">
-                    {{ trans('pages.brands.non_brands') }}
-                </p>
+                <h1 class="font-bold text-sm mb-1">{{ trans('pages.brands.non_brands') }}</h1>
+                <small>{{ trans('pages.brands.try_again') }}</small>
             </div>
         {% endif %}
     </div>
 {% endblock %}
-
-{% block styles %}
-<style>
-    .brands-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .brand-item {
-        transition: transform 0.3s ease;
-    }
-
-    .brand-item:hover {
-        transform: translateY(-4px);
-    }
-
-    .brands-nav-wrap {
-        transition: box-shadow 0.3s ease;
-    }
-
-    .brands-nav-wrap.sticky {
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .brands-nav__item.active {
-        @apply bg-primary text-white;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .brand-section {
-        animation: fadeIn 0.5s ease-out;
-    }
-</style>
-{% endblock %}
-
 {% block scripts %}
-<script>
-const brandsPage = {
-    init() {
-        this.bindEvents();
-        this.initializeSearch();
-        this.initializeNavigation();
-    },
-
-    bindEvents() {
-        // مراقبة التمرير لتحديث التنقل
-        window.addEventListener('scroll', () => {
-            this.updateActiveNavItem();
-            this.updateStickyNav();
-        });
-    },
-
-    initializeSearch() {
-        const searchInput = document.getElementById('brands-search');
-        if (!searchInput) return;
-
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const brandItems = document.querySelectorAll('.brand-item');
-
-            brandItems.forEach(item => {
-                const brandName = item.querySelector('h3').textContent.toLowerCase();
-                item.style.display = brandName.includes(query) ? 'block' : 'none';
-            });
-        });
-    },
-
-    initializeNavigation() {
-        const navItems = document.querySelectorAll('.brands-nav__item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = item.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    },
-
-    updateActiveNavItem() {
-        const sections = document.querySelectorAll('.brand-section');
-        const navItems = document.querySelectorAll('.brands-nav__item');
-        
-        sections.forEach((section, index) => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 150 && rect.bottom >= 150) {
-                navItems.forEach(item => item.classList.remove('active'));
-                navItems[index].classList.add('active');
-            }
-        });
-    },
-
-    updateStickyNav() {
-        const nav = document.querySelector('.brands-nav-wrap');
-        if (!nav) return;
-
-        nav.classList.toggle('sticky', window.scrollY > 100);
-    }
-};
-
-document.addEventListener('DOMContentLoaded', () => brandsPage.init());
-</script>
+    <script defer src="{{ 'pages.js' | asset }}"></script>
 {% endblock %}

@@ -7147,46 +7147,33 @@ var App = /*#__PURE__*/function (_AppHelpers) {
           position: salla.config.get('theme.is_rtl') ? "right" : 'left'
         });
         _this3.onClick("a[href='#mobile-menu']", function (event) {
-          document.body.classList.add('menu-opened');
-          event.preventDefault() || drawer.close() || drawer.open();
-        });
-        _this3.onClick(".close-mobile-menu", function (event) {
-          document.body.classList.remove('menu-opened');
-          event.preventDefault() || drawer.close();
+          event.preventDefault();
+          drawer.open();
         });
       });
     }
   }, {
     key: "initiateStickyMenu",
     value: function initiateStickyMenu() {
-      var _this$element,
-        _this4 = this;
-      var header = this.element('#mainnav'),
-        height = (_this$element = this.element('#mainnav .inner')) === null || _this$element === void 0 ? void 0 : _this$element.clientHeight;
-      if (!header) {
-        return;
-      }
-      window.addEventListener('load', function () {
-        return setTimeout(function () {
-          return _this4.setHeaderHeight();
-        }, 500);
-      });
-      window.addEventListener('resize', function () {
-        return _this4.setHeaderHeight();
-      });
+      var header = this.element('.main-nav-container');
+      var headerHeight = header.clientHeight;
+      var lastScrollTop = 0;
       window.addEventListener('scroll', function () {
-        window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-        window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-      }, {
-        passive: true
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > headerHeight) {
+          header.classList.add('fixed-pinned');
+          header.classList.add('animated');
+        } else {
+          header.classList.remove('fixed-pinned');
+          header.classList.remove('animated');
+        }
+        if (scrollTop > lastScrollTop) {
+          header.classList.remove('fixed-header');
+        } else {
+          header.classList.add('fixed-header');
+        }
+        lastScrollTop = scrollTop;
       });
-    }
-  }, {
-    key: "setHeaderHeight",
-    value: function setHeaderHeight() {
-      var height = this.element('#mainnav .inner').clientHeight,
-        header = this.element('#mainnav');
-      header.style.height = height + 'px';
     }
   }, {
     key: "initiateAdAlert",
@@ -7229,22 +7216,22 @@ var App = /*#__PURE__*/function (_AppHelpers) {
   }, {
     key: "initiateModals",
     value: function initiateModals() {
-      var _this5 = this;
+      var _this4 = this;
       this.onClick('[data-modal-trigger]', function (e) {
         var id = '#' + e.target.dataset.modalTrigger;
-        _this5.removeClass(id, 'hidden');
+        _this4.removeClass(id, 'hidden');
         setTimeout(function () {
-          return _this5.toggleModal(id, true);
+          return _this4.toggleModal(id, true);
         });
       });
       salla.event.document.onClick("[data-close-modal]", function (e) {
-        return _this5.toggleModal('#' + e.target.dataset.closeModal, false);
+        return _this4.toggleModal('#' + e.target.dataset.closeModal, false);
       });
     }
   }, {
     key: "toggleModal",
     value: function toggleModal(id, isOpen) {
-      var _this6 = this;
+      var _this5 = this;
       this.toggleClassIf("".concat(id, " .s-salla-modal-overlay"), 'ease-out duration-300 opacity-100', 'opacity-0', function () {
         return isOpen;
       }).toggleClassIf("".concat(id, " .s-salla-modal-body"), 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100', 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95', function () {
@@ -7254,14 +7241,14 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       });
       if (!isOpen) {
         setTimeout(function () {
-          return _this6.addClass(id, 'hidden');
+          return _this5.addClass(id, 'hidden');
         }, 350);
       }
     }
   }, {
     key: "initiateCollapse",
     value: function initiateCollapse() {
-      var _this7 = this;
+      var _this6 = this;
       document.querySelectorAll('.btn--collapse').forEach(function (trigger) {
         var content = document.querySelector('#' + trigger.dataset.show);
         var state = {
@@ -7287,7 +7274,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         };
         var toggleState = function toggleState(isOpen) {
           state.isOpen = !isOpen;
-          _this7.toggleElementClassIf(content, 'is-closed', 'is-opened', function () {
+          _this6.toggleElementClassIf(content, 'is-closed', 'is-opened', function () {
             return isOpen;
           });
         };
@@ -7325,13 +7312,31 @@ var App = /*#__PURE__*/function (_AppHelpers) {
 salla.onReady(function () {
   return new App().loadTheApp();
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebarOverlay = document.getElementById('sidebarOverlay');
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', toggleSidebar);
+  }
+});
 function toggleSidebar() {
   var sidebar = document.getElementById('mainnav');
-  var isOpen = sidebar.classList.toggle('translate-x-0');
-  sidebar.classList.toggle('-translate-x-full', !isOpen);
-  document.querySelectorAll('.hamburger-menu').forEach(function (button) {
-    button.setAttribute('aria-expanded', isOpen);
-  });
+  var closeBtn = document.getElementById('closeSidebarBtn');
+  var body = document.body;
+  var overlay = document.getElementById('sidebarOverlay');
+
+  // Check if the sidebar is currently visible
+  var isSidebarVisible = !sidebar.classList.contains('hidden');
+  sidebar.classList.toggle('hidden');
+  sidebar.classList.toggle('rtl:translate-x-full', !isSidebarVisible);
+  sidebar.classList.toggle('ltr:-translate-x-full', !isSidebarVisible);
+  closeBtn.classList.toggle('hidden', isSidebarVisible);
+  body.classList.toggle('overflow-hidden', !isSidebarVisible);
+  body.classList.toggle('rtl:pr-72', !isSidebarVisible);
+  body.classList.toggle('ltr:pl-72', !isSidebarVisible);
+  overlay.classList.toggle('opacity-0', !isSidebarVisible);
+  overlay.classList.toggle('pointer-events-none', !isSidebarVisible);
+  overlay.classList.toggle('opacity-50', isSidebarVisible);
+  overlay.classList.toggle('pointer-events-auto', isSidebarVisible);
 }
 })();
 

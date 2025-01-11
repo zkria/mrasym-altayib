@@ -1,3 +1,4 @@
+  
 // Wishlist Product entry
 .product-entry {
   @apply h-full transition-shadow duration-300 bg-white hover:shadow-default rounded-lg justify-between flex relative;
@@ -37,6 +38,7 @@
     @apply block p-3 hover:text-primary;
   }
 }
+
 
 // cart
 .cart-item{
@@ -173,6 +175,8 @@
   }
 }
 
+
+
 // 3d Image Viewer ------------------------------
 .model-viewer-wrapper {
   @apply relative mb-4 md:mb-0 w-full;
@@ -297,6 +301,7 @@
 	  }
 	} 
 }
+
 
 // Horizontal card
 .s-product-card-horizontal{

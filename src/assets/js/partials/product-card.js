@@ -1,4 +1,4 @@
-import BasePage from '../core/base-page';
+import BasePage from '../base-page';
 class ProductCard extends HTMLElement {
   constructor(){
     super()

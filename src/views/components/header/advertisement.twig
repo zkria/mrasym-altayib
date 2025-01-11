@@ -1,16 +1,16 @@
 {#
-| المتغير                    | النوع          | الوصف                                        |
+| Variable                    | Type          | Description                                   |
 |-----------------------------|---------------|-----------------------------------------------|
-| advertisement               | إعلان          |                                               |
-| advertisement.id            | عدد صحيح       |                                               |
-| advertisement.icon          | سلسلة          | فئة Css                                       |
-| advertisement.title         | سلسلة          |                                               |
-| advertisement.description   | سلسلة          |                                               |
-| advertisement.url           | ?سلسلة         |                                               |
-| advertisement.close_url     | سلسلة          | * يجب أن يكون من جانب العميل لتجنب مشاكل التخزين المؤقت |
-| advertisement.colors        | كائن           |                                               |
-| advertisement.colors.bg     | سلسلة          | لون Hex مثل: #23d1b0                          |
-| advertisement.colors.text   | سلسلة          | لون Hex مثل: #ffffff                          |
-| advertisement.target        | سلسلة          | `_self`, `_blank`                             |
+| advertisement               | Advertisement |                                               |
+| advertisement.id            | int           |                                               |
+| advertisement.icon          | string        | Css class                                     |
+| advertisement.title         | string        |                                               |
+| advertisement.description   | string        |                                               |
+| advertisement.url           | ?string       |                                               |
+| advertisement.close_url     | string        | * Should be client side to avoid cache issues |
+| advertisement.colors        | object        |                                               |
+| advertisement.colors.bg     | string        | Hex Color ex: #23d1b0                         |
+| advertisement.colors.text   | string        | Hex Color ex: #ffffff                         |
+| advertisement.target        | string        | `_self`, `_blank`                             |
 #}
 <salla-advertisement></salla-advertisement>

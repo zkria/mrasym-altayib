@@ -14,282 +14,162 @@
 {% extends "layouts.master" %}
 
 {% block content %}
-    <div class="blog-container container mb-8 sm:mb-24">
-        {# رأس الصفحة #}
-        <div class="page-header flex items-center justify-between mb-8">
-            <nav class="breadcrumbs py-5">
-                <salla-breadcrumb></salla-breadcrumb>
-            </nav>
+    <div class=" container mb-8 sm:mb-24">
+      <div class="center-between">
 
-            {# البحث في المقالات #}
-            <div class="search-wrapper relative hidden md:block">
-                <input type="search" 
-                       id="blog-search"
-                       class="form-input pl-10 pr-4"
-                       placeholder="{{ trans('pages.blog.search') }}"
-                />
-                <i class="sicon-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        {# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
+        <nav class="breadcrumbs w-full py-5">
+            <salla-breadcrumb></salla-breadcrumb>
+        </nav>
+
+        {# Categories filter dropdown #}
+        <div class="dropdown-toggler cat-filter lg:hidden">
+          <button aria-label="Categories Trigger" type="button" class="dropdown__trigger rtl:space-x-reverse space-x-1.5 flex text-sm text-primary" aria-expanded="true" aria-haspopup="true"> 
+            <i class="sicon-filter text-xs pointer-events-none"></i>
+            <span class="fix-align pointer-events-none">{{ trans('pages.blog_categories.categories') }}</span>
+          </button>
+          <div class="dropdown__menu"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+              tabindex="-1">
+              <div class="flex items-center p-4 border-b mb-1 lg:hidden relative">
+                  <h2 class="font-bold">{{ trans('pages.blog_categories.categories') }}</h2>
+                  <button class="dropdown__close h-12 w-12 text-red-500 text-lg rounded-full absolute top-2 rtl:left-1 ltr:right-1 z-50">
+                      <i class="sicon-cancel pointer-events-none"></i>
+                  </button>
+              </div>
+              <ul class="pb-4 lg:pb-2 py-2 px-2 lg:px-0 space-y-px">
+                {% for category in categories %}
+                    <li>
+                        <a class="p-2.5 block text-sm hover:text-primary {{ category.is_current ? ' is-active' : '' }}" href="{{ category.url }}">
+                            <span class="rtl:ml-auto ltr:mr-auto">{{ category.name }}</span>
+                        </a>
+                    </li>
+                  {% endfor %}
+              </ul>
             </div>
+
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {# الشريط الجانبي #}
-            <aside class="lg:col-span-3 space-y-8">
-                {# تصفية الفئات للموبايل #}
-                <div class="lg:hidden">
-                    <salla-button 
-                        width="wide"
-                        fill="outline"
-                        onclick="toggleCategories()"
-                        class="categories-toggle">
-                        <i class="sicon-filter"></i>
-                        {{ trans('pages.blog_categories.categories') }}
-                    </salla-button>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-8 gap-8">
+            <nav aria-label="Sidebar" class="hidden lg:block lg:sticky shrink-0 top-24 col-span-2" id="filters-menu">
+                <h2 class="font-bold mb-3">{{ trans('pages.blog_categories.categories') }}</h2>
+                <ul>
+                    {% for category in categories %}
+                        <li {{ category.is_current ? ' class="text-primary"' : '' }}>
+                            <a class="py-3 block text-sm hover:text-primary" href="{{ category.url }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
 
-                {# قائمة الفئات #}
-                <nav id="categories-menu" 
-                     class="categories-menu hidden lg:block bg-white rounded-lg shadow-sm p-6">
-                    <h2 class="text-lg font-bold mb-4">
-                        {{ trans('pages.blog_categories.categories') }}
-                    </h2>
-                    <ul class="space-y-2">
-                        {% for category in categories %}
-                            <li>
-                                <a href="{{ category.url }}" 
-                                   class="flex items-center justify-between py-2 px-3 rounded-md hover:bg-gray-50 {{ category.is_current ? 'text-primary bg-primary/5' : 'text-gray-600' }}">
-                                    <span>{{ category.name }}</span>
-                                    {% if category.articles_count %}
-                                        <span class="text-sm text-gray-400">({{ category.articles_count }})</span>
-                                    {% endif %}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-
-                {# الوسوم الشائعة #}
-                {% if popular_tags|length %}
-                    <div class="popular-tags bg-white rounded-lg shadow-sm p-6">
-                        <h2 class="text-lg font-bold mb-4">
-                            {{ trans('pages.blog.popular_tags') }}
-                        </h2>
-                        <div class="flex flex-wrap gap-2">
-                            {% for tag in popular_tags %}
-                                <a href="{{ tag.url }}"
-                                   class="px-3 py-1.5 text-sm rounded-full bg-gray-100 text-gray-600 hover:bg-primary hover:text-white transition-colors">
-                                    {{ tag.name }}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-            </aside>
-
-            {# المحتوى الرئيسي #}
-            <main class="lg:col-span-9">
-                {# سلايدر المقالات المميزة #}
+            <div class="main-content lg:col-span-6">
                 {% if slides|length %}
-                    <div class="featured-slider mb-8">
-                        <salla-slider 
-                            type="blog"
-                            auto-play
-                            auto-height
-                            pagination
-                            class="rounded-lg overflow-hidden">
+                    <salla-slider 
+                      id="blog-home-slider"
+                      type="blog" 
+                      auto-play 
+                      auto-height
+                      show-controls="false" 
+                      pagination
+                      class="blog-slider block rounded overflow-hidden mb-2.5 lg:mb-8">
+                        <div slot="items">
                             {% for article in slides %}
-                                <div class="relative h-[400px] group">
-                                    {# صورة المقال #}
-                                    <img src="{{ article.image.url }}"
-                                         class="w-full h-full object-cover"
-                                         alt="{{ article.image.alt }}"
-                                    />
-                                    
-                                    {# محتوى المقال #}
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
-                                        <div class="p-8 text-white">
-                                            {# معلومات المقال #}
-                                            <div class="flex items-center gap-6 text-white/80 mb-4">
-                                                <time class="flex items-center gap-2">
-                                                    <i class="sicon-calendar-date"></i>
-                                                    {{ article.created_at|date }}
-                                                </time>
-                                                <a href="{{ article.author.url }}" 
-                                                   class="flex items-center gap-2 hover:text-white">
-                                                    <i class="sicon-user"></i>
-                                                    {{ article.author.name }}
-                                                </a>
+                                <div class="swiper-slide has-overlay blog-slider__slide h-[300px] md:h-[400px] relative bg-border-color flex justify-center {{ article.has_image ? '' : 'no-thumb' }}">
+                                    <img class="{{ article.image.url|is_placeholder?'sm:h-full w-20 object-contain opacity-50':'object-cover h-full w-full' }}"
+                                         src="{{ article.image.url }}" alt="{{ article.image.alt }}">
+                                    <div class="absolute z-10 bottom-0 rtl:right-0 ltr:left-0 p-4 pb-10 rtl:lg:pr-10 ltr:lg:pl-10 lg:pb-20">
+                                        <div class="blog-slider__content relative">
+                                            <div class="z-20 w-full md:w-5/6 lg:w-6/12 text-white">
+                                                <div data-swiper-parallax="-500"  class="block-slide-anime">
+                                                    <div class="mb-2.5 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
+                                                        <div class="flex items-center">
+                                                            <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1"></i>
+                                                            <span class="whitespace-nowrap">{{ article.created_at|date }}</span>
+                                                        </div>
+                                                        <a href="{{ article.author.url }}"
+                                                           class=" flex items-center hover:underline">
+                                                            <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
+                                                            <span class="whitespace-nowrap">{{ article.author.name }}</span>
+                                                        </a>
+                                                    </div>
+                                                    <h3 class="text-sm font-bold leading-normal mb-4">
+                                                        <a href="{{ article.url }}">{{ article.title }}</a>
+                                                    </h3>
+                                                </div>
+                                                <p data-swiper-parallax="-300"  class="line-clamp-2 block-slide-anime description">{{ article.summary }}</p>
                                             </div>
-
-                                            {# عنوان المقال #}
-                                            <h3 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
-                                                <a href="{{ article.url }}">{{ article.title }}</a>
-                                            </h3>
-
-                                            {# ملخص المقال #}
-                                            <p class="text-white/90 line-clamp-2">{{ article.summary }}</p>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
-                        </salla-slider>
-                    </div>
-                {% endif %}
-
-                {# قائمة المقالات #}
-                {% if articles|length %}
-                    <div class="articles-grid">
-                        <salla-infinite-scroll 
-                            next-page="{{ articles.next_page }}"
-                            class="grid md:grid-cols-2 gap-6"
-                            autoload>
-                            {% for article in articles %}
-                                <article class="bg-white rounded-lg shadow-sm overflow-hidden group">
-                                    {# صورة المقال #}
-                                    <a href="{{ article.url }}" class="block relative h-48 overflow-hidden">
-                                        <img src="{{ article.image.url }}"
-                                             class="w-full h-full object-cover transition-transform group-hover:scale-110"
-                                             alt="{{ article.image.alt }}"
-                                        />
-                                    </a>
-
-                                    <div class="p-6">
-                                        {# معلومات المقال #}
-                                        <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                            <time class="flex items-center gap-2">
-                                                <i class="sicon-calendar-date"></i>
-                                                {{ article.created_at|date }}
-                                            </time>
-                                            <a href="{{ article.author.url }}" 
-                                               class="flex items-center gap-2 hover:text-primary">
-                                                <i class="sicon-user"></i>
-                                                {{ article.author.name }}
-                                            </a>
-                                        </div>
-
-                                        {# عنوان المقال #}
-                                        <h3 class="text-lg font-bold mb-3 group-hover:text-primary transition-colors">
-                                            <a href="{{ article.url }}">{{ article.title }}</a>
-                                        </h3>
-
-                                        {# ملخص المقال #}
-                                        <p class="text-gray-600 line-clamp-2 mb-4">
-                                            {{ article.summary }}
-                                        </p>
-
-                                        {# الوسوم #}
-                                        {% if article.tags|length %}
-                                            <div class="flex flex-wrap gap-2 pt-4 border-t">
-                                                {% for tag in article.tags %}
-                                                    <a href="{{ tag.url }}"
-                                                       class="text-sm text-gray-500 hover:text-primary">
-                                                        <i class="sicon-tag"></i>
-                                                        {{ tag.name }}
-                                                    </a>
-                                                {% endfor %}
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </article>
-                            {% endfor %}
-                        </salla-infinite-scroll>
-                    </div>
+                        </div>
+                    </salla-slider>
                 {% else %}
-                    {# رسالة عند عدم وجود مقالات #}
-                    <div class="empty-blog text-center py-16">
-                        <span class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 mb-6">
-                            <i class="sicon-inbox text-4xl text-gray-400"></i>
-                        </span>
-                        <h3 class="text-xl font-bold mb-2">
-                            {{ trans('pages.blog.no_articles_title') }}
-                        </h3>
-                        <p class="text-gray-500">
-                            {{ trans('pages.blog_categories.no_articles') }}
-                        </p>
+                    <div class="sr-only lg:not-sr-only ">
+                        <h1 class="blog-category__title font-bold text-lg mb-8">{{ page.title }}</h1>
                     </div>
                 {% endif %}
-            </main>
+                {% if articles|length %}
+                    {% hook 'blog:index.items.start' %}
+
+                    <salla-infinite-scroll class="grid md:grid-cols-2 gap-2.5 md:gap-8" next-page="{{ articles.next_page }}" autoload>
+                        {% for article in articles %}
+                            <div class='list-block post-entry relative h-full transition-shadow duration-500 bg-white hover:shadow-default rounded-lg justify-around overflow-hidden flex flex-col'>
+                                <a href="{{ article.url }}"
+                                   class='post-entry__image relative overflow-hidden hover:opacity-90 w-full h-56 bg-border-color flex items-center justify-center'>
+                                    <img class="{{ article.image.url|is_placeholder?'sm:h-full w-20 object-contain opacity-60':'h-full w-full object-cover' }}"
+                                         src="{{ article.image.url }}"
+                                         alt="{{ article.image.alt }}">
+                                </a>
+
+                                <div class="flex-1 px-5 pt-5 pb-7">
+                                    <div class="mb-2.5 text-gray-500 rounded-md inline-flex text-sm rtl:space-x-reverse space-x-5">
+                                        <div class="flex items-center">
+                                            <i class="sicon-calendar-date rtl:ml-1 ltr:mr-1"></i>
+                                            <span class="">{{ article.created_at|date }}</span>
+                                        </div>
+                                        <a href="{{ article.author.url }}" class="flex items-center hover:text-dark">
+                                            <i class="sicon-user rtl:ml-1 ltr:mr-1"></i>
+                                            <span class="">{{ article.author.name }}</span>
+                                        </a>
+                                    </div>
+
+                                    <h3 class="post-entry__title  text-sm font-bold text-gray-800 leading-6 mb-2.5">
+                                        <a href="{{ article.url }}">{{ article.title }}</a>
+                                    </h3>
+                                    <p class="text-sm text-gray-500 leading-6 mb-2.5">
+                                        {{ article.summary }}
+                                    </p>
+                                </div>
+
+                                {% if article.tags|length %}
+                                    <div class="p-4 flex flex-wrap items-center border-t border-gray-200">
+                                        {% for tag in article.tags %}
+                                            <a href="{{ tag.url }}"
+                                               class="py-2 px-4 rounded-large inline-flex items-center text-gray-500 hover:text-dark justify-center text-sm">
+                                                <i class="font-medium sicon-tag rtl:ml-1.5 ltr:mr-1.5"></i>
+                                                <span class="fix-align whitespace-nowrap">{{ tag.name }}</span>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </salla-infinite-scroll>
+
+                    {% hook 'blog:index.items.end' %}
+                {% elseif not slides|length %}
+                    <div class="no-content-placeholder">
+                        <i class="sicon-inbox icon"></i>
+                        <p>{{ trans('pages.blog_categories.no_articles') }}</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-const blog = {
-    init() {
-        this.initializeSearch();
-        this.bindEvents();
-    },
-
-    initializeSearch() {
-        const searchInput = document.getElementById('blog-search');
-        if (!searchInput) return;
-
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            this.filterArticles(query);
-        });
-    },
-
-    filterArticles(query) {
-        const articles = document.querySelectorAll('.articles-grid article');
-        
-        articles.forEach(article => {
-            const title = article.querySelector('h3').textContent.toLowerCase();
-            const summary = article.querySelector('p').textContent.toLowerCase();
-            
-            const isMatch = title.includes(query) || summary.includes(query);
-            article.style.display = isMatch ? 'block' : 'none';
-        });
-    },
-
-    bindEvents() {
-        // مراقبة التمرير للقائمة الجانبية
-        const categoriesMenu = document.getElementById('categories-menu');
-        if (categoriesMenu) {
-            window.addEventListener('scroll', () => {
-                categoriesMenu.classList.toggle('sticky', window.scrollY > 100);
-            });
-        }
-    }
-};
-
-function toggleCategories() {
-    const menu = document.getElementById('categories-menu');
-    menu.classList.toggle('hidden');
-}
-
-document.addEventListener('DOMContentLoaded', () => blog.init());
-</script>
-{% endblock %}
-
-{% block styles %}
-<style>
-.categories-menu.sticky {
-    @apply top-20 transition-all duration-300;
-}
-
-.articles-grid article {
-    transition: transform 0.3s ease;
-}
-
-.articles-grid article:hover {
-    transform: translateY(-4px);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.articles-grid article {
-    animation: fadeIn 0.5s ease-out;
-}
-</style>
 {% endblock %}
