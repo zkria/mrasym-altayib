@@ -17,7 +17,8 @@
         class="hamburger-menu"
         aria-label="فتح القائمة الرئيسية"
         aria-expanded="{{ is_sidebar_open ? 'true' : 'false' }}"
-        aria-controls="sidebar-content">
+        aria-controls="sidebar-content"
+        onclick="toggleSidebar()">
         <span class="hamburger-icon"></span>
       </button>
       
@@ -113,3 +114,15 @@
     aria-label="اختيار النطاق">
   </salla-scopes>
 {% endif %}
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('mainnav');
+    const isOpen = sidebar.classList.toggle('open');
+    document.querySelector('.hamburger-menu').setAttribute('aria-expanded', isOpen);
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+</script>
