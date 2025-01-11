@@ -38,7 +38,6 @@ class App extends AppHelpers {
     this.commonThings();
     this.initiateNotifier();
     this.initiateMobileMenu();
-    this.initDarkMode();
     if (header_is_sticky) {
       this.initiateStickyMenu();
     }

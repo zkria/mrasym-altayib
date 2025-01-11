@@ -84,7 +84,7 @@
 {% extends "layouts.master" %}
 
 {% block content %}
-    {#�عداد المتغيرات المساعدة #}
+    {# إعداد المتغيرات المساعدة #}
     {% set hasMultipleImages = product.images|length > 1 %}
     {% set isOnSale = product.is_on_sale %}
     {% set hasRating = product.rating is not null %}
@@ -153,19 +153,19 @@
                         {% endif %}
                     </salla-slider>
                     {# أزرار المشاركة والمفضلة #}
-                <div class="flex rtl:space-x-reverse space-x-3">
-                    <salla-social-share class="inline-flex mb-5" aria-label="مشاركة اجتماعية"></salla-social-share>
-                    <salla-button
-                            class="btn--wishlist animated hidden sm:inline-flex"
-                            data-id="{{ product.id }}"
-                            onclick="salla.wishlist.toggle({{ product.id }})"
-                            shape="icon"
-                            fill="outline"
-                            color="light"
-                            aria-label="إضافة إلى قائمة الرغبات">
-                        <i class="sicon-heart"></i>
-                    </salla-button>
-                </div>
+                    <div class="flex rtl:space-x-reverse space-x-3">
+                        <salla-social-share class="inline-flex mb-5" aria-label="مشاركة اجتماعية"></salla-social-share>
+                        <salla-button
+                                class="btn--wishlist animated hidden sm:inline-flex"
+                                data-id="{{ product.id }}"
+                                onclick="salla.wishlist.toggle({{ product.id }})"
+                                shape="icon"
+                                fill="outline"
+                                color="light"
+                                aria-label="إضافة إلى قائمة الرغبات">
+                            <i class="sicon-heart"></i>
+                        </salla-button>
+                    </div>
                 </div>
                 
             </div>
@@ -498,6 +498,7 @@
         </div>
     </div>
 {% endblock %}
+
 {# تضمين السكربتات اللازمة #}
 {% block scripts %}
     <script defer src="{{ 'product.js' | asset }}"></script>

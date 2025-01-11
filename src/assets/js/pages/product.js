@@ -349,3 +349,50 @@ export default function initProductTabs() {
         if (firstTab) activateTab(firstTab);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabPanels.forEach(panel => panel.classList.remove('active'));
+
+      this.classList.add('active');
+      document.querySelector(`.tab-panel[data-tab="${targetTab}"]`).classList.add('active');
+    });
+  });
+  
+  // تأكد من أن المنتجات يتم جلبها بشكل صحيح
+  fetch('/api/products')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // تحقق من البيانات في وحدة التحكم
+      // قم بعرض المنتجات هنا
+    })
+    .catch(error => {
+      console.error('Error fetching products:', error);
+    });
+
+  // تأكد من أن القوائم تعمل بشكل صحيح
+  const menuItems = document.querySelectorAll('.main-menu .has-children');
+
+  menuItems.forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      const subMenu = this.querySelector('.sub-menu');
+      if (subMenu) {
+        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
+      }
+    });
+
+    item.addEventListener('mouseleave', function() {
+      const subMenu = this.querySelector('.sub-menu');
+      if (subMenu) {
+        subMenu.style.maxHeight = '0';
+      }
+    });
+  });
+});
