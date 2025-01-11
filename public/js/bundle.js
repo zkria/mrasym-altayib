@@ -1536,162 +1536,6 @@ var AppHelpers = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/assets/js/core/mobile-menu.js":
-/*!*******************************************!*\
-  !*** ./src/assets/js/core/mobile-menu.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initiateMobileMenu: () => (/* binding */ initiateMobileMenu)
-/* harmony export */ });
-/* harmony import */ var mmenu_light__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mmenu-light */ "./node_modules/mmenu-light/src/mmenu-light.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/assets/js/core/utils.js");
-
-
-function initiateMobileMenu() {
-  (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isElementLoaded)('#mobile-menu').then(function (menu) {
-    var mobileMenu = new mmenu_light__WEBPACK_IMPORTED_MODULE_0__["default"](menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-    salla.lang.onLoaded(function () {
-      mobileMenu.navigation({
-        title: salla.lang.get('blocks.header.main_menu')
-      });
-    });
-    var drawer = mobileMenu.offcanvas({
-      position: salla.config.get('theme.is_rtl') ? "right" : 'left'
-    });
-    document.querySelectorAll("a[href='#mobile-menu']").forEach(function (el) {
-      el.addEventListener('click', function (event) {
-        document.body.classList.add('menu-opened');
-        event.preventDefault();
-        drawer.open();
-      });
-    });
-    document.querySelectorAll(".close-mobile-menu").forEach(function (el) {
-      el.addEventListener('click', function (event) {
-        document.body.classList.remove('menu-opened');
-        event.preventDefault();
-        drawer.close();
-      });
-    });
-  });
-}
-
-/***/ }),
-
-/***/ "./src/assets/js/core/notifier.js":
-/*!****************************************!*\
-  !*** ./src/assets/js/core/notifier.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initiateNotifier: () => (/* binding */ initiateNotifier)
-/* harmony export */ });
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-
-function initiateNotifier() {
-  salla.notify.setNotifier(function (message, type, data) {
-    if (_typeof(message) == 'object') {
-      return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire(message).then(type);
-    }
-    return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().mixin({
-      toast: true,
-      position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
-      showConfirmButton: false,
-      timer: 3500,
-      didOpen: function didOpen(toast) {
-        toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().stopTimer));
-        toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().resumeTimer));
-      }
-    }).fire({
-      icon: type,
-      title: message,
-      showCloseButton: true,
-      timerProgressBar: true
-    });
-  });
-}
-
-/***/ }),
-
-/***/ "./src/assets/js/core/sticky-menu.js":
-/*!*******************************************!*\
-  !*** ./src/assets/js/core/sticky-menu.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initiateStickyMenu: () => (/* binding */ initiateStickyMenu)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/assets/js/core/utils.js");
-
-function initiateStickyMenu() {
-  var _element;
-  var header = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav'),
-    height = (_element = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav .inner')) === null || _element === void 0 ? void 0 : _element.clientHeight;
-  if (!header) {
-    return;
-  }
-  window.addEventListener('load', function () {
-    return setTimeout(function () {
-      return setHeaderHeight();
-    }, 500);
-  });
-  window.addEventListener('resize', function () {
-    return setHeaderHeight();
-  });
-  window.addEventListener('scroll', function () {
-    window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-    window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-  }, {
-    passive: true
-  });
-}
-function setHeaderHeight() {
-  var height = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav .inner').clientHeight,
-    header = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav');
-  header.style.height = height + 'px';
-}
-
-/***/ }),
-
-/***/ "./src/assets/js/core/utils.js":
-/*!*************************************!*\
-  !*** ./src/assets/js/core/utils.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   element: () => (/* binding */ element),
-/* harmony export */   isElementLoaded: () => (/* binding */ isElementLoaded)
-/* harmony export */ });
-function element(selector) {
-  return document.querySelector(selector);
-}
-function isElementLoaded(selector) {
-  return new Promise(function (resolve) {
-    var interval = setInterval(function () {
-      if (document.querySelector(selector)) {
-        clearInterval(interval);
-        return resolve(document.querySelector(selector));
-      }
-    }, 160);
-  });
-}
-
-/***/ }),
-
 /***/ "./src/assets/js/partials/anime.js":
 /*!*****************************************!*\
   !*** ./src/assets/js/partials/anime.js ***!
@@ -7125,12 +6969,12 @@ var __webpack_exports__ = {};
   !*** ./src/assets/js/core/app.js ***!
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _notifier__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifier */ "./src/assets/js/core/notifier.js");
-/* harmony import */ var _mobile_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mobile-menu */ "./src/assets/js/core/mobile-menu.js");
-/* harmony import */ var _sticky_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sticky-menu */ "./src/assets/js/core/sticky-menu.js");
-/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
-/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
-/* harmony import */ var _app_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-helpers */ "./src/assets/js/core/app-helpers.js");
+/* harmony import */ var mmenu_light__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mmenu-light */ "./node_modules/mmenu-light/src/mmenu-light.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
+/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
+/* harmony import */ var _core_app_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../core/app-helpers */ "./src/assets/js/core/app-helpers.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -7146,10 +6990,9 @@ function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new T
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
 
 
-
  // تحديث المسار
  // تحديث المسار
-
+ // تحديث المسار
 var App = /*#__PURE__*/function (_AppHelpers) {
   function App() {
     var _this;
@@ -7163,10 +7006,10 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     key: "loadTheApp",
     value: function loadTheApp() {
       this.commonThings();
-      (0,_notifier__WEBPACK_IMPORTED_MODULE_0__.initiateNotifier)();
-      (0,_mobile_menu__WEBPACK_IMPORTED_MODULE_1__.initiateMobileMenu)();
+      this.initiateNotifier();
+      this.initiateMobileMenu();
       if (header_is_sticky) {
-        (0,_sticky_menu__WEBPACK_IMPORTED_MODULE_2__.initiateStickyMenu)();
+        this.initiateStickyMenu();
       }
       this.initAddToCart();
       this.initiateAdAlert();
@@ -7174,7 +7017,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       this.initiateModals();
       this.initiateCollapse();
       this.changeMenuDirection();
-      (0,_partials_tooltip__WEBPACK_IMPORTED_MODULE_4__["default"])();
+      (0,_partials_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"])();
       this.loadModalImgOnclick();
       salla.comment.event.onAdded(function () {
         return window.location.reload();
@@ -7189,8 +7032,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       salla.log("ThemeApp(Raed)::".concat(message));
       return this;
     }
-
-    // fix Menu Direction at the third level >> The menu at the third level was popping off the page
   }, {
     key: "changeMenuDirection",
     value: function changeMenuDirection() {
@@ -7272,16 +7113,16 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     value: function initiateNotifier() {
       salla.notify.setNotifier(function (message, type, data) {
         if (_typeof(message) == 'object') {
-          return Swal.fire(message).then(type);
+          return sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire(message).then(type);
         }
-        return Swal.mixin({
+        return sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().mixin({
           toast: true,
           position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
           showConfirmButton: false,
           timer: 3500,
           didOpen: function didOpen(toast) {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
+            toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().stopTimer));
+            toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().resumeTimer));
           }
         }).fire({
           icon: type,
@@ -7296,7 +7137,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     value: function initiateMobileMenu() {
       var _this3 = this;
       this.isElementLoaded('#mobile-menu').then(function (menu) {
-        var mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
+        var mobileMenu = new mmenu_light__WEBPACK_IMPORTED_MODULE_0__["default"](menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
         salla.lang.onLoaded(function () {
           mobileMenu.navigation({
             title: salla.lang.get('blocks.header.main_menu')
@@ -7322,7 +7163,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         _this4 = this;
       var header = this.element('#mainnav'),
         height = (_this$element = this.element('#mainnav .inner')) === null || _this$element === void 0 ? void 0 : _this$element.clientHeight;
-      //when it's landing page, there is no header
       if (!header) {
         return;
       }
@@ -7348,11 +7188,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         header = this.element('#mainnav');
       header.style.height = height + 'px';
     }
-
-    /**
-     * Because salla caches the response, it's important to keep the alert disabled if the visitor closed it.
-     * by store the status of the ad in local storage `salla.storage.set(...)`
-     */
   }, {
     key: "initiateAdAlert",
     value: function initiateAdAlert() {
@@ -7382,7 +7217,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         var btn = _ref.target;
         btn.parentElement.classList.toggle('is-opened');
         document.body.classList.toggle('dropdown--is-opened');
-        // Click Outside || Click on close btn
         window.addEventListener('click', function (_ref2) {
           var element = _ref2.target;
           if (!element.closest('.dropdown__menu') && element !== btn || element.classList.contains('dropdown__close')) {
@@ -7401,7 +7235,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         _this5.removeClass(id, 'hidden');
         setTimeout(function () {
           return _this5.toggleModal(id, true);
-        }); //small amont of time to running toggle After adding hidden
+        });
       });
       salla.event.document.onClick("[data-close-modal]", function (e) {
         return _this5.toggleModal('#' + e.target.dataset.closeModal, false);
@@ -7413,11 +7247,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       var _this6 = this;
       this.toggleClassIf("".concat(id, " .s-salla-modal-overlay"), 'ease-out duration-300 opacity-100', 'opacity-0', function () {
         return isOpen;
-      }).toggleClassIf("".concat(id, " .s-salla-modal-body"), 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100',
-      //add these classes
-      'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95',
-      //remove these classes
-      function () {
+      }).toggleClassIf("".concat(id, " .s-salla-modal-body"), 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100', 'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95', function () {
         return isOpen;
       }).toggleElementClassIf(document.body, 'modal-is-open', 'modal-is-closed', function () {
         return isOpen;
@@ -7468,28 +7298,13 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         });
       });
     }
-
-    /**
-     * Workaround for seeking to simplify & clean, There are three ways to use this method:
-     * 1- direct call: `this.anime('.my-selector')` - will use default values
-     * 2- direct call with overriding defaults: `this.anime('.my-selector', {duration:3000})`
-     * 3- return object to play it letter: `this.anime('.my-selector', false).duration(3000).play()` - will not play animation unless calling play method.
-     * @param {string|HTMLElement} selector
-     * @param {object|undefined|null|null} options - in case there is need to set attributes one by one set it `false`;
-     * @return {Anime|*}
-     */
   }, {
     key: "anime",
     value: function anime(selector) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var anime = new _partials_anime__WEBPACK_IMPORTED_MODULE_3__["default"](selector, options);
+      var anime = new _partials_anime__WEBPACK_IMPORTED_MODULE_2__["default"](selector, options);
       return options === false ? anime : anime.play();
     }
-
-    /**
-     * These actions are responsible for pressing "add to cart" button,
-     * they can be from any page, especially when mega-menu is enabled
-     */
   }, {
     key: "initAddToCart",
     value: function initAddToCart() {
@@ -7506,10 +7321,18 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       });
     }
   }]);
-}(_app_helpers__WEBPACK_IMPORTED_MODULE_5__["default"]);
+}(_core_app_helpers__WEBPACK_IMPORTED_MODULE_4__["default"]);
 salla.onReady(function () {
   return new App().loadTheApp();
 });
+function toggleSidebar() {
+  var sidebar = document.getElementById('mainnav');
+  var isOpen = sidebar.classList.toggle('translate-x-0');
+  sidebar.classList.toggle('-translate-x-full', !isOpen);
+  document.querySelectorAll('.hamburger-menu').forEach(function (button) {
+    button.setAttribute('aria-expanded', isOpen);
+  });
+}
 })();
 
 /******/ })()
