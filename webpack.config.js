@@ -7,20 +7,10 @@ const asset = file => path.resolve('src/assets', file || '');
 const public = file => path.resolve("public", file || '');
 
 module.exports = {
-    entry  : {
-        app     : [asset('styles/app.scss'), asset('js/core/app.js'), asset('js/pages/wishlist.js'), asset('js/pages/blog.js')],
-        home    : asset('js/pages/home.js'),
-        'product-card' : asset('js/partials/product-card.js'),
-        'main-menu' : asset('js/partials/main-menu.js'),
-        'wishlist-card': asset('js/partials/wishlist-card.js'),
-        checkout: [asset('js/pages/cart.js'), asset('js/pages/thankyou.js')],
-        pages   : [asset('js/pages/loyalty.js'), asset('js/pages/brands.js')],
-        product : [asset('js/pages/product.js'), asset('js/pages/products.js')],
-        order   : asset('js/pages/order.js'),
-        testimonials   : asset('js/pages/testimonials.js')
-    },
+    entry  : './src/assets/js/core/app.js',
     output : {
-        path: public(),
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'public/js'),
         clean: true,
         chunkFilename: "[name].[contenthash].js"
     },
@@ -29,10 +19,7 @@ module.exports = {
         rules: [
             {
                 test   : /\.js$/,
-                exclude: [
-                    /(node_modules)/,
-                    asset('js/twilight.js')
-                ],
+                exclude: /node_modules/,
                 use    : {
                     loader : 'babel-loader',
                     options: {
@@ -51,6 +38,12 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src/assets/js'),
+        },
+    },
+    devtool: 'source-map',
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].css',

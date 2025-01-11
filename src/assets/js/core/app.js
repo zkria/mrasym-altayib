@@ -2,7 +2,7 @@ import MobileMenu from 'mmenu-light';
 import Swal from 'sweetalert2';
 import Anime from '../partials/anime';
 import initTootTip from '../partials/tooltip';
-import AppHelpers from "./app-helpers";
+import AppHelpers from './app-helpers';
 
 // إدارة حالة التطبيق
 class AppState {
@@ -75,27 +75,18 @@ class App extends AppHelpers {
   }
 
   loadModalImgOnclick() {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.add('loaded');
-          observer.unobserve(img);
-        }
-      });
-    });
-
     document.querySelectorAll('.load-img-onclick').forEach(link => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
-        const modal = document.querySelector('#' + link.dataset.modalId);
-        const img = modal.querySelector('img');
-        
+        let modal = document.querySelector('#' + link.dataset.modalId),
+          img = modal.querySelector('img'),
+          imgSrc = img.dataset.src;
         modal.open();
-        if (!img.classList.contains('loaded')) {
-          imageObserver.observe(img);
-        }
+
+        if (img.classList.contains('loaded')) return;
+
+        img.src = imgSrc;
+        img.classList.add('loaded');
       });
     });
   }
@@ -166,7 +157,7 @@ class App extends AppHelpers {
 
   initiateMobileMenu() {
     this.isElementLoaded('#mobile-menu').then((menu) => {
-      const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)");
+      const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
 
       salla.lang.onLoaded(() => {
         mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });

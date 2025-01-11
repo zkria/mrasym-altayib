@@ -18,7 +18,7 @@
         aria-label="فتح القائمة الرئيسية"
         aria-expanded="{{ is_sidebar_open ? 'true' : 'false' }}"
         aria-controls="sidebar-content">
-        <span></span>
+        <span class="hamburger-icon"></span>
       </button>
       
       {# زر البحث - محسن #}
@@ -57,7 +57,7 @@
             class="theme-toggle header-btn"
             aria-label="تبديل الوضع الداكن"
             onclick="toggleDarkMode()">
-            <i class="header-btn__icon sicon-moon"></i>
+            <i class="header-btn__icon fas fa-moon"></i>
         </button>
 
         {# قائمة المستخدم #}
@@ -73,7 +73,7 @@
             class="header-btn text-white hover:opacity-80 transition-opacity" 
             aria-label="تسجيل الدخول"
             onclick="salla.event.dispatch('login::open')">
-            <i class="header-btn__icon sicon-user-circle text-2xl" aria-hidden="true"></i>
+            <i class="header-btn__icon fas fa-user-circle text-2xl" aria-hidden="true"></i>
           </button>
         {% endif %}
 
@@ -82,7 +82,7 @@
           class="flex items-center"
           aria-label="سلة التسوق - {{ cart.items_count }} منتجات">
           <i slot="icon" 
-             class="header-btn__icon icon sicon-shopping-bag text-white text-2xl"
+             class="header-btn__icon fas fa-shopping-bag text-white text-2xl"
              aria-hidden="true">
           </i>
         </salla-cart-summary>
