@@ -1,0 +1,843 @@
+/* الوضع الداكن للموقع بالكامل */
+.dark {
+  // الألوان الأساسية
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --border-color: #3a3a3a;
+  --hover-color: #383838;
+
+  // تطبيق على العناصر الرئيسية
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  // الهيدر والقوائم
+  .top-navbar,
+  .main-nav-container,
+  .sub-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  // الأزرار والعناصر التفاعلية
+  .header-btn,
+  .theme-toggle,
+  .btn,
+  .s-button {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &:hover {
+      background-color: var(--hover-color);
+    }
+  }
+
+  // البطاقات والأقسام
+  .s-block,
+  .s-card,
+  .product-block,
+  .sidebar-content,
+  .modal-content {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  // النصوص والروابط
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+  }
+
+  a, .link {
+    color: var(--text-secondary);
+    
+    &:hover {
+      color: var(--text-primary);
+    }
+  }
+
+  // المدخلات وحقول النماذج
+  input,
+  textarea,
+  select,
+  .form-control {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &::placeholder {
+      color: var(--text-secondary);
+    }
+  }
+
+  // القوائم المنسدلة
+  .dropdown-menu,
+  .s-dropdown-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    .dropdown-item {
+      color: var(--text-secondary);
+
+      &:hover {
+        background-color: var(--hover-color);
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  // الجداول
+  table {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    th, td {
+      border-color: var(--border-color);
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--bg-primary);
+    }
+  }
+
+  // التنبيهات والرسائل
+  .alert,
+  .notification {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  // الفوتر
+  footer {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+  }
+
+  // العناصر المتحركة والتأثيرات
+  .modal,
+  .popup {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .modal-content {
+      background-color: var(--bg-secondary);
+    }
+  }
+
+  // شريط التمرير
+  ::-webkit-scrollbar {
+    background-color: var(--bg-primary);
+    
+    &-thumb {
+      background-color: var(--bg-secondary);
+      
+      &:hover {
+        background-color: var(--hover-color);
+      }
+    }
+  }
+
+  // صفحة المنتج
+  .product {
+    &-details,
+    &-description,
+    &-reviews {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+    }
+  }
+
+  // صفحة السلة والدفع
+  .cart-page,
+  .checkout-page {
+    background-color: var(--bg-primary);
+
+    .cart-item,
+    .summary-block {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+    }
+  }
+
+  // الفلاتر والتصنيفات
+  .filters-section,
+  .categories-section {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    .filter-item,
+    .category-item {
+      border-color: var(--border-color);
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+    }
+  }
+
+  // العناصر التفاعلية
+  .interactive-element {
+    &:hover {
+      background-color: var(--hover-color);
+    }
+  }
+
+  // الظلال
+  .shadow,
+  .s-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  /* بطاقات المنتجات */
+  .product-entry,
+  .product-card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    .product-title {
+      color: var(--text-primary);
+    }
+
+    .product-price {
+      color: var(--color-primary);
+      
+      .before-sale {
+        color: var(--text-secondary);
+      }
+    }
+
+    .product-description {
+      color: var(--text-secondary);
+    }
+
+    .badge {
+      background-color: var(--hover-color);
+      color: var(--text-primary);
+    }
+
+    &:hover {
+      background-color: var(--hover-color);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  /* الفوتر وأقسامه */
+  .footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+
+    .footer-title {
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      a {
+        color: var(--text-secondary);
+        
+        &:hover {
+          color: var(--text-primary);
+        }
+      }
+    }
+
+    .footer-contact {
+      color: var(--text-secondary);
+    }
+
+    .social-links {
+      a {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        
+        &:hover {
+          background-color: var(--hover-color);
+        }
+      }
+    }
+
+    .newsletter-form {
+      input {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+      }
+    }
+  }
+
+  /* الأقسام الرئيسية */
+  .main-content,
+  .section-block {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  /* العناوين الرئيسية */
+  .section-title {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  /* البانر والسلايدر */
+  .banner,
+  .slider-block {
+    .slide-content {
+      background-color: rgba(26, 26, 26, 0.8);
+      color: var(--text-primary);
+    }
+  }
+
+  /* صفحة الفئات */
+  .categories-grid {
+    .category-card {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+
+      .category-title {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  /* صفحة المدونة */
+  .blog-card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    .blog-title {
+      color: var(--text-primary);
+    }
+
+    .blog-excerpt {
+      color: var(--text-secondary);
+    }
+
+    &:hover {
+      background-color: var(--hover-color);
+    }
+  }
+
+  /* صفحة تفاصيل المنتج */
+  .product-details-page {
+    .product-gallery {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+    }
+
+    .product-info {
+      .product-variants {
+        .variant-option {
+          background-color: var(--bg-secondary);
+          border-color: var(--border-color);
+
+          &.selected {
+            background-color: var(--hover-color);
+            color: var(--text-primary);
+          }
+        }
+      }
+    }
+
+    .product-tabs {
+      .tab-header {
+        border-color: var(--border-color);
+
+        .tab-btn {
+          color: var(--text-secondary);
+
+          &.active {
+            color: var(--text-primary);
+            border-color: var(--color-primary);
+          }
+        }
+      }
+
+      .tab-content {
+        background-color: var(--bg-secondary);
+        border-color: var(--border-color);
+      }
+    }
+  }
+
+  /* صفحة السلة */
+  .cart-page {
+    .cart-items {
+      .cart-item {
+        background-color: var(--bg-secondary);
+        border-color: var(--border-color);
+      }
+    }
+
+    .cart-summary {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+    }
+  }
+
+  /* صفحة المستخدم */
+  .user-dashboard {
+    .dashboard-card {
+      background-color: var(--bg-secondary);
+      border-color: var(--border-color);
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+    }
+
+    .orders-list {
+      .order-item {
+        background-color: var(--bg-secondary);
+        border-color: var(--border-color);
+      }
+    }
+  }
+
+  /* العناصر المشتركة */
+  .breadcrumb {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+
+    .breadcrumb-item {
+      color: var(--text-secondary);
+
+      &.active {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  /* التنبيهات والرسائل */
+  .alert,
+  .notification {
+    &-success {
+      background-color: rgba(47, 133, 90, 0.2);
+      border-color: #2f855a;
+    }
+
+    &-error {
+      background-color: rgba(229, 62, 62, 0.2);
+      border-color: #e53e3e;
+    }
+  }
+}
+
+// تأثيرات الانتقال
+.theme-toggle,
+.dark * {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* إضافة الوضع الداكن للعناصر الجديدة */
+html.dark {
+  /* التطبيق الأساسي */
+  .app-inner {
+    @apply bg-gray-800 text-gray-200;
+  }
+
+  /* الهيدر والتنقل */
+  .store-header {
+    .top-navbar {
+      @apply bg-gray-900 text-white border-gray-700;
+    }
+    
+    .header-btn {
+      @apply text-white hover:opacity-80;
+    }
+
+    .header-search {
+      input {
+        @apply bg-gray-800 text-white border-gray-600;
+      }
+    }
+  }
+
+  /* القائمة الجانبية */
+  .main-nav-sidebar {
+    @apply bg-gray-900;
+    
+    .sidebar-content {
+      @apply bg-gray-900;
+    }
+
+    .sidebar-header {
+      @apply bg-gray-800 text-white border-gray-700;
+      
+      h2 {
+        @apply text-white;
+      }
+    }
+
+    .main-menu {
+      li {
+        @apply text-gray-300;
+        
+        &:hover {
+          @apply bg-gray-800;
+        }
+      }
+
+      a {
+        @apply text-gray-300;
+        
+        &:hover {
+          @apply text-white bg-gray-800;
+        }
+      }
+
+      .sub-menu {
+        @apply bg-gray-900 border-gray-700;
+      }
+    }
+
+    .btn--close, 
+    .btn--close-sm {
+      @apply text-gray-400 hover:text-white;
+    }
+  }
+
+  /* المحتوى الرئيسي */
+  .s-block {
+    @apply bg-gray-800;
+
+    &__title {
+      h2 {
+        @apply text-white;
+      }
+    }
+  }
+
+  /* بطاقات المنتجات */
+  .s-product-card {
+    &-vertical {
+      @apply bg-gray-900 border-gray-700;
+    }
+
+    &-content {
+      &-title a {
+        @apply text-gray-200 hover:text-white;
+      }
+
+      &-price {
+        @apply text-white;
+      }
+    }
+  }
+
+  /* الأقسام والتصنيفات */
+  .category-block {
+    @apply bg-gray-900 border-gray-700;
+
+    .category-title {
+      @apply text-white;
+    }
+  }
+
+  /* صفحة المنتج */
+  .product-details {
+    @apply bg-gray-900 border-gray-700;
+
+    .product-title {
+      @apply text-white;
+    }
+
+    .product-price {
+      @apply text-white;
+    }
+  }
+
+  /* سلة التسوق */
+  .cart-page {
+    @apply bg-gray-900;
+
+    .cart-item {
+      @apply border-gray-700;
+    }
+  }
+
+  /* النماذج والأزرار */
+  .s-button-element {
+    &.s-button-primary {
+      @apply bg-primary hover:bg-opacity-80 text-white;
+    }
+  }
+
+  input, select, textarea {
+    @apply bg-gray-800 border-gray-700 text-white;
+  }
+
+  /* الفوتر */
+  .store-footer {
+    background-color: theme('colors.gray.900') !important;
+    color: theme('colors.gray.200') !important;
+
+    a {
+      color: theme('colors.gray.300') !important;
+      
+      &:hover {
+        color: theme('colors.white') !important;
+      }
+    }
+
+    &__inner {
+      background-color: theme('colors.gray.800') !important;
+      border-color: theme('colors.gray.700') !important;
+      border-style: dashed;
+      border-bottom-width: 1px;
+      opacity: 0.9;
+    }
+
+    h3 {
+      color: theme('colors.white') !important;
+    }
+
+    .social-link {
+      border-color: theme('colors.gray.600') !important;
+      color: theme('colors.gray.300') !important;
+      
+      &:hover {
+        border-color: theme('colors.gray.400') !important;
+        color: theme('colors.white') !important;
+      }
+    }
+
+    .contact-social {
+      border-top-color: theme('colors.gray.700') !important;
+      
+      ul {
+        color: theme('colors.gray.300') !important;
+      }
+    }
+
+    &.footer-is-light {
+      background-color: theme('colors.gray.900') !important;
+      color: theme('colors.gray.200') !important;
+
+      .store-footer__inner {
+        background-color: theme('colors.gray.800') !important;
+        border-color: theme('colors.gray.700') !important;
+      }
+    }
+  }
+
+  /* تحسين نص حقوق النشر */
+  .copyright-text {
+    p {
+      color: theme('colors.gray.400') !important;
+    }
+    
+    a {
+      color: theme('colors.gray.400') !important;
+      
+      &:hover {
+        color: theme('colors.white') !important;
+      }
+    }
+  }
+
+  /* تنسيق أيقونات وسائل الدفع */
+  .s-payments-list {
+    img {
+      @apply opacity-80 hover:opacity-100 transition-opacity;
+    }
+  }
+
+  /* تنسيق روابط التطبيقات */
+  .s-apps-icons-list {
+    img {
+      @apply opacity-90 hover:opacity-100 transition-opacity;
+    }
+  }
+
+  /* التنبيهات والرسائل */
+  .alert {
+    &-success {
+      @apply bg-green-900 text-green-200 border-green-700;
+    }
+
+    &-error {
+      @apply bg-red-900 text-red-200 border-red-700;
+    }
+  }
+
+  /* تنسيقات الشريط الجانبي */
+  .main-nav-sidebar {
+    background-color: theme('colors.gray.900') !important;
+
+    /* العنوان الرئيسي */
+    .sidebar-header {
+      background-color: theme('colors.gray.900') !important;
+      border-bottom: 1px solid theme('colors.gray.800') !important;
+      
+      h2 {
+        color: theme('colors.white') !important;
+      }
+    }
+
+    /* محتوى الشريط الجانبي */
+    #sidebar-content {
+      background-color: theme('colors.gray.900') !important;
+    }
+
+    /* القائمة الرئيسية */
+    .main-menu, 
+    .sidebar-nav,
+    .vertical-menu,
+    #mobile-menu {
+      background-color: theme('colors.gray.900') !important;
+
+      li {
+        border-bottom: 1px solid theme('colors.gray.800') !important;
+        
+        a, span {
+          color: theme('colors.gray.300') !important;
+          background-color: theme('colors.gray.900') !important;
+          
+          &:hover {
+            color: theme('colors.white') !important;
+            background-color: theme('colors.gray.800') !important;
+          }
+        }
+      }
+    }
+
+    /* القوائم الفرعية */
+    .sub-menu {
+      background-color: theme('colors.gray.900') !important;
+    }
+
+    /* تنسيق mm-spn */
+    .mm-spn.mm-spn--light {
+      background-color: theme('colors.gray.900') !important;
+      color: theme('colors.gray.300') !important;
+    }
+  }
+
+  /* تأكيد تطبيق الخلفية على كامل القائمة */
+  #mainMenu,
+  #mobile-menu,
+  .sidebar-content,
+  .sidebar-nav {
+    background-color: theme('colors.gray.900') !important;
+  }
+
+  /* تحسين النصوص والأيقونات في الشريط الجانبي */
+  .main-nav-sidebar {
+    .sidebar-header {
+      h2 {
+        color: theme('colors.white') !important;
+        font-weight: 600;
+      }
+    }
+
+    .main-menu, 
+    .sidebar-nav,
+    .vertical-menu {
+      li {
+        a, span {
+          color: theme('colors.gray.400') !important;
+          
+          /* الأيقونات داخل الروابط */
+          i, svg {
+            color: theme('colors.gray.500') !important;
+          }
+          
+          &:hover {
+            color: theme('colors.white') !important;
+            
+            i, svg {
+              color: theme('colors.white') !important;
+            }
+          }
+        }
+
+        /* تمييز العنصر النشط */
+        &.active {
+          > a, > span {
+            color: theme('colors.white') !important;
+            font-weight: 500;
+            
+            i, svg {
+              color: theme('colors.blue.500') !important;
+            }
+          }
+        }
+      }
+    }
+
+    /* القوائم الفرعية */
+    .sub-menu {
+      a {
+        color: theme('colors.gray.400') !important;
+        
+        &:hover {
+          color: theme('colors.white') !important;
+        }
+      }
+    }
+
+    /* أيقونات الأسهم */
+    .sicon-keyboard-arrow-down,
+    .sicon-keyboard-arrow-right {
+      color: theme('colors.gray.500') !important;
+    }
+  }
+
+  /* تحسين النصوص في الفوتر */
+  .store-footer {
+    h3 {
+      color: theme('colors.white') !important;
+      font-weight: 600;
+    }
+
+    a {
+      color: theme('colors.gray.400') !important;
+      
+      &:hover {
+        color: theme('colors.white') !important;
+      }
+    }
+
+    .social-link {
+      i, svg {
+        color: theme('colors.gray.400') !important;
+      }
+      
+      &:hover {
+        i, svg {
+          color: theme('colors.white') !important;
+        }
+      }
+    }
+
+    /* معلومات الاتصال */
+    .contact-info {
+      color: theme('colors.gray.400') !important;
+      
+      i, svg {
+        color: theme('colors.blue.500') !important;
+      }
+    }
+  }
+
+  /* تحسين أيقونات الهيدر */
+  .store-header {
+    .header-btn {
+      i, svg {
+        color: theme('colors.gray.400') !important;
+      }
+      
+      &:hover {
+        i, svg {
+          color: theme('colors.white') !important;
+        }
+      }
+    }
+  }
+}
