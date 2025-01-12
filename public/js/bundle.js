@@ -1536,51 +1536,6 @@ var AppHelpers = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/assets/js/core/mobile-menu.js":
-/*!*******************************************!*\
-  !*** ./src/assets/js/core/mobile-menu.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initiateMobileMenu: () => (/* binding */ initiateMobileMenu)
-/* harmony export */ });
-/* harmony import */ var mmenu_light__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mmenu-light */ "./node_modules/mmenu-light/src/mmenu-light.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/assets/js/core/utils.js");
-
-
-function initiateMobileMenu() {
-  (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isElementLoaded)('#mobile-menu').then(function (menu) {
-    var mobileMenu = new mmenu_light__WEBPACK_IMPORTED_MODULE_0__["default"](menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-    salla.lang.onLoaded(function () {
-      mobileMenu.navigation({
-        title: salla.lang.get('blocks.header.main_menu')
-      });
-    });
-    var drawer = mobileMenu.offcanvas({
-      position: salla.config.get('theme.is_rtl') ? "right" : 'left'
-    });
-    document.querySelectorAll("a[href='#mobile-menu']").forEach(function (el) {
-      el.addEventListener('click', function (event) {
-        document.body.classList.add('menu-opened');
-        event.preventDefault();
-        drawer.open();
-      });
-    });
-    document.querySelectorAll(".close-mobile-menu").forEach(function (el) {
-      el.addEventListener('click', function (event) {
-        document.body.classList.remove('menu-opened');
-        event.preventDefault();
-        drawer.close();
-      });
-    });
-  });
-}
-
-/***/ }),
-
 /***/ "./src/assets/js/core/notifier.js":
 /*!****************************************!*\
   !*** ./src/assets/js/core/notifier.js ***!
@@ -1621,74 +1576,48 @@ function initiateNotifier() {
 
 /***/ }),
 
-/***/ "./src/assets/js/core/sticky-menu.js":
-/*!*******************************************!*\
-  !*** ./src/assets/js/core/sticky-menu.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/assets/js/pages/dark-mode.js":
+/*!******************************************!*\
+  !*** ./src/assets/js/pages/dark-mode.js ***!
+  \******************************************/
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   initiateStickyMenu: () => (/* binding */ initiateStickyMenu)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/assets/js/core/utils.js");
+function toggleDarkMode() {
+  var themeToggle = document.querySelector('.theme-toggle');
+  var icon = themeToggle.querySelector('.sun-icon, .moon-icon');
 
-function initiateStickyMenu() {
-  var _element;
-  var header = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav'),
-    height = (_element = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav .inner')) === null || _element === void 0 ? void 0 : _element.clientHeight;
-  if (!header) {
-    return;
+  // تبديل الكلاس للأيقونة
+  themeToggle.classList.toggle('dark-mode');
+  if (themeToggle.classList.contains('dark-mode')) {
+    icon.classList.remove('sun-icon');
+    icon.classList.add('moon-icon');
+    document.documentElement.classList.add('dark');
+  } else {
+    icon.classList.remove('moon-icon');
+    icon.classList.add('sun-icon');
+    document.documentElement.classList.remove('dark');
   }
-  window.addEventListener('load', function () {
-    return setTimeout(function () {
-      return setHeaderHeight();
-    }, 500);
-  });
-  window.addEventListener('resize', function () {
-    return setHeaderHeight();
-  });
-  window.addEventListener('scroll', function () {
-    window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-    window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-  }, {
-    passive: true
-  });
-}
-function setHeaderHeight() {
-  var height = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav .inner').clientHeight,
-    header = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.element)('#mainnav');
-  header.style.height = height + 'px';
+
+  // حفظ التفضيل في localStorage
+  localStorage.setItem('darkMode', themeToggle.classList.contains('dark-mode'));
 }
 
-/***/ }),
+// تطبيق الوضع المحفوظ عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function () {
+  var savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  var themeToggle = document.querySelector('.theme-toggle');
+  if (savedDarkMode) {
+    themeToggle.classList.add('dark-mode'); // إضافة الكلاس المحفوظ
+    document.documentElement.classList.add('dark'); // إضافة الكلاس للعنصر الجذري
+    toggleDarkMode(); // تحديث الأيقونة
+  } else {
+    document.documentElement.classList.remove('dark'); // إزالة الكلاس للعنصر الجذري
+  }
 
-/***/ "./src/assets/js/core/utils.js":
-/*!*************************************!*\
-  !*** ./src/assets/js/core/utils.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   element: () => (/* binding */ element),
-/* harmony export */   isElementLoaded: () => (/* binding */ isElementLoaded)
-/* harmony export */ });
-function element(selector) {
-  return document.querySelector(selector);
-}
-function isElementLoaded(selector) {
-  return new Promise(function (resolve) {
-    var interval = setInterval(function () {
-      if (document.querySelector(selector)) {
-        clearInterval(interval);
-        return resolve(document.querySelector(selector));
-      }
-    }, 160);
-  });
-}
+  // تفعيل الزر
+  var themeButton = document.getElementById('theme-button');
+  themeButton.addEventListener('click', toggleDarkMode);
+});
 
 /***/ }),
 
@@ -1935,510 +1864,6 @@ function tootTip() {
   }
 }
 ;
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/esm/core/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/mmenu-light/esm/core/index.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _modules_match_media_toggler_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/match-media-toggler/index */ "./node_modules/mmenu-light/esm/modules/match-media-toggler/index.js");
-/* harmony import */ var _modules_sliding_panels_navigation_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modules/sliding-panels-navigation/index */ "./node_modules/mmenu-light/esm/modules/sliding-panels-navigation/index.js");
-/* harmony import */ var _modules_offcanvas_drawer_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modules/offcanvas-drawer/index */ "./node_modules/mmenu-light/esm/modules/offcanvas-drawer/index.js");
-
-
-
-/**
- * Class for a lightweight mobile menu.
- */
-var MmenuLight = /** @class */ (function () {
-    /**
-     * Create a lightweight mobile menu.
-     *
-     * @param {HTMLElement} menu                HTML element for the menu.
-     * @param {string}      [mediaQuery='all']  Media queury to match for the menu.
-     */
-    function MmenuLight(menu, mediaQuery) {
-        if (mediaQuery === void 0) { mediaQuery = 'all'; }
-        //  Store the menu node.
-        this.menu = menu;
-        //  Create the toggler instance.
-        this.toggler = new _modules_match_media_toggler_index__WEBPACK_IMPORTED_MODULE_0__["default"](mediaQuery);
-    }
-    /**
-     * Add navigation for the menu.
-     *
-     * @param {object} options Options for the navigation.
-     */
-    MmenuLight.prototype.navigation = function (options) {
-        var _this = this;
-        //  Only needs to be done ones.
-        if (!this.navigator) {
-            options = options || {};
-            var _a = options.title, title = _a === void 0 ? 'Menu' : _a, _b = options.selectedClass, selectedClass = _b === void 0 ? 'Selected' : _b, _c = options.slidingSubmenus, slidingSubmenus = _c === void 0 ? true : _c, _d = options.theme, theme = _d === void 0 ? 'light' : _d;
-            this.navigator = new _modules_sliding_panels_navigation_index__WEBPACK_IMPORTED_MODULE_1__["default"](this.menu, title, selectedClass, slidingSubmenus, theme);
-            //  En-/disable
-            this.toggler.add(function () { return _this.menu.classList.add(_this.navigator.prefix); }, function () { return _this.menu.classList.remove(_this.navigator.prefix); });
-        }
-        return this.navigator;
-    };
-    /**
-     * Add off-canvas behavior to the menu.
-     *
-     * @param {object} options Options for the off-canvas drawer.
-     */
-    MmenuLight.prototype.offcanvas = function (options) {
-        var _this = this;
-        //  Only needs to be done ones.
-        if (!this.drawer) {
-            options = options || {};
-            var _a = options.position, position = _a === void 0 ? 'left' : _a;
-            this.drawer = new _modules_offcanvas_drawer_index__WEBPACK_IMPORTED_MODULE_2__["default"](null, position);
-            /** Original location in the DOM for the menu. */
-            var orgLocation_1 = document.createComment('original menu location');
-            this.menu.after(orgLocation_1);
-            //  En-/disable
-            this.toggler.add(function () {
-                // Move the menu to the drawer.
-                _this.drawer.content.append(_this.menu);
-            }, function () {
-                // Close the drawer.
-                _this.drawer.close();
-                // Move the menu to the original position.
-                orgLocation_1.after(_this.menu);
-            });
-        }
-        return this.drawer;
-    };
-    return MmenuLight;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MmenuLight);
-
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/esm/modules/helpers.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/mmenu-light/esm/modules/helpers.js ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $: () => (/* binding */ $),
-/* harmony export */   r: () => (/* binding */ r)
-/* harmony export */ });
-/**
- * Convert a list to an array.
- *
- * @param 	{NodeList|HTMLCollection} list 	The list or collection to convert into an array.
- * @return	{array}							The array.
- */
-var r = function (list) {
-    return Array.prototype.slice.call(list);
-};
-/**
- * Find elements in the given context.
- *
- * @param 	{string}		selector			The query selector to search for.
- * @param 	{HTMLElement}	[context=document]	The context to search in.
- * @return	{HTMLElement[]}						The found list of elements.
- */
-var $ = function (selector, context) {
-    return r((context || document).querySelectorAll(selector));
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/esm/modules/match-media-toggler/index.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/mmenu-light/esm/modules/match-media-toggler/index.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Class for a match media toggler.
- */
-var MmToggler = /** @class */ (function () {
-    /**
-     * Create the match media.
-     *
-     * @param {string} mediaquery Media query to use.
-     */
-    function MmToggler(mediaquery) {
-        var _this = this;
-        this.listener = function (evnt) {
-            (evnt.matches ? _this.matchFns : _this.unmatchFns).forEach(function (listener) {
-                listener();
-            });
-        };
-        this.toggler = window.matchMedia(mediaquery);
-        this.toggler.addListener(this.listener);
-        this.matchFns = [];
-        this.unmatchFns = [];
-    }
-    /**
-     * Add a function to the list,
-     * also fires the added function.
-     *
-     * @param {Function} match      Function to fire when the media query matches.
-     * @param {Function} unmatch    Function to fire when the media query does not match.
-     */
-    MmToggler.prototype.add = function (match, unmatch) {
-        this.matchFns.push(match);
-        this.unmatchFns.push(unmatch);
-        (this.toggler.matches ? match : unmatch)();
-    };
-    return MmToggler;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MmToggler);
-
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/esm/modules/offcanvas-drawer/index.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/mmenu-light/esm/modules/offcanvas-drawer/index.js ***!
-  \************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var prefix = 'mm-ocd';
-/**
- * Class for off-canvas behavior.
- */
-var MmOffCanvasDrawer = /** @class */ (function () {
-    /**
-     * Class for off-canvas drawer.
-     *
-     * @param {HTMLElement} [node]          The element to put in the drawer.
-     * @param {String}      [position=left] The position of the drawer, can be "left" or "right".
-     */
-    function MmOffCanvasDrawer(node, position) {
-        var _this = this;
-        if (node === void 0) { node = null; }
-        //  Create the wrapper.
-        this.wrapper = document.createElement('div');
-        this.wrapper.classList.add("" + prefix);
-        this.wrapper.classList.add(prefix + "--" + position);
-        //  Create the drawer.
-        this.content = document.createElement('div');
-        this.content.classList.add(prefix + "__content");
-        this.wrapper.append(this.content);
-        //  Create the backdrop.
-        this.backdrop = document.createElement('div');
-        this.backdrop.classList.add(prefix + "__backdrop");
-        this.wrapper.append(this.backdrop);
-        //  Add the nodes to the <body>.
-        document.body.append(this.wrapper);
-        if (node) {
-            this.content.append(node);
-        }
-        //  Click the backdrop.
-        var close = function (evnt) {
-            _this.close();
-            evnt.stopImmediatePropagation();
-        };
-        this.backdrop.addEventListener('touchstart', close, { passive: true });
-        this.backdrop.addEventListener('mousedown', close, { passive: true });
-    }
-    Object.defineProperty(MmOffCanvasDrawer.prototype, "prefix", {
-        /** Prefix for the class. */
-        get: function () {
-            return prefix;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    /**
-     * Open the drawer.
-     */
-    MmOffCanvasDrawer.prototype.open = function () {
-        this.wrapper.classList.add(prefix + "--open");
-        document.body.classList.add(prefix + "-opened");
-    };
-    /**
-     * Close the drawer.
-     */
-    MmOffCanvasDrawer.prototype.close = function () {
-        this.wrapper.classList.remove(prefix + "--open");
-        document.body.classList.remove(prefix + "-opened");
-    };
-    return MmOffCanvasDrawer;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MmOffCanvasDrawer);
-
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/esm/modules/sliding-panels-navigation/index.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/mmenu-light/esm/modules/sliding-panels-navigation/index.js ***!
-  \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./node_modules/mmenu-light/esm/modules/helpers.js");
-
-var prefix = 'mm-spn';
-/**
- * Class for navigating in a mobile menu.
- */
-var MmSlidingPanelsNavigation = /** @class */ (function () {
-    /**
-     * Class for navigating in a mobile menu.
-     *
-     * @param {HTMLElement} node            HTMLElement for the menu.
-     * @param {string}      title           The title for the menu.
-     * @param {string}      selectedClass   The class for selected listitems.
-     * @param {boolean}     slidingSubmenus Whether or not to use sliding submenus.
-     * @param {string}      theme           The color scheme for the menu.
-     */
-    function MmSlidingPanelsNavigation(node, title, selectedClass, slidingSubmenus, theme) {
-        this.node = node;
-        this.title = title;
-        this.slidingSubmenus = slidingSubmenus;
-        this.selectedClass = selectedClass;
-        //  Add classname.
-        this.node.classList.add(prefix);
-        this.node.classList.add(prefix + "--" + theme);
-        this.node.classList.add(prefix + "--" + (this.slidingSubmenus ? 'navbar' : 'vertical'));
-        this._setSelectedl();
-        this._initAnchors();
-    }
-    Object.defineProperty(MmSlidingPanelsNavigation.prototype, "prefix", {
-        /** Prefix for the class. */
-        get: function () {
-            return prefix;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    /**
-     * Open the given panel.
-     *
-     * @param {HTMLElement} panel Panel to open.
-     */
-    MmSlidingPanelsNavigation.prototype.openPanel = function (panel) {
-        /** Parent LI for the panel.  */
-        var listitem = panel.parentElement;
-        //  Sliding submenus
-        if (this.slidingSubmenus) {
-            /** Title above the panel to open. */
-            var title_1 = panel.dataset.mmSpnTitle;
-            //  Opening the main level UL.
-            if (listitem === this.node) {
-                this.node.classList.add(prefix + "--main");
-            }
-            //  Opening a sub level UL.
-            else {
-                this.node.classList.remove(prefix + "--main");
-                //  Find title from parent LI.
-                if (!title_1) {
-                    (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.r)(listitem.children).forEach(function (child) {
-                        if (child.matches('a, span')) {
-                            title_1 = child.textContent;
-                        }
-                    });
-                }
-            }
-            //  Use the default title.
-            if (!title_1) {
-                title_1 = this.title;
-            }
-            //  Set the title.
-            this.node.dataset.mmSpnTitle = title_1;
-            //  Unset all panels from being opened and parent.
-            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.$)("." + prefix + "--open", this.node).forEach(function (open) {
-                open.classList.remove(prefix + "--open");
-                open.classList.remove(prefix + "--parent");
-            });
-            //  Set the current panel as being opened.
-            panel.classList.add(prefix + "--open");
-            panel.classList.remove(prefix + "--parent");
-            //  Set all parent panels as being parent.
-            var parent_1 = panel.parentElement.closest('ul');
-            while (parent_1) {
-                parent_1.classList.add(prefix + "--open");
-                parent_1.classList.add(prefix + "--parent");
-                parent_1 = parent_1.parentElement.closest('ul');
-            }
-        }
-        //  Vertical submenus
-        else {
-            /** Whether or not the panel is currently opened. */
-            var isOpened = panel.matches("." + prefix + "--open");
-            //  Unset all panels from being opened and parent.
-            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.$)("." + prefix + "--open", this.node).forEach(function (open) {
-                open.classList.remove(prefix + "--open");
-            });
-            //  Toggle the current panel.
-            panel.classList[isOpened ? 'remove' : 'add'](prefix + "--open");
-            //  Set all parent panels as being opened.
-            var parent_2 = panel.parentElement.closest('ul');
-            while (parent_2) {
-                parent_2.classList.add(prefix + "--open");
-                parent_2 = parent_2.parentElement.closest('ul');
-            }
-        }
-    };
-    /**
-     * Initiate the selected listitem / open the current panel.
-     */
-    MmSlidingPanelsNavigation.prototype._setSelectedl = function () {
-        /** All selected LIs. */
-        var listitems = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.$)('.' + this.selectedClass, this.node);
-        /** The last selected LI. */
-        var listitem = listitems[listitems.length - 1];
-        /** The opened UL. */
-        var panel = null;
-        if (listitem) {
-            panel = listitem.closest('ul');
-        }
-        if (!panel) {
-            panel = this.node.querySelector('ul');
-        }
-        this.openPanel(panel);
-    };
-    /**
-     * Initialize the click event handlers.
-     */
-    MmSlidingPanelsNavigation.prototype._initAnchors = function () {
-        var _this = this;
-        /**
-         * Clicking an A in the menu: prevent bubbling up to the LI.
-         *
-         * @param   {HTMLElement}    target The clicked element.
-         * @return  {boolean}       handled Whether or not the event was handled.
-         */
-        var clickAnchor = function (target) {
-            if (target.matches('a')) {
-                return true;
-            }
-            return false;
-        };
-        /**
-         * Click a LI or SPAN in the menu: open its submenu (if present).
-         *
-         * @param   {HTMLElement}    target The clicked element.
-         * @return  {boolean}               Whether or not the event was handled.
-         */
-        var openSubmenu = function (target) {
-            /** Parent listitem for the submenu.  */
-            var listitem;
-            //  Find the parent listitem.
-            if (target.closest('span')) {
-                listitem = target.parentElement;
-            }
-            else if (target.closest('li')) {
-                listitem = target;
-            }
-            else {
-                listitem = false;
-            }
-            if (listitem) {
-                (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.r)(listitem.children).forEach(function (panel) {
-                    if (panel.matches('ul')) {
-                        _this.openPanel(panel);
-                    }
-                });
-                return true;
-            }
-            return false;
-        };
-        /**
-         * Click the menu (the navbar): close the last opened submenu.
-         *
-         * @param   {HTMLElement}    target The clicked element.
-         * @return  {boolean}               Whether or not the event was handled.
-         */
-        var closeSubmenu = function (target) {
-            /** The opened ULs. */
-            var panels = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.$)("." + prefix + "--open", target);
-            /** The last opened UL. */
-            var panel = panels[panels.length - 1];
-            if (panel) {
-                /** The second to last opened UL. */
-                var parent_3 = panel.parentElement.closest('ul');
-                if (parent_3) {
-                    _this.openPanel(parent_3);
-                    return true;
-                }
-            }
-            return false;
-        };
-        this.node.addEventListener('click', function (evnt) {
-            var target = evnt.target;
-            var handled = false;
-            handled = handled || clickAnchor(target);
-            handled = handled || openSubmenu(target);
-            handled = handled || closeSubmenu(target);
-            if (handled) {
-                evnt.stopImmediatePropagation();
-            }
-        });
-    };
-    return MmSlidingPanelsNavigation;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MmSlidingPanelsNavigation);
-
-
-/***/ }),
-
-/***/ "./node_modules/mmenu-light/src/mmenu-light.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/mmenu-light/src/mmenu-light.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _esm_core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../esm/core/index */ "./node_modules/mmenu-light/esm/core/index.js");
-/*!
- * Mmenu Light
- * mmenujs.com/mmenu-light
- *
- * Copyright (c) Fred Heusschen
- * www.frebsite.nl
- *
- * License: CC-BY-4.0
- * http://creativecommons.org/licenses/by/4.0/
- */
-
-//	The module
-
-
-//  Export module
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_esm_core_index__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-//	Global namespace
-window.MmenuLight = _esm_core_index__WEBPACK_IMPORTED_MODULE_0__["default"];
-
 
 /***/ }),
 
@@ -7126,11 +6551,11 @@ var __webpack_exports__ = {};
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notifier__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifier */ "./src/assets/js/core/notifier.js");
-/* harmony import */ var _mobile_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mobile-menu */ "./src/assets/js/core/mobile-menu.js");
-/* harmony import */ var _sticky_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sticky-menu */ "./src/assets/js/core/sticky-menu.js");
-/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
-/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
-/* harmony import */ var _app_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-helpers */ "./src/assets/js/core/app-helpers.js");
+/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
+/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
+/* harmony import */ var _app_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app-helpers */ "./src/assets/js/core/app-helpers.js");
+/* harmony import */ var _pages_dark_mode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/dark-mode */ "./src/assets/js/pages/dark-mode.js");
+/* harmony import */ var _pages_dark_mode__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_pages_dark_mode__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -7144,356 +6569,201 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-
-
-
- // تحديث المسار
- // تحديث المسار
+ // استيراد وظيفة لإشعارات التطبيق
+ // استيراد مكتبة الرسوم المتحركة
+ // استيراد وظيفة لتفعيل التلميحات
+ // استيراد المساعدات العامة للتطبيق
 
 var App = /*#__PURE__*/function (_AppHelpers) {
   function App() {
     var _this;
     _classCallCheck(this, App);
-    _this = _callSuper(this, App);
-    window.app = _this;
+    _this = _callSuper(this, App); // استدعاء المُنشئ من الفئة الأساسية
+    window.app = _this; // تعيين التطبيق في نافذة المتصفح
+    _this.checkSystemTheme(); // التحقق من إعدادات النظام عند التحميل
     return _this;
   }
   _inherits(App, _AppHelpers);
   return _createClass(App, [{
     key: "loadTheApp",
     value: function loadTheApp() {
-      this.commonThings();
-      (0,_notifier__WEBPACK_IMPORTED_MODULE_0__.initiateNotifier)();
-      (0,_mobile_menu__WEBPACK_IMPORTED_MODULE_1__.initiateMobileMenu)();
-      if (header_is_sticky) {
-        (0,_sticky_menu__WEBPACK_IMPORTED_MODULE_2__.initiateStickyMenu)();
+      this.commonThings(); // تنفيذ الوظائف العامة
+      (0,_notifier__WEBPACK_IMPORTED_MODULE_0__.initiateNotifier)(); // تفعيل الإشعارات
+      this.initAppFeatures(); // دمج الوظائف المتكررة
+      this.log('Theme Loaded 🎉'); // تسجيل رسالة في وحدة التحكم
+    }
+  }, {
+    key: "checkSystemTheme",
+    value: function checkSystemTheme() {
+      var prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDarkScheme) {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+      } else {
+        document.body.classList.add('light-mode');
+        document.body.classList.remove('dark-mode');
       }
-      this.initAddToCart();
-      this.initiateAdAlert();
-      this.initiateDropdowns();
-      this.initiateModals();
-      this.initiateCollapse();
-      this.changeMenuDirection();
-      (0,_partials_tooltip__WEBPACK_IMPORTED_MODULE_4__["default"])();
-      this.loadModalImgOnclick();
-      salla.comment.event.onAdded(function () {
-        return window.location.reload();
-      });
-      this.status = 'ready';
-      document.dispatchEvent(new CustomEvent('theme::ready'));
-      this.log('Theme Loaded 🎉');
+    }
+  }, {
+    key: "initAppFeatures",
+    value: function initAppFeatures() {
+      var _this2 = this;
+      var features = [this.initiateSidebar, this.initAddToCart, this.initiateAdAlert, this.initiateDropdowns, this.initiateModals, this.initiateCollapse, _partials_tooltip__WEBPACK_IMPORTED_MODULE_2__["default"], this.loadModalImgOnclick];
+      features.forEach(function (feature) {
+        return feature.call(_this2);
+      }); // استدعاء كل وظيفة
     }
   }, {
     key: "log",
     value: function log(message) {
-      salla.log("ThemeApp(Raed)::".concat(message));
-      return this;
+      salla.log("ThemeApp(Raed)::".concat(message)); // تسجيل الرسالة في وحدة التحكم
+      return this; // إرجاع الكائن الحالي
     }
 
-    // fix Menu Direction at the third level >> The menu at the third level was popping off the page
+    // تنفيذ القائمة الجانبية الجديدة
   }, {
-    key: "changeMenuDirection",
-    value: function changeMenuDirection() {
-      app.all('.root-level.has-children', function (item) {
-        if (item.classList.contains('change-menu-dir')) return;
-        app.on('mouseover', item, function () {
-          var submenu = item.querySelector('.sub-menu .sub-menu'),
-            rect = submenu.getBoundingClientRect();
-          (rect.left < 10 || rect.right > window.innerWidth - 10) && app.addClass(item, 'change-menu-dir');
+    key: "initiateSidebar",
+    value: function initiateSidebar() {
+      var sidebar = document.getElementById('sidebar-menu'); // الحصول على عنصر القائمة الجانبية
+      if (!sidebar) return; // إذا لم يكن هناك قائمة جانبية، الخروج من الدالة
+
+      var overlay = this.createOverlay(); // إنشاء تراكب
+      document.body.appendChild(overlay); // إضافة التراكب إلى الجسم
+
+      var toggleSidebar = function toggleSidebar() {
+        var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+        sidebar.classList.toggle('open', show);
+      };
+      this.setupToggleButtons(toggleSidebar);
+      overlay.addEventListener('click', function () {
+        return toggleSidebar(false);
+      });
+      this.setupEscapeKey(toggleSidebar);
+      this.initiateSidebarSubmenus(sidebar);
+      this.setupCloseButton(toggleSidebar);
+    }
+  }, {
+    key: "setupToggleButtons",
+    value: function setupToggleButtons(toggleSidebar) {
+      var toggleBtns = document.querySelectorAll('.menu-trigger'); // الحصول على أزرار التبديل
+      toggleBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var isOpen = document.querySelector('.sidebar-menu').classList.contains('open'); // التحقق مما إذا كانت القائمة مفتوحة
+          toggleSidebar(!isOpen); // تبديل حالة القائمة
         });
       });
     }
   }, {
-    key: "loadModalImgOnclick",
-    value: function loadModalImgOnclick() {
-      document.querySelectorAll('.load-img-onclick').forEach(function (link) {
-        link.addEventListener('click', function (event) {
-          event.preventDefault();
-          var modal = document.querySelector('#' + link.dataset.modalId),
-            img = modal.querySelector('img'),
-            imgSrc = img.dataset.src;
-          modal.open();
-          if (img.classList.contains('loaded')) return;
-          img.src = imgSrc;
-          img.classList.add('loaded');
-        });
+    key: "setupEscapeKey",
+    value: function setupEscapeKey(toggleSidebar) {
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+          toggleSidebar(false); // إغلاق القائمة عند الضغط على مفتاح الهروب
+        }
       });
     }
+  }, {
+    key: "setupCloseButton",
+    value: function setupCloseButton(toggleSidebar) {
+      var closeButton = document.querySelector('.close-menu'); // تأكد من أن الزر موجود
+      if (closeButton) {
+        closeButton.addEventListener('click', function () {
+          console.log('Close button clicked'); // سجل عند النقر على الزر
+          toggleSidebar(false); // إغلاق القائمة عند النقر على زر الإغلاق
+        });
+      }
+    }
+
+    // إنشاء عنصر التراكب
+  }, {
+    key: "createOverlay",
+    value: function createOverlay() {
+      var overlay = document.createElement('div'); // إنشاء عنصر div جديد
+      overlay.id = 'sidebar-overlay'; // تعيين معرف التراكب
+      overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 opacity-0 invisible'; // تعيين أنماط التراكب
+      return overlay; // إرجاع التراكب
+    }
+
+    // التعامل مع القوائم الفرعية في القائمة الجانبية
+  }, {
+    key: "initiateSidebarSubmenus",
+    value: function initiateSidebarSubmenus(sidebar) {
+      var _this3 = this;
+      var subMenuTriggers = sidebar.querySelectorAll('.menu-item.has-children'); // الحصول على عناصر القائمة الفرعية
+
+      subMenuTriggers.forEach(function (trigger) {
+        var subMenu = trigger.querySelector('.sub-menu'); // الحصول على القائمة الفرعية
+        if (!subMenu) return; // إذا لم يكن هناك قائمة فرعية، الخروج
+
+        // إضافة زر التبديل
+        var toggleBtn = document.createElement('button'); // إنشاء زر جديد
+        toggleBtn.className = 'submenu-toggle w-8 h-8 flex items-center justify-center'; // تعيين أنماط الزر
+        toggleBtn.innerHTML = '<i class="sicon-keyboard_arrow_down text-sm transition-transform duration-200"></i>'; // إضافة أيقونة الزر
+        trigger.appendChild(toggleBtn); // إضافة الزر إلى عنصر القائمة
+
+        toggleBtn.addEventListener('click', function (e) {
+          e.preventDefault(); // منع السلوك الافتراضي
+          e.stopPropagation(); // منع الحدث من الانتقال إلى العناصر الأبوية
+
+          var isOpen = subMenu.classList.contains('is-open'); // التحقق مما إذا كانت القائمة الفرعية مفتوحة
+
+          // تبديل القائمة الفرعية
+          if (isOpen) {
+            _this3.anime(subMenu, {
+              height: [subMenu.scrollHeight, 0],
+              // تعيين ارتفاع الرسوم المتحركة
+              duration: 300,
+              // مدة الرسوم المتحركة
+              easing: 'easeOutQuad' // نوع التسهيل
+            }).then(function () {
+              subMenu.classList.remove('is-open'); // إزالة فئة الفتح
+              toggleBtn.querySelector('i').classList.remove('rotate-180'); // إعادة تعيين دوران الأيقونة
+            });
+          } else {
+            subMenu.classList.add('is-open'); // إضافة فئة الفتح
+            toggleBtn.querySelector('i').classList.add('rotate-180'); // تدوير الأيقونة
+            _this3.anime(subMenu, {
+              height: [0, subMenu.scrollHeight],
+              // تعيين ارتفاع الرسوم المتحركة
+              duration: 300,
+              // مدة الرسوم المتحركة
+              easing: 'easeOutQuad' // نوع التسهيل
+            });
+          }
+        });
+
+        // تعيين الارتفاع الأولي إلى 0
+        subMenu.style.height = '0'; // تعيين ارتفاع القائمة الفرعية إلى 0
+        subMenu.style.overflow = 'hidden'; // إخفاء المحتوى الزائد
+      });
+    }
+
+    // بقية الطرق الأصلية...
   }, {
     key: "commonThings",
     value: function commonThings() {
-      this.cleanContentArticles('.content-entry');
+      this.cleanContentArticles('.content-entry'); // تنظيف محتوى المقالات
     }
   }, {
     key: "cleanContentArticles",
     value: function cleanContentArticles(elementsSelector) {
-      var articleElements = document.querySelectorAll(elementsSelector);
+      var articleElements = document.querySelectorAll(elementsSelector); // الحصول على عناصر المقالات
       if (articleElements.length) {
         articleElements.forEach(function (article) {
-          article.innerHTML = article.innerHTML.replace(/\&nbsp;/g, ' ');
+          article.innerHTML = article.innerHTML.replace(/\&nbsp;/g, ' '); // استبدال المسافات الفارغة
         });
       }
-    }
-  }, {
-    key: "isElementLoaded",
-    value: function isElementLoaded(selector) {
-      return new Promise(function (resolve) {
-        var interval = setInterval(function () {
-          if (document.querySelector(selector)) {
-            clearInterval(interval);
-            return resolve(document.querySelector(selector));
-          }
-        }, 160);
-      });
-    }
-  }, {
-    key: "copyToClipboard",
-    value: function copyToClipboard(event) {
-      var _this2 = this;
-      event.preventDefault();
-      var aux = document.createElement("input"),
-        btn = event.currentTarget;
-      aux.setAttribute("value", btn.dataset.content);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand("copy");
-      document.body.removeChild(aux);
-      this.toggleElementClassIf(btn, 'copied', 'code-to-copy', function () {
-        return true;
-      });
-      setTimeout(function () {
-        _this2.toggleElementClassIf(btn, 'code-to-copy', 'copied', function () {
-          return true;
-        });
-      }, 1000);
-    }
-  }, {
-    key: "initiateNotifier",
-    value: function initiateNotifier() {
-      salla.notify.setNotifier(function (message, type, data) {
-        if (_typeof(message) == 'object') {
-          return Swal.fire(message).then(type);
-        }
-        return Swal.mixin({
-          toast: true,
-          position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
-          showConfirmButton: false,
-          timer: 3500,
-          didOpen: function didOpen(toast) {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-          }
-        }).fire({
-          icon: type,
-          title: message,
-          showCloseButton: true,
-          timerProgressBar: true
-        });
-      });
-    }
-  }, {
-    key: "initiateMobileMenu",
-    value: function initiateMobileMenu() {
-      var _this3 = this;
-      this.isElementLoaded('#mobile-menu').then(function (menu) {
-        var mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-        salla.lang.onLoaded(function () {
-          mobileMenu.navigation({
-            title: salla.lang.get('blocks.header.main_menu')
-          });
-        });
-        var drawer = mobileMenu.offcanvas({
-          position: salla.config.get('theme.is_rtl') ? "right" : 'left'
-        });
-        _this3.onClick("a[href='#mobile-menu']", function (event) {
-          document.body.classList.add('menu-opened');
-          event.preventDefault() || drawer.close() || drawer.open();
-        });
-        _this3.onClick(".close-mobile-menu", function (event) {
-          document.body.classList.remove('menu-opened');
-          event.preventDefault() || drawer.close();
-        });
-      });
-    }
-  }, {
-    key: "initiateStickyMenu",
-    value: function initiateStickyMenu() {
-      var _this$element,
-        _this4 = this;
-      var header = this.element('#mainnav'),
-        height = (_this$element = this.element('#mainnav .inner')) === null || _this$element === void 0 ? void 0 : _this$element.clientHeight;
-      //when it's landing page, there is no header
-      if (!header) {
-        return;
-      }
-      window.addEventListener('load', function () {
-        return setTimeout(function () {
-          return _this4.setHeaderHeight();
-        }, 500);
-      });
-      window.addEventListener('resize', function () {
-        return _this4.setHeaderHeight();
-      });
-      window.addEventListener('scroll', function () {
-        window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-        window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-      }, {
-        passive: true
-      });
-    }
-  }, {
-    key: "setHeaderHeight",
-    value: function setHeaderHeight() {
-      var height = this.element('#mainnav .inner').clientHeight,
-        header = this.element('#mainnav');
-      header.style.height = height + 'px';
     }
 
-    /**
-     * Because salla caches the response, it's important to keep the alert disabled if the visitor closed it.
-     * by store the status of the ad in local storage `salla.storage.set(...)`
-     */
-  }, {
-    key: "initiateAdAlert",
-    value: function initiateAdAlert() {
-      var ad = this.element(".salla-advertisement");
-      if (!ad) {
-        return;
-      }
-      if (!salla.storage.get('statusAd-' + ad.dataset.id)) {
-        ad.classList.remove('hidden');
-      }
-      this.onClick('.ad-close', function (event) {
-        event.preventDefault();
-        salla.storage.set('statusAd-' + ad.dataset.id, 'dismissed');
-        anime({
-          targets: '.salla-advertisement',
-          opacity: [1, 0],
-          duration: 300,
-          height: [ad.clientHeight, 0],
-          easing: 'easeInOutQuad'
-        });
-      });
-    }
-  }, {
-    key: "initiateDropdowns",
-    value: function initiateDropdowns() {
-      this.onClick('.dropdown__trigger', function (_ref) {
-        var btn = _ref.target;
-        btn.parentElement.classList.toggle('is-opened');
-        document.body.classList.toggle('dropdown--is-opened');
-        // Click Outside || Click on close btn
-        window.addEventListener('click', function (_ref2) {
-          var element = _ref2.target;
-          if (!element.closest('.dropdown__menu') && element !== btn || element.classList.contains('dropdown__close')) {
-            btn.parentElement.classList.remove('is-opened');
-            document.body.classList.remove('dropdown--is-opened');
-          }
-        });
-      });
-    }
-  }, {
-    key: "initiateModals",
-    value: function initiateModals() {
-      var _this5 = this;
-      this.onClick('[data-modal-trigger]', function (e) {
-        var id = '#' + e.target.dataset.modalTrigger;
-        _this5.removeClass(id, 'hidden');
-        setTimeout(function () {
-          return _this5.toggleModal(id, true);
-        }); //small amont of time to running toggle After adding hidden
-      });
-      salla.event.document.onClick("[data-close-modal]", function (e) {
-        return _this5.toggleModal('#' + e.target.dataset.closeModal, false);
-      });
-    }
-  }, {
-    key: "toggleModal",
-    value: function toggleModal(id, isOpen) {
-      var _this6 = this;
-      this.toggleClassIf("".concat(id, " .s-salla-modal-overlay"), 'ease-out duration-300 opacity-100', 'opacity-0', function () {
-        return isOpen;
-      }).toggleClassIf("".concat(id, " .s-salla-modal-body"), 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100',
-      //add these classes
-      'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95',
-      //remove these classes
-      function () {
-        return isOpen;
-      }).toggleElementClassIf(document.body, 'modal-is-open', 'modal-is-closed', function () {
-        return isOpen;
-      });
-      if (!isOpen) {
-        setTimeout(function () {
-          return _this6.addClass(id, 'hidden');
-        }, 350);
-      }
-    }
-  }, {
-    key: "initiateCollapse",
-    value: function initiateCollapse() {
-      var _this7 = this;
-      document.querySelectorAll('.btn--collapse').forEach(function (trigger) {
-        var content = document.querySelector('#' + trigger.dataset.show);
-        var state = {
-          isOpen: false
-        };
-        var onOpen = function onOpen() {
-          return anime({
-            targets: content,
-            duration: 225,
-            height: content.scrollHeight,
-            opacity: [0, 1],
-            easing: 'easeOutQuart'
-          });
-        };
-        var onClose = function onClose() {
-          return anime({
-            targets: content,
-            duration: 225,
-            height: 0,
-            opacity: [1, 0],
-            easing: 'easeOutQuart'
-          });
-        };
-        var toggleState = function toggleState(isOpen) {
-          state.isOpen = !isOpen;
-          _this7.toggleElementClassIf(content, 'is-closed', 'is-opened', function () {
-            return isOpen;
-          });
-        };
-        trigger.addEventListener('click', function () {
-          var isOpen = state.isOpen;
-          toggleState(isOpen);
-          isOpen ? onClose() : onOpen();
-        });
-      });
-    }
+    // ... (احتفظ ببقية الطرق الأصلية)
 
-    /**
-     * Workaround for seeking to simplify & clean, There are three ways to use this method:
-     * 1- direct call: `this.anime('.my-selector')` - will use default values
-     * 2- direct call with overriding defaults: `this.anime('.my-selector', {duration:3000})`
-     * 3- return object to play it letter: `this.anime('.my-selector', false).duration(3000).play()` - will not play animation unless calling play method.
-     * @param {string|HTMLElement} selector
-     * @param {object|undefined|null|null} options - in case there is need to set attributes one by one set it `false`;
-     * @return {Anime|*}
-     */
-  }, {
-    key: "anime",
-    value: function anime(selector) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var anime = new _partials_anime__WEBPACK_IMPORTED_MODULE_3__["default"](selector, options);
-      return options === false ? anime : anime.play();
-    }
-
-    /**
-     * These actions are responsible for pressing "add to cart" button,
-     * they can be from any page, especially when mega-menu is enabled
-     */
+    // طرق تعديل السلة لتعمل مع الهيدر الجديد
   }, {
     key: "initAddToCart",
     value: function initAddToCart() {
       salla.cart.event.onUpdated(function (summary) {
+        // تحديث إجمالي السلة وعدد العناصر
         document.querySelectorAll('[data-cart-total]').forEach(function (el) {
           return el.innerText = salla.money(summary.total);
         });
@@ -7502,13 +6772,163 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         });
       });
       salla.cart.event.onItemAdded(function (response, prodId) {
-        app.element('salla-cart-summary').animateToCart(app.element("#product-".concat(prodId, " img")));
+        var cartIcon = document.querySelector('salla-cart-summary'); // الحصول على أيقونة السلة
+        var productImage = document.querySelector("#product-".concat(prodId, " img")); // الحصول على صورة المنتج
+        if (cartIcon && productImage) {
+          cartIcon.animateToCart(productImage); // تنفيذ الرسوم المتحركة عند إضافة المنتج إلى السلة
+        }
+      });
+    }
+  }, {
+    key: "initThemeToggle",
+    value: function initThemeToggle() {
+      var themeButton = document.getElementById('theme-button');
+      var sunIcon = document.querySelector('.sun-icon');
+      var moonIcon = document.querySelector('.moon-icon');
+      themeButton.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
+        sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
+        moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
       });
     }
   }]);
-}(_app_helpers__WEBPACK_IMPORTED_MODULE_5__["default"]);
+}(_app_helpers__WEBPACK_IMPORTED_MODULE_3__["default"]); // تهيئة التطبيق
 salla.onReady(function () {
-  return new App().loadTheApp();
+  var appInstance = new App();
+  appInstance.loadTheApp();
+  appInstance.initThemeToggle(); // تفعيل زر الوضع الداكن
+});
+
+// إضافة أنماط مخصصة لرسوم القائمة الجانبية
+var style = document.createElement('style'); // إنشاء عنصر style جديد
+style.textContent = "\n  .sidebar-open {\n    overflow: hidden; // \u0645\u0646\u0639 \u0627\u0644\u062A\u0645\u0631\u064A\u0631 \u0639\u0646\u062F \u0641\u062A\u062D \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062C\u0627\u0646\u0628\u064A\u0629\n  }\n  \n  .submenu-toggle i {\n    transition: transform 0.3s ease; // \u0625\u0636\u0627\u0641\u0629 \u062A\u0623\u062B\u064A\u0631 \u0627\u0646\u062A\u0642\u0627\u0644 \u0644\u062A\u062F\u0648\u064A\u0631 \u0627\u0644\u0623\u064A\u0642\u0648\u0646\u0629\n  }\n  \n  .submenu-toggle i.rotate-180 {\n    transform: rotate(180deg); // \u062A\u062F\u0648\u064A\u0631 \u0627\u0644\u0623\u064A\u0642\u0648\u0646\u0629 \u0639\u0646\u062F \u0641\u062A\u062D \u0627\u0644\u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u0641\u0631\u0639\u064A\u0629\n  }\n";
+document.head.appendChild(style); // إضافة الأنماط إلى رأس الصفحة
+
+// تنفيذ فئة MenuHandler الجديدة
+var MenuHandler = /*#__PURE__*/function () {
+  function MenuHandler() {
+    _classCallCheck(this, MenuHandler);
+    this.isRTL = document.dir === 'rtl';
+    this.menuTrigger = document.querySelector('.menu-trigger');
+    this.closeButton = document.querySelector('.close-menu');
+    this.sidebar = document.querySelector('.sidebar-menu');
+    this.overlay = document.querySelector('.sidebar-overlay');
+    this.submenuTriggers = document.querySelectorAll('.menu-item.has-children');
+    this.init();
+  }
+  return _createClass(MenuHandler, [{
+    key: "init",
+    value: function init() {
+      var _this$menuTrigger,
+        _this4 = this,
+        _this$closeButton,
+        _this$overlay;
+      // Toggle menu
+      (_this$menuTrigger = this.menuTrigger) === null || _this$menuTrigger === void 0 || _this$menuTrigger.addEventListener('click', function () {
+        return _this4.toggleMenu(true);
+      });
+      (_this$closeButton = this.closeButton) === null || _this$closeButton === void 0 || _this$closeButton.addEventListener('click', function () {
+        return _this4.toggleMenu(false);
+      });
+      (_this$overlay = this.overlay) === null || _this$overlay === void 0 || _this$overlay.addEventListener('click', function () {
+        return _this4.toggleMenu(false);
+      });
+
+      // Handle submenus
+      this.submenuTriggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function (e) {
+          if (e.target === trigger || e.target.parentElement === trigger) {
+            e.preventDefault();
+            _this4.toggleSubmenu(trigger);
+          }
+        });
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') _this4.toggleMenu(false);
+      });
+    }
+  }, {
+    key: "toggleMenu",
+    value: function toggleMenu(show) {
+      document.body.classList.toggle('menu-opened', show);
+    }
+  }, {
+    key: "toggleSubmenu",
+    value: function toggleSubmenu(trigger) {
+      var submenu = trigger.querySelector('.sub-menu');
+      var isOpened = trigger.classList.contains('is-opened');
+
+      // Close other submenus
+      this.submenuTriggers.forEach(function (item) {
+        if (item !== trigger) {
+          var _item$querySelector;
+          item.classList.remove('is-opened');
+          (_item$querySelector = item.querySelector('.sub-menu')) === null || _item$querySelector === void 0 || _item$querySelector.classList.remove('is-opened');
+        }
+      });
+
+      // Toggle current submenu
+      trigger.classList.toggle('is-opened', !isOpened);
+      submenu === null || submenu === void 0 || submenu.classList.toggle('is-opened', !isOpened);
+    }
+  }]);
+}(); // Initialize menu handler
+document.addEventListener('DOMContentLoaded', function () {
+  new MenuHandler();
+});
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebar = document.getElementById('mainnav');
+  var openBtn = document.getElementById('openSidebarBtn');
+  var closeBtn = document.getElementById('closeSidebarBtn');
+
+  // فتح القائمة
+  openBtn.addEventListener('click', function () {
+    sidebar.classList.remove('translate-x-full');
+    sidebar.classList.add('translate-x-0');
+    document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+  });
+
+  // إغلاق القائمة
+  closeBtn.addEventListener('click', function () {
+    sidebar.classList.add('translate-x-full');
+    sidebar.classList.remove('translate-x-0');
+    document.body.style.overflow = ''; // إعادة تفعيل التمرير
+  });
+
+  // إغلاق القائمة عند النقر خارجها
+  document.addEventListener('click', function (e) {
+    if (!sidebar.contains(e.target) && !openBtn.contains(e.target) && !sidebar.classList.contains('translate-x-full')) {
+      sidebar.classList.add('translate-x-full');
+      sidebar.classList.remove('translate-x-0');
+      document.body.style.overflow = '';
+    }
+  });
+});
+
+// إضافة خلفية معتمة عند فتح القائمة
+var overlay = document.createElement('div');
+overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-40 hidden';
+overlay.id = 'sidebarOverlay';
+document.body.appendChild(overlay);
+
+// تحديث الخلفية المعتمة
+document.getElementById('openSidebarBtn').addEventListener('click', function () {
+  document.getElementById('sidebarOverlay').classList.remove('hidden');
+});
+document.getElementById('closeSidebarBtn').addEventListener('click', function () {
+  document.getElementById('sidebarOverlay').classList.add('hidden');
+});
+var themeButton = document.getElementById('theme-button');
+var sunIcon = document.querySelector('.sun-icon');
+var moonIcon = document.querySelector('.moon-icon');
+themeButton.addEventListener('click', function () {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+  sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
+  moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
 });
 })();
 
