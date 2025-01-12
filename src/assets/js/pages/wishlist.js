@@ -1,4 +1,4 @@
-import BasePage from './base-page';
+import BasePage from '../core/base-page';
 
 class Wishlist extends BasePage {
 

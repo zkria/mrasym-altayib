@@ -1,7 +1,8 @@
-import MobileMenu from 'mmenu-light';
-import Swal from 'sweetalert2';
-import Anime from './partials/anime';
-import initTootTip from './partials/tooltip';
+import { initiateNotifier } from './notifier';
+import { initiateMobileMenu } from './mobile-menu';
+import { initiateStickyMenu } from './sticky-menu';
+import Anime from '../partials/anime'; // تحديث المسار
+import initTootTip from '../partials/tooltip'; // تحديث المسار
 import AppHelpers from "./app-helpers";
 
 class App extends AppHelpers {
@@ -12,17 +13,17 @@ class App extends AppHelpers {
 
   loadTheApp() {
     this.commonThings();
-    this.initiateNotifier();
-    this.initiateMobileMenu();
+    initiateNotifier();
+    initiateMobileMenu();
     if (header_is_sticky) {
-      this.initiateStickyMenu();
+      initiateStickyMenu();
     }
     this.initAddToCart();
     this.initiateAdAlert();
     this.initiateDropdowns();
     this.initiateModals();
     this.initiateCollapse();
-    this.changeMenuDirection()
+    this.changeMenuDirection();
     initTootTip();
     this.loadModalImgOnclick();
 
@@ -135,28 +136,23 @@ isElementLoaded(selector){
 
 
   initiateMobileMenu() {
+    this.isElementLoaded('#mobile-menu').then((menu) => {
+      const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
 
-  this.isElementLoaded('#mobile-menu').then((menu) => {
+      salla.lang.onLoaded(() => {
+        mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
+      });
+      const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
 
- 
-  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-
-  salla.lang.onLoaded(() => {
-    mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-  });
-  const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
-
-  this.onClick("a[href='#mobile-menu']", event => {
-    document.body.classList.add('menu-opened');
-    event.preventDefault() || drawer.close() || drawer.open()
-    
-  });
-  this.onClick(".close-mobile-menu", event => {
-    document.body.classList.remove('menu-opened');
-    event.preventDefault() || drawer.close()
-  });
-  });
-
+      this.onClick("a[href='#mobile-menu']", event => {
+        document.body.classList.add('menu-opened');
+        event.preventDefault() || drawer.close() || drawer.open();
+      });
+      this.onClick(".close-mobile-menu", event => {
+        document.body.classList.remove('menu-opened');
+        event.preventDefault() || drawer.close();
+      });
+    });
   }
 
   initiateStickyMenu() {

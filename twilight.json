@@ -80,7 +80,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "عرض روابط الصفحات الهامة في الشريط العلوي",
-            "description": "مثل صفحة الهبوط ، المدونة ،الصفحات التعريفية",
+            "description": "مثل صفحة الهبوط ، المدونة ، الصفحات التعريفية",
             "id": "important_links",
             "format": "switch",
             "required": false,
@@ -587,7 +587,7 @@
                     "required": false,
                     "placeholder": "يمكنك إضافة وصف لهذا القسم هنا...",
                     "minLength": 0,
-                    "maxLength": "256"
+                    "maxLength": 256
                 },
                 {
                     "type": "items",
