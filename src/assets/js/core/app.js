@@ -187,14 +187,8 @@ class App extends AppHelpers {
 
   initThemeToggle() {
     const themeButton = document.getElementById('theme-button');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-
     themeButton.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      document.body.classList.toggle('light-mode');
-      sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
-      moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
+      toggleDarkMode(); // استدعاء الدالة من dark-mode.js
     });
   }
 }
@@ -338,4 +332,12 @@ themeButton.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
     sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
     moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
+});
+
+// تحميل الحالة من localStorage عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('dark-mode'); // استخدام المفتاح الموحد
+  if (theme === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
 });

@@ -1583,22 +1583,17 @@ function initiateNotifier() {
 /***/ (() => {
 
 function toggleDarkMode() {
-  var body = document.body;
-  body.classList.toggle('dark-mode');
-
-  // حفظ الحالة في التخزين المحلي
-  if (body.classList.contains('dark-mode')) {
-    localStorage.setItem('dark-mode', 'enabled');
-  } else {
-    localStorage.setItem('dark-mode', 'disabled');
-  }
+  document.documentElement.classList.toggle('dark');
+  var isDarkMode = document.documentElement.classList.contains('dark');
+  localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
 }
+document.getElementById('theme-button').addEventListener('click', toggleDarkMode);
 
-// استعادة الحالة عند تحميل الصفحة
+// عند تحميل الصفحة، تحقق من الوضع المخزن في localStorage
 document.addEventListener('DOMContentLoaded', function () {
-  var darkModeEnabled = localStorage.getItem('dark-mode') === 'enabled';
-  if (darkModeEnabled) {
-    document.body.classList.add('dark-mode');
+  var darkMode = localStorage.getItem('darkMode');
+  if (darkMode === 'enabled') {
+    document.documentElement.classList.add('dark');
   }
 });
 
@@ -6766,13 +6761,8 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     key: "initThemeToggle",
     value: function initThemeToggle() {
       var themeButton = document.getElementById('theme-button');
-      var sunIcon = document.querySelector('.sun-icon');
-      var moonIcon = document.querySelector('.moon-icon');
       themeButton.addEventListener('click', function () {
-        document.body.classList.toggle('dark-mode');
-        document.body.classList.toggle('light-mode');
-        sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
-        moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
+        toggleDarkMode(); // استدعاء الدالة من dark-mode.js
       });
     }
   }]);
@@ -6912,6 +6902,14 @@ themeButton.addEventListener('click', function () {
   document.body.classList.toggle('light-mode');
   sunIcon.style.display = sunIcon.style.display === 'none' ? 'inline' : 'none';
   moonIcon.style.display = moonIcon.style.display === 'none' ? 'inline' : 'none';
+});
+
+// تحميل الحالة من localStorage عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function () {
+  var theme = localStorage.getItem('dark-mode'); // استخدام المفتاح الموحد
+  if (theme === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
 });
 })();
 

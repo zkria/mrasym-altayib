@@ -8,13 +8,16 @@
 {% set important_links = theme.settings.get('important_links') %}
 {% set is_sidebar_open = false %}
 
+<link rel="stylesheet" href="/src/assets/styles/05-utilities/dark-mode.scss">
+<script src="/src/assets/js/pages/dark-mode.js"></script>
+
 <header class="store-header">
   {# شريط التنقل العلوي - محسن #}
-  <div class="top-navbar bg-gray-800 text-white shadow-lg">
-    <div class="container flex justify-between items-center py-2">
+  <div class="top-navbar bg-gray-800 text-white shadow-lg p-4">
+    <div class="container flex justify-between items-center">
       {# زر فتح القائمة في الهيدر #}
       <button 
-        class="hamburger-menu"
+        class="hamburger-menu p-2 rounded hover:bg-gray-700 transition duration-300"
         id="openSidebarBtn"
         aria-label="فتح القائمة الجانبية"
         aria-expanded="false"
@@ -49,10 +52,18 @@
           >
         </a>
       </div>
+      
+      {# الأزرار في اليمين - تحسين #}
+      <div class="header-actions flex items-center gap-4">
+        {# زر تفعيل الوضع الداكن - الزر الجديد #}
+        <button type="button" 
+                id="theme-button"
+                class="header-btn text-white bg-gray-800 hover:bg-gray-700 transition duration-300 ease-in-out rounded-lg p-3 shadow-md text-lg flex items-center"
+                aria-label="تفعيل الوضع الداكن">
+          <i class="sicon-moon text-xl"></i>
+        </button>
 
-      {# الأزرار في اليمين - مبسطة #}
-      <div class="header-actions flex items-center gap-3">
-        {# قائمة المستخدم #}
+        {# زر المستخدم #}
         {% if user.type == 'user' %}
           <salla-user-menu 
             avatar-only 
@@ -62,7 +73,7 @@
           </salla-user-menu>
         {% else %}
           <button 
-            class="header-btn text-white hover:opacity-80 transition-opacity" 
+            class="header-btn text-white bg-gray-800 hover:bg-gray-700 transition duration-300 ease-in-out rounded-full w-10 h-10 flex items-center justify-center shadow-md"
             aria-label="تسجيل الدخول"
             onclick="salla.event.dispatch('login::open')">
             <i class="header-btn__icon sicon-user-circle text-2xl" aria-hidden="true"></i>
@@ -79,19 +90,11 @@
           </i>
         </salla-cart-summary>
       </div>
-
-      {# زر تفعيل الوضع الداكن #}
-      <button 
-        class="dark-mode-toggle"
-        id="toggleDarkMode"
-        aria-label="تفعيل الوضع الداكن"
-        onclick="toggleDarkMode()">
-        <i class="sicon-moon text-2xl text-white"></i>
-      </button>
+    </div>
+  </div>
 
   {# القائمة الجانبية - تم تعديل الموضع #}
   <nav id="mainnav" class="main-nav-sidebar absolute top-full right-0 w-72 bg-white shadow-lg transition-transform duration-300 z-10" aria-label="القائمة الرئيسية">
-      
       <div id="sidebar-content" class="sidebar-content overflow-y-auto max-h-screen">
         <div class="sidebar-header">
           <h2>القائمة الرئيسية</h2>
@@ -114,4 +117,3 @@
   </salla-scopes>
 {% endif %}
 
-<script src="src/assets/js/pages/dark-mode.js"></script>

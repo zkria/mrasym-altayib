@@ -64,3 +64,32 @@
     @apply opacity-1 visibility-visible;
   }
 }
+
+// دعم الوضع الداكن
+body.dark-mode {
+  .sidebar-menu {
+    @apply bg-gray-800 text-gray-200;
+
+    li {
+      > a {
+        @apply text-gray-200 hover:bg-gray-700;
+      }
+
+      &.has-children {
+        > a:after {
+          @apply text-gray-400;
+        }
+
+        .sub-menu {
+          @apply bg-gray-700;
+
+          li {
+            > a {
+              @apply text-gray-300 hover:bg-gray-600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
