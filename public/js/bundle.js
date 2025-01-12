@@ -1583,40 +1583,23 @@ function initiateNotifier() {
 /***/ (() => {
 
 function toggleDarkMode() {
-  var themeToggle = document.querySelector('.theme-toggle');
-  var icon = themeToggle.querySelector('.sun-icon, .moon-icon');
+  var body = document.body;
+  body.classList.toggle('dark-mode');
 
-  // تبديل الكلاس للأيقونة
-  themeToggle.classList.toggle('dark-mode');
-  if (themeToggle.classList.contains('dark-mode')) {
-    icon.classList.remove('sun-icon');
-    icon.classList.add('moon-icon');
-    document.documentElement.classList.add('dark');
+  // حفظ الحالة في التخزين المحلي
+  if (body.classList.contains('dark-mode')) {
+    localStorage.setItem('dark-mode', 'enabled');
   } else {
-    icon.classList.remove('moon-icon');
-    icon.classList.add('sun-icon');
-    document.documentElement.classList.remove('dark');
+    localStorage.setItem('dark-mode', 'disabled');
   }
-
-  // حفظ التفضيل في localStorage
-  localStorage.setItem('darkMode', themeToggle.classList.contains('dark-mode'));
 }
 
-// تطبيق الوضع المحفوظ عند تحميل الصفحة
+// استعادة الحالة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function () {
-  var savedDarkMode = localStorage.getItem('darkMode') === 'true';
-  var themeToggle = document.querySelector('.theme-toggle');
-  if (savedDarkMode) {
-    themeToggle.classList.add('dark-mode'); // إضافة الكلاس المحفوظ
-    document.documentElement.classList.add('dark'); // إضافة الكلاس للعنصر الجذري
-    toggleDarkMode(); // تحديث الأيقونة
-  } else {
-    document.documentElement.classList.remove('dark'); // إزالة الكلاس للعنصر الجذري
+  var darkModeEnabled = localStorage.getItem('dark-mode') === 'enabled';
+  if (darkModeEnabled) {
+    document.body.classList.add('dark-mode');
   }
-
-  // تفعيل الزر
-  var themeButton = document.getElementById('theme-button');
-  themeButton.addEventListener('click', toggleDarkMode);
 });
 
 /***/ }),

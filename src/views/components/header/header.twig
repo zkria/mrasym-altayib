@@ -80,6 +80,15 @@
         </salla-cart-summary>
       </div>
 
+      {# زر تفعيل الوضع الداكن #}
+      <button 
+        class="dark-mode-toggle"
+        id="toggleDarkMode"
+        aria-label="تفعيل الوضع الداكن"
+        onclick="toggleDarkMode()">
+        <i class="sicon-moon text-2xl text-white"></i>
+      </button>
+
   {# القائمة الجانبية - تم تعديل الموضع #}
   <nav id="mainnav" class="main-nav-sidebar absolute top-full right-0 w-72 bg-white shadow-lg transition-transform duration-300 z-10" aria-label="القائمة الرئيسية">
       
@@ -104,3 +113,5 @@
     aria-label="اختيار النطاق">
   </salla-scopes>
 {% endif %}
+
+<script src="src/assets/js/pages/dark-mode.js"></script>
