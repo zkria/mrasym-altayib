@@ -1,4 +1,4 @@
-import BasePage from '../core/base-page';
+import BasePage from './base-page';
 class Brands extends BasePage {
     onReady() {
         // set initial height;
