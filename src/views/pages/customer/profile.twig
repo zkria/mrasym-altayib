@@ -6,12 +6,202 @@
 | page.slug                      | string   |                                                     |
 #}
 {% extends "layouts.customer" %}
+
 {% block inner_content %}
-    {% hook 'customer:profile.form.start' %}
-    <salla-user-profile></salla-user-profile>
-    {% hook 'customer:profile.form.end' %}
+    <div class="profile-container space-y-8">
+        {# رأس الصفحة #}
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold">{{ page.title }}</h1>
+            
+            {# زر حفظ التغييرات #}
+            <salla-button 
+                id="save-profile"
+                color="primary"
+                loading="false">
+                <i class="sicon-check mx-2"></i>
+                {{ trans('common.save_changes') }}
+            </salla-button>
+        </div>
 
-    <salla-verify></salla-verify>
+        {# قسم الصورة الشخصية #}
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="relative">
+                    <div class="w-24 h-24 rounded-full overflow-hidden">
+                        <img src="{{ user.avatar }}" 
+                             alt="{{ user.name }}"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <button class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 shadow-lg hover:opacity-90"
+                            onclick="document.getElementById('avatar-input').click()">
+                        <i class="sicon-camera text-sm"></i>
+                    </button>
+                    <input type="file" 
+                           id="avatar-input" 
+                           class="hidden" 
+                           accept="image/*">
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg">{{ user.name }}</h3>
+                    <p class="text-sm text-gray-500">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
 
-    <salla-user-settings class="mt-10 block"></salla-user-settings>
+        {# معلومات الملف الشخصي #}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {# المعلومات الشخصية #}
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <h2 class="text-lg font-bold mb-6">
+                    {{ trans('pages.profile.personal_info') }}
+                </h2>
+                
+                {% hook 'customer:profile.form.start' %}
+                <salla-user-profile class="profile-form">
+                    {# سيتم تحميل النموذج تلقائياً #}
+                </salla-user-profile>
+                {% hook 'customer:profile.form.end' %}
+            </div>
+
+            {# التحقق والأمان #}
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <h2 class="text-lg font-bold mb-6">
+                    {{ trans('pages.profile.security') }}
+                </h2>
+                
+                {# التحقق من الحساب #}
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-medium">
+                            {{ trans('pages.profile.account_verification') }}
+                        </span>
+                        <span class="status-badge {{ user.is_verified ? 'verified' : 'unverified' }}">
+                            {{ user.is_verified ? trans('common.verified') : trans('common.unverified') }}
+                        </span>
+                    </div>
+                    <salla-verify></salla-verify>
+                </div>
+
+                {# إعدادات الإشعارات #}
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-medium">
+                            {{ trans('pages.profile.notifications') }}
+                        </span>
+                    </div>
+                    <salla-user-settings 
+                        {{ user.is_notifiable ? 'is-notifiable' : '0' }}
+                        class="notifications-settings">
+                    </salla-user-settings>
+                </div>
+            </div>
+        </div>
+
+        {# حذف الحساب #}
+        <div class="bg-red-50 rounded-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-red-600 font-bold mb-1">
+                        {{ trans('pages.profile.delete_account') }}
+                    </h3>
+                    <p class="text-sm text-red-500">
+                        {{ trans('pages.profile.delete_account_warning') }}
+                    </p>
+                </div>
+                <salla-button 
+                    color="danger"
+                    fill="outline"
+                    onclick="confirmDeleteAccount()">
+                    {{ trans('pages.profile.delete_account') }}
+                </salla-button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .status-badge {
+        @apply px-3 py-1 rounded-full text-xs font-medium;
+    }
+
+    .status-badge.verified {
+        @apply bg-green-100 text-green-700;
+    }
+
+    .status-badge.unverified {
+        @apply bg-yellow-100 text-yellow-700;
+    }
+
+    .profile-form :is(input, select) {
+        @apply rounded-lg border-gray-300 focus:border-primary focus:ring-primary;
+    }
+
+    .notifications-settings {
+        @apply space-y-4;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تحميل الصورة الشخصية
+    const avatarInput = document.getElementById('avatar-input');
+    if (avatarInput) {
+        avatarInput.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('avatar', file);
+
+                await salla.profile.updateAvatar(formData);
+                salla.notify.success('{{ trans("pages.profile.avatar_updated") }}');
+                
+                // تحديث الصورة مباشرة
+                const img = document.querySelector('.profile-avatar img');
+                if (img) {
+                    img.src = URL.createObjectURL(file);
+                }
+            } catch (error) {
+                salla.notify.error(error.message);
+            }
+        });
+    }
+
+    // حفظ التغييرات
+    const saveBtn = document.getElementById('save-profile');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', async function() {
+            try {
+                saveBtn.setAttribute('loading', 'true');
+                await salla.profile.save();
+                salla.notify.success('{{ trans("pages.profile.saved") }}');
+            } catch (error) {
+                salla.notify.error(error.message);
+            } finally {
+                saveBtn.setAttribute('loading', 'false');
+            }
+        });
+    }
+});
+
+// تأكيد حذف الحساب
+function confirmDeleteAccount() {
+    salla.confirm('{{ trans("pages.profile.delete_confirm") }}', {
+        type: 'error',
+        confirmButton: '{{ trans("common.yes_delete") }}',
+        cancelButton: '{{ trans("common.cancel") }}',
+    }).then((result) => {
+        if (result.value) {
+            salla.profile.delete()
+                .then(() => window.location.href = '{{ link("/") }}')
+                .catch(error => salla.notify.error(error.message));
+        }
+    });
+}
+</script>
 {% endblock %}

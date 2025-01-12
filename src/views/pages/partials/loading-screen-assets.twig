@@ -1,51 +1,51 @@
-<!-- To eliminate all render blocking CSS & JS and start with the critical css-->
-<!-- To show loader to the user till the page content are  loaded-->
+<!-- لإزالة جميع CSS و JS التي تعيق العرض وبدء التحميل مع CSS الحرج -->
+<!-- لعرض شاشة التحميل للمستخدم حتى يتم تحميل محتوى الصفحة -->
 <style>
   .loader-init {
-      position: fixed;
+      position: fixed; /* تحديد موضع التحميل */
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: white;
-      transition: opacity 0.75s, visibility 0.75s;
-      z-index: 9999;
+      width: 100vw; /* عرض الشاشة بالكامل */
+      height: 100vh; /* ارتفاع الشاشة بالكامل */
+      display: flex; /* استخدام flexbox لتوسيع المحتوى */
+      align-items: center; /* محاذاة العناصر عموديًا في المنتصف */
+      justify-content: center; /* محاذاة العناصر أفقيًا في المنتصف */
+      background: white; /* خلفية بيضاء */
+      transition: opacity 0.75s, visibility 0.75s; /* تأثير الانتقال للشفافية والرؤية */
+      z-index: 9999; /* وضع العنصر في أعلى مستوى */
   }
 
   .loader-init--hidden {
-      opacity: 0;
-      visibility: hidden;
+      opacity: 0; /* جعل العنصر شفافًا */
+      visibility: hidden; /* إخفاء العنصر */
   }
 
   .loader-init::after {
-      content: "";
-      width: 36px;
-      height: 36px;
-      border: 3px solid #eee;
-      border-top-color: #5bd5c4;
-      border-radius: 50%;
-      animation: loading 0.75s ease infinite;
+      content: ""; /* محتوى فارغ */
+      width: 36px; /* عرض الدائرة */
+      height: 36px; /* ارتفاع الدائرة */
+      border: 3px solid #eee; /* حدود الدائرة بلون رمادي فاتح */
+      border-top-color: #5bd5c4; /* لون الجزء العلوي من الدائرة */
+      border-radius: 50%; /* جعل الدائرة مستديرة */
+      animation: loading 0.75s ease infinite; /* إضافة تأثير التحميل */
   }
 
   @keyframes loading {
       from {
-        transform: rotate(0turn);
+        transform: rotate(0turn); /* بدء الدوران من 0 درجة */
       }
       to {
-        transform: rotate(1turn);
+        transform: rotate(1turn); /* الانتهاء من الدوران عند 360 درجة */
       }
   }
 </style>
 <script>
   window.addEventListener("load", () => {
-    const loader = document.querySelector(".loader-init");
-    loader.classList.add("loader-init--hidden");
+    const loader = document.querySelector(".loader-init"); /* تحديد عنصر التحميل */
+    loader.classList.add("loader-init--hidden"); /* إضافة فئة لإخفاء التحميل */
     loader.addEventListener("transitionend", () => {
-  if (!document.querySelector(".loader-init")) return;
-      document.body.removeChild(loader);
-      });
+      if (!document.querySelector(".loader-init")) return; /* التحقق من وجود العنصر */
+      document.body.removeChild(loader); /* إزالة عنصر التحميل من الجسم */
+    });
   });
 </script>

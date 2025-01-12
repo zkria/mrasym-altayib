@@ -42,6 +42,7 @@
  * Chat Bots............Specific styles for chats bots widget.
  * Swal.................Specific styles for Sweet Alert addon.
  * Safari Fixes.........Specific styles for Safari Browser.
+ * Dark Mode............Specific styles for dark mode.
  *
  * EMBEDED ADDONS
  * Lite Youtube Embed...Specific styles for lite-youtube-embed addon.
@@ -89,6 +90,7 @@
 @import './05-utilities/swal';
 @import './05-utilities/safari-fixes';
 @import './05-utilities/font-customization';
+@import './05-utilities/dark-mode';
 
 @import 'lite-youtube-embed';
 //@import 'swiper/css/bundle';

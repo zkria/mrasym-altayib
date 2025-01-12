@@ -1,7 +1,8 @@
-import MobileMenu from 'mmenu-light';
-import Swal from 'sweetalert2';
-import Anime from './partials/anime';
-import initTootTip from './partials/tooltip';
+import { initiateNotifier } from './notifier';
+import { initiateMobileMenu } from './mobile-menu';
+import { initiateStickyMenu } from './sticky-menu';
+import Anime from '../partials/anime'; // تحديث المسار
+import initTootTip from '../partials/tooltip'; // تحديث المسار
 import AppHelpers from "./app-helpers";
 
 class App extends AppHelpers {
@@ -12,18 +13,17 @@ class App extends AppHelpers {
 
   loadTheApp() {
     this.commonThings();
-    this.initiateNotifier();
-    this.initiateMobileMenu();
+    initiateNotifier();
+    initiateMobileMenu();
     if (header_is_sticky) {
-      this.initiateStickyMenu();
+      initiateStickyMenu();
     }
     this.initAddToCart();
     this.initiateAdAlert();
     this.initiateDropdowns();
     this.initiateModals();
     this.initiateCollapse();
-    this.initAttachWishlistListeners();
-    this.changeMenuDirection()
+    this.changeMenuDirection();
     initTootTip();
     this.loadModalImgOnclick();
 
@@ -44,11 +44,9 @@ class App extends AppHelpers {
       app.all('.root-level.has-children',item=>{
         if(item.classList.contains('change-menu-dir')) return;
         app.on('mouseover',item,()=>{
-          let submenu = item.querySelector('.sub-menu .sub-menu');
-          if(submenu){
-            let rect = submenu.getBoundingClientRect();
+          let submenu = item.querySelector('.sub-menu .sub-menu'),
+              rect = submenu.getBoundingClientRect();
             (rect.left < 10 || rect.right > window.innerWidth - 10) && app.addClass(item,'change-menu-dir')
-          }      
         })
       })
     }
@@ -138,44 +136,23 @@ isElementLoaded(selector){
 
 
   initiateMobileMenu() {
+    this.isElementLoaded('#mobile-menu').then((menu) => {
+      const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
 
-  this.isElementLoaded('#mobile-menu').then((menu) => {
-
- 
-  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-
-  salla.lang.onLoaded(() => {
-    mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-  });
-  const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
-
-  this.onClick("a[href='#mobile-menu']", event => {
-    document.body.classList.add('menu-opened');
-    event.preventDefault() || drawer.close() || drawer.open()
-    
-  });
-  this.onClick(".close-mobile-menu", event => {
-    document.body.classList.remove('menu-opened');
-    event.preventDefault() || drawer.close()
-  });
-  });
-
-  }
- initAttachWishlistListeners() {
-    let isListenerAttached = false;
-  
-    function toggleFavoriteIcon(id, isAdded = true) {
-      document.querySelectorAll('.s-product-card-wishlist-btn[data-id="' + id + '"]').forEach(btn => {
-        app.toggleElementClassIf(btn, 's-product-card-wishlist-added', 'not-added', () => isAdded);
-        app.toggleElementClassIf(btn, 'pulse-anime', 'un-favorited', () => isAdded);
+      salla.lang.onLoaded(() => {
+        mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
       });
-    }
-  
-    if (!isListenerAttached) {
-      salla.wishlist.event.onAdded((event, id) => toggleFavoriteIcon(id));
-      salla.wishlist.event.onRemoved((event, id) => toggleFavoriteIcon(id, false));
-      isListenerAttached = true; // Mark the listener as attached
-    }
+      const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
+
+      this.onClick("a[href='#mobile-menu']", event => {
+        document.body.classList.add('menu-opened');
+        event.preventDefault() || drawer.close() || drawer.open();
+      });
+      this.onClick(".close-mobile-menu", event => {
+        document.body.classList.remove('menu-opened');
+        event.preventDefault() || drawer.close();
+      });
+    });
   }
 
   initiateStickyMenu() {
