@@ -22,17 +22,6 @@
         <i class="sicon-menu text-white text-2xl"></i>
       </button>
       
-      <!-- Search Bar -->
-      <div class="header-search ml-4">
-        <salla-search 
-          inline 
-          oval 
-          height="36" 
-          placeholder="ابحث في المتجر..."
-          aria-label="بحث في المتجر">
-        </salla-search>
-      </div>
-      
       <!-- Store Logo -->
       <div class="flex-1 flex justify-center">
         <a class="navbar-brand" href="{{ store.url }}" aria-label="{{ store.name }}">
@@ -86,6 +75,17 @@
         show-brands="true"
         show-links="true">
       </custom-main-menu>
+      
+      <!-- Search Bar -->
+      <div class="header-search ml-4">
+        <salla-search 
+          inline 
+          oval 
+          height="36" 
+          placeholder="ابحث في المتجر..."
+          aria-label="بحث في المتجر">
+        </salla-search>
+      </div>
     </div>
   </nav>
 </header>

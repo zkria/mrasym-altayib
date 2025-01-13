@@ -306,6 +306,35 @@ isElementLoaded(selector){
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
   }
+
+  toggleSidebar() {
+    const sidebar = document.getElementById('mainnav');
+    const isOpen = sidebar.style.display === 'block';
+
+    if (isOpen) {
+        sidebar.style.transition = 'transform 0.3s ease';
+        sidebar.style.transform = 'translateX(100%)'; // إغلاق القائمة
+        setTimeout(() => {
+            sidebar.style.display = 'none'; // إخفاء القائمة بعد الانتهاء من التحويل
+        }, 300); // يجب أن يتطابق مع مدة التحويل
+    } else {
+        sidebar.style.display = 'block'; // عرض القائمة
+        sidebar.style.transition = 'transform 0.3s ease';
+        sidebar.style.transform = 'translateX(0)'; // فتح القائمة
+    }
+
+    document.querySelector('.hamburger-menu').setAttribute('aria-expanded', !isOpen);
+  }
 }
 
 salla.onReady(() => (new App).loadTheApp());
+
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('mainnav');
+  sidebar.classList.toggle('open');
+  document.querySelector('.hamburger-menu').setAttribute('aria-expanded', sidebar.classList.contains('open'));
+}
+
+// استدعاء الدالة عند الحاجة
+document.querySelector('.hamburger-menu').addEventListener('click', toggleSidebar);
