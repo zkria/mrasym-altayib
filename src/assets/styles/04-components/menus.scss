@@ -1,210 +1,104 @@
-
-// Main Menu
-.main-menu > li > a[href*="offer"]{
-  @apply text-red-800
+// === Main Menu تحسين القائمة الرئيسية ===
+.main-menu > li > a[href*="offer"] {
+  @apply text-red-800;
 }
 
 @media only screen and (min-width: 1024px) {
   .main-menu {
-    @apply hidden lg:flex flex-wrap items-center mx-6 pt-8 pb-0;
-
+    @apply flex flex-wrap items-center mx-6 pt-4 pb-0; /* إلغاء hidden */
+    
     .fixed-pinned & {
       padding-top: 0;
       padding-bottom: 0;
     }
 
-    li{
-      > a{
-        @apply flex justify-between items-center transition duration-300 p-3 text-sm hover:text-primary hover:no-underline; 
-      }
-
-      &.root-level{
-        @apply inline-block;
-        
-        > a{
-          @apply font-bold pt-0 pb-8;
-        }
-      }
-    }
-
-    > .has-children:hover > a{
-      color: var(--color-primary);
-    }
-
-    .has-children{
-      li a:hover,
-      .has-children:hover > a{
-        color: var(--color-primary);
-        @apply bg-gray-200/20;
-      }
-
-      > a:after{
-        font-family: 'sallaicons';
-        content: "\e970";
-        @apply inline-block transition-transform duration-300 self-end mx-0.5 text-lg opacity-50 leading-4;
+    li {
+      > a {
+        @apply flex justify-between items-center transition duration-300 p-3 text-sm hover:text-primary hover:no-underline;
       }
 
       &.root-level {
-        > a:after{
+        @apply inline-block;
+
+        > a {
+          @apply font-bold pt-0 pb-6;
+        }
+      }
+    }
+
+    > .has-children:hover > a {
+      color: var(--primary-color);
+    }
+
+    .has-children {
+      li a:hover,
+      .has-children:hover > a {
+        color: var(--primary-color);
+        @apply bg-gray-100;
+      }
+
+      > a:after {
+        font-family: 'sallaicons';
+        content: "\e970";
+        @apply inline-block transition-transform duration-300 mx-1 text-lg opacity-50;
+      }
+
+      &.root-level {
+        > a:after {
           content: "\e96e";
         }
 
-        &:hover > a:after{
+        &:hover > a:after {
           opacity: 1;
-          transform: scaleY(-1);
+          transform: rotate(180deg);
         }
       }
     }
 
     .sub-menu {
-      @apply z-20 transition opacity-0 invisible absolute bg-white -translate-y-3 shadow-default rounded-b-md border-t border-gray-300/30;
+      @apply absolute z-20 opacity-0 invisible bg-white shadow-lg rounded-md border border-gray-200 transition-all;
 
-      .sub-menu {
-        top: -1px;
-        right: 100%;
-
-        [dir="ltr"] & {
-          left: 100%;
-          right: auto;
-        }
+      li a {
+        @apply px-4 py-2 text-gray-600 hover:text-primary;
       }
 
-      .s-product-card-entry{
-        @apply border border-gray-100;
-      }
-
-      .btn {
-        padding: 8px 10px 10px;
-      }
-
-      li.mega-menu .container {
-        ul{
-          @apply p-0 m-0 border-none;
-        }
-  
-        > div{
-          @apply hidden;
-        }
+      li:hover > a {
+        @apply bg-gray-100;
       }
     }
 
-    .change-menu-dir .sub-menu  .sub-menu {
-      @apply rtl:left-full rtl:right-auto ltr:right-full ltr:left-auto;
+    li:hover > .sub-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
-
-    li:hover {
-      > .sub-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-    }
-  }
-
-  .main-menu .sub-menu ul > li:not(:first-child) > .sub-menu{
-    border-top-right-radius: 0.375rem;
-    border-top-left-radius: 0.375rem;
-    border: none;
   }
 }
-// Mobile Slide Menu
+
+// === Mobile Menu تحسين القائمة في الجوال ===
 @media only screen and (max-width: 1024px) {
-  .filters-opened{
-    .close-filters{
-      display: block !important;
-    }
-  } 
-  .menu-opened{
-    .btn--close-sm.close-mobile-menu{
-      display: block !important;
-    }
-  }
   .mobile-menu {
-      display: none;
-      @apply lg:hidden overflow-hidden;
-  }
-  .mm-ocd__content{
-    overflow-y: auto;
-  }
-  .mm-ocd-opened {
-    .mobile-menu {
-      display: block;
-    }
-
-    @media (max-width: 480px) {
-      .btn--close-sm {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        z-index: 99999999;
-      }
-    }
+    @apply block lg:hidden bg-white shadow-md fixed top-0 right-0 w-64 h-full z-50 transform translate-x-full transition-transform duration-300;
   }
 
-  .mm-spn.mm-spn--light {
-    color: #000;
-    background: #ffffff;
+  .menu-opened .mobile-menu {
+    transform: translateX(0);
   }
 
-  .mm-spn {
-    ul.main-menu li:before{
-      @apply w-2 h-2; 
-    }
+  .mobile-menu li a {
+    @apply block py-3 px-4 text-gray-700 hover:bg-gray-100;
+  }
 
-    &.mm-spn--navbar{
-      &:after {
-        @apply transition-all duration-300 rtl:pr-12 ltr:pl-12 text-start opacity-90 font-bold;
-      }
+  .mobile-menu .has-children > a:after {
+    content: "\e96e";
+    @apply inline-block ml-2 text-sm;
+  }
 
-      &.mm-spn--main{
-        &:after{
-          @apply rtl:pr-3 ltr:pl-3;
-        }
-      }
-    }
+  .mobile-menu li:hover > a {
+    @apply bg-gray-100 text-primary;
+  }
 
-    &.mm-spn--navbar:before {
-      [dir="rtl"] & {
-        transform: rotate(135deg) translateY(77%);
-        right: var(--mm-spn-item-indent);
-        left: auto;
-      }
-    }
-
-    li {
-      a,
-      > span {
-		padding: 18px;
-		@apply flex items-center gap-4;
-	  }
-
-	  img{
-		@apply w-12 h-12 object-cover bg-[#f5f7f9] pointer-events-none;
-	  }
-
-      a span{
-        padding: 0;
-      }
-
-      &:before {
-        [dir="rtl"] & {
-          width: 6px;
-          height: 6px;
-          top: 50%;
-          left: 25px;
-          left: calc(var(--mm-spn-item-height) / 2);
-          right: auto;
-          border-bottom: 1px solid;
-          border-left: 1px solid;
-          border-right: none;
-          border-top: none;
-        }
-      }
-
-      &:after {
-        width: 100%;
-        border-color: var(--infinte-color);
-      }
-    }
+  .btn--close-sm {
+    @apply absolute top-4 right-4 text-gray-500 text-2xl;
   }
 }

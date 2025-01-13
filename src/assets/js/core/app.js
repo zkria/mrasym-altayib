@@ -1,8 +1,8 @@
 import { initiateNotifier } from './notifier';
 import { initiateMobileMenu } from './mobile-menu';
 import { initiateStickyMenu } from './sticky-menu';
-import Anime from '../partials/anime'; // تحديث المسار
-import initTootTip from '../partials/tooltip'; // تحديث المسار
+import Anime from '../partials/anime'; // تأكد من أن هذا المسار صحيح
+import initTootTip from '../partials/tooltip'; // تأكد من أن هذا المسار صحيح
 import AppHelpers from "./app-helpers";
 
 class App extends AppHelpers {
@@ -13,16 +13,17 @@ class App extends AppHelpers {
 
   loadTheApp() {
     this.commonThings();
-    initiateNotifier();
-    initiateMobileMenu();
-    if (header_is_sticky) {
-      initiateStickyMenu();
+    this.initiateNotifier();
+    this.initiateMobileMenu();
+    if (typeof header_is_sticky !== 'undefined' && header_is_sticky) {
+      this.initiateStickyMenu();
     }
     this.initAddToCart();
     this.initiateAdAlert();
     this.initiateDropdowns();
     this.initiateModals();
     this.initiateCollapse();
+    this.initAttachWishlistListeners();
     this.changeMenuDirection();
     initTootTip();
     this.loadModalImgOnclick();
@@ -39,19 +40,20 @@ class App extends AppHelpers {
     return this;
   }
 
-    // fix Menu Direction at the third level >> The menu at the third level was popping off the page
-    changeMenuDirection(){
-      app.all('.root-level.has-children',item=>{
-        if(item.classList.contains('change-menu-dir')) return;
-        app.on('mouseover',item,()=>{
-          let submenu = item.querySelector('.sub-menu .sub-menu'),
-              rect = submenu.getBoundingClientRect();
-            (rect.left < 10 || rect.right > window.innerWidth - 10) && app.addClass(item,'change-menu-dir')
-        })
-      })
-    }
+  changeMenuDirection() {
+    app.all('.root-level.has-children', item => {
+      if (item.classList.contains('change-menu-dir')) return;
+      app.on('mouseover', item, () => {
+        let submenu = item.querySelector('.sub-menu .sub-menu');
+        if (submenu) {
+          let rect = submenu.getBoundingClientRect();
+          (rect.left < 10 || rect.right > window.innerWidth - 10) && app.addClass(item, 'change-menu-dir');
+        }
+      });
+    });
+  }
 
-  loadModalImgOnclick(){
+  loadModalImgOnclick() {
     document.querySelectorAll('.load-img-onclick').forEach(link => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
@@ -64,8 +66,8 @@ class App extends AppHelpers {
 
         img.src = imgSrc;
         img.classList.add('loaded');
-      })
-    })
+      });
+    });
   }
 
   commonThings() {
@@ -74,31 +76,28 @@ class App extends AppHelpers {
 
   cleanContentArticles(elementsSelector) {
     let articleElements = document.querySelectorAll(elementsSelector);
-
     if (articleElements.length) {
       articleElements.forEach(article => {
-        article.innerHTML = article.innerHTML.replace(/\&nbsp;/g, ' ')
-      })
+        article.innerHTML = article.innerHTML.replace(/\&nbsp;/g, ' ');
+      });
     }
   }
 
-isElementLoaded(selector){
-  return new Promise((resolve=>{
-    const interval=setInterval(()=>{
-    if(document.querySelector(selector)){
-      clearInterval(interval)
-      return resolve(document.querySelector(selector))
-    }
-   },160)
-}))
-
-  
-  };
+  isElementLoaded(selector) {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        if (document.querySelector(selector)) {
+          clearInterval(interval);
+          return resolve(document.querySelector(selector));
+        }
+      }, 160);
+    });
+  }
 
   copyToClipboard(event) {
     event.preventDefault();
     let aux = document.createElement("input"),
-    btn = event.currentTarget;
+      btn = event.currentTarget;
     aux.setAttribute("value", btn.dataset.content);
     document.body.appendChild(aux);
     aux.select();
@@ -106,7 +105,7 @@ isElementLoaded(selector){
     document.body.removeChild(aux);
     this.toggleElementClassIf(btn, 'copied', 'code-to-copy', () => true);
     setTimeout(() => {
-      this.toggleElementClassIf(btn, 'code-to-copy', 'copied', () => true)
+      this.toggleElementClassIf(btn, 'code-to-copy', 'copied', () => true);
     }, 1000);
   }
 
@@ -122,21 +121,25 @@ isElementLoaded(selector){
         showConfirmButton: false,
         timer: 3500,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
       }).fire({
         icon: type,
         title: message,
         showCloseButton: true,
         timerProgressBar: true
-      })
+      });
     });
   }
 
-
   initiateMobileMenu() {
     this.isElementLoaded('#mobile-menu').then((menu) => {
+      if (!menu) {
+        console.error('Mobile menu not found');
+        return;
+      }
+
       const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
 
       salla.lang.onLoaded(() => {
@@ -155,6 +158,23 @@ isElementLoaded(selector){
     });
   }
 
+  initAttachWishlistListeners() {
+    let isListenerAttached = false;
+
+    function toggleFavoriteIcon(id, isAdded = true) {
+      document.querySelectorAll('.s-product-card-wishlist-btn[data-id="' + id + '"]').forEach(btn => {
+        app.toggleElementClassIf(btn, 's-product-card-wishlist-added', 'not-added', () => isAdded);
+        app.toggleElementClassIf(btn, 'pulse-anime', 'un-favorited', () => isAdded);
+      });
+    }
+
+    if (!isListenerAttached) {
+      salla.wishlist.event.onAdded((event, id) => toggleFavoriteIcon(id));
+      salla.wishlist.event.onRemoved((event, id) => toggleFavoriteIcon(id, false));
+      isListenerAttached = true; // Mark the listener as attached
+    }
+  }
+
   initiateStickyMenu() {
     let header = this.element('#mainnav'),
       height = this.element('#mainnav .inner')?.clientHeight;
@@ -163,8 +183,8 @@ isElementLoaded(selector){
       return;
     }
 
-    window.addEventListener('load', () => setTimeout(() => this.setHeaderHeight(), 500))
-    window.addEventListener('resize', () => this.setHeaderHeight())
+    window.addEventListener('load', () => setTimeout(() => this.setHeaderHeight(), 500));
+    window.addEventListener('resize', () => this.setHeaderHeight());
 
     window.addEventListener('scroll', () => {
       window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
@@ -178,10 +198,6 @@ isElementLoaded(selector){
     header.style.height = height + 'px';
   }
 
-  /**
-   * Because salla caches the response, it's important to keep the alert disabled if the visitor closed it.
-   * by store the status of the ad in local storage `salla.storage.set(...)`
-   */
   initiateAdAlert() {
     let ad = this.element(".salla-advertisement");
 
@@ -225,7 +241,7 @@ isElementLoaded(selector){
     this.onClick('[data-modal-trigger]', e => {
       let id = '#' + e.target.dataset.modalTrigger;
       this.removeClass(id, 'hidden');
-      setTimeout(() => this.toggleModal(id, true)); //small amont of time to running toggle After adding hidden
+      setTimeout(() => this.toggleModal(id, true)); //small amount of time to running toggle After adding hidden
     });
     salla.event.document.onClick("[data-close-modal]", e => this.toggleModal('#' + e.target.dataset.closeModal, false));
   }
@@ -246,7 +262,7 @@ isElementLoaded(selector){
     document.querySelectorAll('.btn--collapse')
       .forEach((trigger) => {
         const content = document.querySelector('#' + trigger.dataset.show);
-        const state = { isOpen: false }
+        const state = { isOpen: false };
 
         const onOpen = () => anime({
           targets: content,
@@ -262,40 +278,26 @@ isElementLoaded(selector){
           height: 0,
           opacity: [1, 0],
           easing: 'easeOutQuart',
-        })
+        });
 
         const toggleState = (isOpen) => {
-          state.isOpen = !isOpen
+          state.isOpen = !isOpen;
           this.toggleElementClassIf(content, 'is-closed', 'is-opened', () => isOpen);
-        }
+        };
 
         trigger.addEventListener('click', () => {
-          const { isOpen } = state
-          toggleState(isOpen)
+          const { isOpen } = state;
+          toggleState(isOpen);
           isOpen ? onClose() : onOpen();
-        })
+        });
       });
   }
 
-
-  /**
-   * Workaround for seeking to simplify & clean, There are three ways to use this method:
-   * 1- direct call: `this.anime('.my-selector')` - will use default values
-   * 2- direct call with overriding defaults: `this.anime('.my-selector', {duration:3000})`
-   * 3- return object to play it letter: `this.anime('.my-selector', false).duration(3000).play()` - will not play animation unless calling play method.
-   * @param {string|HTMLElement} selector
-   * @param {object|undefined|null|null} options - in case there is need to set attributes one by one set it `false`;
-   * @return {Anime|*}
-   */
   anime(selector, options = null) {
     let anime = new Anime(selector, options);
     return options === false ? anime : anime.play();
   }
 
-  /**
-   * These actions are responsible for pressing "add to cart" button,
-   * they can be from any page, especially when mega-menu is enabled
-   */
   initAddToCart() {
     salla.cart.event.onUpdated(summary => {
       document.querySelectorAll('[data-cart-total]').forEach(el => el.innerText = salla.money(summary.total));
@@ -306,55 +308,6 @@ isElementLoaded(selector){
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
   }
-
-  toggleSidebar() {
-    const sidebar = document.getElementById('mainnav');
-    const isOpen = sidebar.style.display === 'block';
-
-    if (isOpen) {
-        sidebar.style.transition = 'transform 0.3s ease';
-        sidebar.style.transform = 'translateX(100%)'; // إغلاق القائمة
-        setTimeout(() => {
-            sidebar.style.display = 'none'; // إخفاء القائمة بعد الانتهاء من التحويل
-        }, 300); // يجب أن يتطابق مع مدة التحويل
-    } else {
-        sidebar.style.display = 'block'; // عرض القائمة
-        sidebar.style.transition = 'transform 0.3s ease';
-        sidebar.style.transform = 'translateX(0)'; // فتح القائمة
-    }
-
-    document.querySelector('.hamburger-menu').setAttribute('aria-expanded', !isOpen);
-  }
 }
 
 salla.onReady(() => (new App).loadTheApp());
-
-
-function toggleSidebar() {
-  const sidebar = document.getElementById('mainnav');
-  sidebar.classList.toggle('open');
-  document.querySelector('.hamburger-menu').setAttribute('aria-expanded', sidebar.classList.contains('open'));
-}
-
-// استدعاء الدالة عند الحاجة
-document.querySelector('.hamburger-menu').addEventListener('click', toggleSidebar);
-
-document.addEventListener('DOMContentLoaded', () => {
-    // تعريف الدالة toggleSidebar هنا
-});
-
-function toggleSideNav() {
-  const sideNav = document.getElementById('sidenav');
-  const toggleButton = document.getElementById('toggle-sidenav');
-  const topNavbar = document.querySelector('.top-navbar');
-
-  if (!sideNav || !toggleButton || !topNavbar) return; // التأكد من وجود العناصر
-
-  const sideNavWidth = sideNav.offsetWidth; // الحصول على عرض الشريط الجانبي
-
-  sideNav.classList.toggle('hidden');
-  const isHidden = sideNav.classList.contains('hidden');
-
-  toggleButton.style.right = isHidden ? '0' : `${sideNavWidth}px`;
-  topNavbar.style.marginRight = isHidden ? '0' : `${sideNavWidth}px`;
-}
