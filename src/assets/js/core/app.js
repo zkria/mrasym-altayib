@@ -338,3 +338,23 @@ function toggleSidebar() {
 
 // استدعاء الدالة عند الحاجة
 document.querySelector('.hamburger-menu').addEventListener('click', toggleSidebar);
+
+document.addEventListener('DOMContentLoaded', () => {
+    // تعريف الدالة toggleSidebar هنا
+});
+
+function toggleSideNav() {
+  const sideNav = document.getElementById('sidenav');
+  const toggleButton = document.getElementById('toggle-sidenav');
+  const topNavbar = document.querySelector('.top-navbar');
+
+  if (!sideNav || !toggleButton || !topNavbar) return; // التأكد من وجود العناصر
+
+  const sideNavWidth = sideNav.offsetWidth; // الحصول على عرض الشريط الجانبي
+
+  sideNav.classList.toggle('hidden');
+  const isHidden = sideNav.classList.contains('hidden');
+
+  toggleButton.style.right = isHidden ? '0' : `${sideNavWidth}px`;
+  topNavbar.style.marginRight = isHidden ? '0' : `${sideNavWidth}px`;
+}

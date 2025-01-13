@@ -40,103 +40,68 @@
 }
 
 .sidebar-header {
-  padding: 16px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color, #eee);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
   
   h2 {
     margin: 0;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 }
 
 .vertical-menu {
-  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
   
   a {
-    display: block;
-    padding: 8px 16px;
-    color: #333;
+    padding: 0.75rem 1.5rem;
+    color: var(--color-text);
     text-decoration: none;
-    transition: background-color 0.3s;
-  }
-  
-  a:hover {
-    background-color: #f0f0f0;
-  }
-}
-
-/* Top Nav */
-.top-navbar {
-  @apply min-h-[70px];
-  background-color: #1a202c; /* لون خلفية جديد */
-  color: #f7fafc; /* لون نص جديد */
-  
-  .container {
-    @apply py-3;
-  }
-
-  // تحسين حجم الشعار
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s ease;
+    white-space: normal; // السماح بالتفاف النص
+    line-height: 1.4; // تحسين المسافة بين الأسطر
+    border-bottom: 1px solid var(--border-color, #eee);
     
-    img {
-      @apply w-auto h-[45px] max-h-[45px] max-w-none;
-      
-      @screen lg {
-        @apply h-[50px] max-h-[50px];
-      }
+    &:hover {
+      background-color: var(--menu-hover-bg, rgba(0,0,0,0.03));
     }
-  }
-
-  // تحسين أزرار القائمة
-  .header-btn__icon {
-    @apply w-12 h-12 text-2xl bg-gray-700 hover:bg-gray-600 
-           transition-all duration-200 rounded-full;
-  }
-
-  // تحسين حقل البحث
-  .s-search-input {
-    @apply bg-gray-700 hover:bg-gray-600
-           ring-2 ring-gray-600
-           text-white placeholder-gray-400
-           h-12 min-w-[200px]
-           transition-all duration-200;
-  }
-
-  @media (max-width: 640px) {
-    .s-search-results{
-      @apply w-screen max-w-[100vw] rtl:-left-2.5 ltr:-right-2.5; 
-    }
-  } 
-
-  .topnav-is-dark & {
-    @apply bg-dark text-gray-300;
-
-    .btn--circle-gray,
-    .btn--rounded-gray,
-    .s-search-input{
-      @apply bg-gray-100/10 hover:bg-gray-100/[0.15]
-    }
-
-    .topnav-link-item{
-      @apply border-gray-300/10;
-    }
-
-    .s-search-input{
-      @apply text-white;
-    }
-  }
-
-  .search-btn{
-    @apply grow sm:grow-0 justify-start md:justify-center;
   }
 }
 
-// contacs menu items - pages menu items
+/* شريط التنقل العلوي */
+.top-navbar {
+  @apply flex items-center justify-between bg-white text-gray-800 p-6 shadow-md sticky top-0 z-50;
+  transition: margin-right 0.3s ease;
+  position: relative;
+}
+
+#toggle-sidenav {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  @apply header-btn;
+}
+
+.side-nav-container {
+  @apply fixed right-0 top-0 h-full text-gray-800 bg-white z-60;
+  width: 300px; /* تعديل العرض هنا */
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.side-nav-container.open {
+  transform: translateX(0);
+}
+
+// عناصر قائمة الاتصالات - عناصر قائمة الصفحات
 .topnav-link-item{
   @apply inline-block transition duration-300 px-4 rtl:last:pl-0 ltr:last:pr-0 py-px text-sm leading-none ltr:border-r rtl:border-l border-gray-200 ltr:last:border-0 rtl:last:border-0 hover:opacity-80;
 
@@ -145,17 +110,17 @@
   }
 }
 
-/* Main Nav */
+/* شريط التنقل الرئيسي */
 .main-nav-container {
   @apply min-h-[68px] lg:min-h-[84px];
   
-  // Custom background Color
+  // لون الخلفية المخصص
   .has-bg &,
   .has-bg & .sub-menu{
     @apply bg-[color:var(--mainnav-bg)];
   }
 
-  // Custom text color
+  // لون النص المخصص
   .has-text-color & {
     @apply text-[color:var(--mainnav-text-color)];
   }
@@ -173,7 +138,7 @@
   }
 }
 
-/* Sticky Header */
+/* رأس ثابت */
 .main-nav-container {
   &.animated {
     .inner {
@@ -189,7 +154,7 @@
       left: 0;
       width: 100%;
       z-index: 29;
-      box-shadow: 0 0 5px rgb(252, 249, 249);
+      box-shadow: 0 0 5px rgba(252, 249, 249, 0.1);
       transform: translate3d(0, -100%, 0);
 
       @media (max-width: 1024px){
@@ -227,16 +192,14 @@
 }
 
 .navbar-brand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply items-center flex my-2 lg:my-0;
 
   img {
     @apply w-auto max-h-12 max-w-[100px] xs:max-w-[170px];
   }
 }
 
-// Mainnav cart icon
+// أيقونة عربة التسوق في الشريط الرئيسي
 .header-btn{
   @apply border-none outline-none transition-opacity hover:opacity-80;
 
@@ -349,7 +312,7 @@ salla-user-menu{
   }
 }
 
-// cart summary
+// ملخص العربة
 .s-cart-summary-total{
   @apply text-black font-[600];
 }
@@ -370,8 +333,7 @@ salla-user-menu{
   }
 }
 
-
-// Search
+// البحث
 .header-search{
   .s-search-results{
     @apply z-10;
@@ -380,39 +342,45 @@ salla-user-menu{
 
 /* تنسيق زر القائمة */
 .hamburger-menu {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
+  @apply flex items-center justify-center
+         w-10 h-10 rounded-full
+         bg-gray-800 hover:bg-gray-700
+         transition-all duration-200
+         hover:scale-105;
 
-.hamburger-icon {
-  width: 24px;
-  height: 2px;
-  background-color: #f7fafc;
-  position: relative;
-}
+  span {
+    @apply w-5 h-0.5 bg-white relative
+           transition-all duration-300;
 
-.hamburger-icon::before,
-.hamburger-icon::after {
-  content: '';
-  width: 24px;
-  height: 2px;
-  background-color: #f7fafc;
-  position: absolute;
-  left: 0;
-}
+    &:before,
+    &:after {
+      @apply content-[''] absolute left-0
+             w-5 h-0.5 bg-white
+             transition-all duration-300;
+    }
 
-.hamburger-icon::before {
-  top: -8px;
-}
+    &:before {
+      @apply -translate-y-1.5;
+    }
 
-.hamburger-icon::after {
-  top: 8px;
+    &:after {
+      @apply translate-y-1.5;
+    }
+  }
+
+  &.active {
+    span {
+      @apply bg-transparent;
+
+      &:before {
+        @apply rotate-45 translate-y-0;
+      }
+
+      &:after {
+        @apply -rotate-45 translate-y-0;
+      }
+    }
+  }
 }
 
 .hamburger-line {
@@ -550,8 +518,6 @@ body.sidebar-open {
   right: 0;
   height: 100%;
   z-index: 1001;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 // تحسينات للموبايل
@@ -1672,125 +1638,5 @@ salla-cart-summary {
       @apply bg-gray-900;
     }
     // ... باقي تنسيقات الوضع الداكن
-  }
-
-  .top-navbar {
-    @apply min-h-[70px];
-    background-color: #1a202c;
-    color: #f7fafc;
-    
-    .container {
-      @apply py-3;
-    }
-
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      img {
-        @apply w-auto h-[45px] max-h-[45px] max-w-none;
-        
-        @screen lg {
-          @apply h-[50px] max-h-[50px];
-        }
-      }
-    }
-
-    .header-btn__icon {
-      @apply w-12 h-12 text-2xl bg-gray-700 hover:bg-gray-600 
-             transition-all duration-200 rounded-full;
-    }
-  }
-
-  .main-nav-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100%;
-    background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-
-  .main-nav-sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar-header {
-    padding: 16px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .sidebar-nav {
-    padding: 16px;
-  }
-
-  .sidebar-nav a {
-    display: block;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.3s;
-  }
-
-  .sidebar-nav a:hover {
-    background-color: #f0f0f0;
-  }
-
-  @media (max-width: 768px) {
-    .main-nav-sidebar {
-      width: 100%;
-    }
-
-    .hamburger-menu {
-      display: flex;
-    }
-  }
-}
-
-
-.store-header {
-  .top-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #333;
-    color: #fff;
-  }
-
-  .main-nav-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
-
-    &.open {
-      transform: translateX(0);
-    }
-
-    .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      background-color: #f5f5f5;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .sidebar-content {
-      padding: 1rem;
-      overflow-y: auto;
-    }
   }
 }

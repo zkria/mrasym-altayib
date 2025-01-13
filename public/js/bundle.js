@@ -7536,6 +7536,22 @@ function toggleSidebar() {
 
 // استدعاء الدالة عند الحاجة
 document.querySelector('.hamburger-menu').addEventListener('click', toggleSidebar);
+document.addEventListener('DOMContentLoaded', function () {
+  // تعريف الدالة toggleSidebar هنا
+});
+function toggleSideNav() {
+  var sideNav = document.getElementById('sidenav');
+  var toggleButton = document.getElementById('toggle-sidenav');
+  var topNavbar = document.querySelector('.top-navbar');
+  if (!sideNav || !toggleButton || !topNavbar) return; // التأكد من وجود العناصر
+
+  var sideNavWidth = sideNav.offsetWidth; // الحصول على عرض الشريط الجانبي
+
+  sideNav.classList.toggle('hidden');
+  var isHidden = sideNav.classList.contains('hidden');
+  toggleButton.style.right = isHidden ? '0' : "".concat(sideNavWidth, "px");
+  topNavbar.style.marginRight = isHidden ? '0' : "".concat(sideNavWidth, "px");
+}
 })();
 
 /******/ })()

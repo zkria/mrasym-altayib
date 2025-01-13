@@ -1,101 +1,63 @@
 {#
-| المتغيرات        | النوع    | الوصف                           |
+| المتغير          | النوع   | الوصف                           |
 |------------------|---------|---------------------------------|
 | cart             | كائن    |                                 |
-| cart.items_count | عدد صحيح |                                 |
-| cart.total       | سلسلة   | المجموع المنسق مثل: "١٠٠ ر.س"   |
+| cart.items_count | عدد صحيح|                                 |
+| cart.total       | سلسلة   | المجموع بصيغة مثل: "١٠٠ ر.س"    |
 #}
 {% set important_links = theme.settings.get('important_links') %}
-{% set is_sidebar_open = false %}
-
 <header class="store-header">
-  <!-- Top Navbar -->
-  <div class="top-navbar bg-gray-800 text-white shadow-lg">
-    <div class="container flex justify-between items-center py-2">
-      <!-- Hamburger Menu Button -->
-      <button 
-        class="hamburger-menu"
-        aria-label="فتح القائمة الرئيسية"
-        aria-expanded="false"
-        aria-controls="sidebar-content"
-        onclick="toggleSidebar()">
-        <i class="sicon-menu text-white text-2xl"></i>
-      </button>
-      
-      <!-- Store Logo -->
-      <div class="flex-1 flex justify-center">
-        <a class="navbar-brand" href="{{ store.url }}" aria-label="{{ store.name }}">
-          <img 
-            width="150"
-            height="50"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            src="{{ store.logo }}"
-            alt="{{ store.name }}"
-            class="logo-image"
-            srcset="{{ store.logo }} 1x, {{ store.logo_retina }} 2x">
-        </a>
-      </div>
-      
-      <!-- User Menu and Cart -->
-      <div class="header-actions flex items-center gap-3">
-        {% if user.type == 'user' %}
-          <salla-user-menu avatar-only show-header></salla-user-menu>
-        {% else %}
-          <button 
-            class="header-btn text-white hover:opacity-80 transition-opacity" 
-            aria-label="تسجيل الدخول"
-            onclick="salla.event.dispatch('login::open')">
-            <i class="sicon-user-circle text-2xl"></i>
-          </button>
-        {% endif %}
+  <div class="top-navbar">
+    <button id="toggle-sidenav" class="header-btn" aria-label="فتح القائمة الجانبية">
+      <i class="header-btn__icon sicon-menu"></i>
+    </button>
 
-        <salla-cart-summary class="flex items-center">
-          <i slot="icon" class="sicon-shopping-bag text-white text-2xl"></i>
-        </salla-cart-summary>
-      </div>
+    <a class="navbar-brand" href="{{ store.url }}">
+      <img fetchpriority="high" src="{{ store.logo }}" alt="شعار {{ store.name }}" loading="lazy">
+      {% if is_page('index') %}
+        <h1 class="sr-only">{{ store.name }}</h1>
+      {% else %}
+        <h2 class="sr-only">{{ store.name }}</h2>
+      {% endif %}
+    </a>
+
+    <div class="header-actions">
+      <button id="search-button" class="header-btn" aria-label="بحث">
+        <i class="header-btn__icon sicon-search"></i>
+      </button>
+
+      <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن">
+        <i class="header-btn__icon sicon-moon"></i>
+      </button>
+
+      {% if user.type == 'user' %}
+        <salla-user-menu avatar-only show-header></salla-user-menu>
+      {% else %}
+        <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
+          <i class="header-btn__icon sicon-user-circle"></i>
+        </button>
+      {% endif %}
+
+      <salla-cart-summary class="cart-summary">
+        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+      </salla-cart-summary>
     </div>
   </div>
 
-  <!-- Sidebar Navigation -->
-  <nav id="mainnav" class="main-nav-sidebar" aria-label="القائمة الرئيسية">
-    <div id="sidebar-content" class="sidebar-content overflow-y-auto max-h-screen">
-      <div class="sidebar-header flex justify-between items-center p-4">
-        <h2 class="text-lg font-bold">قائمة مراسيم</h2>
-        <button onclick="toggleSidebar()" aria-label="إغلاق القائمة">
-          <i class="sicon-close text-xl"></i>
-        </button>
-      </div>
-      <custom-main-menu 
-        id="mainMenu"
-        class="sidebar-nav vertical-menu flex-grow"
-        mobile="true"
-        show-categories="true"
-        show-brands="true"
-        show-links="true">
-      </custom-main-menu>
-      
-      <!-- Search Bar -->
-      <div class="header-search ml-4">
-        <salla-search 
-          inline 
-          oval 
-          height="36" 
-          placeholder="ابحث في المتجر..."
-          aria-label="بحث في المتجر">
-        </salla-search>
-      </div>
+  <div id="search-popup" class="hidden search-popup">
+    <div class="search-container">
+      <button id="close-search" class="close-search" aria-label="إغلاق نافذة البحث">إغلاق</button>
+      <salla-search inline oval height="36"></salla-search>
     </div>
-  </nav>
+  </div>
+
+  <div id="sidenav" class="side-nav-container">
+    <div class="inner">
+      <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="sidenav-logo" loading="lazy">
+      <p class="sidenav-title">القائمة</p>
+      <custom-main-menu></custom-main-menu>
+    </div>
+  </div>
 </header>
 
-<!-- Sidebar and Dark Mode Toggle Script -->
-<script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById('mainnav');
-    sidebar.classList.toggle('open');
-    document.querySelector('.hamburger-menu').setAttribute('aria-expanded', sidebar.classList.contains('open'));
-  }
-</script>
-
+<script src="path/to/external/script.js"></script>
