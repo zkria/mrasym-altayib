@@ -2,6 +2,7 @@ import BasePage from '../core/base-page';
 class ProductCard extends HTMLElement {
   constructor(){
     super()
+    this.darkMode = false;
   }
   
   connectedCallback(){
@@ -43,6 +44,11 @@ class ProductCard extends HTMLElement {
       })
       
       this.render()
+  }
+
+  setDarkMode(darkMode) {
+    this.darkMode = darkMode;
+    this.render();
   }
 
   initCircleBar() {
@@ -166,7 +172,8 @@ class ProductCard extends HTMLElement {
   }
 
   render(){
-    this.classList.add('s-product-card-entry'); 
+    const cardClass = this.darkMode ? 's-product-card-dark' : 's-product-card-light';
+    this.classList.add('s-product-card-entry', cardClass); 
     this.setAttribute('id', this.product.id);
     !this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-vertical') : '';
     this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-horizontal') : '';
@@ -178,8 +185,13 @@ class ProductCard extends HTMLElement {
     this.shadowOnHover?  this.classList.add('s-product-card-shadow') : '';
     this.product?.is_out_of_stock?  this.classList.add('s-product-card-out-of-stock') : '';
 
+    const backgroundColor = this.darkMode ? 'dark:bg-gray-800' : '';
+    const textColor = this.darkMode ? 'dark:text-gray-200' : 'text-gray-800';
+    const priceColor = this.darkMode ? 'dark:text-red-300' : 'text-red-400';
+    const regularPriceColor = this.darkMode ? 'dark:text-gray-400' : 'text-gray-500';
+
     this.innerHTML = `
-        <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'}">
+        <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'} ${backgroundColor}">
           <a href="${this.product?.url}">
             <img class="s-product-card-image-${salla.url.is_placeholder(this.product?.image?.url)
               ? 'contain'
@@ -199,8 +211,8 @@ class ProductCard extends HTMLElement {
               fill="outline"
               color="light"
               name="product-name-${this.product.id}"
-              aria-label="Add or remove to wishlist"
-              class="s-product-card-wishlist-btn animated "
+              aria-label="إضافة أو إزالة من قائمة المفضلة"
+              class="s-product-card-wishlist-btn animated ${this.isInWishlist ? 's-product-card-wishlist-added pulse-anime' : 'not-added un-favorited'}"
               onclick="salla.wishlist.toggle(${this.product.id})"
               data-id="${this.product.id}">
               <i class="sicon-heart"></i>
@@ -222,12 +234,12 @@ class ProductCard extends HTMLElement {
             : ``}
 
           <div class="s-product-card-content-main ${this.isSpecial ? 's-product-card-content-extra-padding' : ''}">
-            <h3 class="s-product-card-content-title">
+            <h3 class="s-product-card-content-title ${textColor}">
               <a href="${this.product?.url}">${this.product?.name}</a>
             </h3>
 
             ${this.product?.subtitle && !this.minimal ?
-              `<p class="s-product-card-content-subtitle opacity-80">${this.product?.subtitle}</p>`
+              `<p class="s-product-card-content-subtitle opacity-80 ${textColor}">${this.product?.subtitle}</p>`
               : ``}
           </div>
           ${this.product?.donation && !this.minimal && !this.fullImage ?
@@ -250,7 +262,7 @@ class ProductCard extends HTMLElement {
             : ''}
           <div class="s-product-card-content-sub ${this.isSpecial ? 's-product-card-content-extra-padding' : ''}">
             ${this.product?.donation?.can_donate ? '' : this.getProductPrice()}
-            ${this.product?.rating?.stars && !this.minimal ?
+            ${this.product?.rating?.stars ?
               `<div class="s-product-card-rating">
                 <i class="sicon-star2 before:text-orange-300"></i>
                 <span>${this.product.rating.stars}</span>
@@ -282,8 +294,8 @@ class ProductCard extends HTMLElement {
                   fill="outline" 
                   color="light" 
                   id="card-wishlist-btn-${this.product.id}-horizontal"
-                  aria-label="Add or remove to wishlist"
-                  class="s-product-card-wishlist-btn animated"
+                  aria-label="إضافة أو إزالة من قائمة المفضلة"
+                  class="s-product-card-wishlist-btn animated ${this.isInWishlist ? 's-product-card-wishlist-added pulse-anime' : 'not-added un-favorited'}"
                   onclick="salla.wishlist.toggle(${this.product.id})"
                   data-id="${this.product.id}">
                   <i class="sicon-heart"></i> 

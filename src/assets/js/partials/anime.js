@@ -3,12 +3,16 @@ import AnimeJS from 'animejs';
 window.anime = AnimeJS;
 
 class Anime {
-    constructor(selector, options) {
+    constructor(selector, options, darkMode = false) {
+        this.darkMode = darkMode;
         this.options = {
             targets : selector,
             opacity : [0, 1],
             delay   : (el, i) => i * 100,
             duration: 2000,
+            easing: 'easeInOutQuad',
+            color: darkMode ? '#FFFFFF' : '#000000',
+            backgroundColor: darkMode ? '#333333' : '#FFFFFF',
         };
         this.setOptions(options);
     }
@@ -142,6 +146,15 @@ class Anime {
      */
     play() {
         return AnimeJS(this.options);
+    }
+
+    setDarkMode(darkMode) {
+        this.darkMode = darkMode;
+        // تحديث الألوان والخلفيات بناءً على الوضع الداكن
+        this.options.color = darkMode ? 'dark:text-gray-200' : '#000000';
+        this.options.backgroundColor = darkMode ? 'dark:bg-gray-800' : '#FFFFFF';
+        this.options.borderColor = darkMode ? 'dark:border-gray-700' : '#000';
+        return this;
     }
 }
 

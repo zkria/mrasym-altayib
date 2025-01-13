@@ -1,97 +1,95 @@
 /*
- * IMPORTANT NOTE: Theme based on Tailwindcss but for the purpose of simplifing the DOM we use
- * tailwind classes with @apply directive in the SCSS files
+ * ملاحظة هامة: يعتمد التصميم على Tailwindcss ولكن لغرض تبسيط DOM نستخدم
+ * فئات Tailwind مع توجيه @apply في ملفات SCSS
 */
 
 /**
- * SETTINGS
- * Tailwind.............Import tailwind.
- * Fonts................Any font files.
- * Global...............Project-specific, globally available variables.
- * Breakpoints..........Mixins and variables for responsive styles.
+ * الإعدادات
+ * Tailwind.............استيراد Tailwind.
+ * Fonts................أي ملفات خط.
+ * Global...............متغيرات متاحة على مستوى المشروع.
+ * Breakpoints..........مزيج ومتغيرات لتصميمات استجابة.
  *
- * GENERIC
- * Common...............All commn styles and assistan classes and common style fixes
- * Reset................Reset specific elements to make them easier to style in other contexts.
- * Animations...........Some of animations from anime.css
- * Lazyload.............Lazyload placeholder styles
- * RTL..................Specific styles for RTL.
- * LTR..................Specific styles for LTR.
+ * العناصر العامة
+ * Common...............جميع الأنماط الشائعة والفئات المساعدة وإصلاحات الأنماط الشائعة.
+ * Reset................إعادة تعيين عناصر معينة لتسهيل تصميمها في سياقات أخرى.
+ * Animations...........بعض الرسوم المتحركة من anime.css.
+ * Lazyload.............أنماط عنصر التحميل الكسول.
+ * RTL..................أنماط محددة للاتجاه من اليمين لليسار.
+ * LTR..................أنماط محددة للاتجاه من اليسار لليمين.
  *
- * ELEMENTS
- * Forms................Element-level form styling.
- * Buttons..............Specific styles for buttons.
- * Radio................Specific styles for custom radio button.
- * Radio Images.........Specific styles for radio images, used in product options.
+ * العناصر
+ * Forms................تصميم مستوى العنصر للنماذج.
+ * Buttons..............أنماط محددة للأزرار.
+ * Radio................أنماط محددة لزر الراديو المخصص.
+ * Radio Images.........أنماط محددة لصور الراديو، المستخدمة في خيارات المنتجات.
  *
- * COMPONENTS
- * Header...............Specific styles for header styles.
- * Footer...............Specific styles for footer styles.
- * Menu.................Specific styles for main menu and mobile menu styles.
- * User Menu............Specific styles for user menu dropdown.
- * User Pages...........Specific styles for user pages like profile, notifications, orders...
- * Home Blocks..........Specific styles for home blocks.
- * Slider...............Specific styles for sliders.
- * Product..............Specific styles for single product page and it's elements.
- * Brands...............Specific styles for brands page.
- * Placeholder..........Specific styles for no content placeholders.
- * Gifting..............Specific styles for gifting system.
- * Loyalty..............Specific styles for loyalty system.
+ * المكونات
+ * Header...............أنماط محددة لرأس الصفحة.
+ * Footer...............أنماط محددة لذيل الصفحة.
+ * Menu.................أنماط محددة للقائمة الرئيسية وقائمة الجوال.
+ * User Menu............أنماط محددة لقائمة المستخدم المنسدلة.
+ * User Pages...........أنماط محددة لصفحات المستخدم مثل الملف الشخصي، الإشعارات، الطلبات...
+ * Home Blocks..........أنماط محددة لكتل الصفحة الرئيسية.
+ * Slider...............أنماط محددة للسلايدر.
+ * Product..............أنماط محددة لصفحة المنتج الفردية وعناصرها.
+ * Brands...............أنماط محددة لصفحة العلامات التجارية.
+ * Placeholder..........أنماط محددة لعدم وجود محتوى.
+ * Gifting..............أنماط محددة لنظام الهدايا.
+ * Loyalty..............أنماط محددة لنظام الولاء.
  *
- * UTILITIES
- * Chat Bots............Specific styles for chats bots widget.
- * Swal.................Specific styles for Sweet Alert addon.
- * Safari Fixes.........Specific styles for Safari Browser.
- * Dark Mode............Specific styles for dark mode.
+ * الأدوات المساعدة
+ * Chat Bots............أنماط محددة لواجهة دردشة الروبوتات.
+ * Swal.................أنماط محددة لإضافة Sweet Alert.
+ * Safari Fixes.........أنماط محددة لمتصفح Safari.
  *
- * EMBEDED ADDONS
- * Lite Youtube Embed...Specific styles for lite-youtube-embed addon.
- * Swiper...............Specific styles for swiper slider addon.
- * MMenu................Specific styles for mmenu addon.
+ * الإضافات المدمجة
+ * Lite Youtube Embed...أنماط محددة لإضافة lite-youtube-embed.
+ * Swiper...............أنماط محددة لإضافة swiper slider.
+ * MMenu................أنماط محددة لإضافة mmenu.
  *
 */
 
-@import './01-settings/tailwind';
-@import './01-settings/fonts';
-@import './01-settings/global';
-@import './01-settings/breakpoints';
+@import './01-settings/tailwind'; // استيراد إعدادات Tailwind
+@import './01-settings/fonts'; // استيراد إعدادات الخطوط
+@import './01-settings/global'; // استيراد المتغيرات العالمية
+@import './01-settings/breakpoints'; // استيراد نقاط التوقف
 
-@import './02-generic/reset';
-@import './02-generic/common';
-@import './02-generic/tooltip';
-@import './02-generic/animations';
-@import './02-generic/lazyload';
-@import './02-generic/rtl';
-@import './02-generic/ltr';
-@import './02-generic/mixins';
+@import './02-generic/reset'; // استيراد إعادة تعيين الأنماط العامة
+@import './02-generic/common'; // استيراد الأنماط الشائعة
+@import './02-generic/tooltip'; // استيراد أنماط التلميحات
+@import './02-generic/animations'; // استيراد الأنماط الرسومية
+@import './02-generic/lazyload'; // استيراد أنماط التحميل الكسول
+@import './02-generic/rtl'; // استيراد الأنماط للاتجاه من اليمين لليسار
+@import './02-generic/ltr'; // استيراد الأنماط للاتجاه من اليسار لليمين
+@import './02-generic/mixins'; // استيراد المزيجات
 
-@import './03-elements/form';
-@import './03-elements/buttons';
-@import './03-elements/radio';
-@import './03-elements/radio-images';
+@import './03-elements/form'; // استيراد أنماط النماذج
+@import './03-elements/buttons'; // استيراد أنماط الأزرار
+@import './03-elements/radio'; // استيراد أنماط زر الراديو
+@import './03-elements/radio-images'; // استيراد أنماط صور زر الراديو
 
-@import './04-components/header';
-@import './04-components/footer';
-@import './04-components/menus';
-@import './04-components/user-menu';
-@import './04-components/user-pages';
-@import './04-components/home-blocks';
-@import './04-components/slider';
-@import './04-components/product';
-@import './04-components/brands';
-@import './04-components/no-content-placeholder';
-@import './04-components/gifting';
-@import './04-components/loyalty';
-@import './04-components/virtooal';
-@import './04-components/landing-page';
-@import './04-components/filters';
+@import './04-components/header'; // استيراد أنماط رأس الصفحة
+@import './04-components/footer'; // استيراد أنماط ذيل الصفحة
+@import './04-components/menus'; // استيراد أنماط القوائم
+@import './04-components/user-menu'; // استيراد أنماط قائمة المستخدم
+@import './04-components/user-pages'; // استيراد أنماط صفحات المستخدم
+@import './04-components/home-blocks'; // استيراد أنماط كتل الصفحة الرئيسية
+@import './04-components/slider'; // استيراد أنماط السلايدر
+@import './04-components/product'; // استيراد أنماط المنتج
+@import './04-components/brands'; // استيراد أنماط العلامات التجارية
+@import './04-components/no-content-placeholder'; // استيراد أنماط عدم وجود محتوى
+@import './04-components/gifting'; // استيراد أنماط نظام الهدايا
+@import './04-components/loyalty'; // استيراد أنماط نظام الولاء
+@import './04-components/virtooal'; // استيراد أنماط Virtooal
+@import './04-components/landing-page'; // استيراد أنماط صفحة الهبوط
+@import './04-components/filters'; // استيراد أنماط الفلاتر
 
-@import './05-utilities/chat-bots';
-@import './05-utilities/swal';
-@import './05-utilities/safari-fixes';
-@import './05-utilities/font-customization';
-@import './05-utilities/dark-mode';
+@import './05-utilities/chat-bots'; // استيراد أنماط واجهة دردشة الروبوتات
+@import './05-utilities/swal'; // استيراد أنماط Sweet Alert
+@import './05-utilities/safari-fixes'; // استيراد أنماط إصلاحات Safari
+@import './05-utilities/font-customization'; // استيراد أنماط تخصيص الخطوط
 
-@import 'lite-youtube-embed';
-//@import 'swiper/css/bundle';
-@import 'mmenu-light/dist/mmenu-light.css';
+@import 'lite-youtube-embed'; // استيراد أنماط إضافة lite-youtube-embed
+//@import 'swiper/css/bundle'; // استيراد أنماط إضافة swiper
+@import 'mmenu-light/dist/mmenu-light.css'; // استيراد أنماط إضافة mmenu

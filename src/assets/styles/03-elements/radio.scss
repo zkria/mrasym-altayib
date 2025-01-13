@@ -1,57 +1,59 @@
+// إعدادات أزرار الراديو المخصصة
 .custom-radios {
   div {
-    display: inline-block;
+    display: inline-block; // تعيين العرض ككتلة داخلية
   }
 
   input[type="radio"] {
-    display: none;
+    display: none; // إخفاء زر الراديو
 
     + label {
-      cursor: pointer;
+      cursor: pointer; // تغيير المؤشر عند التمرير فوق التسمية
 
       span {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        // margin: -1px 4px 0 0;
-        vertical-align: middle;
-        cursor: pointer;
-        border-radius: 6px;
-        border: 2px solid #ffffff;
-        background-repeat: no-repeat;
-        background-position: center;
-        text-align: center;
-        line-height: 40px;
-        box-shadow: 0 1px 3px 0 rgba(#000, 0.075);
+        display: inline-block; // تعيين العرض ككتلة داخلية
+        width: 40px; // عرض الزر
+        height: 40px; // ارتفاع الزر
+        vertical-align: middle; // محاذاة عمودية
+        cursor: pointer; // تغيير المؤشر عند التمرير فوق الزر
+        border-radius: 6px; // تعيين الزوايا المدورة
+        border: 2px solid var(--radio-border-color, #004d40); // استخدام متغير للون الحدود
+        @apply dark:border-gray-600; // لون الحدود في الوضع الداكن
+        background-repeat: no-repeat; // عدم تكرار الخلفية
+        background-position: center; // تعيين موضع الخلفية
+        text-align: center; // محاذاة النص إلى المركز
+        line-height: 40px; // تعيين ارتفاع السطر
+        box-shadow: 0 1px 3px 0 rgba(var(--shadow-color, #000), 0.075); // استخدام متغير للون الظل
+        @apply dark:bg-gray-800; // لون الخلفية في الوضع الداكن
 
         &::after {
-          opacity: 0;
-          display: inline-block;
-          transform: scale(0.4);
-          transition: all 0.3s ease;
-          font-family: "sallaicons" !important;
-          // speak: never;
-          font-style: normal;
-          font-weight: normal;
-          font-variant: normal;
-          text-transform: none;
-          line-height: 1;
-          -webkit-font-smoothing: antialiased;
-          content: "\ea9d";
-          color: #fff;
-          font-size: 20px;
-          font-weight: bold;
+          opacity: 0; // تعيين الشفافية إلى 0
+          display: inline-block; // تعيين العرض ككتلة داخلية
+          transform: scale(0.4); // تعيين حجم الأيقونة
+          transition: all 0.3s ease; // تأثير الانتقال
+          font-family: "sallaicons" !important; // تعيين عائلة الخط
+          font-style: normal; // تعيين نمط الخط
+          font-weight: normal; // تعيين وزن الخط
+          font-variant: normal; // تعيين متغير الخط
+          text-transform: none; // عدم تحويل النص
+          line-height: 1; // تعيين ارتفاع السطر
+          -webkit-font-smoothing: antialiased; // تحسين عرض الخط
+          content: "\ea9d"; // رمز الأيقونة
+          color: var(--icon-color, #e0f7f7); // استخدام متغير للون الأيقونة
+          @apply dark:text-gray-200; // لون الأيقونة في الوضع الداكن
+          font-size: 20px; // حجم الخط
+          font-weight: bold; // وزن الخط
         }
       }
     }
 
     &:checked + label span:after {
-      opacity: 1;
-      transform: scale(1);
+      opacity: 1; // جعل الأيقونة مرئية عند التحديد
+      transform: scale(1); // تعيين حجم الأيقونة
     }
 
     &:disabled + label {
-      opacity: .45;
+      opacity: .45; // تعيين الشفافية عند التعطيل
     }
   }
 
@@ -59,20 +61,22 @@
     input[type="radio"] {
       + label {
         span {
-          border-radius: 50%;
-          width: 30px;
-          height: 30px;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #ddd;
+          border-radius: 50%; // تعيين الزوايا المدورة
+          width: 30px; // عرض الزر
+          height: 30px; // ارتفاع الزر
+          display: inline-flex; // تعيين العرض ككتلة مرنة
+          justify-content: center; // محاذاة المحتوى إلى المركز
+          align-items: center; // محاذاة المحتوى عموديًا
+          background-color: var(--rounded-bg-color, #004d40); // استخدام متغير للون الخلفية
+          @apply dark:bg-gray-700; // لون الخلفية في الوضع الداكن
 
           &::after {
-            content: "";
-            width: 14px;
-            height: 14px;
-            background-color: #f1f1f1;
-            border-radius: 50%;
+            content: ""; // محتوى فارغ
+            width: 14px; // عرض الأيقونة
+            height: 14px; // ارتفاع الأيقونة
+            background-color: var(--icon-inner-color, #e0f7f7); // استخدام متغير للون الأيقونة
+            @apply dark:bg-gray-200; // لون الأيقونة في الوضع الداكن
+            border-radius: 50%; // تعيين الزوايا المدورة
           }
         }
       }
@@ -80,27 +84,27 @@
   }
 
   &--icons {
-    font-size: 40px;
-    line-height: 42px;
+    font-size: 40px; // حجم الخط
+    line-height: 42px; // ارتفاع السطر
 
     input[type="radio"] {
       + label {
-        transition: transform 0.2s, color 0.3s;
-        filter: grayscale(1);
-
+        transition: transform 0.2s, color 0.3s; // تأثير الانتقال
+        filter: grayscale(1); // تعيين اللون إلى رمادي
 
         &:hover {
-          filter: grayscale(0);
+          filter: grayscale(0); // إزالة اللون الرمادي عند التمرير
         }
       }
 
       &:checked + label {
-        filter: grayscale(0);
-        transform: scale(1.25) translateY(-3px);
+        filter: grayscale(0); // إزالة اللون الرمادي عند التحديد
+        transform: scale(1.25) translateY(-3px); // تكبير الزر
 
         .rate-title {
-          font-weight: bold;
-          color: #2b2d34;
+          font-weight: bold; // تعيين وزن الخط إلى عريض
+          color: var(--rate-title-color, #004d40); // استخدام متغير للون النص
+          @apply dark:text-gray-200; // لون النص في الوضع الداكن
         }
       }
     }

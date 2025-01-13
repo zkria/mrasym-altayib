@@ -7,57 +7,58 @@
 #}
 {% set important_links = theme.settings.get('important_links') %}
 <header class="store-header">
-  <div class="top-navbar">
-    <button id="toggle-sidenav" class="header-btn" aria-label="فتح القائمة الجانبية">
-      <i class="header-btn__icon sicon-menu"></i>
-    </button>
+  <div class="top-navbar bg-gray-800 text-white shadow-lg">
+    <div class="container flex justify-between items-center py-2">
+      {# الأزرار في اليمين #}
+      <div class="header-buttons flex items-center ml-auto">
+        {# مكون اللغة والعملات #}
+        {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+          <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray text-white flex items-center">
+            <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+            <span class="mx-1.5">|</span> <span>{{ currency.symbol }}</span>
+          </button>
+          <salla-localization-modal></salla-localization-modal>
+        {% endif %}
 
-    <a class="navbar-brand" href="{{ store.url }}">
-      <img fetchpriority="high" src="{{ store.logo }}" alt="شعار {{ store.name }}" loading="lazy">
-      {% if is_page('index') %}
-        <h1 class="sr-only">{{ store.name }}</h1>
-      {% else %}
-        <h2 class="sr-only">{{ store.name }}</h2>
-      {% endif %}
-    </a>
+        {# أزرار السلة والمستخدم #}
+        <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4 flex items-center">
+          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag text-white text-2xl"></i> <!-- أيقونة سلة التسوق -->
+        </salla-cart-summary>
 
-    <div class="header-actions">
-      <button id="search-button" class="header-btn" aria-label="بحث">
-        <i class="header-btn__icon sicon-search"></i>
-      </button>
+        {% if user.type == 'user' %}
+          <salla-user-menu avatar-only show-header></salla-user-menu> <!-- قائمة المستخدم -->
+        {% else %}
+          <button class="header-btn text-white flex items-center" aria-label="أيقونة المستخدم" onclick="salla.event.dispatch('login::open')">
+            <i class="header-btn__icon sicon-user-circle text-2xl"></i> <!-- أيقونة المستخدم -->
+          </button>
+        {% endif %}
 
-      <button id="toggle-dark-mode" class="header-btn" aria-label="تفعيل الوضع الداكن">
-        <i class="header-btn__icon sicon-moon"></i>
-      </button>
+        {# زر البحث على اليمين #}
+        <div class="header-search ml-4"> <!-- إضافة مسافة بين الأزرار -->
+          <salla-search inline oval height="36"></salla-search>
+        </div>
+      </div>
 
-      {% if user.type == 'user' %}
-        <salla-user-menu avatar-only show-header></salla-user-menu>
-      {% else %}
-        <button class="header-btn" aria-label="رمز المستخدم" onclick="salla.event.dispatch('login::open')">
-          <i class="header-btn__icon sicon-user-circle"></i>
-        </button>
-      {% endif %}
-
-      <salla-cart-summary class="cart-summary">
-        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-      </salla-cart-summary>
+      {# الشعار في المنتصف #}
+      <div class="flex-1 flex justify-center">
+        <a class="navbar-brand" href="{{ store.url }}">
+          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
+          <h1 class="sr-only">{{ store.name }}</h1> <!-- اسم المتجر -->
+        </a>
+      </div>
     </div>
   </div>
 
-  <div id="search-popup" class="hidden search-popup">
-    <div class="search-container">
-      <button id="close-search" class="close-search" aria-label="إغلاق نافذة البحث">إغلاق</button>
-      <salla-search inline oval height="36"></salla-search>
-    </div>
-  </div>
-
-  <div id="sidenav" class="side-nav-container">
-    <div class="inner">
-      <img src="{{ store.logo }}" alt="شعار {{ store.name }}" class="sidenav-logo" loading="lazy">
-      <p class="sidenav-title">القائمة</p>
-      <custom-main-menu></custom-main-menu>
+  {# شريط التنقل العمودي #}
+  <div id="mainnav" class="main-nav-container shadow-default bg-white fixed right-0 top-0 h-full w-64">
+    <div class="inner bg-inherit h-full">
+      <custom-main-menu></custom-main-menu> <!-- القائمة الرئيسية المخصصة -->
     </div>
   </div>
 </header>
+
+{% if store.scope %}
+  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes> <!-- نطاقات المتجر -->
+{% endif %}
 
 <script src="path/to/external/script.js"></script>

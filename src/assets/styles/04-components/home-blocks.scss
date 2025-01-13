@@ -1,5 +1,5 @@
 /*
-  Block Title
+  إعدادات عنوان الكتلة
 */
 .s-block{
   &__title{
@@ -11,10 +11,14 @@
 
     h2{ 
       @apply text-lg font-bold relative leading-[1.2];
+      color: var(--block-title-color, #333);
+      @apply dark:text-gray-200;
     }
 
     p{
       @apply text-sm opacity-60 mt-2 line-clamp-1 sm:line-clamp-2 rtl:md:pl-16 ltr:md:pr-16;
+      color: var(--block-desc-color, #666);
+      @apply dark:text-gray-200;
     }
 
     &-nav{
@@ -24,6 +28,7 @@
 
   &__display-all{
     @apply inline-flex items-center gap-2 text-sm font-bold opacity-80 hover:opacity-100;
+    color: var(--display-all-color, #333);
 
     i{
       @apply ltr:rotate-180 inline-block;
@@ -32,11 +37,13 @@
 }
 
 /*
-  Main slider
+  إعدادات السلايدر الرئيسي
 */
 .s-block--hero-slider{
   .swiper-slide{
-    @apply h-80 sm:h-96 lg:h-116 xl:h-132 relative bg-gray-800;
+    @apply h-80 sm:h-96 lg:h-116 xl:h-132 relative;
+    background-color: var(--hero-slider-bg, #555);
+    @apply dark:bg-gray-800;
 
     .swiper-lazy{
       &:after{
@@ -52,7 +59,7 @@
   }
 }
 
-/* Banner Block */
+/* إعدادات الكتلة الإعلانية */
 .banner {
   @media screen and (min-width: 768px) {
     &:hover {
@@ -62,6 +69,14 @@
 
       .banner__description {
         animation: delayKeyframe 0.3s, toTopFromBottom 0.9s 0.3s;
+      }
+    }
+
+    + .merged-has-no-title {
+      @apply -mt-16 md:-mt-[74px];
+
+      .s-slider-block__title {
+        @apply sm:mb-0;
       }
     }
   }
@@ -387,7 +402,7 @@
   }
 }
 
-// repeated block with narrow top spacing
+// إعدادات الكتلة المتكررة مع هوامش ضيقة في الأعلى
 .s-block--features + .s-block--features,
 .s-block--fixed-banner + .s-block--fixed-banner,
 .s-block--banners + .s-block--banners {

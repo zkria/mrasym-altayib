@@ -1714,14 +1714,19 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 window.anime = animejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 var Anime = /*#__PURE__*/function () {
   function Anime(selector, options) {
+    var darkMode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     _classCallCheck(this, Anime);
+    this.darkMode = darkMode;
     this.options = {
       targets: selector,
       opacity: [0, 1],
       delay: function delay(el, i) {
         return i * 100;
       },
-      duration: 2000
+      duration: 2000,
+      easing: 'easeInOutQuad',
+      color: darkMode ? '#FFFFFF' : '#000000',
+      backgroundColor: darkMode ? '#333333' : '#FFFFFF'
     };
     this.setOptions(options);
   }
@@ -1887,6 +1892,16 @@ var Anime = /*#__PURE__*/function () {
     key: "play",
     value: function play() {
       return (0,animejs__WEBPACK_IMPORTED_MODULE_0__["default"])(this.options);
+    }
+  }, {
+    key: "setDarkMode",
+    value: function setDarkMode(darkMode) {
+      this.darkMode = darkMode;
+      // تحديث الألوان والخلفيات بناءً على الوضع الداكن
+      this.options.color = darkMode ? 'dark:text-gray-200' : '#000000';
+      this.options.backgroundColor = darkMode ? 'dark:bg-gray-800' : '#FFFFFF';
+      this.options.borderColor = darkMode ? 'dark:border-gray-700' : '#000';
+      return this;
     }
   }]);
 }();

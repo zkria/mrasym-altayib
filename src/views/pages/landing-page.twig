@@ -1,279 +1,79 @@
 {#
-| Variable                    | Type                   | Description |   |   |
-|-----------------------------|------------------------|-------------|---|---|
-| landing                     | object                 |             |   |   |
-| landing.id                  | int                    |             |   |   |
-| landing.title               | string                 |             |   |   |
-| landing.content             | string                 |             |   |   |
-| landing.products            | Products[] *Collection |             |   |   |
-| landing.offer_ends_at       | ?date                  |             |   |   |
-| landing.testimonials_type   | string                 |             |   |   |
-| landing.show_quantity       | bool                   |             |   |   |
-| landing.is_slider           | bool                   |             |   |   |
-| landing.is_expired          | bool                   |             |   |   |
-| landing.show_store_features | bool                   |             |   |   |
+| المتغيرات                    | النوع                   | الوصف                                                         |
+|-------------------------------|------------------------|---------------------------------------------------------------|
+| landing                       | كائن                   |                                                               |
+| landing.id                    | عدد                    |                                                               |
+| landing.title                 | سلسلة                 |                                                               |
+| landing.content               | سلسلة                 |                                                               |
+| landing.products              | منتجات[] *مجموعة      |                                                               |
+| landing.offer_ends_at         | ?تاريخ                 |                                                               |
+| landing.testimonials_type     | سلسلة                 |                                                               |
+| landing.show_quantity         | بولياني               |                                                               |
+| landing.is_slider             | بولياني               |                                                               |
+| landing.is_expired            | بولياني               |                                                               |
+| landing.show_store_features   | بولياني               |                                                               |
 #}
 {% extends "layouts.master" %}
 {% block content %}
-
-{# إضافة متغيرات JavaScript #}
 <script>
-    window.landingPage = {
-        showQuantity: {{ landing.show_quantity ? 'true' : 'false' }},
-        endDate: "{{ landing.offer_ends_at }}",
-        isExpired: {{ landing.is_expired ? 'true' : 'false' }}
-    };
+	window.showQuantity = {{ landing.show_quantity ? 'true' : 'false' }};
 </script>
-
-{# تحسين تصميم الصفحة #}
-<div class="landing-page {{ not landing ? 'notfound' : (landing.is_expired ? 'expired' : 'active') }}">
-    
-    {# رأس الصفحة المحسن #}
-    <header class="landing-header relative">
-        {# خلفية متحركة #}
-        <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-primary/5 animate-gradient"></div>
-        
-        <div class="container relative z-10">
-            {# شعار المتجر #}
-            <a href="{{ store.url }}" class="header-logo" aria-label="{{ store.name }}">
-                <img src="{{ store.logo }}" 
-                     width="75" height="75" 
-                     alt="{{ store.name }}"
-                     class="logo hover:scale-105 transition-transform">
-            </a>
-
-            {# محتوى الرأس #}
-            <div class="header-content text-center max-w-3xl mx-auto py-12">
-                {# العنوان مع تأثيرات #}
-                <h1 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in">
-                    {{ landing.title }}
-                </h1>
-
-                {# الوصف #}
-                <div class="prose prose-lg mx-auto mb-8 animate-fade-in-up">
-                    {{ landing.content|raw }}
-                </div>
-
-                {# العد التنازلي المحسن #}
-                {% if landing.offer_ends_at %}
-                    <div class="countdown-wrapper bg-white/80 backdrop-blur rounded-xl p-6 inline-block">
-                        <h3 class="text-xl font-medium mb-4">
-                            {{ trans('pages.offer.offer_remaining_time') }}
-                        </h3>
-                        <salla-count-down 
-                            date="{{ landing.offer_ends_at }}" 
-                            labeled 
-                            size="lg"
-                            class="countdown-animated">
-                        </salla-count-down>
+    {# ======================== صفحة الهبوط ======================== #}
+    {% if not landing %}
+        <div class="landing-page notfound bg-white dark:bg-gray-800">
+            <header>
+                <div class="header-content container">
+                <a href="{{ store.url }}" class="header-content-logo" aria-label="{{ store.name }} logo">
+					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
+                    <div class="header-content-inner">
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ trans('common.errors.404') }}</h1>
+                        <div class="text-center mt-6">
+                            <salla-button href="{{ link('/') }}" color="primary" class="btn--rounded-full">
+                                {{ trans('common.elements.back_home') }}
+                            </salla-button>
+                        </div>
                     </div>
-                {% endif %}
-            </div>
+                </div>
+            </header>
         </div>
-    </header>
-
-    {# قسم المنتجات المحسن #}
-    <section class="products-section py-12 bg-gray-50">
-        <div class="container">
-            {# عرض المنتجات #}
-            {% if landing.is_slider %}
-                <salla-products-slider 
-                    source="landing-page"
-                    block-title="{{ trans('pages.offer.included_products') }}"
-                    display-all-url
-                    class="products-slider--enhanced">
-                </salla-products-slider>
-            {% else %}
-                <div class="s-block">
-                    <div class="s-block__title">
-                        <h2 class="text-2xl font-bold">
-                            {{ trans('pages.offer.included_products') }}
-                        </h2>
+    {% elseif landing.is_expired %}
+        <div class="landing-page expired bg-white dark:bg-gray-800">
+            <header>
+                <div class="header-content container">
+                <a href="{{ store.url }}" aria-label="{{ store.name }} logo" class="header-content-logo">
+					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
+                    <div class="header-content-inner">
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ trans('pages.offer.offer_finished') }}</h1>
+                        <p class="text-gray-500 dark:text-gray-400">{{ trans('pages.offer.offer_expired_message') }}</p>
+                        <div class="text-center mt-6">
+                            <salla-button href="{{ link('/') }}" color="primary" class="btn--rounded-full">
+                                {{ trans('common.elements.back_home') }}
+                            </salla-button>
+                        </div>
                     </div>
-                    
-                    {# قائمة المنتجات المحسنة #}
-                    <salla-products-list 
-                        source="landing-page"
-                        class="{{ theme.settings.get('vertical_fixed_products', true) ? 
-                               'vertical-products' : 'horizontal-products' }} products-grid--enhanced">
-                    </salla-products-list>
                 </div>
-            {% endif %}
-
-            {# قسم الشراء السريع المحسن #}
-            <div class="quick-buy-section mt-12">
-                <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-6">
-                    <h3 class="text-xl font-bold mb-6 text-center">
-                        {{ trans('pages.offer.quick_purchase') }}
-                    </h3>
-                    
-                    <salla-mini-checkout-widget
-                        products="[{{ landing.products|map((product) => product.id)|join(',') }}]"
-                        language="{{ user.language_code }}"
-                        label="{{ trans('pages.orders.finish_payment') }}"
-                        store-id="{{ store.id }}"
-                        api="{{ store.api }}"
-                        class="checkout-widget--enhanced"
-                    ></salla-mini-checkout-widget>
-                </div>
-            </div>
+            </header>
         </div>
-    </section>
-
-    {# مميزات المتجر #}
-    {% if landing.show_store_features %}
-        <section class="features-section py-12 bg-white">
-            <div class="container">
-                {% component 'home.store-features' with {
-                    class: 'features-grid--enhanced'
-                } %}
-            </div>
-        </section>
-    {% endif %}
-
-    {# آراء العملاء المحسنة #}
-    {% if landing.testimonials_type %}
-        <section class="testimonials-section py-12 bg-gray-50">
-            <div class="container">
-                {% component 'home.testimonials' with {
-                    type: landing.testimonials_type,
-                    class: 'testimonials--enhanced'
-                } %}
-            </div>
-        </section>
-    {% endif %}
-
-    {# شريط التحفيز المتحرك #}
-    <div class="sticky-cta fixed bottom-0 left-0 right-0 bg-white shadow-lg transform translate-y-0 transition-transform duration-300 z-50">
-        <div class="container py-4 flex items-center justify-between">
-            {% if landing.offer_ends_at %}
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <span class="text-sm font-medium">
-                        {{ trans('pages.offer.hurry_up') }}
-                    </span>
-                    <salla-count-down 
-                        date="{{ landing.offer_ends_at }}"
-                        labeled 
-                        size="sm">
-                    </salla-count-down>
+    {% else %}
+        <div class="landing-page pb-10 bg-white dark:bg-gray-800">
+            <header>
+                <div class="header-content container">
+                <a href="{{ store.url }}" aria-label="{{ store.name }} logo" class="header-content-logo">
+					<img src="{{ store.logo }}" width="75" height="75" alt="logo" class="logo"></a>
+                    <div class="header-content-inner">
+                        <h1 class="text-gray-900 dark:text-gray-200">{{ landing.title }}</h1>
+                        <p class="text-gray-500 dark:text-gray-400">{{ landing.content|raw }}</p>
+                    </div>
+                    {% if landing.offer_ends_at %}
+                        <div class="header-content-offer">
+                            <h3 class="text-gray-900 dark:text-gray-200">{{ trans('pages.offer.offer_remaining_time') }}</h3>
+                            <salla-count-down date="{{ landing.offer_ends_at }}" labeled size="lg"></salla-count-down>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            
-            <salla-button 
-                onclick="document.querySelector('.quick-buy-section').scrollIntoView({behavior: 'smooth'})"
-                color="primary"
-                class="!rounded-full">
-                {{ trans('pages.offer.buy_now') }}
-            </salla-button>
+            </header>
+            ...
         </div>
-    </div>
-</div>
-{% endblock %}
-
-{# الأنماط المحسنة #}
-{% block styles %}
-<style>
-    .landing-page {
-        --primary-color: {{ theme.settings.get('color_primary', '#000000') }};
-    }
-
-    .animate-gradient {
-        background-size: 200% 200%;
-        animation: gradient 8s ease infinite;
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-out;
-    }
-
-    .animate-fade-in-up {
-        animation: fadeInUp 1s ease-out;
-    }
-
-    .countdown-animated .count-item {
-        animation: pulse 1s infinite;
-    }
-
-    .products-grid--enhanced {
-        gap: 2rem;
-    }
-
-    .checkout-widget--enhanced {
-        --primary-color: var(--primary-color);
-        --border-radius: 1rem;
-    }
-
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-</style>
-{% endblock %}
-
-{# السكربتات المحسنة #}
-{% block scripts %}
-<script defer src="{{ 'landing-page.js' | asset }}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // التحكم في شريط التحفيز
-    const stickyCta = document.querySelector('.sticky-cta');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll <= 0) {
-            stickyCta.style.transform = 'translateY(0)';
-            return;
-        }
-        
-        if (currentScroll > lastScroll && !stickyCta.classList.contains('scroll-down')) {
-            stickyCta.style.transform = 'translateY(100%)';
-        } else if (currentScroll < lastScroll && stickyCta.classList.contains('scroll-down')) {
-            stickyCta.style.transform = 'translateY(0)';
-        }
-        
-        lastScroll = currentScroll;
-    });
-
-    // تحسين تجربة العد التنازلي
-    if (window.landingPage.endDate) {
-        const endDate = new Date(window.landingPage.endDate);
-        const now = new Date();
-        
-        if (endDate > now) {
-            // تحديث كل ثانية
-            setInterval(() => {
-                const timeLeft = endDate - new Date();
-                if (timeLeft <= 0) {
-                    window.location.reload();
-                }
-            }, 1000);
-        }
-    }
-});
-</script>
+    {% endif %}
+    <div class="hidden bottom-1"></div>
 {% endblock %}
