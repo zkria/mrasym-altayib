@@ -1,23 +1,17 @@
-import { initiateNotifier } from './notifier';
-import { initiateMobileMenu } from './mobile-menu';
-import { initiateStickyMenu } from './sticky-menu';
-import Anime from '../partials/anime'; // تأكد من أن هذا المسار صحيح
-import initTootTip from '../partials/tooltip'; // تأكد من أن هذا المسار صحيح
+import Anime from '../partials/anime'; // تحديث المسار
+import initTootTip from '../partials/tooltip'; // تحديث المسار
 import AppHelpers from "./app-helpers";
+import '../pages/dark-mode'; // تأكد من استخدام المسار الصحيح
 
 class App extends AppHelpers {
   constructor() {
     super();
     window.app = this;
+    this.initDarkMode();
   }
 
   loadTheApp() {
     this.commonThings();
-    this.initiateNotifier();
-    this.initiateMobileMenu();
-    if (typeof header_is_sticky !== 'undefined' && header_is_sticky) {
-      this.initiateStickyMenu();
-    }
     this.initAddToCart();
     this.initiateAdAlert();
     this.initiateDropdowns();
@@ -109,55 +103,6 @@ class App extends AppHelpers {
     }, 1000);
   }
 
-  initiateNotifier() {
-    salla.notify.setNotifier(function (message, type, data) {
-      if (typeof message == 'object') {
-        return Swal.fire(message).then(type);
-      }
-
-      return Swal.mixin({
-        toast: true,
-        position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
-        showConfirmButton: false,
-        timer: 3500,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer);
-          toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-      }).fire({
-        icon: type,
-        title: message,
-        showCloseButton: true,
-        timerProgressBar: true
-      });
-    });
-  }
-
-  initiateMobileMenu() {
-    this.isElementLoaded('#mobile-menu').then((menu) => {
-      if (!menu) {
-        console.error('Mobile menu not found');
-        return;
-      }
-
-      const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-
-      salla.lang.onLoaded(() => {
-        mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-      });
-      const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
-
-      this.onClick("a[href='#mobile-menu']", event => {
-        document.body.classList.add('menu-opened');
-        event.preventDefault() || drawer.close() || drawer.open();
-      });
-      this.onClick(".close-mobile-menu", event => {
-        document.body.classList.remove('menu-opened');
-        event.preventDefault() || drawer.close();
-      });
-    });
-  }
-
   initAttachWishlistListeners() {
     let isListenerAttached = false;
 
@@ -173,29 +118,6 @@ class App extends AppHelpers {
       salla.wishlist.event.onRemoved((event, id) => toggleFavoriteIcon(id, false));
       isListenerAttached = true; // Mark the listener as attached
     }
-  }
-
-  initiateStickyMenu() {
-    let header = this.element('#mainnav'),
-      height = this.element('#mainnav .inner')?.clientHeight;
-    //when it's landing page, there is no header
-    if (!header) {
-      return;
-    }
-
-    window.addEventListener('load', () => setTimeout(() => this.setHeaderHeight(), 500));
-    window.addEventListener('resize', () => this.setHeaderHeight());
-
-    window.addEventListener('scroll', () => {
-      window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-      window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-    }, { passive: true });
-  }
-
-  setHeaderHeight() {
-    let height = this.element('#mainnav .inner').clientHeight,
-      header = this.element('#mainnav');
-    header.style.height = height + 'px';
   }
 
   initiateAdAlert() {
@@ -308,6 +230,104 @@ class App extends AppHelpers {
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
   }
+
+  initDarkMode() {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      this.saveDarkModePreference();
+    });
+
+    this.restoreDarkModePreference();
+  }
+
+  saveDarkModePreference() {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+  }
+
+  restoreDarkModePreference() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    }
+  }
 }
+
+// New MenuHandler class implementation
+class MenuHandler {
+  constructor() {
+    this.isRTL = document.dir === 'rtl';
+    this.menuTrigger = document.querySelector('.menu-trigger');
+    this.closeButton = document.querySelector('.close-menu');
+    this.sidebar = document.querySelector('.sidebar-menu');
+    this.overlay = document.querySelector('.sidebar-overlay');
+    this.submenuTriggers = document.querySelectorAll('.menu-item.has-children');
+    
+    this.init();
+  }
+
+  init() {
+    // Toggle menu
+    this.menuTrigger?.addEventListener('click', () => this.toggleMenu(true));
+    this.closeButton?.addEventListener('click', () => this.toggleMenu(false));
+    this.overlay?.addEventListener('click', () => this.toggleMenu(false));
+
+    // Handle submenus
+    this.submenuTriggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        if (e.target === trigger || e.target.parentElement === trigger) {
+          e.preventDefault();
+          this.toggleSubmenu(trigger);
+        }
+      });
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') this.toggleMenu(false);
+    });
+  }
+
+  toggleMenu(show) {
+    document.body.classList.toggle('menu-opened', show);
+  }
+
+  toggleSubmenu(trigger) {
+    const submenu = trigger.querySelector('.sub-menu');
+    const isOpened = trigger.classList.contains('is-opened');
+    
+    // Close other submenus
+    this.submenuTriggers.forEach(item => {
+      if (item !== trigger) {
+        item.classList.remove('is-opened');
+        item.querySelector('.sub-menu')?.classList.remove('is-opened');
+      }
+    });
+
+    // Toggle current submenu
+    trigger.classList.toggle('is-opened', !isOpened);
+    submenu?.classList.toggle('is-opened', !isOpened);
+  }
+}
+
+// Initialize menu handler
+document.addEventListener('DOMContentLoaded', () => {
+  new MenuHandler();
+  const sidebar = document.querySelector('.sidebar-menu');
+  const overlay = document.querySelector('.sidebar-overlay');
+  const toggleBtn = document.querySelector('.menu-trigger'); // تأكد من وجود زر التبديل
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open'); // تبديل حالة القائمة
+    overlay.classList.toggle('visible'); // إظهار التراكب
+  });
+
+  // إغلاق القائمة عند النقر على التراكب
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+  });
+});
 
 salla.onReady(() => (new App).loadTheApp());

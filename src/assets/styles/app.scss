@@ -50,46 +50,53 @@
  *
 */
 
-@import './01-settings/tailwind'; // استيراد إعدادات Tailwind
-@import './01-settings/fonts'; // استيراد إعدادات الخطوط
-@import './01-settings/global'; // استيراد المتغيرات العالمية
-@import './01-settings/breakpoints'; // استيراد نقاط التوقف
+// 1. إعدادات Tailwind والمتغيرات الأساسية
+@import './01-settings/tailwind';      // تكوينات Tailwind CSS
+@import './01-settings/fonts';         // تعريفات الخطوط
+@import './01-settings/global';        // المتغيرات العامة والألوان
+@import './01-settings/breakpoints';   // نقاط الكسر للتصميم المتجاوب
 
-@import './02-generic/reset'; // استيراد إعادة تعيين الأنماط العامة
-@import './02-generic/common'; // استيراد الأنماط الشائعة
-@import './02-generic/tooltip'; // استيراد أنماط التلميحات
-@import './02-generic/animations'; // استيراد الأنماط الرسومية
-@import './02-generic/lazyload'; // استيراد أنماط التحميل الكسول
-@import './02-generic/rtl'; // استيراد الأنماط للاتجاه من اليمين لليسار
-@import './02-generic/ltr'; // استيراد الأنماط للاتجاه من اليسار لليمين
-@import './02-generic/mixins'; // استيراد المزيجات
+// 2. الأنماط العامة والتصحيحات
+@import './02-generic/reset';          // إعادة تعيين الأنماط الافتراضية
+@import './02-generic/common';         // الأنماط المشتركة
+@import './02-generic/tooltip';        // تلميحات الأدوات
+@import './02-generic/animations';     // التأثيرات الحركية
+@import './02-generic/lazyload';       // تحميل الصور الكسول
+@import './02-generic/rtl';           // دعم اللغة العربية
+@import './02-generic/ltr';           // دعم اللغة الإنجليزية
+@import './02-generic/mixins';        // الدوال المساعدة
 
-@import './03-elements/form'; // استيراد أنماط النماذج
-@import './03-elements/buttons'; // استيراد أنماط الأزرار
-@import './03-elements/radio'; // استيراد أنماط زر الراديو
-@import './03-elements/radio-images'; // استيراد أنماط صور زر الراديو
+// 3. العناصر الأساسية
+@import './03-elements/form';          // النماذج
+@import './03-elements/buttons';       // الأزرار
+@import './03-elements/radio';         // أزرار الراديو
+@import './03-elements/radio-images';  // اختيار الصور
 
-@import './04-components/header'; // استيراد أنماط رأس الصفحة
-@import './04-components/footer'; // استيراد أنماط ذيل الصفحة
-@import './04-components/menus'; // استيراد أنماط القوائم
-@import './04-components/user-menu'; // استيراد أنماط قائمة المستخدم
-@import './04-components/user-pages'; // استيراد أنماط صفحات المستخدم
-@import './04-components/home-blocks'; // استيراد أنماط كتل الصفحة الرئيسية
-@import './04-components/slider'; // استيراد أنماط السلايدر
-@import './04-components/product'; // استيراد أنماط المنتج
-@import './04-components/brands'; // استيراد أنماط العلامات التجارية
-@import './04-components/no-content-placeholder'; // استيراد أنماط عدم وجود محتوى
-@import './04-components/gifting'; // استيراد أنماط نظام الهدايا
-@import './04-components/loyalty'; // استيراد أنماط نظام الولاء
-@import './04-components/virtooal'; // استيراد أنماط Virtooal
-@import './04-components/landing-page'; // استيراد أنماط صفحة الهبوط
-@import './04-components/filters'; // استيراد أنماط الفلاتر
+// 4. المكونات
+@import './04-components/header';      // الرأس
+@import './04-components/footer';      // التذييل
+@import './04-components/menus';       // القوائم
+@import './04-components/user-menu';   // قائمة المستخدم
+@import './04-components/user-pages';  // صفحات المستخدم
+@import './04-components/home-blocks'; // كتل الصفحة الرئيسية
+@import './04-components/slider';      // عارض الشرائح
+@import './04-components/product';     // صفحة المنتج
+@import './04-components/brands';      // العلامات التجارية
+@import './04-components/no-content-placeholder';  // محتوى فارغ
+@import './04-components/gifting';     // نظام الهدايا
+@import './04-components/loyalty';     // نظام الولاء
+@import './04-components/virtooal';    // المكون الافتراضي
+@import './04-components/landing-page'; // صفحة الهبوط
+@import './04-components/filters';     // المرشحات
 
-@import './05-utilities/chat-bots'; // استيراد أنماط واجهة دردشة الروبوتات
-@import './05-utilities/swal'; // استيراد أنماط Sweet Alert
-@import './05-utilities/safari-fixes'; // استيراد أنماط إصلاحات Safari
-@import './05-utilities/font-customization'; // استيراد أنماط تخصيص الخطوط
+// 5. الأدوات المساعدة
+@import './05-utilities/chat-bots';    // روبوتات الدردشة
+@import './05-utilities/swal';         // تنبيهات Sweet Alert
+@import './05-utilities/safari-fixes'; // إصلاحات متصفح Safari
+@import './05-utilities/font-customization'; // تخصيص الخطوط
+@import './05-utilities/dark-mode';    // الوضع الداكن
 
-@import 'lite-youtube-embed'; // استيراد أنماط إضافة lite-youtube-embed
-//@import 'swiper/css/bundle'; // استيراد أنماط إضافة swiper
-@import 'mmenu-light/dist/mmenu-light.css'; // استيراد أنماط إضافة mmenu
+// 6. المكتبات الخارجية
+@import 'lite-youtube-embed';          // تضمين يوتيوب المخفف
+//@import 'swiper/css/bundle';         // مكتبة Swiper (معطلة حالياً)
+@import 'mmenu-light/dist/mmenu-light.css'; // قائمة الموبايل

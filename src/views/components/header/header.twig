@@ -1,78 +1,58 @@
-{#
-  | المتغير          | النوع   | الوصف                           |
-  |------------------|---------|---------------------------------|
-  | cart             | كائن    |                                 |
-  | cart.items_count | عدد صحيح|                                 |
-  | cart.total       | سلسلة   | المجموع بصيغة مثل: "١٠٠ ر.س"    |
+هاذ  الكود  الحالي {#
+| المتغيرات        | النوع    | الوصف                           |
+|------------------|---------|---------------------------------|
+| cart             | كائن    |                                 |
+| cart.items_count | عدد صحيح |                                 |
+| cart.total       | سلسلة   | المجموع المنسق مثل: "١٠٠ ر.س"   |
 #}
-
 {% set important_links = theme.settings.get('important_links') %}
+{% set is_sidebar_open = false %}
 
-<header class="store-header">
-  <!-- شريط علوي -->
-  <div class="top-navbar bg-gray-800 text-white shadow-lg">
-    <div class="container flex justify-between items-center py-2">
-      <!-- أزرار الجهة اليمنى -->
-      <div class="header-buttons flex items-center ml-auto">
-        <!-- اللغة والعملات -->
-        {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-          <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray text-white flex items-center">
-            <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-            <span class="mx-1.5">|</span>
-            <span>{{ currency.symbol }}</span>
-          </button>
-          <salla-localization-modal></salla-localization-modal>
-        {% endif %}
+<div class="top-bar">
+  <div class="container flex justify-between items-center p-4">
+    <!-- زر إظهار القائمة الجانبية -->
+    <i class='bx bx-menu toggle'></i>
 
-        <!-- السلة والمستخدم -->
-        <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4 flex items-center">
-          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag text-white text-2xl"></i>
-        </salla-cart-summary>
+    <!-- الشعار -->
+    <div class="logo">
+      <img src="{{ store.logo }}" alt="صورة المتجر" class="w-16 h-16">
+    </div>
 
-        {% if user.type == 'user' %}
-          <salla-user-menu avatar-only show-header></salla-user-menu>
-        {% else %}
-          <button class="header-btn text-white flex items-center" aria-label="تسجيل الدخول" onclick="salla.event.dispatch('login::open')">
-            <i class="header-btn__icon sicon-user-circle text-2xl"></i>
-          </button>
-        {% endif %}
+    <!-- زر البحث -->
+    <div class="search-box flex items-center">
+      <i class='bx bx-search icon'></i>
+      <input type="text" placeholder="بحث..." class="search-input">
+    </div>
 
-        <!-- زر البحث -->
-        <div class="header-search ml-4">
-          <salla-search inline oval height="36"></salla-search>
-        </div>
-      </div>
-
-      <!-- الشعار في الوسط -->
-      <div class="flex-1 flex justify-center">
-        <a class="navbar-brand" href="{{ store.url }}">
-          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo">
-          <h1 class="sr-only">{{ store.name }}</h1>
-        </a>
-      </div>
+    <!-- أزرار السلة والمستخدم -->
+    <div class="flex items-center">
+      {% if user.type=='user' %}
+        <salla-user-menu avatar-only show-header></salla-user-menu>
+      {% else %}
+        <button class="header-btn" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
+          <i class="header-btn__icon sicon-user-circle"></i>
+        </button>
+      {% endif %}
+      <salla-cart-summary>
+        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+      </salla-cart-summary>
     </div>
   </div>
+</div>
 
-  <!-- شريط التنقل الرئيسي -->
-  <div id="mainnav" class="main-nav-container shadow-default bg-white fixed right-0 top-0 h-full flex flex-col transition-transform transform" :class="{ 'translate-x-0': isOpen, 'translate-x-full': !isOpen }">
-    <div class="inner bg-inherit">
-      <div class="container">
-        <div class="flex items-stretch justify-between relative">
-          <div class="flex items-center">
-            <a class="mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="فتح القائمة">
-              <i class="sicon-menu text-primary text-2xl"></i>
-            </a>
-            <custom-main-menu></custom-main-menu>
-          </div>
-        </div>
+<div class="sidebar-header" id="sidebar">
+  <header class="store-header">
+    <div class="sidebar-container">
+      <div class="menu-bar">
+        <custom-main-menu></custom-main-menu>
       </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>
 
-<!-- نطاقات المتجر -->
 {% if store.scope %}
-  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+  <salla-scopes 
+    selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"
+    aria-label="اختيار النطاق">
+  </salla-scopes>
 {% endif %}
-
-<script src="path/to/external/script.js"></script>

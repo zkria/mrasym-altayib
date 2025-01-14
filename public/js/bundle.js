@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/animejs/lib/anime.es.js":
@@ -8,6 +7,7 @@
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1333,6 +1333,7 @@ anime.random = function (min, max) { return Math.floor(Math.random() * (max - mi
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ AppHelpers)
@@ -1535,12 +1536,58 @@ var AppHelpers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/assets/js/pages/dark-mode.js":
+/*!******************************************!*\
+  !*** ./src/assets/js/pages/dark-mode.js ***!
+  \******************************************/
+/***/ (() => {
+
+function toggleDarkMode() {
+  var themeToggle = document.querySelector('.theme-toggle');
+  var icon = themeToggle.querySelector('.sun-icon, .moon-icon');
+
+  // تبديل الكلاس للأيقونة
+  themeToggle.classList.toggle('dark-mode');
+  if (themeToggle.classList.contains('dark-mode')) {
+    icon.classList.remove('sun-icon');
+    icon.classList.add('moon-icon');
+    document.documentElement.classList.add('dark');
+  } else {
+    icon.classList.remove('moon-icon');
+    icon.classList.add('sun-icon');
+    document.documentElement.classList.remove('dark');
+  }
+
+  // حفظ التفضيل في localStorage
+  localStorage.setItem('darkMode', themeToggle.classList.contains('dark-mode'));
+}
+
+// تطبيق الوضع المحفوظ عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function () {
+  var savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  var themeToggle = document.querySelector('.theme-toggle');
+  if (savedDarkMode) {
+    themeToggle.classList.add('dark-mode'); // إضافة الكلاس المحفوظ
+    document.documentElement.classList.add('dark'); // إضافة الكلاس للعنصر الجذري
+    toggleDarkMode(); // تحديث الأيقونة
+  } else {
+    document.documentElement.classList.remove('dark'); // إزالة الكلاس للعنصر الجذري
+  }
+
+  // تفعيل الزر
+  var themeButton = document.getElementById('theme-button');
+  themeButton.addEventListener('click', toggleDarkMode);
+});
+
+/***/ }),
+
 /***/ "./src/assets/js/partials/anime.js":
 /*!*****************************************!*\
   !*** ./src/assets/js/partials/anime.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1757,6 +1804,7 @@ var Anime = /*#__PURE__*/function () {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ tootTip)
@@ -1821,6 +1869,18 @@ function tootTip() {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -1851,18 +1911,18 @@ function tootTip() {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
+"use strict";
 /*!***********************************!*\
   !*** ./src/assets/js/core/app.js ***!
   \***********************************/
 __webpack_require__.r(__webpack_exports__);
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './notifier'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './mobile-menu'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './sticky-menu'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
-/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
-/* harmony import */ var _app_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app-helpers */ "./src/assets/js/core/app-helpers.js");
+/* harmony import */ var _partials_anime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../partials/anime */ "./src/assets/js/partials/anime.js");
+/* harmony import */ var _partials_tooltip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/tooltip */ "./src/assets/js/partials/tooltip.js");
+/* harmony import */ var _app_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app-helpers */ "./src/assets/js/core/app-helpers.js");
+/* harmony import */ var _pages_dark_mode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/dark-mode */ "./src/assets/js/pages/dark-mode.js");
+/* harmony import */ var _pages_dark_mode__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_pages_dark_mode__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
@@ -1876,18 +1936,17 @@ function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.
 function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+ // تحديث المسار
+ // تحديث المسار
 
-
-
- // تأكد من أن هذا المسار صحيح
- // تأكد من أن هذا المسار صحيح
-
+ // تأكد من استخدام المسار الصحيح
 var App = /*#__PURE__*/function (_AppHelpers) {
   function App() {
     var _this;
     _classCallCheck(this, App);
     _this = _callSuper(this, App);
     window.app = _this;
+    _this.initDarkMode();
     return _this;
   }
   _inherits(App, _AppHelpers);
@@ -1895,11 +1954,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     key: "loadTheApp",
     value: function loadTheApp() {
       this.commonThings();
-      this.initiateNotifier();
-      this.initiateMobileMenu();
-      if (typeof header_is_sticky !== 'undefined' && header_is_sticky) {
-        this.initiateStickyMenu();
-      }
       this.initAddToCart();
       this.initiateAdAlert();
       this.initiateDropdowns();
@@ -1907,7 +1961,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       this.initiateCollapse();
       this.initAttachWishlistListeners();
       this.changeMenuDirection();
-      (0,_partials_tooltip__WEBPACK_IMPORTED_MODULE_2__["default"])();
+      (0,_partials_tooltip__WEBPACK_IMPORTED_MODULE_1__["default"])();
       this.loadModalImgOnclick();
       salla.comment.event.onAdded(function () {
         return window.location.reload();
@@ -2001,58 +2055,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       }, 1000);
     }
   }, {
-    key: "initiateNotifier",
-    value: function initiateNotifier() {
-      salla.notify.setNotifier(function (message, type, data) {
-        if (_typeof(message) == 'object') {
-          return Swal.fire(message).then(type);
-        }
-        return Swal.mixin({
-          toast: true,
-          position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
-          showConfirmButton: false,
-          timer: 3500,
-          didOpen: function didOpen(toast) {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-          }
-        }).fire({
-          icon: type,
-          title: message,
-          showCloseButton: true,
-          timerProgressBar: true
-        });
-      });
-    }
-  }, {
-    key: "initiateMobileMenu",
-    value: function initiateMobileMenu() {
-      var _this3 = this;
-      this.isElementLoaded('#mobile-menu').then(function (menu) {
-        if (!menu) {
-          console.error('Mobile menu not found');
-          return;
-        }
-        var mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-        salla.lang.onLoaded(function () {
-          mobileMenu.navigation({
-            title: salla.lang.get('blocks.header.main_menu')
-          });
-        });
-        var drawer = mobileMenu.offcanvas({
-          position: salla.config.get('theme.is_rtl') ? "right" : 'left'
-        });
-        _this3.onClick("a[href='#mobile-menu']", function (event) {
-          document.body.classList.add('menu-opened');
-          event.preventDefault() || drawer.close() || drawer.open();
-        });
-        _this3.onClick(".close-mobile-menu", function (event) {
-          document.body.classList.remove('menu-opened');
-          event.preventDefault() || drawer.close();
-        });
-      });
-    }
-  }, {
     key: "initAttachWishlistListeners",
     value: function initAttachWishlistListeners() {
       var isListenerAttached = false;
@@ -2076,39 +2078,6 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         });
         isListenerAttached = true; // Mark the listener as attached
       }
-    }
-  }, {
-    key: "initiateStickyMenu",
-    value: function initiateStickyMenu() {
-      var _this$element,
-        _this4 = this;
-      var header = this.element('#mainnav'),
-        height = (_this$element = this.element('#mainnav .inner')) === null || _this$element === void 0 ? void 0 : _this$element.clientHeight;
-      //when it's landing page, there is no header
-      if (!header) {
-        return;
-      }
-      window.addEventListener('load', function () {
-        return setTimeout(function () {
-          return _this4.setHeaderHeight();
-        }, 500);
-      });
-      window.addEventListener('resize', function () {
-        return _this4.setHeaderHeight();
-      });
-      window.addEventListener('scroll', function () {
-        window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-        window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-      }, {
-        passive: true
-      });
-    }
-  }, {
-    key: "setHeaderHeight",
-    value: function setHeaderHeight() {
-      var height = this.element('#mainnav .inner').clientHeight,
-        header = this.element('#mainnav');
-      header.style.height = height + 'px';
     }
   }, {
     key: "initiateAdAlert",
@@ -2152,22 +2121,22 @@ var App = /*#__PURE__*/function (_AppHelpers) {
   }, {
     key: "initiateModals",
     value: function initiateModals() {
-      var _this5 = this;
+      var _this3 = this;
       this.onClick('[data-modal-trigger]', function (e) {
         var id = '#' + e.target.dataset.modalTrigger;
-        _this5.removeClass(id, 'hidden');
+        _this3.removeClass(id, 'hidden');
         setTimeout(function () {
-          return _this5.toggleModal(id, true);
+          return _this3.toggleModal(id, true);
         }); //small amount of time to running toggle After adding hidden
       });
       salla.event.document.onClick("[data-close-modal]", function (e) {
-        return _this5.toggleModal('#' + e.target.dataset.closeModal, false);
+        return _this3.toggleModal('#' + e.target.dataset.closeModal, false);
       });
     }
   }, {
     key: "toggleModal",
     value: function toggleModal(id, isOpen) {
-      var _this6 = this;
+      var _this4 = this;
       this.toggleClassIf("".concat(id, " .s-salla-modal-overlay"), 'ease-out duration-300 opacity-100', 'opacity-0', function () {
         return isOpen;
       }).toggleClassIf("".concat(id, " .s-salla-modal-body"), 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100',
@@ -2181,14 +2150,14 @@ var App = /*#__PURE__*/function (_AppHelpers) {
       });
       if (!isOpen) {
         setTimeout(function () {
-          return _this6.addClass(id, 'hidden');
+          return _this4.addClass(id, 'hidden');
         }, 350);
       }
     }
   }, {
     key: "initiateCollapse",
     value: function initiateCollapse() {
-      var _this7 = this;
+      var _this5 = this;
       document.querySelectorAll('.btn--collapse').forEach(function (trigger) {
         var content = document.querySelector('#' + trigger.dataset.show);
         var state = {
@@ -2214,7 +2183,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         };
         var toggleState = function toggleState(isOpen) {
           state.isOpen = !isOpen;
-          _this7.toggleElementClassIf(content, 'is-closed', 'is-opened', function () {
+          _this5.toggleElementClassIf(content, 'is-closed', 'is-opened', function () {
             return isOpen;
           });
         };
@@ -2229,7 +2198,7 @@ var App = /*#__PURE__*/function (_AppHelpers) {
     key: "anime",
     value: function anime(selector) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var anime = new _partials_anime__WEBPACK_IMPORTED_MODULE_1__["default"](selector, options);
+      var anime = new _partials_anime__WEBPACK_IMPORTED_MODULE_0__["default"](selector, options);
       return options === false ? anime : anime.play();
     }
   }, {
@@ -2247,8 +2216,120 @@ var App = /*#__PURE__*/function (_AppHelpers) {
         app.element('salla-cart-summary').animateToCart(app.element("#product-".concat(prodId, " img")));
       });
     }
+  }, {
+    key: "initDarkMode",
+    value: function initDarkMode() {
+      var _this6 = this;
+      var darkModeToggle = document.getElementById('dark-mode-toggle');
+      darkModeToggle.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        _this6.saveDarkModePreference();
+      });
+      this.restoreDarkModePreference();
+    }
+  }, {
+    key: "saveDarkModePreference",
+    value: function saveDarkModePreference() {
+      var isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+    }
+  }, {
+    key: "restoreDarkModePreference",
+    value: function restoreDarkModePreference() {
+      var isDarkMode = localStorage.getItem('darkMode') === 'true';
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+      }
+    }
   }]);
-}(_app_helpers__WEBPACK_IMPORTED_MODULE_3__["default"]);
+}(_app_helpers__WEBPACK_IMPORTED_MODULE_2__["default"]); // New MenuHandler class implementation
+var MenuHandler = /*#__PURE__*/function () {
+  function MenuHandler() {
+    _classCallCheck(this, MenuHandler);
+    this.isRTL = document.dir === 'rtl';
+    this.menuTrigger = document.querySelector('.menu-trigger');
+    this.closeButton = document.querySelector('.close-menu');
+    this.sidebar = document.querySelector('.sidebar-menu');
+    this.overlay = document.querySelector('.sidebar-overlay');
+    this.submenuTriggers = document.querySelectorAll('.menu-item.has-children');
+    this.init();
+  }
+  return _createClass(MenuHandler, [{
+    key: "init",
+    value: function init() {
+      var _this$menuTrigger,
+        _this7 = this,
+        _this$closeButton,
+        _this$overlay;
+      // Toggle menu
+      (_this$menuTrigger = this.menuTrigger) === null || _this$menuTrigger === void 0 || _this$menuTrigger.addEventListener('click', function () {
+        return _this7.toggleMenu(true);
+      });
+      (_this$closeButton = this.closeButton) === null || _this$closeButton === void 0 || _this$closeButton.addEventListener('click', function () {
+        return _this7.toggleMenu(false);
+      });
+      (_this$overlay = this.overlay) === null || _this$overlay === void 0 || _this$overlay.addEventListener('click', function () {
+        return _this7.toggleMenu(false);
+      });
+
+      // Handle submenus
+      this.submenuTriggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function (e) {
+          if (e.target === trigger || e.target.parentElement === trigger) {
+            e.preventDefault();
+            _this7.toggleSubmenu(trigger);
+          }
+        });
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') _this7.toggleMenu(false);
+      });
+    }
+  }, {
+    key: "toggleMenu",
+    value: function toggleMenu(show) {
+      document.body.classList.toggle('menu-opened', show);
+    }
+  }, {
+    key: "toggleSubmenu",
+    value: function toggleSubmenu(trigger) {
+      var submenu = trigger.querySelector('.sub-menu');
+      var isOpened = trigger.classList.contains('is-opened');
+
+      // Close other submenus
+      this.submenuTriggers.forEach(function (item) {
+        if (item !== trigger) {
+          var _item$querySelector;
+          item.classList.remove('is-opened');
+          (_item$querySelector = item.querySelector('.sub-menu')) === null || _item$querySelector === void 0 || _item$querySelector.classList.remove('is-opened');
+        }
+      });
+
+      // Toggle current submenu
+      trigger.classList.toggle('is-opened', !isOpened);
+      submenu === null || submenu === void 0 || submenu.classList.toggle('is-opened', !isOpened);
+    }
+  }]);
+}(); // Initialize menu handler
+document.addEventListener('DOMContentLoaded', function () {
+  new MenuHandler();
+  var sidebar = document.querySelector('.sidebar-menu');
+  var overlay = document.querySelector('.sidebar-overlay');
+  var toggleBtn = document.querySelector('.menu-trigger'); // تأكد من وجود زر التبديل
+
+  toggleBtn.addEventListener('click', function () {
+    sidebar.classList.toggle('open'); // تبديل حالة القائمة
+    overlay.classList.toggle('visible'); // إظهار التراكب
+  });
+
+  // إغلاق القائمة عند النقر على التراكب
+  overlay.addEventListener('click', function () {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+  });
+});
 salla.onReady(function () {
   return new App().loadTheApp();
 });
